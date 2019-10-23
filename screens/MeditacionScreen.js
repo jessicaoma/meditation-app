@@ -1,24 +1,30 @@
 import React, {Component} from 'react';
-import {Button, Text, StyleSheet} from 'react-native';
+import {Button, Text, StyleSheet, Image} from 'react-native';
+import PlayVideoButton from '../components/playVideoButton';
+import ScreenBg from '../components/screenBg';
+import Cover from '../components/Cover';
+
+const src = 'http://okoconnect.com/karim/images/meditar2-full.png';
+const resizeMode = 'center';
 
 export default class MeditacionScreen extends Component {
   static navigationOptions = {
     title: 'Meditacion',
   };
 
-  _handleClick = () => {
-    //alert('This is a button!');
-    //this.props.navigation.navigate('Paso');
-  };
-
   render() {
+
     return (
       <>
-        <Text>Meditacion</Text>
-        <Button onPress={this._handleClick} title="Play" />
+        <ScreenBg source={{uri: src}}>
+          <PlayVideoButton />
+          
+        </ScreenBg>
       </>
     );
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  
+});
