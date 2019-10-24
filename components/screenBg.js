@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, SafeAreaView, StyleSheet} from 'react-native';
+import {ImageBackground, SafeAreaView, StyleSheet, Dimensions} from 'react-native';
 import Colors from '../constants/Colors';
 
 const ScreenBg = ({source, color, children}) => {
@@ -18,7 +18,7 @@ const ScreenBg = ({source, color, children}) => {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
-    minHeight: '100vh',
+    minHeight: Dimensions.get('window').height,
   },
   image: {
     resizeMode: 'cover',
