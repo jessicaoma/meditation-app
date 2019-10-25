@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {Button, Text, StyleSheet, Image} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import PlayVideoButton from '../components/playVideoButton';
-import ScreenBg from '../components/screenBg';
-import Cover from '../components/Cover';
+import ScreenBg from '../components/ScreenBg';
 
 const src = 'http://okoconnect.com/karim/images/meditar2-full.png';
-const resizeMode = 'center';
 
 export default class MeditacionScreen extends Component {
   static navigationOptions = {
@@ -13,12 +11,12 @@ export default class MeditacionScreen extends Component {
   };
 
   render() {
-
     return (
       <>
         <ScreenBg source={{uri: src}}>
-          <PlayVideoButton />
-          
+          <View style={styles.center}>
+            <PlayVideoButton />
+          </View>
         </ScreenBg>
       </>
     );
@@ -26,5 +24,9 @@ export default class MeditacionScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  
+  center: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
 });

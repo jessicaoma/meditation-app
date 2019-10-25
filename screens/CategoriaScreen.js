@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {StyleSheet, FlatList} from 'react-native';
 import ItemBubble from '../components/ItemBubble';
-import LayoutBg from '../components/LayoutBg';
 import Cover from '../components/Cover';
 import Colors from '../constants/Colors';
+import ScreenBg from '../components/ScreenBg';
 
 var categoria = {};
 
@@ -88,14 +88,14 @@ export default class Categoria extends Component {
 
     return (
       <>
-        <LayoutBg source={{uri: categoria.bgImg}}>
+        <ScreenBg source={{uri: categoria.bgImg}} color={categoria.color}>
           <FlatList
             data={categoria.viajes}
             renderItem={this.renderItem}
             keyExtractor={this.keyExtractor}
             style={styles.container}
           />
-        </LayoutBg>
+        </ScreenBg>
       </>
     );
   }
