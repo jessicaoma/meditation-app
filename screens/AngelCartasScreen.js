@@ -3,20 +3,20 @@ import {Text, StyleSheet, View, FlatList, Dimensions} from 'react-native';
 import HalfCover from '../components/HalfCover';
 
 const data = [
-  { 
-    key: 'A', 
+  {
+    key: 'A',
     uri: 'http://okoconnect.com/karim/images/angel1.png',
   },
-  { 
-    key: 'B', 
+  {
+    key: 'B',
     uri: 'http://okoconnect.com/karim/images/angel2.png',
   },
-  { 
-    key: 'C', 
+  {
+    key: 'C',
     uri: 'http://okoconnect.com/karim/images/angel3.png',
   },
-  { 
-    key: 'C', 
+  {
+    key: 'C',
     uri: 'http://okoconnect.com/karim/images/angel4.png',
   },
 ];
@@ -24,9 +24,12 @@ const data = [
 const formatData = (data, numColumns) => {
   const numberOfFullRows = Math.floor(data.length / numColumns);
 
-  let numberOfElementsLastRow = data.length - (numberOfFullRows * numColumns);
-  while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
-    data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
+  let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
+  while (
+    numberOfElementsLastRow !== numColumns &&
+    numberOfElementsLastRow !== 0
+  ) {
+    data.push({key: `blank-${numberOfElementsLastRow}`, empty: true});
     numberOfElementsLastRow++;
   }
 
@@ -40,25 +43,23 @@ export default class AngelCartasScreen extends Component {
     title: 'Tu ángel',
     header: null,
   };
-  
+
   _handleClick = () => {
     //alert('This is a button!2');
     this.props.navigation.navigate('Angel');
   };
 
-  renderItem = ({ item, index }) => {
+  renderItem = ({item, index}) => {
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
     return (
-      <View
-        style={styles.item}
-      >
+      <View style={styles.item}>
         <HalfCover
           source={{uri: item.uri}}
           onPress={this._handleClick}
-          color= {'#fff'}
-          minHeight={(Dimensions.get('window').height / numColumns)-82 } 
+          color={'#fff'}
+          width={Dimensions.get('window').height / numColumns - 82}
         />
       </View>
     );
@@ -82,11 +83,11 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   item: {
-    alignItems: 'left',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     flex: 1,
     margin: 1,
-    height: Dimensions.get('window').width - 80, 
+    height: Dimensions.get('window').width - 80,
   },
   itemInvisible: {
     backgroundColor: 'transparent',
