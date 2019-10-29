@@ -12,7 +12,6 @@ const AudiolibroNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'Audiolibros',
-    mode: 'card',
     navigationOptions: {
       tabBarIcon: ({focused}) => (
         <TabBarIcon focused={focused} name={'md-link'} />

@@ -12,7 +12,6 @@ const MeditacionNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'Meditaciones',
-    mode: 'card',
     navigationOptions: {
       tabBarIcon: ({focused}) => (
         <TabBarIcon focused={focused} name={'md-link'} />

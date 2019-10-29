@@ -16,7 +16,6 @@ const ViajesNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'Categorias',
-    mode: 'card',
     navigationOptions: {
       tabBarIcon: ({focused}) => (
         <TabBarIcon focused={focused} name={'md-link'} />

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
-import PlayVideoButton from '../components/playVideoButton';
+
 import ScreenBg from '../components/ScreenBg';
+
+import Player from '../player/Player';
 
 const src = 'http://okoconnect.com/karim/images/meditar2-full.png';
 
@@ -14,19 +15,22 @@ export default class MeditacionScreen extends Component {
     return (
       <>
         <ScreenBg source={{uri: src}}>
-          <View style={styles.center}>
-            <PlayVideoButton />
-          </View>
+          <Player
+            source={{
+              uri:
+                'https://s3.amazonaws.com/exp-us-standard/audio/playlist-example/Comfort_Fit_-_03_-_Sorry.mp3',
+            }}
+            isVideo={false}
+          />
+          {/* <Player
+            source={{
+              uri:
+                'https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4',
+            }}
+            isVideo={true}
+          /> */}
         </ScreenBg>
       </>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  center: {
-    alignSelf: 'center',
-    justifyContent: 'center',
-    height: '100%',
-  },
-});
