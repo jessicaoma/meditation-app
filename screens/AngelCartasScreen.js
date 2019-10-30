@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, FlatList, Dimensions} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  FlatList,
+  Dimensions,
+  StatusBar,
+} from 'react-native';
 import HalfCover from '../components/HalfCover';
 
 const data = [
@@ -67,17 +74,23 @@ export default class AngelCartasScreen extends Component {
 
   render() {
     return (
-      <FlatList
-        data={formatData(data, numColumns)}
-        style={styles.container}
-        renderItem={this.renderItem}
-        numColumns={numColumns}
-      />
+      <>
+        <View style={styles.statusBar} />
+        <FlatList
+          data={formatData(data, numColumns)}
+          style={styles.container}
+          renderItem={this.renderItem}
+          numColumns={numColumns}
+        />
+      </>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  statusBar: {
+    height: StatusBar.currentHeight,
+  },
   container: {
     flex: 1,
     marginVertical: 20,

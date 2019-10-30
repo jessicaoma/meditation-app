@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {Text, SectionList, StyleSheet, Image} from 'react-native';
+import {
+  Text,
+  SectionList,
+  StyleSheet,
+  Image,
+  StatusBar,
+  View,
+} from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
@@ -32,7 +39,40 @@ const data = [
   },
 ];
 
+export default class MeditacionesScreen extends Component {
+  static navigationOptions = {
+    header: null,
+  };
+  _handleClick = () => {
+    this.props.navigation.navigate('Meditacion');
+  };
+  render = () => (
+    <>
+      <View style={styles.statusBar} />
+      <SectionList
+        style={styles.container}
+        sections={data}
+        renderItem={({item}) => (
+          <Buttom
+            style={{backgroundColor: item.bg || Colors.primaryDark}}
+            onPress={this._handleClick}>
+            <Text style={styles.title_boxes}>{item.title}</Text>
+            <Image style={styles.image} source={{uri: item.img}} />
+          </Buttom>
+        )}
+        renderSectionHeader={({section: {title}}) => (
+          <Text style={styles.sectionTitle}>{title}</Text>
+        )}
+        keyExtractor={item => 'meditacionId' + item.id}
+      />
+    </>
+  );
+}
+
 const styles = StyleSheet.create({
+  statusBar: {
+    height: StatusBar.currentHeight,
+  },
   container: {
     paddingHorizontal: Dims.regularSpace,
   },
@@ -59,34 +99,3 @@ const styles = StyleSheet.create({
     width: 94,
   },
 });
-
-export default class MeditacionesScreen extends Component {
-  static navigationOptions = {
-    header: null,
-  };
-  _handleClick = () => {
-    this.props.navigation.navigate('Meditacion');
-  };
-  render = () => (
-    <>
-      <SectionList
-        style={styles.container}
-        sections={data}
-        renderItem={({item}) => (
-          <Buttom
-            style={{backgroundColor: item.bg || Colors.primaryDark}}
-            onPress={this._handleClick}>
-            <Text style={styles.title_boxes}>{item.title}</Text>
-            <Image style={styles.image} source={{uri: item.img}} />
-          </Buttom>
-        )}
-        renderSectionHeader={({section: {title}}) => (
-          <Text style={styles.sectionTitle}>{title}</Text>
-        )}
-        keyExtractor={item => 'meditacionId' + item.id}
-      />
-    </>
-  );
-}
-
-MeditacionesScreen;

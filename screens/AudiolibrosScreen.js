@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, FlatList} from 'react-native';
+import {Text, StyleSheet, View, FlatList, StatusBar} from 'react-native';
 import HalfCover from '../components/HalfCover';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
@@ -70,27 +70,30 @@ export default class AudiolibrosScreen extends Component {
     );
   };
 
-  renderSeparator = () => <View style={styles.itemSeparator} />;
-
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.sectionTitle}>Audiolibros</Text>
-        <FlatList
-          //en android me funciono sin agregar elementos vacios, confirmar en iOS
-          //data={formatData(data, numColumns)}
-          data={data}
-          renderItem={this.renderItem}
-          numColumns={numColumns}
-          columnWrapperStyle={styles.wrapperStyle}
-          ItemSeparatorComponent={this.renderSeparator}
-        />
-      </View>
+      <>
+        <View style={styles.statusBar} />
+        <View style={styles.container}>
+          <Text style={styles.sectionTitle}>Audiolibros</Text>
+          <FlatList
+            //en android me funciono sin agregar elementos vacios, confirmar en iOS
+            //data={formatData(data, numColumns)}
+            data={data}
+            renderItem={this.renderItem}
+            numColumns={numColumns}
+            columnWrapperStyle={styles.wrapperStyle}
+          />
+        </View>
+      </>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  statusBar: {
+    height: StatusBar.currentHeight,
+  },
   container: {
     flex: 1,
     paddingHorizontal: Dimensions.regularSpace,

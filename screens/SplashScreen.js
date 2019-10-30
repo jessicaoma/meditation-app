@@ -19,7 +19,7 @@ export default function SplashScreen({navigation}) {
   }, 1000);
   return (
     <>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.contaner}>
         <Image
           // @ts-ignore

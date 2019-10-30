@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {Text, SectionList, StyleSheet, Image} from 'react-native';
+import {
+  Text,
+  SectionList,
+  StyleSheet,
+  Image,
+  View,
+  StatusBar,
+} from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
@@ -87,6 +94,7 @@ class Categorias extends Component {
   render() {
     return (
       <>
+        <View style={styles.statusBar} />
         <SectionList
           style={styles.container}
           sections={data}
@@ -111,6 +119,9 @@ class Categorias extends Component {
 }
 
 const styles = StyleSheet.create({
+  statusBar: {
+    height: StatusBar.currentHeight,
+  },
   container: {
     paddingHorizontal: Dims.regularSpace,
   },
