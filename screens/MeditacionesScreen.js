@@ -10,60 +10,61 @@ import {
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
-
-const data = [
-  {
-    title: 'Meditaciones',
-    data: [
-      {
-        id: 1,
-        title: 'Meditación 1',
-        img: 'http://okoconnect.com/karim/images/meditar2.png',
-      },
-      {
-        id: 2,
-        title: 'Meditación 2',
-        img: 'http://okoconnect.com/karim/images/meditar4.png',
-      },
-      {
-        id: 3,
-        title: 'Meditación 3',
-        img: 'http://okoconnect.com/karim/images/meditar1.png',
-      },
-      {
-        id: 4,
-        title: 'Meditación 4',
-        img: 'http://okoconnect.com/karim/images/meditar3.png',
-      },
-    ],
-  },
-];
+import Constants from 'expo-constants';
+import API from '../utils/API';
 
 export default class MeditacionesScreen extends Component {
   static navigationOptions = {
     header: null,
   };
-  _handleClick = () => {
-    this.props.navigation.navigate('Meditacion');
+  constructor(props) {
+    super(props);
+    this.state = {
+      meditaciones: [{title: 'Meditaciones', data: []}],
+    };
+  }
+  async componentDidMount() {
+    const data = await API.getMeditaciones();
+    this.setState({
+      meditaciones: [{title: 'Meditaciones', data}],
+    });
+
+    //console.log(this.state.meditaciones[0]);
+  }
+
+  _handleClick = item => {
+    this.props.navigation.navigate('Meditacion', {
+      meditacion: item,
+    });
   };
+  _renderItem = ({item}) => {
+    return (
+      <Buttom
+        style={{backgroundColor: item.color || Colors.primaryDark}}
+        onPress={() => {
+          this._handleClick(item);
+        }}>
+        <Text style={styles.title_boxes}>{item.title}</Text>
+        <Image style={styles.image} source={{uri: item.itemImage}} />
+      </Buttom>
+    );
+  };
+  _renderHeader = ({section: {title}}) => (
+    <Text style={styles.sectionTitle}>{title}</Text>
+  );
+  _renderEmtpy = () => <Text>No hay Meditaciones :(</Text>;
+
   render = () => (
     <>
       <View style={styles.statusBar} />
+      <View style={{borderColor: '#00F', borderWidth: 1}} />
       <SectionList
         style={styles.container}
-        sections={data}
-        renderItem={({item}) => (
-          <Buttom
-            style={{backgroundColor: item.bg || Colors.primaryDark}}
-            onPress={this._handleClick}>
-            <Text style={styles.title_boxes}>{item.title}</Text>
-            <Image style={styles.image} source={{uri: item.img}} />
-          </Buttom>
-        )}
-        renderSectionHeader={({section: {title}}) => (
-          <Text style={styles.sectionTitle}>{title}</Text>
-        )}
-        keyExtractor={item => 'meditacionId' + item.id}
+        sections={this.state.meditaciones}
+        renderItem={this._renderItem}
+        ListEmptyComponent={this._renderEmtpy}
+        renderSectionHeader={this._renderHeader}
+        keyExtractor={item => item.id}
       />
     </>
   );
@@ -71,7 +72,8 @@ export default class MeditacionesScreen extends Component {
 
 const styles = StyleSheet.create({
   statusBar: {
-    height: StatusBar.currentHeight,
+    //height: StatusBar.currentHeight,
+    height: Constants.statusBarHeight,
   },
   container: {
     paddingHorizontal: Dims.regularSpace,

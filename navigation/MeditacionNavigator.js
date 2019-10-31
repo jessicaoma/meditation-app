@@ -16,6 +16,7 @@ const MeditacionNavigator = createStackNavigator(
       tabBarIcon: ({focused}) => (
         <TabBarIcon focused={focused} name={'md-link'} />
       ),
+      headerBackTitle: null,
     },
   },
 );

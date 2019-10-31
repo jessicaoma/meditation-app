@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
-import Dimensions from '../constants/Dimensions';
+import {StyleSheet, View} from 'react-native';
 import {Audio} from 'expo-av';
 import Controls from './Controls';
 import ScreenView from './ScreenView';
@@ -42,13 +41,14 @@ export default class Player extends Component {
     });
   }
 
-  componentWillUnmount() {
+  /*componentWillUnmount() {
     if (this.playbackInstance !== null) {
       this.playbackInstance.unloadAsync();
       this.playbackInstance.setOnPlaybackStatusUpdate(null);
       this.playbackInstance = null;
     }
-  }
+  }*/
+
   //creacion de las intancias
   async _loadNewPlaybackInstance(playing) {
     const source = this.props.source;

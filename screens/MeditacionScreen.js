@@ -1,24 +1,26 @@
 import React, {Component} from 'react';
-
 import ScreenBg from '../components/ScreenBg';
-
 import Player from '../player/Player';
 
-const src = 'http://okoconnect.com/karim/images/meditar2-full.png';
+//const src = 'http://okoconnect.com/karim/images/meditar2-full.png';
 
 export default class MeditacionScreen extends Component {
-  static navigationOptions = {
-    title: 'Meditacion',
+  static navigationOptions = ({navigation}) => {
+    let meditacion = navigation.getParam('meditacion', {title: 'Meditación'});
+    return {title: meditacion.title};
   };
 
   render() {
+    const {navigation} = this.props;
+    let meditacion = navigation.getParam('meditacion', {});
     return (
       <>
-        <ScreenBg source={{uri: src}}>
+        <ScreenBg
+          source={{uri: meditacion.backgroundImage}}
+          color={meditacion.color}>
           <Player
             source={{
-              uri:
-                'https://s3.amazonaws.com/exp-us-standard/audio/playlist-example/Comfort_Fit_-_03_-_Sorry.mp3',
+              uri: meditacion.media,
             }}
             isVideo={false}
           />
