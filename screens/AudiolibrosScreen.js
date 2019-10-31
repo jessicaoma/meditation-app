@@ -3,24 +3,7 @@ import {Text, StyleSheet, View, FlatList, StatusBar} from 'react-native';
 import HalfCover from '../components/HalfCover';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
-
-const data = [
-  {
-    key: 'A',
-    uri: 'http://okoconnect.com/karim/images/libro1.png',
-    title: '101 Frases para reflexionar 101',
-  },
-  {
-    key: 'B',
-    uri: 'http://okoconnect.com/karim/images/libro2.png',
-    title: 'Aprendiendo a meditar',
-  },
-  {
-    key: 'C',
-    uri: 'http://okoconnect.com/karim/images/libro3.png',
-    title: 'La aventura espiritual',
-  },
-];
+import API from '../utils/API';
 
 /*const formatData = (data, numColumns) => {
   const numberOfFullRows = Math.floor(data.length / numColumns);
@@ -49,19 +32,35 @@ export default class AudiolibrosScreen extends Component {
     header: null,
   };
 
-  _handleClick = () => {
-    this.props.navigation.navigate('Audiolibro');
+  constructor(props) {
+    super(props);
+    this.state = {
+      audioLibros: [],
+    };
+  }
+  async componentDidMount() {
+    const data = await API.getAudiolibros();
+    this.setState({
+      audioLibros: data,
+    });
+    //console.log(this.state.meditaciones[0]);
+  }
+
+  _handleClick = item => {
+    this.props.navigation.navigate('Audiolibro', {audiolibro: item});
   };
 
-  renderItem = ({item, index}) => {
+  _renderItem = ({item}) => {
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
     return (
       <View style={styles.item}>
         <HalfCover
-          source={{uri: item.uri}}
-          onPress={this._handleClick}
+          source={{uri: item.itemImage}}
+          onPress={() => {
+            this._handleClick(item);
+          }}
           title={item.title}
           color={'#fff'}
           width={widthItem}
@@ -69,6 +68,8 @@ export default class AudiolibrosScreen extends Component {
       </View>
     );
   };
+
+  _renderEmtpy = () => <Text>No hay Meditaciones :(</Text>;
 
   render() {
     return (
@@ -79,10 +80,12 @@ export default class AudiolibrosScreen extends Component {
           <FlatList
             //en android me funciono sin agregar elementos vacios, confirmar en iOS
             //data={formatData(data, numColumns)}
-            data={data}
-            renderItem={this.renderItem}
+            data={this.state.audioLibros}
+            renderItem={this._renderItem}
             numColumns={numColumns}
             columnWrapperStyle={styles.wrapperStyle}
+            ListEmptyComponent={this._renderEmtpy}
+            keyExtractor={item => item.id}
           />
         </View>
       </>
