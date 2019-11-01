@@ -1,13 +1,7 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  SectionList,
-  StyleSheet,
-  Image,
-  StatusBar,
-  View,
-} from 'react-native';
+import {Text, SectionList, StyleSheet, Image, View} from 'react-native';
 import Buttom from '../components/Buttom';
+import TabBarIcon from '../components/TabBarIcon';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Constants from 'expo-constants';
@@ -15,7 +9,10 @@ import API from '../utils/API';
 
 export default class MeditacionesScreen extends Component {
   static navigationOptions = {
-    header: null,
+    //header: null,
+    tabBarIcon: ({focused}) => (
+      <TabBarIcon focused={focused} name={'md-link'} />
+    ),
   };
   constructor(props) {
     super(props);
@@ -49,6 +46,7 @@ export default class MeditacionesScreen extends Component {
       </Buttom>
     );
   };
+
   _renderHeader = ({section: {title}}) => (
     <Text style={styles.sectionTitle}>{title}</Text>
   );
@@ -57,7 +55,6 @@ export default class MeditacionesScreen extends Component {
   render = () => (
     <>
       <View style={styles.statusBar} />
-      <View style={{borderColor: '#00F', borderWidth: 1}} />
       <SectionList
         style={styles.container}
         sections={this.state.meditaciones}

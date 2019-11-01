@@ -7,7 +7,7 @@ import Player from '../player/Player';
 export default class MeditacionScreen extends Component {
   static navigationOptions = ({navigation}) => {
     let meditacion = navigation.getParam('meditacion', {title: 'Meditación'});
-    return {title: meditacion.title};
+    return {title: meditacion.title, headerBackTitle: null};
   };
 
   render() {

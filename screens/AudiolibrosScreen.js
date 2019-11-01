@@ -4,21 +4,7 @@ import HalfCover from '../components/HalfCover';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import API from '../utils/API';
-
-/*const formatData = (data, numColumns) => {
-  const numberOfFullRows = Math.floor(data.length / numColumns);
-
-  let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
-  while (
-    numberOfElementsLastRow !== numColumns &&
-    numberOfElementsLastRow !== 0
-  ) {
-    data.push({key: `blank-${numberOfElementsLastRow}`, empty: true});
-    numberOfElementsLastRow++;
-  }
-
-  return data;
-};*/
+import TabBarIcon from '../components/TabBarIcon';
 
 const numColumns = 2;
 //Estoy restando los margenes laterales (16 + 16), y eso lo divido entre las columnas.
@@ -28,8 +14,11 @@ const widthItem = (Dimensions.window.width - Dimensions.hugeSpace) / numColumns;
 
 export default class AudiolibrosScreen extends Component {
   static navigationOptions = {
-    title: 'AudioLibros',
-    header: null,
+    //title: 'AudioLibros',
+    //header: null,
+    tabBarIcon: ({focused}) => (
+      <TabBarIcon focused={focused} name={'md-link'} />
+    ),
   };
 
   constructor(props) {
@@ -78,8 +67,6 @@ export default class AudiolibrosScreen extends Component {
         <View style={styles.container}>
           <Text style={styles.sectionTitle}>Audiolibros</Text>
           <FlatList
-            //en android me funciono sin agregar elementos vacios, confirmar en iOS
-            //data={formatData(data, numColumns)}
             data={this.state.audioLibros}
             renderItem={this._renderItem}
             numColumns={numColumns}

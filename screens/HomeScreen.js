@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Text,
   View,
-  StatusBar,
 } from 'react-native';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
