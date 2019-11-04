@@ -41,13 +41,14 @@ export default class Player extends Component {
     });
   }
 
-  /*componentWillUnmount() {
+  componentWillUnmount() {
+    console.log('unmound player')
     if (this.playbackInstance !== null) {
       this.playbackInstance.unloadAsync();
       this.playbackInstance.setOnPlaybackStatusUpdate(null);
       this.playbackInstance = null;
     }
-  }*/
+  }
 
   //creacion de las intancias
   async _loadNewPlaybackInstance(playing) {
