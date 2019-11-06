@@ -8,30 +8,55 @@ import MeditacionesScreen from '../screens/MeditacionesScreen';
 import ViajesNavigator from './ViajesNavigator';
 import Colors from '../constants/Colors';
 import AngelNavigator from './AngelNavigator';
-
-const HomeStack = createStackNavigator(
-  {
-    Home: HomeScreen,
-  },
-  {
-    navigationOptions: {
-      tabBarIcon: ({focused}) => (
-        <TabBarIcon focused={focused} name={'md-information-circle'} />
-      ),
-    },
-  },
-);
+import ActionBarImage from './ActionBarImage';
 
 const tabNavigator = createBottomTabNavigator(
   {
-    Home: HomeStack,
-    Viajes: ViajesNavigator,
-    Meditar: MeditacionesScreen,
-    Audiolibros: AudiolibrosScreen,
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        title: 'Inicio',
+        tabBarIcon: ({focused}) => (
+          <ActionBarImage
+            uri='http://okoconnect.com/karim/images/icons/iconInicio.png' 
+            />
+        ),
+      },
+    },
+    Viajes: {
+      screen: ViajesNavigator,
+      navigationOptions: {
+        title: 'Viajes',
+        tabBarIcon: () => (
+          <ActionBarImage uri='http://okoconnect.com/karim/images/icons/iconViajes.png'/>
+        ),
+      },
+    },
+    Meditar: {
+      screen: MeditacionesScreen,
+      navigationOptions: {
+        title: 'Meditar',
+        tabBarIcon: ({focused}) => (
+          <ActionBarImage uri='http://okoconnect.com/karim/images/icons/iconMeditar.png'/>
+        ),
+      },
+    },
+    Audiolibros: {
+      screen: AudiolibrosScreen,
+      navigationOptions: {
+        title: 'Audiolibros',
+        tabBarIcon: ({focused}) => (
+          <ActionBarImage uri='http://okoconnect.com/karim/images/icons/iconLibros.png'/>
+        ),
+      },
+    },
     AngelStack: {
       screen: AngelNavigator,
       navigationOptions: {
         title: 'Tu ángel',
+        tabBarIcon: ({focused}) => (
+          <ActionBarImage uri='http://okoconnect.com/karim/images/icons/iconAngel.png'/>
+        ),
       },
     },
   },

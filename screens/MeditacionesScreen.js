@@ -7,12 +7,14 @@ import Dims from '../constants/Dimensions';
 import Constants from 'expo-constants';
 import API from '../utils/API';
 import Cover from '../components/Cover';
+const iconMeditar = '..assets/images/iconsNavigations/iconMeditar.png';
+
 
 export default class MeditacionesScreen extends Component {
   static navigationOptions = {
     //header: null,
     tabBarIcon: ({focused}) => (
-      <TabBarIcon focused={focused} name={'md-link'} />
+      <TabBarIcon focused={focused} name={'md-link'} uri={iconMeditar}/>
     ),
   };
   constructor(props) {
@@ -92,6 +94,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
     marginLeft: 0,
     color: Colors.grey,
+    fontFamily: 'MyriadPro-Bold',
   },
   title_boxes: {
     color: 'white',
