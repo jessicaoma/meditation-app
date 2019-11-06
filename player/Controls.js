@@ -23,27 +23,30 @@ const ICON_PAUSE_BUTTON = 'md-pause';
  */
 export default function Controls(props) {
   return (
-    <View style={[styles.container, {opacity: props.isLoading ? 0.5 : 1.0}]}>
-      <TouchableOpacity onPress={props.onPress} disabled={props.isLoading}>
-        <Ionicons
-          name={props.isPlaying ? ICON_PAUSE_BUTTON : ICON_PLAY_BUTTON}
-          size={26}
-          color={colors.white}
+    <>
+      <TouchableOpacity onPress={props.onPress} style={styles.playscreen} />
+      <View style={[styles.container, {opacity: props.isLoading ? 0.5 : 1.0}]}>
+        <TouchableOpacity onPress={props.onPress} disabled={props.isLoading}>
+          <Ionicons
+            name={props.isPlaying ? ICON_PAUSE_BUTTON : ICON_PLAY_BUTTON}
+            size={26}
+            color={colors.white}
+          />
+        </TouchableOpacity>
+        <Slider
+          style={{
+            flex: 1,
+          }}
+          value={props.seekSliderPosition}
+          onValueChange={props.onSliderValueChange}
+          onSlidingComplete={props.onSlidingComplete}
+          thumbTintColor={colors.white}
+          disabled={props.isLoading}
+          minimumTrackTintColor={colors.white}
         />
-      </TouchableOpacity>
-      <Slider
-        style={{
-          flex: 1,
-        }}
-        value={props.seekSliderPosition}
-        onValueChange={props.onSliderValueChange}
-        onSlidingComplete={props.onSlidingComplete}
-        thumbTintColor={colors.white}
-        disabled={props.isLoading}
-        minimumTrackTintColor={colors.white}
-      />
-      <Text style={{color: colors.white}}>{props.currentTime}</Text>
-    </View>
+        <Text style={{color: colors.white}}>{props.currentTime}</Text>
+      </View>
+    </>
   );
 }
 
@@ -58,6 +61,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     //activar si quiere verificar la ubicación del componente
     //borderColor: '#F00',
+    //borderWidth: 1,
+  },
+  playscreen: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
+    height: '100%',
+    width: '100%',
+    //borderColor: '#F0F',
     //borderWidth: 1,
   },
 });

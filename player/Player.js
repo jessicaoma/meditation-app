@@ -42,7 +42,7 @@ export default class Player extends Component {
   }
 
   componentWillUnmount() {
-    console.log('unmound player')
+    //console.log('unmound player')
     if (this.playbackInstance !== null) {
       this.playbackInstance.unloadAsync();
       this.playbackInstance.setOnPlaybackStatusUpdate(null);
