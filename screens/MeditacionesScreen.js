@@ -6,6 +6,7 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Constants from 'expo-constants';
 import API from '../utils/API';
+import Cover from '../components/Cover';
 
 export default class MeditacionesScreen extends Component {
   static navigationOptions = {
@@ -48,7 +49,14 @@ export default class MeditacionesScreen extends Component {
   };
 
   _renderHeader = ({section: {title}}) => (
-    <Text style={styles.sectionTitle}>{title}</Text>
+    <View>
+      <Text style={styles.sectionTitle}>{title}</Text>
+      <Cover
+        source={{
+          uri: 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
+        }}
+      />
+    </View>
   );
   _renderEmtpy = () => <Text>No hay Meditaciones :(</Text>;
 
