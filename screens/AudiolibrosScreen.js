@@ -4,7 +4,7 @@ import HalfCover from '../components/HalfCover';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import API from '../utils/API';
-import TabBarIcon from '../components/TabBarIcon';
+import ActionBarImage from '../navigation/ActionBarImage';
 
 const numColumns = 2;
 //Estoy restando los margenes laterales (16 + 16), y eso lo divido entre las columnas.
@@ -13,11 +13,12 @@ const widthItem = (Dimensions.window.width - Dimensions.hugeSpace) / numColumns;
 //Para la separación entre los elementos de una fila, debe hacerse manual.
 
 export default class AudiolibrosScreen extends Component {
+  
   static navigationOptions = {
     //title: 'AudioLibros',
     //header: null,
     tabBarIcon: ({focused}) => (
-      <TabBarIcon focused={focused} name={'md-link'} />
+      <ActionBarImage uri='http://okoconnect.com/karim/images/icons/iconLibros.png' style={{opacity: 1}} />
     ),
   };
 
@@ -58,7 +59,7 @@ export default class AudiolibrosScreen extends Component {
     );
   };
 
-  _renderEmtpy = () => <Text>No hay Meditaciones :(</Text>;
+  _renderEmtpy = () => <Text>No hay Audiolibros disponibles :(</Text>;
 
   render() {
     return (
@@ -97,6 +98,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
     marginLeft: 0,
     color: Colors.grey,
+    fontFamily: 'MyriadPro-Bold',
   },
   item: {
     //alignItems: 'flex-start',

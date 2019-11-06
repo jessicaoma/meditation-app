@@ -97,18 +97,6 @@ const styles = StyleSheet.create({
     lineHeight: 65,
     fontFamily: 'MyriadPro-Regular',
   },
-  instagramRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: Dims.regularSpace,
-    color: Colors.primary,
-  },
-  instagramText: {
-    color: Colors.primaryDark,
-    fontSize: 16,
-    lineHeight: 14,
-  },
   forgetText: {
     color: Colors.grey,
     fontSize: 16,
