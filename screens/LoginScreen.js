@@ -59,8 +59,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     minHeight: 100,
     paddingTop: Dims.hugeSpace + Dims.hugeSpace + Dims.hugeSpace,
-    paddingLeft: 20,
-    paddingRight: 20,
   },
   welcomeTitle: {
     color: '#aba0b5',
@@ -97,18 +95,6 @@ const styles = StyleSheet.create({
     lineHeight: 65,
     fontFamily: 'MyriadPro-Regular',
   },
-  instagramRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: Dims.regularSpace,
-    color: Colors.primary,
-  },
-  instagramText: {
-    color: Colors.primaryDark,
-    fontSize: 16,
-    lineHeight: 14,
-  },
   forgetText: {
     color: Colors.grey,
     fontSize: 16,
@@ -119,5 +105,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    padding: 25,
   },
 });

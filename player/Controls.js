@@ -29,8 +29,9 @@ export default function Controls(props) {
         <TouchableOpacity onPress={props.onPress} disabled={props.isLoading}>
           <Ionicons
             name={props.isPlaying ? ICON_PAUSE_BUTTON : ICON_PLAY_BUTTON}
-            size={26}
+            size={35}
             color={colors.white}
+            style={styles.shadow}
           />
         </TouchableOpacity>
         <Slider
@@ -73,5 +74,18 @@ const styles = StyleSheet.create({
     width: '100%',
     //borderColor: '#F0F',
     //borderWidth: 1,
+  },
+  shadow: {
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
   },
 });
