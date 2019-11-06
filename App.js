@@ -35,13 +35,21 @@ async function loadResourcesAsync() {
     Asset.loadAsync([
       require('./assets/images/logo.png'),
       require('./assets/images/splash-bg.png'),
+      require('./assets/images/iconsNavigations/iconInicio.png'),
+      require('./assets/images/iconsNavigations/iconViajes.png'),
+      require('./assets/images/iconsNavigations/iconMeditar.png'),
+      require('./assets/images/iconsNavigations/iconLibros.png'),
+      require('./assets/images/iconsNavigations/iconAngel.png'),
     ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar
       ...Ionicons.font,
       // We include SpaceMono because we use it in HomeScreen.js. Feel free to
       // remove this if you are not using it in your app
-      //'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+      'MyriadPro-Bold': require('./assets/fonts/MyriadPro-bold.ttf'),
+      'MyriadPro-Semibold ': require('./assets/fonts/MyriadPro-semibold.ttf'),
+      'MyriadPro-Regular': require('./assets/fonts/MyriadPro-regular.ttf'),
+      'SFProText-Medium': require('./assets/fonts/SFProText-Medium.ttf'),
     }),
   ]);
 }

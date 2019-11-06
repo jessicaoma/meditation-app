@@ -31,7 +31,7 @@ export default class LoginScreen extends Component {
             <TouchableOpacity
               onPress={this.handleLogin}
               style={[styles.button]}>
-              <Text style={styles.buttonLabel}>INICIAR SESION</Text>
+              <Text style={styles.buttonLabel}>Iniciar Sesión</Text>
             </TouchableOpacity>
             <TouchableHighlight onPress={this.handleLogin}>
               <View style={[styles.instagramRow]}>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   button: {
-    backgroundColor: Colors.primaryDark,
+    backgroundColor: Colors.second,
     borderRadius: 30,
     alignSelf: 'stretch',
     width: '100%',
@@ -87,7 +87,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     letterSpacing: 1.5,
-    lineHeight: 48,
+    lineHeight: 65,
+    fontFamily: 'MyriadPro-Regular',
   },
   instagramRow: {
     flexDirection: 'row',

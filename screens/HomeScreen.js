@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     textTransform: 'uppercase',
     alignSelf: 'center',
+    fontFamily: 'MyriadPro-Regular',
   },
   itemImage: {
     resizeMode: 'cover',
