@@ -7,6 +7,7 @@ import {
   Dimensions,
   StatusBar,
 } from 'react-native';
+import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 
 const data = [
@@ -77,6 +78,7 @@ export default class AngelCartasScreen extends Component {
     return (
       <>
         <View style={styles.statusBar} />
+        <Text style={styles.sectionTitle}>Tu Ángel del día</Text>
         <FlatList
           data={formatData(data, numColumns)}
           style={styles.container}
@@ -94,7 +96,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginVertical: 20,
   },
   item: {
     alignItems: 'flex-start',
@@ -105,5 +106,16 @@ const styles = StyleSheet.create({
   },
   itemInvisible: {
     backgroundColor: 'transparent',
+  },
+  sectionTitle: {
+    fontSize: 20,
+    letterSpacing: 1.11,
+    lineHeight: 36,
+    marginTop: Dimensions.regularSpace,
+    marginRight: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    color: Colors.grey,
+    fontFamily: 'MyriadPro-Bold',
   },
 });
