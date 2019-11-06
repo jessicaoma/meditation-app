@@ -54,6 +54,7 @@ export default class AudiolibrosScreen extends Component {
           title={item.title}
           color={'#fff'}
           width={widthItem}
+          height={widthItem}
         />
       </View>
     );
