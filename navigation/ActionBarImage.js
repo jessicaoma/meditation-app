@@ -11,13 +11,17 @@ export default class ActionBarImage extends Component {
       <View style={{ flexDirection: 'row' }}>
         <Image
           source={{ uri: this.props.uri }}
-          style={{
-            width: 48,
-            height: 34,
-            opacity: 0.4,
-          }}
+          style={[styles.icon, this.props.style]}
         />
       </View>
     );
   }
 }
+
+var styles = StyleSheet.create({
+  icon: {
+    width: 48,
+    height: 34,
+    opacity: 0.4,
+  },
+});

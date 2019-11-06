@@ -24,24 +24,24 @@ export default class LoginScreen extends Component {
       <>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView style={styles.container}>
-          <Logo style={styles.logo} />
+          <Image source={require('../assets/images/logo2.png')} style={styles.logo} />
+          <Text style={styles.welcomeTitle}>BIENVENIDO</Text>
           <View style={styles.full}>
-            <InputLogin placeholder="Nombre de usuario" type="text" />
+            <InputLogin placeholder="Correo" type="text" />
             <InputLogin placeholder="Constraseña" type="password" />
             <TouchableOpacity
               onPress={this.handleLogin}
               style={[styles.button]}>
               <Text style={styles.buttonLabel}>Iniciar Sesión</Text>
             </TouchableOpacity>
-            <TouchableHighlight onPress={this.handleLogin}>
-              <View style={[styles.instagramRow]}>
-                <Image source={require('../assets/images/instagram.png')} />
-                <Text style={styles.instagramText}>Iniciar con Instagram</Text>
-              </View>
-            </TouchableHighlight>
             <TouchableHighlight>
               <Text style={styles.forgetText}>¿Olvidaste tu contraseña?</Text>
             </TouchableHighlight>
+            <TouchableOpacity
+              onPress={this.handleLogin}
+              style={[styles.button]}>
+              <Text style={styles.buttonLabel}>CREAR UNA CUENTA</Text>
+            </TouchableOpacity>
           </View>
           <View />
           <View />
@@ -59,7 +59,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     minHeight: 100,
     paddingTop: Dims.hugeSpace + Dims.hugeSpace + Dims.hugeSpace,
-    paddingHorizontal: Dims.hugeSpace,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  welcomeTitle: {
+    color: '#aba0b5',
+    fontSize: 20,
+    lineHeight: 36,
+    fontFamily: 'MyriadPro-Regular',
   },
   logo: {
     maxWidth: 185,

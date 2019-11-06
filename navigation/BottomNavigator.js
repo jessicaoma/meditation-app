@@ -17,7 +17,9 @@ const tabNavigator = createBottomTabNavigator(
       navigationOptions: {
         title: 'Inicio',
         tabBarIcon: ({focused}) => (
-          <ActionBarImage uri='http://okoconnect.com/karim/images/iconHome1.png' />
+          <ActionBarImage
+            uri='http://okoconnect.com/karim/images/icons/iconInicio.png' 
+            />
         ),
       },
     },
@@ -26,7 +28,7 @@ const tabNavigator = createBottomTabNavigator(
       navigationOptions: {
         title: 'Viajes',
         tabBarIcon: () => (
-          <ActionBarImage uri='http://okoconnect.com/karim/images/iconLibreria2.png' />
+          <ActionBarImage uri='http://okoconnect.com/karim/images/icons/iconViajes.png'/>
         ),
       },
     },
@@ -35,7 +37,7 @@ const tabNavigator = createBottomTabNavigator(
       navigationOptions: {
         title: 'Meditar',
         tabBarIcon: ({focused}) => (
-          <ActionBarImage uri='http://okoconnect.com/karim/images/iconMeditar3.png' />
+          <ActionBarImage uri='http://okoconnect.com/karim/images/icons/iconMeditar.png'/>
         ),
       },
     },
@@ -44,7 +46,7 @@ const tabNavigator = createBottomTabNavigator(
       navigationOptions: {
         title: 'Audiolibros',
         tabBarIcon: ({focused}) => (
-          <ActionBarImage uri='http://okoconnect.com/karim/images/iconAudio.png' />
+          <ActionBarImage uri='http://okoconnect.com/karim/images/icons/iconLibros.png'/>
         ),
       },
     },
@@ -53,7 +55,7 @@ const tabNavigator = createBottomTabNavigator(
       navigationOptions: {
         title: 'Tu ángel',
         tabBarIcon: ({focused}) => (
-          <ActionBarImage uri='http://okoconnect.com/karim/images/iconAngel3.png' />
+          <ActionBarImage uri='http://okoconnect.com/karim/images/icons/iconAngel.png'/>
         ),
       },
     },

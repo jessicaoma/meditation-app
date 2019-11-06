@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
     marginLeft: 0,
     color: Colors.grey,
+    fontFamily: 'MyriadPro-Bold',
   },
   title_boxes: {
     color: '#494c6b',
