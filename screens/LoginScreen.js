@@ -59,8 +59,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     minHeight: 100,
     paddingTop: Dims.hugeSpace + Dims.hugeSpace + Dims.hugeSpace,
-    paddingLeft: 20,
-    paddingRight: 20,
   },
   welcomeTitle: {
     color: '#aba0b5',
@@ -107,5 +105,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    padding: 25,
   },
 });
