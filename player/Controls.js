@@ -35,16 +35,17 @@ export default function Controls(props) {
           />
         </TouchableOpacity>
         <Slider
-          style={styles.shadow,styles.flexy}
+          style={(styles.shadow, styles.flexy)}
           value={props.seekSliderPosition}
           onValueChange={props.onSliderValueChange}
           onSlidingComplete={props.onSlidingComplete}
           thumbTintColor={colors.white}
           disabled={props.isLoading}
           minimumTrackTintColor={colors.white}
-
         />
-        <Text style={[styles.shadow, {color: colors.white}]}>{props.currentTime}</Text>
+        <Text style={[styles.shadow, {color: colors.white}]}>
+          {props.currentTime}
+        </Text>
       </View>
     </>
   );
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   shadow: {
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,

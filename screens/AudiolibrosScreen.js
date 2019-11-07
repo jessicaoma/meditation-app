@@ -44,7 +44,6 @@ export default class AudiolibrosScreen extends Component {
             this._handleClick(item);
           }}
           title={item.title}
-          color={'#fff'}
           width={widthItem}
           height={widthItem}
         />
