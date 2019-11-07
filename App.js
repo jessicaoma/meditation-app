@@ -48,7 +48,7 @@ async function loadResourcesAsync() {
       // We include SpaceMono because we use it in HomeScreen.js. Feel free to
       // remove this if you are not using it in your app
       'MyriadPro-Bold': require('./assets/fonts/MyriadPro-bold.ttf'),
-      'MyriadPro-Semibold ': require('./assets/fonts/MyriadPro-semibold.ttf'),
+      'MyriadPro-Semibold': require('./assets/fonts/MyriadPro-semibold.ttf'),
       'MyriadPro-Regular': require('./assets/fonts/MyriadPro-regular.ttf'),
       'SFProText-Medium': require('./assets/fonts/SFProText-Medium.ttf'),
     }),
