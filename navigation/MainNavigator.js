@@ -17,7 +17,8 @@ const MainNavigator = createStackNavigator(
     defaultNavigationOptions: {
       headerBackTitle: null,
       headerTitleStyle: {
-        // #Editar aca va los estilos, si no te funciona se debera colocar esta propiedad en el navigationOptions de cada pantalla
+        color: '#030303',
+        fontFamily: 'MyriadPro-Semibold',
       },
     },
   },

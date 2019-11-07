@@ -35,17 +35,16 @@ export default function Controls(props) {
           />
         </TouchableOpacity>
         <Slider
-          style={{
-            flex: 1,
-          }}
+          style={styles.shadow,styles.flexy}
           value={props.seekSliderPosition}
           onValueChange={props.onSliderValueChange}
           onSlidingComplete={props.onSlidingComplete}
           thumbTintColor={colors.white}
           disabled={props.isLoading}
           minimumTrackTintColor={colors.white}
+
         />
-        <Text style={{color: colors.white}}>{props.currentTime}</Text>
+        <Text style={[styles.shadow, {color: colors.white}]}>{props.currentTime}</Text>
       </View>
     </>
   );
@@ -60,6 +59,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
+    backgroundColor: 'rgba(0, 0, 0, 0.35)',
+    padding: 5,
     //activar si quiere verificar la ubicación del componente
     //borderColor: '#F00',
     //borderWidth: 1,
@@ -75,14 +76,13 @@ const styles = StyleSheet.create({
     //borderColor: '#F0F',
     //borderWidth: 1,
   },
+  flexy: {
+    flex: 1,
+  },
   shadow: {
     shadowColor: 'black',
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.7,
     shadowRadius: 5,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
     shadowOffset: {
       width: 0,
       height: 1,
