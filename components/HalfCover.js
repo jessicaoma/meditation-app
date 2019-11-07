@@ -9,6 +9,7 @@ import Colors from '../constants/Colors';
  * @property {(event: any) => void} [onPress] Callback used when the component is Press
  * @property {string} [title] Title of the component
  * @property {number} width Componenet width, is a square
+ * @property {number} height Componenet height, is a rectangle
  */
 
 /**
@@ -16,8 +17,6 @@ import Colors from '../constants/Colors';
  * @param {Props} props Props sended to the component
  */
 const HalfCover = ({source, onPress, color, title, width, height}) => {
-  //calculo el ancho de la imagen dado el margen interno
-  let imageWidth = width - 10;
   return (
     <TouchableHighlight onPress={onPress}>
       <View style={[styles.halfCoverContainer, {width: width}]}>
@@ -26,8 +25,8 @@ const HalfCover = ({source, onPress, color, title, width, height}) => {
             styles.image,
             {
               backgroundColor: color || Colors.primary,
-              width: imageWidth,
-              height: height,
+              width: width - 10,
+              height: height - 10,
             },
           ]}
           source={source}
@@ -49,6 +48,15 @@ const styles = StyleSheet.create({
     margin: 5,
     resizeMode: 'contain',
     borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
   },
   title: {
     marginHorizontal: 5,
