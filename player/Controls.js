@@ -61,6 +61,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: 'rgba(0, 0, 0, 0.35)',
     padding: 5,
+    borderRadius: 15,
+    margin: 10,
     //activar si quiere verificar la ubicación del componente
     //borderColor: '#F00',
     //borderWidth: 1,
