@@ -80,12 +80,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   shadow: {
-    shadowColor: 'black',
-    shadowOpacity: 0.7,
-    shadowRadius: 5,
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 2,
     },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
 });
