@@ -1,15 +1,55 @@
 import React from 'react';
-import {Ionicons} from '@expo/vector-icons';
+import {StyleSheet, Image} from 'react-native';
 
-import Colors from '../constants/Colors';
+/**
+ * @typedef {Object} Props
+ * @property {string} name Name of the Tab Icon
+ * @property {boolean} [focused] Indicate that the icon selected
+ * @property {string} tintColor Color to used in the icon
+ */
 
-export default function TabBarIcon(props) {
+/**
+ * Tab Bar Icon Component
+ * @param {Props} props
+ */
+export default function TabBarIcon({name, focused, tintColor}) {
+  let source = null;
+  switch (name) {
+    case 'viajes':
+      source = require('../assets/images/iconsNavigations/iconViajes.png');
+      break;
+    case 'meditar':
+      source = require('../assets/images/iconsNavigations/iconMeditar.png');
+      break;
+    case 'audiolibros':
+      source = require('../assets/images/iconsNavigations/iconLibros.png');
+
+      break;
+    case 'angel':
+      source = require('../assets/images/iconsNavigations/iconAngel.png');
+      break;
+    default:
+      source = require('../assets/images/iconsNavigations/iconInicio.png');
+      break;
+  }
+
   return (
-    <Ionicons
-      name={props.name}
-      size={26}
-      style={{marginBottom: -3}}
-      color={props.focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+    <Image
+      source={source}
+      style={[
+        styles.icon,
+        {
+          tintColor: tintColor,
+        },
+      ]}
     />
   );
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 48,
+    height: 34,
+    opacity: 1,
+  },
+});

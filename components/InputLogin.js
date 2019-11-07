@@ -18,7 +18,7 @@ import Dims from '../constants/Dimensions';
 export default class InputLogin extends Component {
   state = {
     icon: 'eye',
-    password: false,
+    password: true,
   };
   _changeIcon = () => {
     this.setState(prevState => ({

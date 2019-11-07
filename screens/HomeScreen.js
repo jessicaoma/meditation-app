@@ -40,7 +40,6 @@ const dataViajesenprogreso = [
 export default class Home extends Component {
   static navigationOptions = {
     headerTitle: (
-      // eslint-disable-next-line react-native/no-inline-styles
       <Logo style={{width: 189, height: 47, resizeMode: 'contain'}} />
     ),
   };

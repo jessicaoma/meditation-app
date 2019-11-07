@@ -1,22 +1,14 @@
 import React, {Component} from 'react';
 import {Text, SectionList, StyleSheet, Image, View} from 'react-native';
 import Buttom from '../components/Buttom';
-import TabBarIcon from '../components/TabBarIcon';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Constants from 'expo-constants';
 import API from '../utils/API';
 import Cover from '../components/Cover';
-const iconMeditar = '..assets/images/iconsNavigations/iconMeditar.png';
-
 
 export default class MeditacionesScreen extends Component {
-  static navigationOptions = {
-    //header: null,
-    tabBarIcon: ({focused}) => (
-      <TabBarIcon focused={focused} name={'md-link'} uri={iconMeditar}/>
-    ),
-  };
+  static navigationOptions = {};
   constructor(props) {
     super(props);
     this.state = {
@@ -79,7 +71,6 @@ export default class MeditacionesScreen extends Component {
 
 const styles = StyleSheet.create({
   statusBar: {
-    //height: StatusBar.currentHeight,
     height: Constants.statusBarHeight,
   },
   container: {

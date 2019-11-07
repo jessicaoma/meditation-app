@@ -3,8 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
-  Image,
   TouchableOpacity,
   TouchableHighlight,
   StatusBar,
@@ -23,8 +21,8 @@ export default class LoginScreen extends Component {
     return (
       <>
         <StatusBar barStyle="dark-content" />
-        <SafeAreaView style={styles.container}>
-          <Image source={require('../assets/images/logo2.png')} style={styles.logo} />
+        <View style={styles.container}>
+          <Logo isAlternative style={styles.logo} />
           <Text style={styles.welcomeTitle}>BIENVENIDO</Text>
           <View style={styles.full}>
             <InputLogin placeholder="Correo" type="text" />
@@ -45,7 +43,7 @@ export default class LoginScreen extends Component {
           </View>
           <View />
           <View />
-        </SafeAreaView>
+        </View>
       </>
     );
   }

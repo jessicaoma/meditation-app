@@ -7,12 +7,18 @@ import BottomNavigator from './BottomNavigator';
 const MainNavigator = createStackNavigator(
   {
     Main: {screen: BottomNavigator, navigationOptions: {header: null}},
-    Meditacion: MeditacionScreen,
-    Audiolibro: AudiolibroScreen,
+    Meditacion: {
+      screen: MeditacionScreen,
+      navigationOptions: {},
+    },
+    Audiolibro: {screen: AudiolibroScreen, navigationOptions: {}},
   },
   {
     defaultNavigationOptions: {
       headerBackTitle: null,
+      headerTitleStyle: {
+        // #Editar aca va los estilos, si no te funciona se debera colocar esta propiedad en el navigationOptions de cada pantalla
+      },
     },
   },
 );

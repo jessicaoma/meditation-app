@@ -1,11 +1,8 @@
-import React from 'react';
 import {createStackNavigator} from 'react-navigation';
 import Categorias from '../screens/CategoriasScreen';
 import Categoria from '../screens/CategoriaScreen';
 import ViajeScreen from '../screens/ViajeScreen';
 import PasoScreen from '../screens/PasoScreen';
-
-import TabBarIcon from '../components/TabBarIcon';
 
 const ViajesNavigator = createStackNavigator(
   {
@@ -16,11 +13,7 @@ const ViajesNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'Categorias',
-    navigationOptions: {
-      tabBarIcon: ({focused}) => (
-        <TabBarIcon focused={focused} name={'md-link'} />
-      ),
-    },
+    navigationOptions: {},
   },
 );
 

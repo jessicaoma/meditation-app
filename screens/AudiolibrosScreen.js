@@ -4,7 +4,6 @@ import HalfCover from '../components/HalfCover';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import API from '../utils/API';
-import ActionBarImage from '../navigation/ActionBarImage';
 
 const numColumns = 2;
 //Estoy restando los margenes laterales (16 + 16), y eso lo divido entre las columnas.
@@ -13,14 +12,7 @@ const widthItem = (Dimensions.window.width - Dimensions.hugeSpace) / numColumns;
 //Para la separación entre los elementos de una fila, debe hacerse manual.
 
 export default class AudiolibrosScreen extends Component {
-  
-  static navigationOptions = {
-    //title: 'AudioLibros',
-    //header: null,
-    tabBarIcon: ({focused}) => (
-      <ActionBarImage uri='http://okoconnect.com/karim/images/icons/iconLibros.png' style={{opacity: 1}} />
-    ),
-  };
+  static navigationOptions = {};
 
   constructor(props) {
     super(props);

@@ -34,6 +34,7 @@ async function loadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
       require('./assets/images/logo.png'),
+      require('./assets/images/logo2.png'),
       require('./assets/images/splash-bg.png'),
       require('./assets/images/iconsNavigations/iconInicio.png'),
       require('./assets/images/iconsNavigations/iconViajes.png'),

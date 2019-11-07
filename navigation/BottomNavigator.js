@@ -8,18 +8,17 @@ import MeditacionesScreen from '../screens/MeditacionesScreen';
 import ViajesNavigator from './ViajesNavigator';
 import Colors from '../constants/Colors';
 import AngelNavigator from './AngelNavigator';
-import ActionBarImage from './ActionBarImage';
 
-const tabNavigator = createBottomTabNavigator(
+const homeStack = createStackNavigator({Home: HomeScreen});
+
+const BottomNavigator = createBottomTabNavigator(
   {
     Home: {
-      screen: HomeScreen,
+      screen: homeStack,
       navigationOptions: {
         title: 'Inicio',
-        tabBarIcon: ({focused}) => (
-          <ActionBarImage
-            uri='http://okoconnect.com/karim/images/icons/iconInicio.png' 
-            />
+        tabBarIcon: ({focused, horizontal, tintColor}) => (
+          <TabBarIcon name={'inicio'} tintColor={tintColor} />
         ),
       },
     },
@@ -27,8 +26,8 @@ const tabNavigator = createBottomTabNavigator(
       screen: ViajesNavigator,
       navigationOptions: {
         title: 'Viajes',
-        tabBarIcon: () => (
-          <ActionBarImage uri='http://okoconnect.com/karim/images/icons/iconViajes.png'/>
+        tabBarIcon: ({focused, horizontal, tintColor}) => (
+          <TabBarIcon name={'viajes'} tintColor={tintColor} />
         ),
       },
     },
@@ -36,8 +35,8 @@ const tabNavigator = createBottomTabNavigator(
       screen: MeditacionesScreen,
       navigationOptions: {
         title: 'Meditar',
-        tabBarIcon: ({focused}) => (
-          <ActionBarImage uri='http://okoconnect.com/karim/images/icons/iconMeditar.png'/>
+        tabBarIcon: ({focused, horizontal, tintColor}) => (
+          <TabBarIcon name={'meditar'} tintColor={tintColor} />
         ),
       },
     },
@@ -45,8 +44,8 @@ const tabNavigator = createBottomTabNavigator(
       screen: AudiolibrosScreen,
       navigationOptions: {
         title: 'Audiolibros',
-        tabBarIcon: ({focused}) => (
-          <ActionBarImage uri='http://okoconnect.com/karim/images/icons/iconLibros.png'/>
+        tabBarIcon: ({focused, horizontal, tintColor}) => (
+          <TabBarIcon name={'audiolibros'} tintColor={tintColor} />
         ),
       },
     },
@@ -54,18 +53,22 @@ const tabNavigator = createBottomTabNavigator(
       screen: AngelNavigator,
       navigationOptions: {
         title: 'Tu ángel',
-        tabBarIcon: ({focused}) => (
-          <ActionBarImage uri='http://okoconnect.com/karim/images/icons/iconAngel.png'/>
+        tabBarIcon: ({focused, horizontal, tintColor}) => (
+          <TabBarIcon name={'angel'} tintColor={tintColor} />
         ),
       },
     },
   },
   {
     tabBarOptions: {
-      activeTintColor: Colors.primaryDark,
+      activeTintColor: Colors.tabIconSelected,
+      inactiveTintColor: Colors.tabIconDefault,
+      labelStyle:{
+        // #Editar aca va los estilos, si no te funciona se debera usar tabBarLabel que debe regresar un React.Node y estar la altura de tabBarIcon.
+      }
     },
     initialRouteName: 'Home',
   },
 );
 
-export default tabNavigator;
+export default BottomNavigator;

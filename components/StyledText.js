@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import { Text } from 'react-native';
+import React from 'react';
+import {Text} from 'react-native';
 
-export function MonoText(props) {
+export function StyledText(props) {
   return (
-    <Text {...props} style={[props.style, { fontFamily: 'MyriadPro-Regular' }]} />
+    <Text {...props} style={[props.style, {fontFamily: 'MyriadPro-Regular'}]} />
   );
 }

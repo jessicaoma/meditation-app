@@ -9,7 +9,6 @@
  * @property {string} backgroundSplash Color on Splash screen
  * @property {string} tabIconDefault Color of a tab icon when is not select
  * @property {string} tabIconSelected Color of a tab icon when is selected
- * @property {string} tabBar Color background of the bottom bar,
  * @property {string} white Color that represent White
  */
 
@@ -23,9 +22,8 @@ const colors = {
   grey: '#665e61',
   borderWhite: '#e3e3e3',
   backgroundSplash: '#e6e9f4',
-  tabIconDefault: '#ccc',
-  tabIconSelected: '#7883a4',
-  tabBar: '#fefefe',
+  tabIconDefault: '#aeafbe',
+  tabIconSelected: '#515471',
   white: 'rgb(252, 253, 255)',
 };
 export default colors;
