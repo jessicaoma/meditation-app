@@ -15,7 +15,7 @@ import Colors from '../constants/Colors';
  * A image half cover
  * @param {Props} props Props sended to the component
  */
-const HalfCover = ({source, onPress, color, title, width}) => {
+const HalfCover = ({source, onPress, color, title, width, height}) => {
   //calculo el ancho de la imagen dado el margen interno
   let imageWidth = width - 10;
   return (
@@ -27,7 +27,7 @@ const HalfCover = ({source, onPress, color, title, width}) => {
             {
               backgroundColor: color || Colors.primary,
               width: imageWidth,
-              height: imageWidth,
+              height: height,
             },
           ]}
           source={source}
