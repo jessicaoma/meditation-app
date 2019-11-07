@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {Text, SectionList, StyleSheet, Image, View} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
@@ -12,13 +19,15 @@ export default class MeditacionesScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      meditaciones: [{title: 'Meditaciones', data: []}],
+      meditaciones: [],
+      isLoading: true,
     };
   }
   async componentDidMount() {
     const data = await API.getMeditaciones();
     this.setState({
-      meditaciones: [{title: 'Meditaciones', data}],
+      meditaciones: data,
+      isLoading: false,
     });
 
     //console.log(this.state.meditaciones[0]);
@@ -29,9 +38,10 @@ export default class MeditacionesScreen extends Component {
       meditacion: item,
     });
   };
-  _renderItem = ({item}) => {
+  _renderItem = item => {
     return (
       <Buttom
+        key={item.id}
         style={{backgroundColor: item.color || Colors.primaryDark}}
         onPress={() => {
           this._handleClick(item);
@@ -42,29 +52,27 @@ export default class MeditacionesScreen extends Component {
     );
   };
 
-  _renderHeader = ({section: {title}}) => (
-    <View>
-      <Text style={styles.sectionTitle}>{title}</Text>
-      <Cover
-        source={{
-          uri: 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
-        }}
-      />
-    </View>
-  );
   _renderEmtpy = () => <Text>No hay Meditaciones :(</Text>;
 
   render = () => (
     <>
       <View style={styles.statusBar} />
-      <SectionList
-        style={styles.container}
-        sections={this.state.meditaciones}
-        renderItem={this._renderItem}
-        ListEmptyComponent={this._renderEmtpy}
-        renderSectionHeader={this._renderHeader}
-        keyExtractor={item => item.id}
-      />
+      <ScrollView style={styles.container}>
+        <View>
+          <Text style={styles.sectionTitle}>Meditaciones</Text>
+          <Cover
+            source={{
+              uri:
+                'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
+            }}
+          />
+        </View>
+        {this.state.isLoading ? (
+          <ActivityIndicator size="large" color={Colors.primaryDark} />
+        ) : (
+          this.state.meditaciones.map(this._renderItem)
+        )}
+      </ScrollView>
     </>
   );
 }
@@ -98,5 +106,7 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: 'cover',
     width: 94,
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
   },
 });
