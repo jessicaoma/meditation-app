@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import ScreenBg from '../components/ScreenBg';
 import Player from '../player/Player';
 
-//const src = 'http://okoconnect.com/karim/images/meditar2-full.png';
-
 export default class MeditacionScreen extends Component {
   static navigationOptions = ({navigation}) => {
     let meditacion = navigation.getParam('meditacion', {title: 'Meditación'});
@@ -17,7 +15,8 @@ export default class MeditacionScreen extends Component {
       <>
         <ScreenBg
           source={{uri: meditacion.backgroundImage}}
-          color={meditacion.color}>
+          color={meditacion.color}
+          resizeMode={'cover'}>
           <Player
             source={{
               uri: meditacion.media,

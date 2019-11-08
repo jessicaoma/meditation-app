@@ -15,7 +15,8 @@ export default class AudiolibroScreen extends Component {
       <>
         <ScreenBg
           source={{uri: audiolibro.backgroundImage}}
-          color={audiolibro.color}>
+          color={audiolibro.color}
+          resizeMode={'contain'}>
           <Player
             source={{
               uri: audiolibro.media,
