@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, FlatList, StatusBar} from 'react-native';
+import {Text, StyleSheet, View, FlatList} from 'react-native';
 import HalfCover from '../components/HalfCover';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
+import Constants from 'expo-constants';
 import API from '../utils/API';
 
 const numColumns = 2;
@@ -75,7 +76,7 @@ export default class AudiolibrosScreen extends Component {
 
 const styles = StyleSheet.create({
   statusBar: {
-    height: StatusBar.currentHeight,
+    height: Constants.statusBarHeight,
   },
   container: {
     flex: 1,
