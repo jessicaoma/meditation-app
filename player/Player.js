@@ -66,7 +66,7 @@ export default class Player extends Component {
     };
 
     if (this.props.isVideo) {
-      console.log(this._onPlaybackStatusUpdate);
+      //console.log(this._onPlaybackStatusUpdate);
       await this._video.loadAsync(source, initialStatus);
       // this._video.onPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
       this.playbackInstance = this._video;
@@ -121,7 +121,7 @@ export default class Player extends Component {
 
   //Callback cuando se comienza a mover el slider
   _onSeekSliderValueChange = value => {
-    console.log('change');
+    //console.log('change');
     if (this.playbackInstance != null && !this.isSeeking) {
       this.isSeeking = true;
       this.shouldPlayAtEndOfSeek = this.state.shouldPlay;
@@ -131,7 +131,7 @@ export default class Player extends Component {
 
   //Callback cuando se termina de mover el slider
   _onSeekSliderSlidingComplete = async value => {
-    console.log('complete');
+    //console.log('complete');
     if (this.playbackInstance != null) {
       this.isSeeking = false;
       const seekPosition = value * this.state.playbackInstanceDuration;
@@ -200,6 +200,7 @@ export default class Player extends Component {
           <ScreenView
             refVideo={this._refVideo}
             onPlaybackStatusUpdate={this._onPlaybackStatusUpdate}
+            styleVideo={this.props.styleVideo}
           />
           <Controls
             isPlaying={this.state.isPlaying}

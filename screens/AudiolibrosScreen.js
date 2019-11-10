@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, FlatList} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import HalfCover from '../components/HalfCover';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
@@ -52,7 +58,9 @@ export default class AudiolibrosScreen extends Component {
     );
   };
 
-  _renderEmtpy = () => <Text>No hay Audiolibros disponibles :(</Text>;
+  _renderEmtpy = () => (
+    <ActivityIndicator size="large" color={Colors.primaryDark} />
+  ); //<Text>No hay Audiolibros disponibles :(</Text>;
 
   render() {
     return (

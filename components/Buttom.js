@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     maxWidth: 'auto',
     minHeight: 75,
-    minWidth: 300,
     justifyContent: 'space-between',
     marginBottom: 22,
     paddingRight: 0,

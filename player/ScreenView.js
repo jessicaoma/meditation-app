@@ -6,6 +6,7 @@ import {Video} from 'expo-av';
  * @typedef {Object} Props Properties of the component
  * @property {(ref: any) => void} refVideo Callback to get the video player reference
  * @property {(status: any) => void} onPlaybackStatusUpdate Callback on the status updates
+ * @property {import('react-native').ViewStyle} [styleVideo] Extra Style to the player
  */
 
 /**
@@ -16,7 +17,7 @@ export default function ScreenView(props) {
   return (
     <View style={styles.videoContainer}>
       <Video
-        style={styles.player}
+        style={[styles.player, props.styleVideo]}
         ref={props.refVideo}
         resizeMode={Video.RESIZE_MODE_STRETCH}
         onPlaybackStatusUpdate={props.onPlaybackStatusUpdate}

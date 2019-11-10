@@ -12,7 +12,8 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Constants from 'expo-constants';
 import API from '../utils/API';
-import Cover from '../components/Cover';
+import ScreenBg from '../components/ScreenBg';
+import Player from '../player/Player';
 
 export default class MeditacionesScreen extends Component {
   static navigationOptions = {};
@@ -21,6 +22,7 @@ export default class MeditacionesScreen extends Component {
     this.state = {
       meditaciones: [],
       isLoading: true,
+      //heightCover: 210,
     };
   }
   async componentDidMount() {
@@ -38,6 +40,7 @@ export default class MeditacionesScreen extends Component {
       meditacion: item,
     });
   };
+
   _renderItem = item => {
     return (
       <Buttom
@@ -52,7 +55,11 @@ export default class MeditacionesScreen extends Component {
     );
   };
 
-  _renderEmtpy = () => <Text>No hay Meditaciones :(</Text>;
+  /*_handleLoad = event => {
+    const {height} = event.nativeEvent.source;
+    this.setState({heightCover: height});
+    //console.log(height);
+  };*/
 
   render = () => (
     <>
@@ -60,12 +67,26 @@ export default class MeditacionesScreen extends Component {
       <ScrollView style={styles.container}>
         <View>
           <Text style={styles.sectionTitle}>Meditaciones</Text>
-          <Cover
+          <ScreenBg
             source={{
               uri:
                 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
             }}
-          />
+            styleView={[
+              styles.containBG,
+              {
+                height: 210,
+              },
+            ]}
+            styleImage={styles.imageBG}>
+            <Player
+              source={{
+                uri: 'http://okoconnect.com/karim/videos/video2.mp4',
+              }}
+              isVideo={true}
+              styleVideo={styles.video}
+            />
+          </ScreenBg>
         </View>
         {this.state.isLoading ? (
           <ActivityIndicator size="large" color={Colors.primaryDark} />
@@ -108,5 +129,16 @@ const styles = StyleSheet.create({
     width: 94,
     borderTopRightRadius: 20,
     borderBottomRightRadius: 20,
+  },
+  containBG: {
+    borderRadius: 20,
+    marginBottom: Dims.bigSpace,
+  },
+  imageBG: {
+    resizeMode: 'cover',
+    borderRadius: 20,
+  },
+  video: {
+    borderRadius: 20,
   },
 });

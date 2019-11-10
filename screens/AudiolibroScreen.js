@@ -16,20 +16,13 @@ export default class AudiolibroScreen extends Component {
         <ScreenBg
           source={{uri: audiolibro.backgroundImage}}
           color={audiolibro.color}
-          resizeMode={'contain'}>
+          styleImage={{resizeMode: 'contain'}}>
           <Player
             source={{
               uri: audiolibro.media,
             }}
             isVideo={false}
           />
-          {/* <Player
-            source={{
-              uri:
-                'https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4',
-            }}
-            isVideo={true}
-          /> */}
         </ScreenBg>
       </>
     );

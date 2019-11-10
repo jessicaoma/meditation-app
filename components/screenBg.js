@@ -6,28 +6,31 @@ import Colors from '../constants/Colors';
  * @typedef {Object} Props Properties of the component
  * @property {string} [color] Backgroud color for the image, default value Colors.primary
  * @property {import('react-native').ImageSourcePropType} source Source of the image to render
- * @property {string} resizeMode Determines how to resize the image
  * @property {any} [children] Children component that has is own render
+ * @property {any} [styleView] Extra style to the View compoenet
+ * @property {any} styleImage Extra style to the Image componet
+ * @property {(event: import('react-native').NativeSyntheticEvent) => void} [onLoad] Invoked when load image completes successfully
  */
 
 /**
  * Layout for screen that requiere a background image
  * @param {Props} props Props sended to the component
  */
-const ScreenBg = ({source, color, resizeMode, children}) => {
+const ScreenBg = ({source, color, styleView, styleImage, children, onLoad}) => {
   return (
-    <View>
+    <View style={[styles.container, styleView]}>
       <Image
         source={source}
         style={[
           StyleSheet.absoluteFill,
           {
-            resizeMode: resizeMode,
             backgroundColor: color || Colors.primary,
           },
+          styleImage,
         ]}
+        onLoad={onLoad}
       />
-      <View style={styles.container}>{children}</View>
+      <View>children}</View>
     </View>
   );
 };
@@ -35,7 +38,7 @@ const ScreenBg = ({source, color, resizeMode, children}) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: '100%',
+    //height: '100%',
   },
 });
 
