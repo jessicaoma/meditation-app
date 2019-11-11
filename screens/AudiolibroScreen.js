@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ScreenBg from '../components/ScreenBg';
+import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 
 export default class AudiolibroScreen extends Component {

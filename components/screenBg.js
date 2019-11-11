@@ -30,7 +30,7 @@ const ScreenBg = ({source, color, styleView, styleImage, children, onLoad}) => {
         ]}
         onLoad={onLoad}
       />
-      <View>children}</View>
+      <View>{children}</View>
     </View>
   );
 };

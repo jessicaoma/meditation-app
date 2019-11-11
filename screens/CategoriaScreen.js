@@ -3,7 +3,7 @@ import {StyleSheet, FlatList} from 'react-native';
 import ItemBubble from '../components/ItemBubble';
 import Cover from '../components/Cover';
 import Colors from '../constants/Colors';
-import ScreenBg from '../components/ScreenBg';
+import ScreenBg from '../components/screenBg';
 
 var categoria = {};
 
