@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
+import Constants from 'expo-constants';
+import Dims from '../constants/Dimensions';
 
 const data = [
   {
@@ -67,8 +69,8 @@ export default class AngelCartasScreen extends Component {
           source={{uri: item.uri}}
           onPress={this._handleClick}
           color={'transparent'}
-          width={Dimensions.get('window').width / numColumns}
-          height={Dimensions.get('window').height / numColumns}
+          width={(Dimensions.get('window').width / numColumns) - (Dims.smallSpace)}
+          height={(Dimensions.get('window').height / numColumns) - 100}
         />
       </View>
     );
@@ -78,13 +80,15 @@ export default class AngelCartasScreen extends Component {
     return (
       <>
         <View style={styles.statusBar} />
-        <Text style={styles.sectionTitle}>Tu Ángel del día</Text>
-        <FlatList
-          data={formatData(data, numColumns)}
-          style={styles.container}
-          renderItem={this.renderItem}
-          numColumns={numColumns}
-        />
+        <View style={styles.container}>
+          <Text style={styles.sectionTitle}>Tu Ángel del día</Text>
+          <FlatList
+            data={formatData(data, numColumns)}
+            renderItem={this.renderItem}
+            numColumns={numColumns}
+          />
+          <Text style={styles.suggestion}>Elige una carta para descubrir</Text>
+        </View>
       </>
     );
   }
@@ -92,17 +96,18 @@ export default class AngelCartasScreen extends Component {
 
 const styles = StyleSheet.create({
   statusBar: {
-    height: StatusBar.currentHeight,
+    height: Constants.statusBarHeight,
   },
   container: {
     flex: 1,
+    paddingHorizontal: Dims.regularSpace,
   },
   item: {
     alignItems: 'flex-start',
     justifyContent: 'center',
     flex: 1,
     margin: 1,
-    height: Dimensions.get('window').width - 80,
+    height: Dims.width - 280,
   },
   itemInvisible: {
     backgroundColor: 'transparent',
@@ -111,11 +116,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     letterSpacing: 1.11,
     lineHeight: 36,
-    marginTop: Dimensions.regularSpace,
+    marginTop: Dims.regularSpace,
     marginRight: 0,
-    marginBottom: 0,
+    marginBottom: 3,
     marginLeft: 0,
     color: Colors.grey,
     fontFamily: 'MyriadPro-Bold',
+  },
+  suggestion: {
+    fontFamily: 'MyriadPro-Regular',
+    fontSize: 16,
+    lineHeight: 28,
+    textAlign: 'center',
+    color: '#665e61'
   },
 });
