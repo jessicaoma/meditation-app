@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   buttonLabel: {
     color: 'white',
-    fontSize: 18,
+    fontSize: Dims.window.width * 0.048,
     fontWeight: 'bold',
     textAlign: 'center',
     letterSpacing: 1.5,
