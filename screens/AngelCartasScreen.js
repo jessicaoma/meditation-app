@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  StyleSheet,
-  View,
-  FlatList,
-  Dimensions,
-  StatusBar,
-} from 'react-native';
+import {Text, StyleSheet, View, FlatList, Dimensions} from 'react-native';
 import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Constants from 'expo-constants';
@@ -69,8 +62,8 @@ export default class AngelCartasScreen extends Component {
           source={{uri: item.uri}}
           onPress={this._handleClick}
           color={'transparent'}
-          width={(Dimensions.get('window').width / numColumns) - (Dims.smallSpace)}
-          height={(Dimensions.get('window').height / numColumns) - 100}
+          width={Dimensions.get('window').width / numColumns - Dims.smallSpace}
+          height={Dimensions.get('window').height / numColumns - 100}
         />
       </View>
     );
@@ -107,7 +100,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     margin: 1,
-    height: Dims.width - 280,
+    height: Dims.window.width - 280,
   },
   itemInvisible: {
     backgroundColor: 'transparent',
@@ -128,6 +121,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 28,
     textAlign: 'center',
-    color: '#665e61'
+    color: '#665e61',
   },
 });

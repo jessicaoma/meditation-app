@@ -1,58 +1,63 @@
-import React, { Component } from 'react'
-import { Animated, View, StyleSheet, Image, Dimensions, ScrollView, Text, ImageBackground } from 'react-native'
+import React, {Component} from 'react';
+import {
+  Animated,
+  View,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  Text,
+  ImageBackground,
+} from 'react-native';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 
-
-const deviceWidth = Dimensions.get('window').width - Dims.regularSpace - 16
-const deviceHeight = (deviceWidth * 1.5) + 16
-const FIXED_BAR_WIDTH = 40
-const BAR_SPACE = 8
+const deviceWidth = Dimensions.get('window').width - Dims.regularSpace - 16;
+const deviceHeight = deviceWidth * 1.5 + 16;
+const FIXED_BAR_WIDTH = 40;
+const BAR_SPACE = 8;
 
 const images = [
   {
     image: 'http://okoconnect.com/karim/images/angel1.png',
-    text:  ''
+    text: '',
   },
   {
     image: 'http://okoconnect.com/karim/images/angelreve1-vacio.png',
-    text:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua'
-  }
-]
+    text:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+  },
+];
 
 export default class AngelScreen extends Component {
- 
-  numItems = images.length
-  itemWidth = (FIXED_BAR_WIDTH / this.numItems) - ((this.numItems - 1) * BAR_SPACE)
-  animVal = new Animated.Value(0)
+  numItems = images.length;
+  itemWidth = FIXED_BAR_WIDTH / this.numItems - (this.numItems - 1) * BAR_SPACE;
+  animVal = new Animated.Value(0);
 
   static navigationOptions = {
     title: 'Tu ángel',
   };
-  
+
   render() {
-    let imageArray = []
-    let barArray = []
+    let imageArray = [];
+    let barArray = [];
     images.forEach((item, i) => {
       const thisImage = (
         <ImageBackground
           key={`image${i}`}
           source={{uri: item.image}}
-          style={[styles.sliderImage]}
-        >
+          style={[styles.sliderImage]}>
           <View style={styles.topBox}>
-              <Text style={styles.headline}>{item.text}</Text>
-
+            <Text style={styles.headline}>{item.text}</Text>
           </View>
         </ImageBackground>
-      )
-      imageArray.push(thisImage)
+      );
+      imageArray.push(thisImage);
 
       const scrollBarVal = this.animVal.interpolate({
         inputRange: [deviceWidth * (i - 1), deviceWidth * (i + 1)],
         outputRange: [-this.itemWidth, this.itemWidth],
         extrapolate: 'clamp',
-      })
+      });
 
       const thisBar = (
         <View
@@ -63,57 +68,42 @@ export default class AngelScreen extends Component {
               width: this.itemWidth,
               marginLeft: i === 0 ? 0 : BAR_SPACE,
             },
-          ]}
-        >
+          ]}>
           <Animated.View
-
             style={[
               styles.bar,
               {
                 width: this.itemWidth,
-                transform: [
-                  { translateX: scrollBarVal },
-                ],
+                transform: [{translateX: scrollBarVal}],
               },
             ]}
           />
         </View>
-      )
-      barArray.push(thisBar)
-    })
+      );
+      barArray.push(thisBar);
+    });
 
     return (
       <>
-      <View style={styles.statusBar} />
-      <View
-        style={[styles.container]}
-        flex={1}
-      >
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={10}
-          pagingEnabled
-          onScroll={
-            Animated.event(
-              [{ nativeEvent: { contentOffset: { x: this.animVal } } }]
-            )
-          }
-          style={styles.slider}
-        >
-          {imageArray}
-        </ScrollView>
-        <View
-          style={styles.barContainer}
-        >
-          {barArray}
+        <View style={styles.statusBar} />
+        <View style={[styles.container]}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            scrollEventThrottle={10}
+            pagingEnabled
+            onScroll={Animated.event([
+              {nativeEvent: {contentOffset: {x: this.animVal}}},
+            ])}
+            style={styles.slider}>
+            {imageArray}
+          </ScrollView>
+          <View style={styles.barContainer}>{barArray}</View>
         </View>
-      </View>
       </>
-    )
+    );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -135,7 +125,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     left: '50%',
-    translateX: '-50%',
+    //requiere un valor numerico
+    //transform: [{translateX: '-50%'}],
+    //translateX: '-50%',
   },
   track: {
     backgroundColor: '#ccc',
@@ -166,5 +158,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 60,
-  }
-})
+  },
+});
