@@ -91,14 +91,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dimensions.regularSpace,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 17,
     letterSpacing: 1.11,
     lineHeight: 36,
     marginTop: Dimensions.regularSpace,
     marginRight: 0,
     marginBottom: 3,
     marginLeft: 0,
-    color: Colors.grey,
+    color: Colors.gray,
     fontFamily: 'MyriadPro-Bold',
   },
   item: {

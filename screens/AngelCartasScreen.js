@@ -106,14 +106,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 17,
     letterSpacing: 1.11,
     lineHeight: 36,
     marginTop: Dims.regularSpace,
     marginRight: 0,
     marginBottom: 3,
     marginLeft: 0,
-    color: Colors.grey,
+    color: Colors.gray,
     fontFamily: 'MyriadPro-Bold',
   },
   suggestion: {

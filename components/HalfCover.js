@@ -42,13 +42,6 @@ const styles = StyleSheet.create({
     //flex: 1,
     //flexDirection: 'row',
   },
-  title: {
-    marginHorizontal: 5,
-    color: Colors.grey,
-    fontSize: 16,
-    lineHeight: 28,
-    flexWrap: 'wrap',
-  },
   button: {
     margin: 5,
     borderRadius: 10,
@@ -60,5 +53,13 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
+  },
+  title: {
+    marginHorizontal: 5,
+    color: Colors.gray,
+    fontSize: 16,
+    lineHeight: 20,
+    textAlign: 'center',
+    flexWrap: 'wrap',
   },
 });

@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   bar: {
-    backgroundColor: Colors.grey,
+    backgroundColor: Colors.gray,
     height: 5,
     position: 'absolute',
     left: 0,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 33,
     textAlign: 'center',
-    color: Colors.grey,
+    color: Colors.gray,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 60,

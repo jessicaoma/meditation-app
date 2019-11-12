@@ -29,21 +29,24 @@ export default function Controls(props) {
         <TouchableOpacity onPress={props.onPress} disabled={props.isLoading}>
           <Ionicons
             name={props.isPlaying ? ICON_PAUSE_BUTTON : ICON_PLAY_BUTTON}
-            size={35}
+            size={30}
             color={colors.white}
-            style={styles.shadow}
+            style={(styles.shadow, styles.playbuttons)}
           />
         </TouchableOpacity>
         <Slider
-          style={(styles.shadow, styles.flexy)}
+          style={(styles.shadow, styles.slider)}
           value={props.seekSliderPosition}
           onValueChange={props.onSliderValueChange}
           onSlidingComplete={props.onSlidingComplete}
-          thumbTintColor={colors.white}
+          thumbTintColor={colors.gray}
+          thumbStyle={styles.thumb}
+          trackStyle={styles.thumb}
           disabled={props.isLoading}
           minimumTrackTintColor={colors.white}
         />
-        <Text style={[styles.shadow, {color: colors.white}]}>
+        <Text
+          style={[styles.shadow, styles.currenttime, {color: colors.white}]}>
           {props.currentTime}
         </Text>
       </View>
@@ -59,11 +62,12 @@ const styles = StyleSheet.create({
     bottom: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
     backgroundColor: 'rgba(0, 0, 0, 0.35)',
-    padding: 5,
+    paddingVertical: 15,
+    paddingHorizontal: 25,
     borderRadius: 15,
-    margin: 10,
+    marginHorizontal: 20,
+    marginBottom: 30,
     //activar si quiere verificar la ubicación del componente
     //borderColor: '#F00',
     //borderWidth: 1,
@@ -79,7 +83,21 @@ const styles = StyleSheet.create({
     //borderColor: '#F0F',
     //borderWidth: 1,
   },
-  flexy: {
+  thumb: {
+    width: 5,
+    height: 5,
+    backgroundColor: 'red',
+  },
+  playbuttons: {
+    marginRight: 15,
+    flex: 1,
+    paddingVertical: 10,
+  },
+  currenttime: {
+    marginLeft: 15,
+    fontSize: 12,
+  },
+  slider: {
     flex: 1,
   },
   shadow: {

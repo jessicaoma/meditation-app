@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     lineHeight: 56,
     fontSize: 16,
     letterSpacing: 0.89,
-    color: Colors.grey,
+    color: Colors.gray,
   },
   fondoV: {
     //marginBottom: Dims.bigSpace,

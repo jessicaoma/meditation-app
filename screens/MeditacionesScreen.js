@@ -22,7 +22,6 @@ export default class MeditacionesScreen extends Component {
     this.state = {
       meditaciones: [],
       isLoading: true,
-      //heightCover: 210,
     };
   }
   async componentDidMount() {
@@ -31,8 +30,6 @@ export default class MeditacionesScreen extends Component {
       meditaciones: data,
       isLoading: false,
     });
-
-    //console.log(this.state.meditaciones[0]);
   }
 
   _handleClick = item => {
@@ -45,7 +42,10 @@ export default class MeditacionesScreen extends Component {
     return (
       <Buttom
         key={item.id}
-        style={{backgroundColor: item.color || Colors.primaryDark}}
+        style={[
+          styles.button,
+          {backgroundColor: item.color || Colors.primaryDark},
+        ]}
         onPress={() => {
           this._handleClick(item);
         }}>
@@ -54,12 +54,6 @@ export default class MeditacionesScreen extends Component {
       </Buttom>
     );
   };
-
-  /*_handleLoad = event => {
-    const {height} = event.nativeEvent.source;
-    this.setState({heightCover: height});
-    //console.log(height);
-  };*/
 
   render = () => (
     <>
@@ -104,6 +98,10 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: Dims.regularSpace,
+    flex: 1,
+  },
+  button: {
+    paddingRight: 0,
   },
   sectionTitle: {
     fontSize: 20,
@@ -113,22 +111,22 @@ const styles = StyleSheet.create({
     marginRight: 0,
     marginBottom: 3,
     marginLeft: 0,
-    color: Colors.grey,
+    color: Colors.gray,
     fontFamily: 'MyriadPro-Bold',
   },
   title_boxes: {
     color: 'white',
-    fontSize: 15.5,
-    letterSpacing: 0.99,
+    fontSize: Dims.window.width * 0.038,
+    letterSpacing: 0.055,
     lineHeight: 25,
     textTransform: 'uppercase',
     alignSelf: 'center',
   },
   image: {
     resizeMode: 'cover',
-    width: 94,
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
+    width: 92,
+    borderTopRightRadius: 50,
+    borderBottomRightRadius: 50,
   },
   containBG: {
     borderRadius: 20,

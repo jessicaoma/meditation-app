@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     marginRight: 0,
     marginBottom: 3,
     marginLeft: 0,
-    color: Colors.grey,
+    color: Colors.gray,
     fontFamily: 'MyriadPro-Bold',
   },
   title_boxes: {

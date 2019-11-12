@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   inputText: {
     width: '100%',
-    color: Colors.grey,
+    color: Colors.gray,
     fontSize: 16,
     fontWeight: '400',
     letterSpacing: 1,
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   },
   inputPassword: {
     width: '96%',
-    color: Colors.grey,
+    color: Colors.gray,
     fontSize: 16,
     fontWeight: '400',
     letterSpacing: 1,
