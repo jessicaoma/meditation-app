@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     color: Colors.grey,
     fontSize: 16,
-    lineHeight: 28,
+    lineHeight: 20,
+    textAlign: 'center',
     flexWrap: 'wrap',
   },
 });

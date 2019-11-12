@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 17,
     letterSpacing: 1.11,
     lineHeight: 36,
     marginTop: Dims.regularSpace,
