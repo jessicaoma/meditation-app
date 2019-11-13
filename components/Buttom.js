@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     maxWidth: 'auto',
     minHeight: 75,
     justifyContent: 'space-between',
-    marginBottom: 15,
+    marginBottom: 10,
     paddingRight: 0,
     paddingBottom: 0,
     paddingLeft: 15,

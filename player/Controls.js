@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, Slider, StyleSheet, View} from 'react-native';
+import {Text, TouchableOpacity, StyleSheet, View, Platform} from 'react-native';
+import Slider from 'react-native-slider';
 import {Ionicons} from '@expo/vector-icons';
 import colors from '../constants/Colors';
 import PropTypes from 'prop-types';
+
 
 /**
  * @typedef {Object} Props Properties of the component
@@ -17,7 +19,7 @@ import PropTypes from 'prop-types';
 
 const ICON_PLAY_BUTTON = 'md-play';
 const ICON_PAUSE_BUTTON = 'md-pause';
-
+const sliderThumb = require('../assets/images/sliderimage.png');
 /**
  * Controls elements for the player
  * @param {Props} props sended to the component
@@ -44,11 +46,11 @@ export default function Controls(props) {
           value={props.seekSliderPosition}
           onValueChange={props.onSliderValueChange}
           onSlidingComplete={props.onSlidingComplete}
-          thumbTintColor={colors.gray}
-          thumbStyle={styles.thumb}
-          trackStyle={styles.thumb}
           disabled={props.isLoading}
           minimumTrackTintColor={colors.white}
+          thumbTintColor={Platform.select({ ios: null, android: colors.white })}
+          thumbImage={sliderThumb}
+          thumbStyle={styles.thumb}
         />
         <Text style={[styles.shadow, styles.currenttime, {color: colors.white}]}>
           {props.currentTime}
@@ -89,9 +91,10 @@ const styles = StyleSheet.create({
     //borderWidth: 1,
   },
   thumb: {
-    width: 5,
-    height: 5,
+    width: 10,
+    height: 10,
     backgroundColor: colors.gray,
+    padding: 0,
   },
   playbuttons: {
     marginRight: 15,
