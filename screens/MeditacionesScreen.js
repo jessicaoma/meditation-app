@@ -12,7 +12,9 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Constants from 'expo-constants';
 import API from '../utils/API';
-import Cover from '../components/Cover';
+import ScreenBg from '../components/screenBg'; 
+import Player from '../player/Player';
+
 export default class MeditacionesScreen extends Component {
   static navigationOptions = {};
   constructor(props) {
@@ -28,21 +30,22 @@ export default class MeditacionesScreen extends Component {
       meditaciones: data,
       isLoading: false,
     });
-
-    //console.log(this.state.meditaciones[0]);
   }
-
 
   _handleClick = item => {
     this.props.navigation.navigate('Meditacion', {
       meditacion: item,
     });
   };
+
   _renderItem = item => {
     return (
       <Buttom
         key={item.id}
-        style={[styles.button, {backgroundColor: item.color || Colors.primaryDark}]}
+        style={[
+          styles.button,
+          {backgroundColor: item.color || Colors.primaryDark},
+        ]}
         onPress={() => {
           this._handleClick(item);
         }}>
@@ -52,20 +55,32 @@ export default class MeditacionesScreen extends Component {
     );
   };
 
-  _renderEmtpy = () => <Text>No hay Meditaciones :(</Text>;
-
   render = () => (
     <>
       <View style={styles.statusBar} />
       <ScrollView style={styles.container}>
         <View>
           <Text style={styles.sectionTitle}>Meditaciones</Text>
-          <Cover
+          <ScreenBg
             source={{
               uri:
                 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
             }}
-          />
+            styleView={[
+              styles.containBG,
+              {
+                height: 210,
+              },
+            ]}
+            styleImage={styles.imageBG}>
+            <Player
+              source={{
+                uri: 'http://okoconnect.com/karim/videos/video2.mp4',
+              }}
+              isVideo={true}
+              styleVideo={styles.video}
+            />
+          </ScreenBg>
         </View>
         {this.state.isLoading ? (
           <ActivityIndicator size="large" color={Colors.primaryDark} />
@@ -85,8 +100,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dims.regularSpace,
     flex: 1,
   },
-  button:{
-    paddingRight: 0
+  button: {
+    paddingRight: 0,
   },
   sectionTitle: {
     fontSize: 20,
@@ -96,7 +111,7 @@ const styles = StyleSheet.create({
     marginRight: 0,
     marginBottom: 3,
     marginLeft: 0,
-    color: Colors.grey,
+    color: Colors.gray,
     fontFamily: 'MyriadPro-Bold',
   },
   title_boxes: {
@@ -112,5 +127,16 @@ const styles = StyleSheet.create({
     width: 92,
     borderTopRightRadius: 50,
     borderBottomRightRadius: 50,
+  },
+  containBG: {
+    borderRadius: 20,
+    marginBottom: Dims.bigSpace,
+  },
+  imageBG: {
+    resizeMode: 'cover',
+    borderRadius: 20,
+  },
+  video: {
+    borderRadius: 20,
   },
 });

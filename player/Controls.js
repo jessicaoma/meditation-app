@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, TouchableOpacity, Slider, StyleSheet, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import colors from '../constants/Colors';
+import PropTypes from 'prop-types';
 
 /**
  * @typedef {Object} Props Properties of the component
@@ -24,6 +25,8 @@ const ICON_PAUSE_BUTTON = 'md-pause';
 
 
 export default function Controls(props) {
+
+
   return (
     <>
       <TouchableOpacity onPress={props.onPress} style={styles.playscreen} />
@@ -65,7 +68,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.35)',
-    paddingVertical: 15,
+    paddingVertical: 10,
     paddingHorizontal: 25,
     borderRadius: 15,
     marginHorizontal: 20,
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
   thumb: {
     width: 5,
     height: 5,
-    backgroundColor: 'red',
+    backgroundColor: colors.gray,
   },
   playbuttons: {
     marginRight: 15,
