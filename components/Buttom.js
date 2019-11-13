@@ -24,12 +24,12 @@ export default function Buttom({style, children, onPress}) {
 const styles = StyleSheet.create({
   contenedor: {
     flexDirection: 'row',
-    borderRadius: 20,
+    borderRadius: 15,
     backgroundColor: Colors.primary,
     maxWidth: 'auto',
     minHeight: 75,
     justifyContent: 'space-between',
-    marginBottom: 22,
+    marginBottom: 10,
     paddingRight: 0,
     paddingBottom: 0,
     paddingLeft: 15,

@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, Slider, StyleSheet, View} from 'react-native';
+import {Text, TouchableOpacity, StyleSheet, View, Platform} from 'react-native';
+import Slider from 'react-native-slider';
 import {Ionicons} from '@expo/vector-icons';
 import colors from '../constants/Colors';
+import PropTypes from 'prop-types';
+
 
 /**
  * @typedef {Object} Props Properties of the component
@@ -16,12 +19,14 @@ import colors from '../constants/Colors';
 
 const ICON_PLAY_BUTTON = 'md-play';
 const ICON_PAUSE_BUTTON = 'md-pause';
-
+const sliderThumb = require('../assets/images/sliderimage.png');
 /**
  * Controls elements for the player
  * @param {Props} props sended to the component
  */
 export default function Controls(props) {
+
+
   return (
     <>
       <TouchableOpacity onPress={props.onPress} style={styles.playscreen} />
@@ -39,11 +44,11 @@ export default function Controls(props) {
           value={props.seekSliderPosition}
           onValueChange={props.onSliderValueChange}
           onSlidingComplete={props.onSlidingComplete}
-          thumbTintColor={colors.gray}
-          thumbStyle={styles.thumb}
-          trackStyle={styles.thumb}
           disabled={props.isLoading}
           minimumTrackTintColor={colors.white}
+          thumbTintColor={Platform.select({ ios: null, android: colors.white })}
+          thumbImage={sliderThumb}
+          thumbStyle={styles.thumb}
         />
         <Text
           style={[styles.shadow, styles.currenttime, {color: colors.white}]}>
@@ -63,7 +68,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.35)',
-    paddingVertical: 15,
+    paddingVertical: 10,
     paddingHorizontal: 25,
     borderRadius: 15,
     marginHorizontal: 20,
@@ -84,9 +89,10 @@ const styles = StyleSheet.create({
     //borderWidth: 1,
   },
   thumb: {
-    width: 5,
-    height: 5,
-    backgroundColor: 'red',
+    width: 10,
+    height: 10,
+    backgroundColor: colors.gray,
+    padding: 0,
   },
   playbuttons: {
     marginRight: 15,
