@@ -14,14 +14,18 @@ export default class MeditacionScreen extends Component {
     return (
       <>
         <ScreenBg
-          source={{uri: meditacion.backgroundImage}}
+          //source={{uri: meditacion.backgroundImage}}
           color={meditacion.color}
-          styleImage={{resizeMode: 'cover'}}>
+          //styleImage={{resizeMode: 'cover'}}
+        >
           <Player
             source={{
               uri: meditacion.media,
             }}
-            isVideo={false}
+            isVideo={true}
+            resizeMode={'contain'}
+            showPlayFrame={false}
+            shouldPlay
           />
         </ScreenBg>
       </>
