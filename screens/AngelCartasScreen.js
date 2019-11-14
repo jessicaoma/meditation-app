@@ -5,6 +5,7 @@ import HalfCover from '../components/HalfCover';
 import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
 
+
 const data = [
   {
     key: 'A',
@@ -62,8 +63,8 @@ export default class AngelCartasScreen extends Component {
           source={{uri: item.uri}}
           onPress={this._handleClick}
           color={'transparent'}
-          width={Dimensions.get('window').width / numColumns - Dims.smallSpace}
-          height={Dimensions.get('window').height / numColumns - 100}
+          width={((Dimensions.get('window').width - Dims.hugeSpace) / numColumns)-5}
+          height={(Dimensions.get('window').height / numColumns) - 60}
         />
       </View>
     );
