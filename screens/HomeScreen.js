@@ -33,7 +33,7 @@ const dataLonuevo = [
   },
 ];
 const dataViajesenprogreso = [
-  {id: 1, title: 'Aprende a cambiar', bg: '#979394'},
+  {id: 1, title: 'Aprende a cambiar', bg: '#f3ebf9'},
   {id: 2, title: 'crear buenos Habitos', bg: '#cbe3e2'},
 ];
 
@@ -53,7 +53,7 @@ export default class Home extends Component {
     <Buttom
       style={[{backgroundColor: item.bg || Colors.primaryDark}, styles.box2]}>
       <Text style={styles.title_boxes2}>{item.title}</Text>
-      <Image style={styles.itemCandado} source={{uri: item.img}} />
+      {/* <Image style={styles.itemCandado} source={{uri: item.img}} /> */}
     </Buttom>
   );
 

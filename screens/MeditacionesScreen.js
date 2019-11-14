@@ -12,7 +12,7 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Constants from 'expo-constants';
 import API from '../utils/API';
-import ScreenBg from '../components/screenBg'; 
+import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 
 export default class MeditacionesScreen extends Component {

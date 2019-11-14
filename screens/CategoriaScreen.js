@@ -6,6 +6,7 @@ import Colors from '../constants/Colors';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 
+
 var categoria = {};
 
 export default class Categoria extends Component {

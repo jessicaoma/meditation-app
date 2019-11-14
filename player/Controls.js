@@ -24,8 +24,6 @@ const sliderThumb = require('../assets/images/sliderimage.png');
  * Controls elements for the player
  * @param {Props} props sended to the component
  */
-
-
 export default function Controls(props) {
 
 
@@ -33,12 +31,12 @@ export default function Controls(props) {
     <>
       <TouchableOpacity onPress={props.onPress} style={styles.playscreen} />
       <View style={[styles.container, {opacity: props.isLoading ? 0.5 : 1.0}]}>
-         <TouchableOpacity onPress={props.onPress} disabled={props.isLoading}>
+        <TouchableOpacity onPress={props.onPress} disabled={props.isLoading}>
           <Ionicons
             name={props.isPlaying ? ICON_PAUSE_BUTTON : ICON_PLAY_BUTTON}
             size={30}
             color={colors.white}
-            style={styles.shadow, styles.playbuttons}
+            style={(styles.shadow, styles.playbuttons)}
           />
         </TouchableOpacity>
         <Slider
@@ -52,14 +50,14 @@ export default function Controls(props) {
           thumbImage={sliderThumb}
           thumbStyle={styles.thumb}
         />
-        <Text style={[styles.shadow, styles.currenttime, {color: colors.white}]}>
+        <Text
+          style={[styles.shadow, styles.currenttime, {color: colors.white}]}>
           {props.currentTime}
         </Text>
       </View>
     </>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -98,8 +96,8 @@ const styles = StyleSheet.create({
   },
   playbuttons: {
     marginRight: 15,
-    flex:1,
-    paddingVertical: 10
+    flex: 1,
+    paddingVertical: 10,
   },
   currenttime: {
     marginLeft: 15,

@@ -6,26 +6,56 @@ import ScreenView from './ScreenView';
 import PlayVideoButton from '../components/playVideoButton';
 
 //const VIDEO_CONTAINER_HEIGHT = (Dimensions.window.height * 2.0) / 5.0 - 14 * 2;
-
+/**
+ * Player componet for all media used in the app
+ * @typedef {object} Props
+ * @prop {import('expo-av/build/AV').PlaybackSource} source Source of the audio/video
+ * @prop {boolean} isVideo True when the source is a video, false to audio
+ * @prop {boolean} [showControls] Indicate that the controls most be show, default true
+ * @prop {import('react-native').ViewStyle} [styleVideo] Style for the video
+ * @prop {boolean} [showPlayFrame] Indicate that the incial play button controls most be show, default true
+ * @prop {(status: import('expo-av/build/AV').PlaybackStatus) => void} [onEnd] Callback when media is ends
+ * @prop {(event: import('expo-av/build/Video.types').ReadyForDisplayEvent) => any} [onReadyForDisplay] Call when the video is ready to play
+ * @prop {import('expo-av/build/Video.types').ResizeMode | 'stretch' | 'cover' | 'contain'} [resizeMode] How the video should be scaled for display in the component, default 'stretch'
+ * @prop {boolean} [shouldPlay] A boolean describing if the media is supposed to play
+ *
+ * @extends {Component<Props>}
+ */
 export default class Player extends Component {
+  /**
+   * Constuctor
+   * @param {Props} props Initial Propertites
+   */
   constructor(props) {
     super(props);
     this.isSeeking = false;
     this.shouldPlayAtEndOfSeek = false;
     this.playbackInstance = null;
+    this.resizeMode = props.resizeMode || 'stretch';
+    this.showControls = true; //default
+    let showPlayer = false; //default
+
+    if (props.showControls !== undefined) {
+      this.showControls = props.showControls;
+    }
+    if (!this.showControls) {
+      showPlayer = true;
+    } else if (props.showPlayFrame !== undefined) {
+      showPlayer = !props.showPlayFrame;
+    }
     this.state = {
       playbackInstancePosition: null,
       playbackInstanceDuration: null,
-      shouldPlay: true,
+      shouldPlay: props.shouldPlay || false,
       isPlaying: false,
       isBuffering: false,
-      isLoading: true,
+      //isLoading: props.shouldPlay || false,
       //videoWidth: Dimensions.window.width,
       //videoHeight: VIDEO_CONTAINER_HEIGHT,
       //poster: false,
       //useNativeControls: false,
       //fullscreen: false,
-      showPlayer: false,
+      showPlayer: showPlayer,
     };
   }
 
@@ -45,32 +75,30 @@ export default class Player extends Component {
     //console.log('unmound player')
     if (this.playbackInstance !== null) {
       this.playbackInstance.unloadAsync();
-      this.playbackInstance.setOnPlaybackStatusUpdate(null);
-      this.playbackInstance = null;
+      //this.playbackInstance.setOnPlaybackStatusUpdate(null);
+      //this.playbackInstance = null;
     }
   }
 
   //creacion de las intancias
-  async _loadNewPlaybackInstance(playing) {
+  async _loadNewPlaybackInstance() {
     const source = this.props.source;
     // https://docs.expo.io/versions/v35.0.0/sdk/av/#default-initial-playbackstatustoset
     const initialStatus = {
-      shouldPlay: playing,
+      shouldPlay: this.state.shouldPlay,
       //rate: this.state.rate,
       //shouldCorrectPitch: this.state.shouldCorrectPitch,
       //volume: this.state.volume,
       //isMuted: this.state.muted,
-      // isLooping: this.state.loopingType === LOOPING_TYPE_ONE
-      // // UNCOMMENT THIS TO TEST THE OLD androidImplementation:
-      // androidImplementation: 'MediaPlayer',
+      //isLooping: this.props.isLooping,
     };
 
     if (this.props.isVideo) {
-      console.log(this._onPlaybackStatusUpdate);
+      //console.log(this._onPlaybackStatusUpdate);
       await this._video.loadAsync(source, initialStatus);
       // this._video.onPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
       this.playbackInstance = this._video;
-      const status = await this._video.getStatusAsync();
+      //const status = await this._video.getStatusAsync();
     } else {
       const {sound, status} = await Audio.Sound.createAsync(
         source,
@@ -83,6 +111,9 @@ export default class Player extends Component {
     this.setState({isLoading: false});
   }
 
+  /**
+   * @param {import('expo-av/build/AV').PlaybackStatus} status
+   */
   _onPlaybackStatusUpdate = status => {
     if (status.isLoaded) {
       this.setState({
@@ -95,18 +126,24 @@ export default class Player extends Component {
         //muted: status.isMuted,
         //volume: status.volume,
         //loopingType: status.isLooping ? LOOPING_TYPE_ONE : LOOPING_TYPE_ALL,
-        shouldCorrectPitch: status.shouldCorrectPitch,
+        //shouldCorrectPitch: status.shouldCorrectPitch,
       });
+      if (status.didJustFinish && this.props.onEnd !== undefined) {
+        //console.log('toend');
+        this.props.onEnd(status);
+      }
     } else {
       if (status.error) {
         console.log(`FATAL PLAYER ERROR: ${status.error}`);
       }
     }
   };
-
+  /**
+   * @param {import('expo-av').Video} component
+   */
   _refVideo = component => {
     this._video = component;
-    this._loadNewPlaybackInstance(false);
+    this._loadNewPlaybackInstance();
   };
 
   _onPlayPausePressed = () => {
@@ -121,7 +158,6 @@ export default class Player extends Component {
 
   //Callback cuando se comienza a mover el slider
   _onSeekSliderValueChange = value => {
-    console.log('change');
     if (this.playbackInstance != null && !this.isSeeking) {
       this.isSeeking = true;
       this.shouldPlayAtEndOfSeek = this.state.shouldPlay;
@@ -131,7 +167,6 @@ export default class Player extends Component {
 
   //Callback cuando se termina de mover el slider
   _onSeekSliderSlidingComplete = async value => {
-    console.log('complete');
     if (this.playbackInstance != null) {
       this.isSeeking = false;
       const seekPosition = value * this.state.playbackInstanceDuration;
@@ -189,6 +224,7 @@ export default class Player extends Component {
     });
     this._onPlayPausePressed();
   };
+
   render() {
     return (
       <View style={styles.container}>
@@ -200,16 +236,23 @@ export default class Player extends Component {
           <ScreenView
             refVideo={this._refVideo}
             onPlaybackStatusUpdate={this._onPlaybackStatusUpdate}
+            styleVideo={this.props.styleVideo}
+            onReadyForDisplay={this.props.onReadyForDisplay}
+            resizeMode={this.resizeMode}
+            posterSource={this.props.posterSource}
+            posterStyle={this.props.posterStyle}
           />
-          <Controls
-            isPlaying={this.state.isPlaying}
-            onPress={this._onPlayPausePressed}
-            currentTime={this._getTimestamp()}
-            isLoading={this.state.isLoading}
-            onSliderValueChange={this._onSeekSliderValueChange}
-            onSlidingComplete={this._onSeekSliderSlidingComplete}
-            seekSliderPosition={this._getSeekSliderPosition()}
-          />
+          {this.showControls && (
+            <Controls
+              isPlaying={this.state.isPlaying}
+              onPress={this._onPlayPausePressed}
+              currentTime={this._getTimestamp()}
+              isLoading={this.state.isLoading}
+              onSliderValueChange={this._onSeekSliderValueChange}
+              onSlidingComplete={this._onSeekSliderSlidingComplete}
+              seekSliderPosition={this._getSeekSliderPosition()}
+            />
+          )}
         </View>
         <PlayVideoButton
           isShow={!this.state.showPlayer}

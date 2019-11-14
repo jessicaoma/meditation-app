@@ -4,8 +4,11 @@ import {Video} from 'expo-av';
 
 /**
  * @typedef {Object} Props Properties of the component
- * @property {(ref: any) => void} refVideo Callback to get the video player reference
- * @property {(status: any) => void} onPlaybackStatusUpdate Callback on the status updates
+ * @prop {(ref: any) => void} refVideo Callback to get the video player reference
+ * @prop {(status: import('expo-av/build/AV').PlaybackStatus) => void} onPlaybackStatusUpdate Callback on the status updates
+ * @prop {import('react-native').ViewStyle} [styleVideo] Extra Style to the player
+ * @prop {(event: import('expo-av/build/Video.types').ReadyForDisplayEvent) => any} [onReadyForDisplay] Call when the video is ready to play
+ * @prop {import('expo-av/build/Video.types').ResizeMode | 'stretch' | 'cover' | 'contain'} resizeMode Resize Mode
  */
 
 /**
@@ -16,10 +19,13 @@ export default function ScreenView(props) {
   return (
     <View style={styles.videoContainer}>
       <Video
-        style={styles.player}
+        style={[styles.player, props.styleVideo]}
         ref={props.refVideo}
-        resizeMode={Video.RESIZE_MODE_STRETCH}
+        resizeMode={props.resizeMode}
         onPlaybackStatusUpdate={props.onPlaybackStatusUpdate}
+        onReadyForDisplay={props.onReadyForDisplay}
+        posterSource={props.posterSource}
+        posterStyle={props.posterStyle}
       />
     </View>
   );

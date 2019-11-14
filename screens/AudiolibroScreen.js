@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ScreenBg from '../components/ScreenBg';
+import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 
 export default class AudiolibroScreen extends Component {
@@ -15,20 +15,14 @@ export default class AudiolibroScreen extends Component {
       <>
         <ScreenBg
           source={{uri: audiolibro.backgroundImage}}
-          color={audiolibro.color}>
+          color={audiolibro.color}
+          styleImage={{resizeMode: 'contain'}}>
           <Player
             source={{
               uri: audiolibro.media,
             }}
             isVideo={false}
           />
-          {/* <Player
-            source={{
-              uri:
-                'https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4',
-            }}
-            isVideo={true}
-          /> */}
         </ScreenBg>
       </>
     );

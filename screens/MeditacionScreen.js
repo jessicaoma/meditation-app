@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import ScreenBg from '../components/ScreenBg';
+import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
-
-//const src = 'http://okoconnect.com/karim/images/meditar2-full.png';
 
 export default class MeditacionScreen extends Component {
   static navigationOptions = ({navigation}) => {
@@ -16,21 +14,19 @@ export default class MeditacionScreen extends Component {
     return (
       <>
         <ScreenBg
-          source={{uri: meditacion.backgroundImage}}
-          color={meditacion.color}>
+          //source={{uri: meditacion.backgroundImage}}
+          color={meditacion.color}
+          //styleImage={{resizeMode: 'cover'}}
+        >
           <Player
             source={{
               uri: meditacion.media,
             }}
-            isVideo={false}
-          />
-          {/* <Player
-            source={{
-              uri:
-                'https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4',
-            }}
             isVideo={true}
-          /> */}
+            resizeMode={'contain'}
+            showPlayFrame={false}
+            shouldPlay
+          />
         </ScreenBg>
       </>
     );

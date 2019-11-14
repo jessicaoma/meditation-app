@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Regular',
   },
   forgetText: {
-    color: Colors.grey,
+    color: Colors.gray,
     fontSize: 16,
     lineHeight: 28,
     marginVertical: Dims.smallSpace,

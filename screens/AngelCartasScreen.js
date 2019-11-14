@@ -94,11 +94,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dims.regularSpace,
   },
   item: {
-    //alignItems: 'flex-start',
-    //justifyContent: 'center',
-    //flex: 1,
-    //margin: 1,
-    //height: (Dims.window.width / 2) + 50,
   },
   itemInvisible: {
     backgroundColor: 'transparent',
