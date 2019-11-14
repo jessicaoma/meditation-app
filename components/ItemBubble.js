@@ -21,14 +21,13 @@ export default class ItemBubble extends Component {
       styleStatus = StyleSheet.create({
         styleContainer: {
           borderColor: color,
-          backgroundColor: 'white'
+          backgroundColor: 'white',
         },
         styleText: {
           fontWeight: 'bold',
         },
       });
-    }
-    else if (status === 'viajeTitle') {
+    } else if (status === 'viajeTitle') {
       styleStatus = StyleSheet.create({
         styleContainer: {
           borderColor: color,
@@ -61,10 +60,10 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     paddingHorizontal: Dims.bigSpace,
     borderColor: Colors.borderWhite,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   text: {
-    fontFamily: "MyriadPro-Semibold",
+    fontFamily: 'MyriadPro-Semibold',
     lineHeight: 46,
     fontSize: Dims.window.width * 0.038,
     letterSpacing: 0.89,

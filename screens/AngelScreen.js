@@ -8,10 +8,11 @@ import {
   Text,
   ImageBackground,
 } from 'react-native';
+import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 
-const deviceWidth = Dimensions.get('window').width - Dims.regularSpace - 16;
+const deviceWidth = Dims.window.width - Dims.regularSpace - 16;
 const deviceHeight = deviceWidth * 1.5 + 16;
 const FIXED_BAR_WIDTH = 40;
 const BAR_SPACE = 8;
@@ -109,6 +110,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: Dims.regularSpace,
+  },
+  statusBar: {
+    height: Constants.statusBarHeight,
   },
   slider: {
     marginTop: 20,

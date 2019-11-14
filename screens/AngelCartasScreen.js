@@ -60,9 +60,9 @@ export default class AngelCartasScreen extends Component {
         <HalfCover
           source={{uri: item.uri}}
           onPress={this._handleClick}
-          height={((Dimensions.get('window').width  - 40 ) / numColumns) * 1.5 }
-          width={(Dimensions.get('window').width  - 40 ) / numColumns}
-          color={'transparent'}
+          height={((Dims.window.width  - 40 ) / numColumns) * 1.5 }
+          width={(Dims.window.width  - 40 ) / numColumns}
+          //color={'transparent'}
         />
     );
   };

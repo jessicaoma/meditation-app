@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
   title_boxes: {
     color: '#494c6b',
-    fontSize: Dims.window.width * 0.038,
+    fontSize: Dimensions.window.width * 0.038,
     letterSpacing: 0.055,
     lineHeight: 20,
     textTransform: 'uppercase',
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   },
   title_boxes2: {
     color: '#494c6b',
-    fontSize: Dims.window.width * 0.038,
+    fontSize: Dimensions.window.width * 0.038,
     letterSpacing: 0.99,
     lineHeight: 20,
     textTransform: 'uppercase',
