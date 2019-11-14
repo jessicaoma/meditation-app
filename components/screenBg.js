@@ -5,10 +5,10 @@ import Colors from '../constants/Colors';
 /**
  * @typedef {Object} Props Properties of the component
  * @property {string} [color] Backgroud color for the image, default value Colors.primary
- * @property {import('react-native').ImageSourcePropType} source Source of the image to render
- * @property {any} [children] Children component that has is own render
- * @property {any} [styleView] Extra style to the View compoenet
- * @property {any} styleImage Extra style to the Image componet
+ * @property {import('react-native').ImageSourcePropType} [source] Source of the image to render
+ * @property {import('react').ReactNode} [children] Children component that has is own render
+ * @property {import('react-native').ViewStyle} [styleView] Extra style to the View compoenet
+ * @property {import('react-native').ImageStyle} [styleImage] Extra style to the Image componet
  * @property {(event: import('react-native').NativeSyntheticEvent) => void} [onLoad] Invoked when load image completes successfully
  */
 
