@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     paddingRight: 0,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 17,
     letterSpacing: 1.11,
     lineHeight: 36,
     marginTop: Dims.regularSpace,
@@ -134,9 +134,9 @@ const styles = StyleSheet.create({
   },
   imageBG: {
     resizeMode: 'cover',
-    borderRadius: 20,
+    borderRadius: 10,
   },
   video: {
-    borderRadius: 20,
+    borderRadius: 10,
   },
 });

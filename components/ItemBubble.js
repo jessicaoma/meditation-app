@@ -21,9 +21,22 @@ export default class ItemBubble extends Component {
       styleStatus = StyleSheet.create({
         styleContainer: {
           borderColor: color,
+          backgroundColor: 'white'
         },
         styleText: {
           fontWeight: 'bold',
+        },
+      });
+    }
+    else if (status === 'viajeTitle') {
+      styleStatus = StyleSheet.create({
+        styleContainer: {
+          borderColor: color,
+          backgroundColor: color,
+        },
+        styleText: {
+          fontWeight: 'bold',
+          fontSize: 18,
         },
       });
     }
@@ -42,19 +55,20 @@ export default class ItemBubble extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: Dims.bigSpace,
+    marginBottom: Dims.smallSpace,
     borderWidth: 3,
     borderRadius: 30,
     paddingVertical: 0,
     paddingHorizontal: Dims.bigSpace,
     borderColor: Colors.borderWhite,
+    backgroundColor: 'white'
   },
   text: {
-    //font-family: "MyriadPro-Regular",
-    lineHeight: 56,
-    fontSize: 16,
+    fontFamily: "MyriadPro-Semibold",
+    lineHeight: 46,
+    fontSize: Dims.window.width * 0.038,
     letterSpacing: 0.89,
-    color: Colors.grey,
+    color: Colors.gray,
   },
   fondoV: {
     //marginBottom: Dims.bigSpace,

@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {StyleSheet, FlatList} from 'react-native';
+import {StyleSheet, FlatList, ActivityIndicator, ScrollView, View, Text} from 'react-native';
 import ItemBubble from '../components/ItemBubble';
 import Cover from '../components/Cover';
 import Colors from '../constants/Colors';
-import ScreenBg from '../components/ScreenBg';
+import ScreenBg from '../components/screenBg';
+import Player from '../player/Player';
 
 var categoria = {};
 
@@ -34,7 +35,27 @@ export default class Categoria extends Component {
             {item.title}
           </ItemBubble>
         ) : (
-          <Cover source={item.source} color={item.color} />
+          <ScreenBg
+            source={{
+              uri:
+                'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
+            }}
+            styleView={[
+              styles.containBG,
+              {
+                height: 210,
+                marginBottom: 10
+              },
+            ]}
+            styleImage={styles.imageBG}>
+            <Player
+              source={{
+                uri: 'http://okoconnect.com/karim/videos/video2.mp4',
+              }}
+              isVideo={true}
+              styleVideo={styles.video}
+            />
+          </ScreenBg>
         )}
       </>
     );
@@ -88,23 +109,34 @@ export default class Categoria extends Component {
 
     return (
       <>
-        <ScreenBg source={{uri: categoria.bgImg}} color={categoria.color}>
-          <FlatList
+      <ScreenBg source={{uri: categoria.bgImg}} color={categoria.color}>
+      <View style={styles.statusBar} />
+      <ScrollView style={styles.container}>
+        
+        <FlatList
             data={categoria.viajes}
             renderItem={this.renderItem}
             keyExtractor={this.keyExtractor}
             style={styles.container}
           />
-        </ScreenBg>
-      </>
+      </ScrollView>
+      </ScreenBg>
+    </>
+      
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingHorizontal: 10,
+    paddingTop: 10,
     height: '100%',
+  },
+  imageBG: {
+    resizeMode: 'cover',
+    borderRadius: 10,
+    height: 210,
+    marginBottom: 5,
   },
 });

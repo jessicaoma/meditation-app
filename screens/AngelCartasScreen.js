@@ -1,17 +1,9 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  StyleSheet,
-  View,
-  FlatList,
-  Dimensions,
-  StatusBar,
-} from 'react-native';
+import {Text, StyleSheet, View, FlatList, Dimensions} from 'react-native';
 import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
-
 
 const data = [
   {
@@ -65,15 +57,13 @@ export default class AngelCartasScreen extends Component {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
     return (
-      <View style={styles.item}>
         <HalfCover
           source={{uri: item.uri}}
           onPress={this._handleClick}
+          height={((Dimensions.get('window').width  - 40 ) / numColumns) * 1.5 }
+          width={(Dimensions.get('window').width  - 40 ) / numColumns}
           color={'transparent'}
-          width={((Dimensions.get('window').width - Dims.hugeSpace) / numColumns)-5}
-          height={(Dimensions.get('window').height / numColumns) - 60}
         />
-      </View>
     );
   };
 
@@ -82,7 +72,7 @@ export default class AngelCartasScreen extends Component {
       <>
         <View style={styles.statusBar} />
         <View style={styles.container}>
-          <Text style={styles.sectionTitle}>Tu Ángel del día</Text>
+          <Text style={styles.sectionTitle}>Tu Ángel del día </Text>
           <FlatList
             data={formatData(data, numColumns)}
             renderItem={this.renderItem}
@@ -104,11 +94,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dims.regularSpace,
   },
   item: {
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    flex: 1,
-    margin: 1,
-    height: Dims.width - 280,
+    //alignItems: 'flex-start',
+    //justifyContent: 'center',
+    //flex: 1,
+    //margin: 1,
+    //height: (Dims.window.width / 2) + 50,
   },
   itemInvisible: {
     backgroundColor: 'transparent',
@@ -121,7 +111,7 @@ const styles = StyleSheet.create({
     marginRight: 0,
     marginBottom: 3,
     marginLeft: 0,
-    color: Colors.grey,
+    color: Colors.gray,
     fontFamily: 'MyriadPro-Bold',
   },
   suggestion: {
@@ -129,6 +119,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 28,
     textAlign: 'center',
-    color: '#665e61'
+    color: '#665e61',
   },
 });
