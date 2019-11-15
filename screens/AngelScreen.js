@@ -3,7 +3,6 @@ import {
   Animated,
   View,
   StyleSheet,
-  Dimensions,
   ScrollView,
   Text,
   ImageBackground,
@@ -12,76 +11,74 @@ import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 
+/**
+ * @typedef {Object} ParamsNavigation
+ * @prop {import('./AngelCartasScreen').Card} carta
+ * @prop {import('./AngelCartasScreen').AngelMessage} mensaje
+ */
+
 const deviceWidth = Dims.window.width - Dims.regularSpace - 16;
 const deviceHeight = deviceWidth * 1.5 + 16;
 const FIXED_BAR_WIDTH = 40;
 const BAR_SPACE = 8;
 
-const images = [
-  {
-    image: 'http://okoconnect.com/karim/images/angel1.png',
-    text: '',
-  },
-  {
-    image: 'http://okoconnect.com/karim/images/angelreve1-vacio.png',
-    text:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
-  },
-];
-
 export default class AngelScreen extends Component {
-  numItems = images.length;
-  itemWidth = FIXED_BAR_WIDTH / this.numItems - (this.numItems - 1) * BAR_SPACE;
   animVal = new Animated.Value(0);
 
   static navigationOptions = {
-    title: 'Tu ángel',
+    //title: 'Tu ángel',
   };
 
   render() {
-    let imageArray = [];
-    let barArray = [];
-    images.forEach((item, i) => {
-      const thisImage = (
+    /**@type {ParamsNavigation} */
+    const {carta, mensaje} = this.props.navigation.state.params;
+    const numItems = carta.faces.length;
+    const itemWidth = FIXED_BAR_WIDTH / numItems - (numItems - 1) * BAR_SPACE;
+    
+    const imageArray = carta.faces.map((item, index) => {
+      return (
         <ImageBackground
-          key={`image${i}`}
-          source={{uri: item.image}}
+          key={`cardimage${index}`}
+          source={item}
           style={[styles.sliderImage]}>
-          <View style={styles.topBox}>
-            <Text style={styles.headline}>{item.text}</Text>
-          </View>
+          {index === 0 ? (
+            //aca ira el titulo (mensaje.title)
+            <View></View>
+          ) : (
+            <View style={styles.topBox}>
+              <Text style={styles.headline}>{mensaje.sentence}</Text>
+            </View>
+          )}
         </ImageBackground>
       );
-      imageArray.push(thisImage);
-
+    });
+    const barArray = carta.faces.map((item, index) => {
       const scrollBarVal = this.animVal.interpolate({
-        inputRange: [deviceWidth * (i - 1), deviceWidth * (i + 1)],
-        outputRange: [-this.itemWidth, this.itemWidth],
+        inputRange: [deviceWidth * (index - 1), deviceWidth * (index + 1)],
+        outputRange: [-itemWidth, itemWidth],
         extrapolate: 'clamp',
       });
-
-      const thisBar = (
+      return (
         <View
-          key={`bar${i}`}
+          key={`bar${index}`}
           style={[
             styles.track,
             {
-              width: this.itemWidth,
-              marginLeft: i === 0 ? 0 : BAR_SPACE,
+              width: itemWidth,
+              marginLeft: index === 0 ? 0 : BAR_SPACE,
             },
           ]}>
           <Animated.View
             style={[
               styles.bar,
               {
-                width: this.itemWidth,
+                width: itemWidth,
                 transform: [{translateX: scrollBarVal}],
               },
             ]}
           />
         </View>
       );
-      barArray.push(thisBar);
     });
 
     return (
@@ -120,7 +117,7 @@ const styles = StyleSheet.create({
   sliderImage: {
     width: deviceWidth,
     height: deviceHeight,
-    resizeMode: 'contain',
+    //resizeMode: 'contain',
   },
   barContainer: {
     position: 'absolute',

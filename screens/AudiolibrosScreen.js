@@ -40,9 +40,9 @@ export default class AudiolibrosScreen extends Component {
   };
 
   _renderItem = ({item}) => {
-    if (item.empty === true) {
-      return <View style={[styles.item, styles.itemInvisible]} />;
-    }
+    // if (item.empty === true) {
+    //   return <View style={[styles.item, styles.itemInvisible]} />;
+    // }
     return (
       <View style={styles.item}>
         <HalfCover
@@ -108,9 +108,9 @@ const styles = StyleSheet.create({
     //margin: 1,
     //height: Dimensions.window.width / numColumns + 70,
   },
-  itemInvisible: {
-    backgroundColor: 'transparent',
-  },
+  // itemInvisible: {
+  //   backgroundColor: 'transparent',
+  // },
   //Estilo entre las filas
   wrapperStyle: {
     marginBottom: Dimensions.bigSpace,
