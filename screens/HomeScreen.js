@@ -44,9 +44,17 @@ export default class Home extends Component {
     ),
   };
 
+  async componentDidMount() {
+    // const data = await API.getMeditaciones();
+    // this.setState({
+    //   meditaciones: data,
+    //   isLoading: false,
+    // });
+  }
+
   _handleClick = () => {
     //alert('This is a button!');
-    this.props.navigation.navigate('Viaje');
+    //this.props.navigation.navigate('Viaje');
   };
 
   _renderItemLonuevo = ({item}) => (
@@ -65,13 +73,23 @@ export default class Home extends Component {
     </Buttom>
   );
 
+  _handleReflexion = () => {
+    this.props.navigation.navigate('Reflexion',{
+      reflexion: {
+        title : 'Reflexión del día',
+        color: '#fff',
+        media: 'http://okoconnect.com/karim/videos/v1_meditacion_1080.mp4'
+      }
+    });
+  };
+
   render() {
     return (
       <>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <Cover source={{uri: uriReflexion}} />
+          <Cover source={{uri: uriReflexion}} onPress={this._handleReflexion} />
           <Buttom>
             <Text style={styles.title_boxes}>¿como me siento?</Text>
             <Image source={{uri: uricomomesiento}} style={styles.itemImage} />

@@ -3,6 +3,7 @@ import {createStackNavigator} from 'react-navigation';
 import MeditacionScreen from '../screens/MeditacionScreen';
 import AudiolibroScreen from '../screens/AudiolibroScreen';
 import BottomNavigator from './BottomNavigator';
+import ReflexionScreen from '../screens/ReflexionScreen';
 
 const MainNavigator = createStackNavigator(
   {
@@ -12,6 +13,7 @@ const MainNavigator = createStackNavigator(
       navigationOptions: {},
     },
     Audiolibro: {screen: AudiolibroScreen, navigationOptions: {}},
+    Reflexion: ReflexionScreen
   },
   {
     defaultNavigationOptions: {
