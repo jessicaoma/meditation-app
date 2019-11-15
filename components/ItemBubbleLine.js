@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dims.regularSpace,
     borderColor: Colors.borderWhite,
     backgroundColor: 'white',
-    justifyContent: 'left',
+    //justifyContent: 'left',
     flexDirection: 'row',
     flex: 1,
   },
