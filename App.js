@@ -41,7 +41,15 @@ async function loadResourcesAsync() {
       require('./assets/images/iconsNavigations/iconMeditar.png'),
       require('./assets/images/iconsNavigations/iconLibros.png'),
       require('./assets/images/iconsNavigations/iconAngel.png'),
-      require('./assets/images/iconsNavigations/sliderimage.png'),
+      require('./assets/images/sliderimage.png'),
+      require('./assets/images/angel/angel1.png'),
+      require('./assets/images/angel/angel2.png'),
+      require('./assets/images/angel/angel3.png'),
+      require('./assets/images/angel/angel4.png'),
+      require('./assets/images/angel/angelreve1-vacio.png'),
+      require('./assets/images/angel/angelreve2-vacio.png'),
+      require('./assets/images/angel/angelreve3-vacio.png'),
+      require('./assets/images/angel/angelreve4-vacio.png'),
     ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar

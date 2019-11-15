@@ -4,69 +4,102 @@ import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
+import API from '../utils/API';
 
+/**
+ * @typedef {Object} Card
+ * @prop {string} key Key used to identiface
+ * @prop {NodeRequire[]} faces Array of images, in the index 0 is on the back side of the card, and index 1 is on the front side of the card
+ *
+ * @typedef {Object} AngelMessage
+ * @prop {string} id Id
+ * @prop {string} sentence Message of the angel
+ * @prop {string} title Title of the angel
+ */
 
+/**@type {Card[]} */
 const data = [
   {
-    key: 'A',
-    uri: 'http://okoconnect.com/karim/images/angel1.png',
+    key: 'cartaA',
+    faces: [
+      require('../assets/images/angel/angel1.png'),
+      require('../assets/images/angel/angelreve1-vacio.png'),
+    ],
   },
   {
-    key: 'B',
-    uri: 'http://okoconnect.com/karim/images/angel2.png',
+    key: 'cartaB',
+    faces: [
+      require('../assets/images/angel/angel2.png'),
+      require('../assets/images/angel/angelreve2-vacio.png'),
+    ],
   },
   {
-    key: 'C',
-    uri: 'http://okoconnect.com/karim/images/angel3.png',
+    key: 'cartaC',
+    faces: [
+      require('../assets/images/angel/angel3.png'),
+      require('../assets/images/angel/angelreve3-vacio.png'),
+    ],
   },
   {
-    key: 'C',
-    uri: 'http://okoconnect.com/karim/images/angel4.png',
+    key: 'cartaD',
+    faces: [
+      require('../assets/images/angel/angel4.png'),
+      require('../assets/images/angel/angelreve4-vacio.png'),
+    ],
   },
 ];
-
-const formatData = (data, numColumns) => {
-  const numberOfFullRows = Math.floor(data.length / numColumns);
-
-  let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
-  while (
-    numberOfElementsLastRow !== numColumns &&
-    numberOfElementsLastRow !== 0
-  ) {
-    data.push({key: `blank-${numberOfElementsLastRow}`, empty: true});
-    numberOfElementsLastRow++;
-  }
-
-  return data;
-};
 
 const numColumns = 2;
 
 export default class AngelCartasScreen extends Component {
-  static navigationOptions = {
-    title: 'Tu ángel',
-    header: null,
-  };
+  // static navigationOptions = {
+  //   title: 'Tu ángel',
+  //   header: null,
+  // };
 
-  _handleClick = () => {
-    //alert('This is a button!2');
-    this.props.navigation.navigate('Angel');
-  };
+  constructor(props) {
+    super(props);
+    this.angelMessage = undefined;
+  }
 
-  renderItem = ({item, index}) => {
-    if (item.empty === true) {
-      return <View style={[styles.item, styles.itemInvisible]} />;
+  async componentDidMount() {
+    this.angelMessage = await API.getAngelMessage();
+
+    // this.setState({
+    //   audioLibros: data,
+    // });
+    //console.log(this.state.meditaciones[0]);
+  }
+
+  /**
+   * @param {Card} item
+   */
+  _handleClick = item => {
+    if (this.angelMessage !== undefined) {
+      this.props.navigation.navigate('Angel', {
+        carta: item,
+        mensaje: this.angelMessage,
+      });
     }
+  };
+
+  /**
+   * @param {import('react-native').ListRenderItemInfo<Card>} item
+   */
+  renderItem = ({item}) => {
+    // if (item.empty === true) {
+    //   return <View style={[styles.item, styles.itemInvisible]} />;
+    // }
     return (
-      <View style={styles.item}>
-        <HalfCover
-          source={{uri: item.uri}}
-          onPress={this._handleClick}
-          height={Dimensions.get('window').height / numColumns - 100}
-          width={Dimensions.get('window').width / numColumns - Dims.smallSpace}
-          color={'transparent'}
-        />
-      </View>
+      <HalfCover
+        source={item.faces[0]}
+        onPress={() => {
+          this._handleClick(item);
+        }}
+        height={((Dims.window.width - 40) / numColumns) * 1.5}
+        width={(Dims.window.width - 40) / numColumns}
+        //color={'transparent'}
+      />
     );
   };
 
@@ -75,9 +108,9 @@ export default class AngelCartasScreen extends Component {
       <>
         <View style={styles.statusBar} />
         <View style={styles.container}>
-          <Text style={styles.sectionTitle}>Tu Ángel del día</Text>
+          <Text style={styles.sectionTitle}>Tu Ángel del día </Text>
           <FlatList
-            data={formatData(data, numColumns)}
+            data={data}
             renderItem={this.renderItem}
             numColumns={numColumns}
           />
@@ -96,16 +129,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: Dims.regularSpace,
   },
-  item: {
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    flex: 1,
-    margin: 1,
-    height: Dims.window.width - 280,
-  },
-  itemInvisible: {
-    backgroundColor: 'transparent',
-  },
+  item: {},
+  // itemInvisible: {
+  //   backgroundColor: 'transparent',
+  // },
   sectionTitle: {
     fontSize: 17,
     letterSpacing: 1.11,

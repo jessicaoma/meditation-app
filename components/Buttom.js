@@ -24,7 +24,7 @@ export default function Buttom({style, children, onPress}) {
 const styles = StyleSheet.create({
   contenedor: {
     flexDirection: 'row',
-    borderRadius: 15,
+    borderRadius: 10,
     backgroundColor: Colors.primary,
     maxWidth: 'auto',
     minHeight: 75,

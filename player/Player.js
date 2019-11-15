@@ -239,8 +239,6 @@ export default class Player extends Component {
             styleVideo={this.props.styleVideo}
             onReadyForDisplay={this.props.onReadyForDisplay}
             resizeMode={this.resizeMode}
-            posterSource={this.props.posterSource}
-            posterStyle={this.props.posterStyle}
           />
           {this.showControls && (
             <Controls

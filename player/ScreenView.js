@@ -24,8 +24,6 @@ export default function ScreenView(props) {
         resizeMode={props.resizeMode}
         onPlaybackStatusUpdate={props.onPlaybackStatusUpdate}
         onReadyForDisplay={props.onReadyForDisplay}
-        posterSource={props.posterSource}
-        posterStyle={props.posterStyle}
       />
     </View>
   );

@@ -12,6 +12,12 @@ class Api {
     const data = await query.json();
     return data;
   }
+
+  async getAngelMessage() {
+    const query = await fetch(`${BASE_API}angelmessage`);
+    const data = await query.json();
+    return data;
+  }
 }
 
 export default new Api();

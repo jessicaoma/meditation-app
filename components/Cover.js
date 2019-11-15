@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableHighlight, Image, StyleSheet} from 'react-native';
+import {TouchableOpacity, Image, StyleSheet} from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 
@@ -16,12 +16,12 @@ import Dims from '../constants/Dimensions';
  */
 const Cover = ({source, onPress, color}) => {
   return (
-    <TouchableHighlight onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
       <Image
         source={source}
         style={[styles.image, {backgroundColor: color || Colors.primary}]}
       />
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 
