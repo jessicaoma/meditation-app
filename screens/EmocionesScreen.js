@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, FlatList, Dimensions} from 'react-native';
+import {Text, StyleSheet, View, FlatList, Dimensions, ScrollView} from 'react-native';
 import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
 
-
-/**@type {Card[]} */
 const data = [
   {
     key: 'cartaA',
@@ -42,7 +40,7 @@ export default class EmocionesScreen extends Component {
   /**
    * @param {Card} item
    */
-   _handleClick = item => {
+  _handleClick = item => {
     this.props.navigation.navigate('Emocion', {
       carta: item
     });
@@ -75,6 +73,9 @@ export default class EmocionesScreen extends Component {
   render() {
     return (
       <>
+      <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scrollView}>
         <View style={styles.container}>
           <Text style={styles.sectionTitle}>Tus emociones </Text>
           <FlatList
@@ -83,9 +84,10 @@ export default class EmocionesScreen extends Component {
             numColumns={numColumns}
           />
           <Text style={styles.suggestion}>¿Cómo te sientes hoy?.{"\n"}
-					Llevando un registro de tus emociones vas a concerte más a ti misma.
-				</Text>
+            Llevando un registro de tus emociones vas a concerte más a ti misma.
+          </Text>
         </View>
+      </ScrollView>
       </>
     );
   }
