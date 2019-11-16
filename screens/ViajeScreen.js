@@ -37,6 +37,39 @@ export default class ViajeScreen extends Component {
       </>
     );
   };
+  
+  renderSeparator = () => {
+    let styleStatus = {};
+    let {color, status, onPress} = this.props;
+    if (status === 'done') {
+      styleStatus = StyleSheet.create({
+        styleLine: {
+          backgroundColor: color,
+        },
+      });
+    }
+    else if (status === 'doing') {
+      styleStatus = StyleSheet.create({
+        styleLine: {
+          backgroundColor: Colors.borderWhite,
+        }, 
+      });
+    }
+    else if (status === 'viajeTitle') {
+      styleStatus = StyleSheet.create({
+        styleLine: {
+          backgroundColor: Colors.color,
+          height: 20,
+        }, 
+      });
+    }
+    return (
+      <View style={[styles.containerLine]}>
+        <View style={[styles.line, styleStatus.styleLine]} />
+      </View>
+    );
+  };
+
   keyExtractor = item => item.id.toString() + 'viaje';
   render() {
     viaje = {
@@ -101,6 +134,7 @@ export default class ViajeScreen extends Component {
               renderItem={this.renderItem}
               keyExtractor={this.keyExtractor}
               style={styles.container}
+              ItemSeparatorComponent={this.renderSeparator}
             />
         </ScrollView>
         <TouchableOpacity
@@ -144,5 +178,16 @@ const styles = StyleSheet.create({
     letterSpacing: 1.5,
     lineHeight: 50,
     fontFamily: 'MyriadPro-Regular',
+  },
+  containerLine: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  line: {
+    height: 15,
+    width: 3,
+    margin: 'auto',
+    backgroundColor: Colors.borderWhite,
   },
 });
