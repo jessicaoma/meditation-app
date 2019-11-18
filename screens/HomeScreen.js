@@ -40,6 +40,7 @@ const dataViajesenprogreso = [
 export default class Home extends Component {
   static navigationOptions = {
     headerTitle: (
+      // eslint-disable-next-line react-native/no-inline-styles
       <Logo style={{width: 189, height: 47, resizeMode: 'contain'}} />
     ),
   };
@@ -74,16 +75,16 @@ export default class Home extends Component {
   );
 
   _handleReflexion = () => {
-    this.props.navigation.navigate('Reflexion',{
+    this.props.navigation.navigate('Reflexion', {
       reflexion: {
-        title : 'Reflexión del día',
+        title: 'Reflexión del día',
         color: '#fff',
-        media: 'http://okoconnect.com/karim/videos/v1_meditacion_1080.mp4'
-      }
+        media: 'http://okoconnect.com/karim/videos/v1_meditacion_1080.mp4',
+      },
     });
   };
 
-  _handleEmociones = item => {
+  _handleEmociones = () => {
     this.props.navigation.navigate('Emociones');
   };
 

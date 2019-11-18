@@ -51,6 +51,10 @@ async function loadResourcesAsync() {
       require('./assets/images/angel/angelreve2-vacio.png'),
       require('./assets/images/angel/angelreve3-vacio.png'),
       require('./assets/images/angel/angelreve4-vacio.png'),
+      require('./assets/images/emociones/emocion1.png'),
+      require('./assets/images/emociones/emocion2.png'),
+      require('./assets/images/emociones/emocion3.png'),
+      require('./assets/images/emociones/emocion4.png'),
     ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar

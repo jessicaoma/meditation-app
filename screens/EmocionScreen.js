@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
-import {Button, Text, StyleSheet, View, ScrollView, Dimensions, Image} from 'react-native';
+import {Text, StyleSheet, View, ScrollView, Image} from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
-
-const uriOracion = 'http://okoconnect.com/karim/images/oracion.jpeg';
 
 export default class Emocion extends Component {
   static navigationOptions = {
@@ -18,26 +16,38 @@ export default class Emocion extends Component {
   render() {
     return (
       <>
-      <ScrollView
+        <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-        <View style={styles.container}>
-          <Text style={styles.bigTitle}>Alegría</Text>
-          <Text style={styles.bigParagraph}>Lorem ipsum dolor sit amet consectetur adipiscing elit feugiat id varius, laoreet ultrices vitae mi per class rhoncus aliquet nostra, natoque.</Text>
-          
-          <View style={{flex:1}}>
-          <Image
-            style={{
-              width: Dims.window.width - Dims.regularSpace,
-              height: Dims.window.width - Dims.regularSpace
-            }}
-           source={{uri: 'http://okoconnect.com/karim/images/oracion.jpeg'}}
-          />
+          <View style={styles.container}>
+            <Text style={styles.bigTitle}>Alegría</Text>
+            <Text style={styles.bigParagraph}>
+              Lorem ipsum dolor sit amet consectetur adipiscing elit feugiat id
+              varius, laoreet ultrices vitae mi per class rhoncus aliquet
+              nostra, natoque.
+            </Text>
+
+            <View style={{flex: 1}}>
+              <Image
+                style={{
+                  width: Dims.window.width - Dims.regularSpace,
+                  height: Dims.window.width - Dims.regularSpace,
+                }}
+                source={{
+                  uri: 'http://okoconnect.com/karim/images/oracion.jpeg',
+                }}
+              />
+            </View>
+
+            <Text style={styles.paragraph}>
+              Antes de salir de la cama asegúrate de establecer la intención
+              para el día que acaba de comenzar, perdónate por los errores de
+              ayer, agradece y reza. Estes en problemas o no “Reza”. La oración
+              es la herramienta que te ayuda a enfrentar mejor las dificultades.
+              {'\n'}Feliz Sábado ✨
+            </Text>
           </View>
-         
-          <Text style={styles.paragraph}>Antes de salir de la cama asegúrate de establecer la intención para el día que acaba de comenzar, perdónate por los errores de ayer, agradece y reza. Estes en problemas o no “Reza”. La oración es la herramienta que te ayuda a enfrentar mejor las dificultades.{"\n"}Feliz Sábado ✨</Text>
-        </View>
-      </ScrollView>
+        </ScrollView>
       </>
     );
   }
@@ -74,7 +84,6 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Regular',
     textAlign: 'center',
     paddingHorizontal: Dims.smallSpace,
-
   },
   bigParagraph: {
     fontSize: 18,

@@ -55,9 +55,6 @@ export default class Categoria extends Component {
     //aca la llamada al servicio para la categoria
   };
 
-  componentWillUnmount() {
-    //alert('un');
-  }
   _goViaje = () => {
     //alert('This is a button!');
     this.props.navigation.navigate('Viaje');
