@@ -83,6 +83,10 @@ export default class Home extends Component {
     });
   };
 
+  _handleEmociones = item => {
+    this.props.navigation.navigate('Emociones');
+  };
+
   render() {
     return (
       <>
@@ -90,7 +94,7 @@ export default class Home extends Component {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           <Cover source={{uri: uriReflexion}} onPress={this._handleReflexion} />
-          <Buttom>
+          <Buttom onPress={this._handleEmociones}>
             <Text style={styles.title_boxes}>¿como me siento?</Text>
             <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
           </Buttom>

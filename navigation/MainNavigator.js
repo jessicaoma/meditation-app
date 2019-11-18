@@ -4,6 +4,8 @@ import MeditacionScreen from '../screens/MeditacionScreen';
 import AudiolibroScreen from '../screens/AudiolibroScreen';
 import BottomNavigator from './BottomNavigator';
 import ReflexionScreen from '../screens/ReflexionScreen';
+import EmocionesScreen from '../screens/EmocionesScreen';
+import EmocionScreen from '../screens/EmocionScreen';
 
 const MainNavigator = createStackNavigator(
   {
@@ -13,7 +15,9 @@ const MainNavigator = createStackNavigator(
       navigationOptions: {},
     },
     Audiolibro: {screen: AudiolibroScreen, navigationOptions: {}},
-    Reflexion: ReflexionScreen
+    Reflexion: ReflexionScreen,
+    Emociones: EmocionesScreen,
+    Emocion: EmocionScreen,
   },
   {
     defaultNavigationOptions: {

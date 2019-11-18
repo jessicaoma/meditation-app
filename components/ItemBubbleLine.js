@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Dims from '../constants/Dimensions';
-import Colors from '../constants/Colors';
+import Colors from '../constants/Colors'; 
 
 export default class ItemBubbleLine extends Component {
   render() {
@@ -14,9 +14,6 @@ export default class ItemBubbleLine extends Component {
         },
         styleText: {
           fontWeight: 'bold',
-        },
-        styleLine: {
-          backgroundColor: color,
         },
         circle: {
           borderColor: Colors.primaryDark,
@@ -33,9 +30,6 @@ export default class ItemBubbleLine extends Component {
         styleText: {
           fontWeight: 'bold',
         },
-        styleLine: {
-          backgroundColor: Colors.borderWhite,
-        }, 
         circle: {
           borderColor: Colors.primaryDark,
         },
@@ -53,10 +47,6 @@ export default class ItemBubbleLine extends Component {
         styleText: {
           fontWeight: 'bold',
           fontSize: 18,
-        },
-        styleLine: {
-          backgroundColor: color,
-          height: 20,
         },
         circle: {
           display: 'none'
@@ -76,12 +66,11 @@ export default class ItemBubbleLine extends Component {
           {this.props.children}{' '}
         </Text>
       </TouchableOpacity>
-      <View style={[styles.containerLine]}>
-        <View style={[styles.line, styleStatus.styleLine]} />
-      </View>
+      
       </>
     );
   }
+
 }
 
 const styles = StyleSheet.create({
@@ -102,17 +91,6 @@ const styles = StyleSheet.create({
     fontSize: Dims.window.width * 0.038,
     letterSpacing: 0.89,
     color: Colors.gray,
-  },
-  containerLine: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  line: {
-    height: 15,
-    width: 3,
-    margin: 'auto',
-    backgroundColor: Colors.borderWhite,
   },
   circle: {
     height: 20,
