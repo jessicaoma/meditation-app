@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {StyleSheet} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 
@@ -16,15 +17,21 @@ export default class AudiolibroScreen extends Component {
         <ScreenBg
           source={{uri: audiolibro.backgroundImage}}
           color={audiolibro.color}
-          styleImage={{resizeMode: 'contain'}}>
+          styleImage={styles.image}>
           <Player
             source={{
               uri: audiolibro.media,
             }}
-            isVideo={false}
+            showControls
+            showPlayFrame
+            //shouldPlay
           />
         </ScreenBg>
       </>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  image: {resizeMode: 'contain'},
+});

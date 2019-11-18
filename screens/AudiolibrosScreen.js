@@ -29,6 +29,7 @@ export default class AudiolibrosScreen extends Component {
   }
   async componentDidMount() {
     const data = await API.getAudiolibros();
+    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
       audioLibros: data,
     });
@@ -40,9 +41,6 @@ export default class AudiolibrosScreen extends Component {
   };
 
   _renderItem = ({item}) => {
-    // if (item.empty === true) {
-    //   return <View style={[styles.item, styles.itemInvisible]} />;
-    // }
     return (
       <View style={styles.item}>
         <HalfCover
@@ -60,23 +58,25 @@ export default class AudiolibrosScreen extends Component {
 
   _renderEmtpy = () => (
     <ActivityIndicator size="large" color={Colors.primaryDark} />
-  ); //<Text>No hay Audiolibros disponibles :(</Text>;
+  );
+  _renderListHeader = () => (
+    <Text style={styles.sectionTitle}>Audiolibros</Text>
+  );
 
   render() {
     return (
       <>
         <View style={styles.statusBar} />
-        <View style={styles.container}>
-          <Text style={styles.sectionTitle}>Audiolibros</Text>
-          <FlatList
-            data={this.state.audioLibros}
-            renderItem={this._renderItem}
-            numColumns={numColumns}
-            columnWrapperStyle={styles.wrapperStyle}
-            ListEmptyComponent={this._renderEmtpy}
-            keyExtractor={item => item.id}
-          />
-        </View>
+        <FlatList
+          data={this.state.audioLibros}
+          renderItem={this._renderItem}
+          numColumns={numColumns}
+          columnWrapperStyle={styles.wrapperStyle}
+          ListEmptyComponent={this._renderEmtpy}
+          keyExtractor={item => item.id}
+          ListHeaderComponent={this._renderListHeader}
+          style={styles.container}
+        />
       </>
     );
   }

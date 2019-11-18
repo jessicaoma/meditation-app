@@ -22,9 +22,11 @@ export default class ReflexionScreen extends Component {
             source={{
               uri: reflexion.media,
             }}
-            isVideo={true}
+            isVideo
             resizeMode={'contain'}
-            showPlayFrame={false}
+            showPlayFrame
+            showControls
+            //shouldPlay
           />
         </ScreenBg>
       </>

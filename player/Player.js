@@ -10,14 +10,15 @@ import PlayVideoButton from '../components/playVideoButton';
  * Player componet for all media used in the app
  * @typedef {object} Props
  * @prop {import('expo-av/build/AV').PlaybackSource} source Source of the audio/video
- * @prop {boolean} isVideo True when the source is a video, false to audio
- * @prop {boolean} [showControls] Indicate that the controls most be show, default true
+ * @prop {boolean} [isVideo] Indicate that the source is a video
+ * @prop {boolean} [showControls] Indicate that the controls most be show, default false
+ * @prop {boolean} [showPlayFrame] Indicate that the incial play button controls most be show, default false
+ * @prop {boolean} [shouldPlay] A boolean describing if the media is supposed to play
+ * @prop {import('react-native').ViewStyle|import('react-native').StyleSheet.absoluteFill} [style] Style to aplie to View container
  * @prop {import('react-native').ViewStyle} [styleVideo] Style for the video
- * @prop {boolean} [showPlayFrame] Indicate that the incial play button controls most be show, default true
  * @prop {(status: import('expo-av/build/AV').PlaybackStatus) => void} [onEnd] Callback when media is ends
  * @prop {(event: import('expo-av/build/Video.types').ReadyForDisplayEvent) => any} [onReadyForDisplay] Call when the video is ready to play
  * @prop {import('expo-av/build/Video.types').ResizeMode | 'stretch' | 'cover' | 'contain'} [resizeMode] How the video should be scaled for display in the component, default 'stretch'
- * @prop {boolean} [shouldPlay] A boolean describing if the media is supposed to play
  *
  * @extends {Component<Props>}
  */
@@ -30,32 +31,20 @@ export default class Player extends Component {
     super(props);
     this.isSeeking = false;
     this.shouldPlayAtEndOfSeek = false;
+    /** @type {Audio.Sound | import('expo-av').Video} */
     this.playbackInstance = null;
     this.resizeMode = props.resizeMode || 'stretch';
-    this.showControls = true; //default
-    let showPlayer = false; //default
 
-    if (props.showControls !== undefined) {
-      this.showControls = props.showControls;
-    }
-    if (!this.showControls) {
-      showPlayer = true;
-    } else if (props.showPlayFrame !== undefined) {
-      showPlayer = !props.showPlayFrame;
-    }
     this.state = {
       playbackInstancePosition: null,
       playbackInstanceDuration: null,
-      shouldPlay: props.shouldPlay || false,
+      shouldPlay: true,
       isPlaying: false,
-      isBuffering: false,
-      //isLoading: props.shouldPlay || false,
-      //videoWidth: Dimensions.window.width,
-      //videoHeight: VIDEO_CONTAINER_HEIGHT,
-      //poster: false,
-      //useNativeControls: false,
-      //fullscreen: false,
-      showPlayer: showPlayer,
+      isBuffering: true,
+      isLoading: true,
+      showPlayer: false,
+      isFirstLoad: true,
+      showControls: props.showControls,
     };
   }
 
@@ -72,48 +61,42 @@ export default class Player extends Component {
   }
 
   componentWillUnmount() {
-    //console.log('unmound player')
     if (this.playbackInstance !== null) {
       this.playbackInstance.unloadAsync();
-      //this.playbackInstance.setOnPlaybackStatusUpdate(null);
-      //this.playbackInstance = null;
+      if (!this.props.isVideo) {
+        // @ts-ignore
+        this.playbackInstance.setOnPlaybackStatusUpdate(null);
+      }
+      this.playbackInstance = null;
     }
   }
 
-  //creacion de las intancias
   async _loadNewPlaybackInstance() {
     const source = this.props.source;
     // https://docs.expo.io/versions/v35.0.0/sdk/av/#default-initial-playbackstatustoset
     const initialStatus = {
-      shouldPlay: this.state.shouldPlay,
-      //rate: this.state.rate,
-      //shouldCorrectPitch: this.state.shouldCorrectPitch,
-      //volume: this.state.volume,
-      //isMuted: this.state.muted,
+      shouldPlay: this.props.shouldPlay,
       //isLooping: this.props.isLooping,
     };
-
+    if (initialStatus.shouldPlay) {
+      this.setState({showPlayer: true});
+    }
     if (this.props.isVideo) {
-      //console.log(this._onPlaybackStatusUpdate);
       await this._video.loadAsync(source, initialStatus);
-      // this._video.onPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
       this.playbackInstance = this._video;
       //const status = await this._video.getStatusAsync();
     } else {
-      const {sound, status} = await Audio.Sound.createAsync(
+      const {sound} = await Audio.Sound.createAsync(
         source,
         initialStatus,
         this._onPlaybackStatusUpdate,
       );
       this.playbackInstance = sound;
     }
-
     this.setState({isLoading: false});
   }
 
-  /**
-   * @param {import('expo-av/build/AV').PlaybackStatus} status
-   */
+  /** @param {import('expo-av/build/AV').PlaybackStatus} status */
   _onPlaybackStatusUpdate = status => {
     if (status.isLoaded) {
       this.setState({
@@ -122,28 +105,25 @@ export default class Player extends Component {
         shouldPlay: status.shouldPlay,
         isPlaying: status.isPlaying,
         isBuffering: status.isBuffering,
-        //rate: status.rate,
-        //muted: status.isMuted,
-        //volume: status.volume,
-        //loopingType: status.isLooping ? LOOPING_TYPE_ONE : LOOPING_TYPE_ALL,
-        //shouldCorrectPitch: status.shouldCorrectPitch,
       });
       if (status.didJustFinish && this.props.onEnd !== undefined) {
-        //console.log('toend');
         this.props.onEnd(status);
       }
     } else {
+      // @ts-ignore
       if (status.error) {
+        // @ts-ignore
         console.log(`FATAL PLAYER ERROR: ${status.error}`);
       }
     }
   };
-  /**
-   * @param {import('expo-av').Video} component
-   */
+  /** @param {import('expo-av').Video} component */
   _refVideo = component => {
     this._video = component;
-    this._loadNewPlaybackInstance();
+    if (this.state.isFirstLoad) {
+      this._loadNewPlaybackInstance();
+      this.setState({isFirstLoad: false});
+    }
   };
 
   _onPlayPausePressed = () => {
@@ -156,8 +136,7 @@ export default class Player extends Component {
     }
   };
 
-  //Callback cuando se comienza a mover el slider
-  _onSeekSliderValueChange = value => {
+  _onSeekSliderValueChange = () => {
     if (this.playbackInstance != null && !this.isSeeking) {
       this.isSeeking = true;
       this.shouldPlayAtEndOfSeek = this.state.shouldPlay;
@@ -165,7 +144,7 @@ export default class Player extends Component {
     }
   };
 
-  //Callback cuando se termina de mover el slider
+  /** @param {number} value */
   _onSeekSliderSlidingComplete = async value => {
     if (this.playbackInstance != null) {
       this.isSeeking = false;
@@ -192,11 +171,13 @@ export default class Player extends Component {
     return 0;
   }
 
+  /** @param {number} millis */
   _getMMSSFromMillis(millis) {
     const totalSeconds = millis / 1000;
     const seconds = Math.floor(totalSeconds % 60);
     const minutes = Math.floor(totalSeconds / 60);
 
+    /** @param {number} number */
     const padWithZero = number => {
       const string = number.toString();
       if (number < 10) {
@@ -219,28 +200,31 @@ export default class Player extends Component {
   }
 
   _startPlayer = () => {
-    this.setState({
-      showPlayer: true,
-    });
-    this._onPlayPausePressed();
+    if (!this.state.isLoading) {
+      this.setState({
+        showPlayer: true,
+      });
+      this._onPlayPausePressed();
+    }
   };
 
   render() {
     return (
       <View style={styles.container}>
         <View
-          style={{
-            display: this.state.showPlayer ? 'flex' : 'none',
-            height: '100%',
-          }}>
+          style={[
+            styles.container,
+            this.state.showPlayer ? styles.show : styles.hidden,
+          ]}>
           <ScreenView
             refVideo={this._refVideo}
             onPlaybackStatusUpdate={this._onPlaybackStatusUpdate}
             styleVideo={this.props.styleVideo}
             onReadyForDisplay={this.props.onReadyForDisplay}
             resizeMode={this.resizeMode}
+            shouldPlay={this.props.shouldPlay}
           />
-          {this.showControls && (
+          {this.state.showControls && (
             <Controls
               isPlaying={this.state.isPlaying}
               onPress={this._onPlayPausePressed}
@@ -253,7 +237,7 @@ export default class Player extends Component {
           )}
         </View>
         <PlayVideoButton
-          isShow={!this.state.showPlayer}
+          isShow={this.props.showPlayFrame && !this.state.showPlayer}
           onPress={this._startPlayer}
         />
       </View>
@@ -265,5 +249,11 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     width: '100%',
+  },
+  hidden: {
+    display: 'none',
+  },
+  show: {
+    display: 'flex',
   },
 });

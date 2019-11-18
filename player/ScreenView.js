@@ -9,6 +9,7 @@ import {Video} from 'expo-av';
  * @prop {import('react-native').ViewStyle} [styleVideo] Extra Style to the player
  * @prop {(event: import('expo-av/build/Video.types').ReadyForDisplayEvent) => any} [onReadyForDisplay] Call when the video is ready to play
  * @prop {import('expo-av/build/Video.types').ResizeMode | 'stretch' | 'cover' | 'contain'} resizeMode Resize Mode
+ * @prop {boolean} [shouldPlay] A boolean describing if the media is supposed to play
  */
 
 /**
@@ -24,6 +25,7 @@ export default function ScreenView(props) {
         resizeMode={props.resizeMode}
         onPlaybackStatusUpdate={props.onPlaybackStatusUpdate}
         onReadyForDisplay={props.onReadyForDisplay}
+        shouldPlay={props.shouldPlay}
       />
     </View>
   );
