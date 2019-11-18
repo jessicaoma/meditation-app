@@ -45,10 +45,6 @@ export default class EmocionesScreen extends Component {
     });
   };
 
-  static navigationOptions = {
-    title: '¿Cómo me siento?',
-  };
-
   /**
    * @param {import('react-native').ListRenderItemInfo<Card>} item
    */

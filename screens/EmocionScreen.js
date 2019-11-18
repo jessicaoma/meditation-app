@@ -4,10 +4,6 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 
 export default class Emocion extends Component {
-  static navigationOptions = {
-    title: '¿Cómo me siento?',
-  };
-
   _handleClick = () => {
     //alert('This is a button!');
     //this.props.navigation.navigate('Viaje');

@@ -85,7 +85,7 @@ export default class Home extends Component {
   };
 
   _handleEmociones = () => {
-    this.props.navigation.navigate('Emociones');
+    this.props.navigation.navigate('EmocionesStack');
   };
 
   render() {

@@ -4,20 +4,30 @@ import MeditacionScreen from '../screens/MeditacionScreen';
 import AudiolibroScreen from '../screens/AudiolibroScreen';
 import BottomNavigator from './BottomNavigator';
 import ReflexionScreen from '../screens/ReflexionScreen';
-import EmocionesScreen from '../screens/EmocionesScreen';
-import EmocionScreen from '../screens/EmocionScreen';
+import EmocionesNavigator from './EmocionesNavigator';
+//import ViajesNavigator from './ViajesNavigator';
 
 const MainNavigator = createStackNavigator(
   {
     Main: {screen: BottomNavigator, navigationOptions: {header: null}},
     Meditacion: {
       screen: MeditacionScreen,
-      navigationOptions: {},
+      //navigationOptions: {},
     },
     Audiolibro: {screen: AudiolibroScreen, navigationOptions: {}},
     Reflexion: ReflexionScreen,
-    Emociones: EmocionesScreen,
-    Emocion: EmocionScreen,
+    EmocionesStack: {
+      screen: EmocionesNavigator,
+      navigationOptions: {
+        title: '¿Cómo me siento?',
+      },
+    },
+    // Viajes: {
+    //   screen: ViajesNavigator,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
   },
   {
     defaultNavigationOptions: {
