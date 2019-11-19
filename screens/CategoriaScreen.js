@@ -57,7 +57,7 @@ export default class Categoria extends Component {
 
   _goViaje = () => {
     //alert('This is a button!');
-    this.props.navigation.navigate('Viaje');
+    this.props.navigation.navigate('ViajeStack');
   };
 
   renderListHeader = _ => {

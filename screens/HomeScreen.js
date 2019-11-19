@@ -54,8 +54,7 @@ export default class Home extends Component {
   }
 
   _handleClick = () => {
-    //alert('This is a button!');
-    //this.props.navigation.navigate('Viaje');
+    this.props.navigation.navigate('ViajeStack');
   };
 
   _renderItemLonuevo = ({item}) => (

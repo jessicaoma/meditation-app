@@ -5,7 +5,7 @@ import AudiolibroScreen from '../screens/AudiolibroScreen';
 import BottomNavigator from './BottomNavigator';
 import ReflexionScreen from '../screens/ReflexionScreen';
 import EmocionesNavigator from './EmocionesNavigator';
-//import ViajesNavigator from './ViajesNavigator';
+import ViajeNavigator from './ViajeNavigator';
 
 const MainNavigator = createStackNavigator(
   {
@@ -22,12 +22,12 @@ const MainNavigator = createStackNavigator(
         title: '¿Cómo me siento?',
       },
     },
-    // Viajes: {
-    //   screen: ViajesNavigator,
-    //   navigationOptions: {
-    //     header: null,
-    //   },
-    // },
+    ViajeStack: {
+      screen: ViajeNavigator,
+      navigationOptions: {
+        header: null,
+      },
+    },
   },
   {
     defaultNavigationOptions: {

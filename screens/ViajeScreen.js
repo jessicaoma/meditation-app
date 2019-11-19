@@ -5,6 +5,7 @@ import ItemBubbleLine from '../components/ItemBubbleLine';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
+import {HeaderBackButton} from 'react-navigation';
 
 /**
  * @typedef Paso
@@ -15,8 +16,15 @@ import Dimensions from '../constants/Dimensions';
  * @typedef {Object} DataItemSeparator
  * @prop {boolean} highlighted
  * @prop {Paso[]} leadingItem
+ *
+ * @typedef {object} Props
+ * @prop {import('react-navigation').NavigationScreenProp} [navigation]
  */
 
+/**
+ * Viaje Screen
+ * @extends {Component<Props>}
+ * */
 export default class ViajeScreen extends Component {
   viaje = {
     id: 1,
@@ -67,9 +75,10 @@ export default class ViajeScreen extends Component {
     bgImg: 'http://okoconnect.com/karim/images/viaje-bg-2.png',
   };
 
-  static navigationOptions = {
+  static navigationOptions = ({navigation}) => ({
     title: '¿Qué es ser Feliz?',
-  };
+    headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
+  });
 
   _handleClick = () => {
     //alert('This is a button!');
