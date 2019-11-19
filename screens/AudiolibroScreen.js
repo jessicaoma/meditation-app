@@ -23,8 +23,8 @@ export default class AudiolibroScreen extends Component {
               uri: audiolibro.media,
             }}
             showControls
-            showPlayFrame
-            //shouldPlay
+            //showPlayFrame
+            shouldPlay
           />
         </ScreenBg>
       </>

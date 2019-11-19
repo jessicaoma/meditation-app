@@ -78,8 +78,9 @@ export default class Home extends Component {
     this.props.navigation.navigate('Reflexion', {
       reflexion: {
         title: 'Reflexión del día',
-        color: '#fff',
-        media: 'http://okoconnect.com/karim/videos/v1_meditacion_1080.mp4',
+        color: 'rgb(248, 247, 243)',
+        imagebg: uriReflexion,
+        media: 'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
       },
     });
   };

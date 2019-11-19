@@ -57,7 +57,8 @@ export default class MeditacionScreen extends Component {
               }}
               //ref={this.refAudio}
               showControls
-              showPlayFrame
+              //showPlayFrame
+              shouldPlay
             />
             {/* </View> */}
           </View>
@@ -72,12 +73,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  border1: {
-    borderWidth: 1,
-    borderColor: '#f00',
-  },
-  border2: {
-    borderWidth: 1,
-    borderColor: '#ff0',
-  },
+  // border1: {
+  //   borderWidth: 1,
+  //   borderColor: '#f00',
+  // },
+  // border2: {
+  //   borderWidth: 1,
+  //   borderColor: '#ff0',
+  // },
 });
