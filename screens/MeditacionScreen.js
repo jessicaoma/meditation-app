@@ -51,9 +51,7 @@ export default class MeditacionScreen extends Component {
               ]}> */}
             <Player
               source={{
-                uri:
-                  'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
-                //uri: meditacion.media,
+                uri: meditacion.media,
               }}
               //ref={this.refAudio}
               showControls

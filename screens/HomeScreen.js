@@ -12,6 +12,8 @@ import Colors from '../constants/Colors';
 import Buttom from '../components/Buttom';
 import Logo from '../components/Logo';
 import Cover from '../components/Cover';
+import {Ionicons} from '@expo/vector-icons';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const uriReflexion = 'http://okoconnect.com/karim/images/video-preview.jpeg';
 const uricomomesiento = 'http://okoconnect.com/karim/images/comomesiento.png';
@@ -37,13 +39,35 @@ const dataViajesenprogreso = [
   {id: 2, title: 'crear buenos Habitos', bg: '#cbe3e2'},
 ];
 
+/**
+ * @typedef {object} Props
+ * @prop {import('react-navigation').NavigationScreenProp} [navigation]
+ */
+
+/**
+ * Home Screen
+ * @extends {Component<Props>}
+ * */
 export default class Home extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({navigation}) => ({
     headerTitle: (
       // eslint-disable-next-line react-native/no-inline-styles
       <Logo style={{width: 189, height: 47, resizeMode: 'contain'}} />
     ),
-  };
+    headerRight: (
+      <TouchableOpacity
+        style={{marginRight: 16}}
+        onPress={() => {
+          navigation.openDrawer();
+        }}>
+        <Ionicons
+          name={'md-information-circle'}
+          size={24}
+          color={Colors.primaryDark}
+        />
+      </TouchableOpacity>
+    ),
+  });
 
   async componentDidMount() {
     // const data = await API.getMeditaciones();
