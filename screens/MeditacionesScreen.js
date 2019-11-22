@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Image,
   View,
-  ScrollView,
+  FlatList,
   ActivityIndicator,
 } from 'react-native';
 import Buttom from '../components/Buttom';
@@ -21,14 +21,13 @@ export default class MeditacionesScreen extends Component {
     super(props);
     this.state = {
       meditaciones: [],
-      isLoading: true,
     };
   }
   async componentDidMount() {
     const data = await API.getMeditaciones();
+    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
       meditaciones: data,
-      isLoading: false,
     });
   }
 
@@ -38,7 +37,7 @@ export default class MeditacionesScreen extends Component {
     });
   };
 
-  _renderItem = item => {
+  _renderItem = ({item}) => {
     return (
       <Buttom
         key={item.id}
@@ -55,39 +54,47 @@ export default class MeditacionesScreen extends Component {
     );
   };
 
+  _renderListHeader = _ => {
+    return (
+      <View>
+        <Text style={styles.sectionTitle}>Meditaciones</Text>
+        <ScreenBg
+          source={{
+            uri: 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
+          }}
+          styleView={[styles.containBG, styles.cover]}
+          styleImage={styles.imageBG}>
+          <Player
+            source={{
+              uri: 'http://okoconnect.com/karim/videos/video2.mp4',
+            }}
+            isVideo
+            styleVideo={styles.video}
+            showControls
+            showPlayFrame
+          />
+        </ScreenBg>
+      </View>
+    );
+  };
+
+  _renderListEmpty = _ => {
+    return <ActivityIndicator size="large" color={Colors.primaryDark} />;
+  };
+
+  _keyExtractor = item => item.id;
+
   render = () => (
     <>
       <View style={styles.statusBar} />
-      <ScrollView style={styles.container}>
-        <View>
-          <Text style={styles.sectionTitle}>Meditaciones</Text>
-          <ScreenBg
-            source={{
-              uri:
-                'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
-            }}
-            styleView={[
-              styles.containBG,
-              {
-                height: 210,
-              },
-            ]}
-            styleImage={styles.imageBG}>
-            <Player
-              source={{
-                uri: 'http://okoconnect.com/karim/videos/video2.mp4',
-              }}
-              isVideo={true}
-              styleVideo={styles.video}
-            />
-          </ScreenBg>
-        </View>
-        {this.state.isLoading ? (
-          <ActivityIndicator size="large" color={Colors.primaryDark} />
-        ) : (
-          this.state.meditaciones.map(this._renderItem)
-        )}
-      </ScrollView>
+      <FlatList
+        data={this.state.meditaciones}
+        renderItem={this._renderItem}
+        ListHeaderComponent={this._renderListHeader}
+        ListEmptyComponent={this._renderListEmpty}
+        style={styles.container}
+        keyExtractor={this._keyExtractor}
+      />
     </>
   );
 }
@@ -138,5 +145,8 @@ const styles = StyleSheet.create({
   },
   video: {
     borderRadius: 10,
+  },
+  cover: {
+    height: 210,
   },
 });

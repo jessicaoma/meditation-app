@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Button, Text, StyleSheet} from 'react-native';
 
-export default class PasoScreen extends Component {
+export default class MiDiarioScreen extends Component {
   static navigationOptions = {
-    title: 'Paso',
+    //title: 'Paso',
   };
 
   _handleClick = () => {
@@ -14,8 +14,7 @@ export default class PasoScreen extends Component {
   render() {
     return (
       <>
-        <Text>Paso</Text>
-        <Button onPress={this._handleClick} title="Paso?" />
+        <Text>Mi Diario</Text>
       </>
     );
   }

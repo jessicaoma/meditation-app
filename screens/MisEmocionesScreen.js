@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Button, Text, StyleSheet} from 'react-native';
+import {Button, Text, StyleSheet, Image} from 'react-native';
+import {DrawerNavigator} from 'react-navigation';
 
-export default class PasoScreen extends Component {
+export default class MisEmocionesScreen extends Component {
   static navigationOptions = {
-    title: 'Paso',
+    
   };
 
   _handleClick = () => {
@@ -14,11 +15,10 @@ export default class PasoScreen extends Component {
   render() {
     return (
       <>
-        <Text>Paso</Text>
-        <Button onPress={this._handleClick} title="Paso?" />
+        <Text>Mis Emociones</Text>
       </>
     );
   }
 }
 
-const styles = StyleSheet.create({});
+

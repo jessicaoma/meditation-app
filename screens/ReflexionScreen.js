@@ -14,17 +14,15 @@ export default class ReflexionScreen extends Component {
     return (
       <>
         <ScreenBg
-          //source={{uri: meditacion.backgroundImage}}
+          source={{uri: reflexion.imagebg}}
           color={reflexion.color}
-          //styleImage={{resizeMode: 'cover'}}
-        >
+          styleImage={{resizeMode: 'contain'}}>
           <Player
             source={{
               uri: reflexion.media,
             }}
-            isVideo={true}
-            resizeMode={'contain'}
-            showPlayFrame={false}
+            showControls
+            shouldPlay
           />
         </ScreenBg>
       </>

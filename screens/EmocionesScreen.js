@@ -1,53 +1,48 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, FlatList, Dimensions, ScrollView} from 'react-native';
+import {Text, StyleSheet, View, FlatList, ScrollView} from 'react-native';
 import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
-import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
-import API from '../utils/API';
 
+/**
+ * @typedef {Object} Card
+ * @prop {string} key
+ * @prop {NodeRequire[]} faces
+ */
+/** @type {Card[]} */
 const data = [
   {
     key: 'cartaA',
-    faces: [
-      require('../assets/images/emociones/emocion1.png'),
-    ],
+    // @ts-ignore
+    faces: [require('../assets/images/emociones/emocion1.png')],
   },
   {
     key: 'cartaB',
-    faces: [
-      require('../assets/images/emociones/emocion2.png'),
-    ],
+    // @ts-ignore
+    faces: [require('../assets/images/emociones/emocion2.png')],
   },
   {
     key: 'cartaC',
-    faces: [
-      require('../assets/images/emociones/emocion3.png'),
-    ],
+    // @ts-ignore
+    faces: [require('../assets/images/emociones/emocion3.png')],
   },
   {
     key: 'cartaD',
-    faces: [
-      require('../assets/images/emociones/emocion4.png'),
-    ],
+    // @ts-ignore
+    faces: [require('../assets/images/emociones/emocion4.png')],
   },
 ];
 
 const numColumns = 2;
 
 export default class EmocionesScreen extends Component {
-
   /**
    * @param {Card} item
    */
   _handleClick = item => {
     this.props.navigation.navigate('Emocion', {
-      carta: item
+      carta: item,
     });
-  };
-
-  static navigationOptions = {
-    title: '¿Cómo me siento?',
   };
 
   /**
@@ -73,21 +68,21 @@ export default class EmocionesScreen extends Component {
   render() {
     return (
       <>
-      <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-        <View style={styles.container}>
-          <Text style={styles.sectionTitle}>Tus emociones </Text>
-          <FlatList
-            data={data}
-            renderItem={this.renderItem}
-            numColumns={numColumns}
-          />
-          <Text style={styles.suggestion}>¿Cómo te sientes hoy?.{"\n"}
-            Llevando un registro de tus emociones vas a concerte más a ti misma.
-          </Text>
-        </View>
-      </ScrollView>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+          <View style={styles.container}>
+            <Text style={styles.sectionTitle}>Tus emociones </Text>
+            <FlatList
+              data={data}
+              renderItem={this.renderItem}
+              numColumns={numColumns}
+            />
+            <Text style={styles.suggestion}>
+              ¿Cómo te sientes hoy?.{'\n'}
+              Llevando un registro de tus emociones vas a concerte más a ti
+              misma.
+            </Text>
+          </View>
+        </ScrollView>
       </>
     );
   }
