@@ -160,6 +160,13 @@ export default class PremiumScreen extends Component {
           </View>
         </View>
       </ScrollView>
+      <View style={[styles.containerBottomButton]}>
+        <TouchableOpacity
+          onPress={this._handleClick}
+          style={[styles.button]}>
+          <Text style={styles.buttonLabel}>Empieza tu prueba gratis</Text>
+        </TouchableOpacity>
+      </View>
       </>
     );
   }
@@ -174,6 +181,11 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: Dimensions.regularSpace,
     paddingHorizontal: Dimensions.regularSpace,
+  },
+  containerBottomButton: {
+    paddingVertical: Dimensions.regularSpace,
+    paddingHorizontal: Dimensions.regularSpace,
+    backgroundColor: 'white',
   },
   topimage: {
     width: '100%',
