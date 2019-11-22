@@ -112,6 +112,14 @@ export default class Home extends Component {
     this.props.navigation.navigate('EmocionesStack');
   };
 
+  _handelBienvenida = () => {
+    this.props.navigation.navigate('Bienvenida');
+  };
+
+  _handleTutorial = () => {
+    this.props.navigation.navigate('Tutorial');
+  };
+
   render() {
     return (
       <>
@@ -138,11 +146,11 @@ export default class Home extends Component {
             keyExtractor={item => 'viajesenprogreso' + item.id}
           />
           <View style={styles.separador} />
-          <Buttom>
+          <Buttom onPress={this._handelBienvenida}>
             <Text style={styles.title_boxes}>BIENVENIDA</Text>
             <Image source={{uri: uriflor1}} style={styles.itemImage} />
           </Buttom>
-          <Buttom>
+          <Buttom onPress={this._handleTutorial}>
             <Text style={styles.title_boxes}>TUTORIAL</Text>
             <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
           </Buttom>
