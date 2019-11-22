@@ -5,7 +5,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import AudiolibrosScreen from '../screens/AudiolibrosScreen';
 import MeditacionesScreen from '../screens/MeditacionesScreen';
-import ViajesNavigator from './ViajesNavigator';
+import CategoriasNavigator from './CategoriasNavigator';
 import Colors from '../constants/Colors';
 import AngelNavigator from './AngelNavigator';
 
@@ -22,8 +22,8 @@ const BottomNavigator = createBottomTabNavigator(
         ),
       },
     },
-    Viajes: {
-      screen: ViajesNavigator,
+    Categorias: {
+      screen: CategoriasNavigator,
       navigationOptions: {
         title: 'Viajes',
         tabBarIcon: ({focused, horizontal, tintColor}) => (

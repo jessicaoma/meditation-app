@@ -2,22 +2,32 @@ import {createStackNavigator} from 'react-navigation';
 
 import MeditacionScreen from '../screens/MeditacionScreen';
 import AudiolibroScreen from '../screens/AudiolibroScreen';
-import BottomNavigator from './BottomNavigator';
 import ReflexionScreen from '../screens/ReflexionScreen';
-import EmocionesScreen from '../screens/EmocionesScreen';
-import EmocionScreen from '../screens/EmocionScreen';
+import EmocionesNavigator from './EmocionesNavigator';
+import ViajeNavigator from './ViajeNavigator';
+import PerfilNavigation from './PerfilNavigation';
 
 const MainNavigator = createStackNavigator(
   {
-    Main: {screen: BottomNavigator, navigationOptions: {header: null}},
+    PerfilDrawer: {screen: PerfilNavigation, navigationOptions: {header: null}},
     Meditacion: {
       screen: MeditacionScreen,
-      navigationOptions: {},
+      //navigationOptions: {},
     },
     Audiolibro: {screen: AudiolibroScreen, navigationOptions: {}},
     Reflexion: ReflexionScreen,
-    Emociones: EmocionesScreen,
-    Emocion: EmocionScreen,
+    EmocionesStack: {
+      screen: EmocionesNavigator,
+      navigationOptions: {
+        title: '¿Cómo me siento?',
+      },
+    },
+    ViajeStack: {
+      screen: ViajeNavigator,
+      navigationOptions: {
+        header: null,
+      },
+    },
   },
   {
     defaultNavigationOptions: {
