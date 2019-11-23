@@ -12,7 +12,7 @@ import Colors from '../constants/Colors';
 import Buttom from '../components/Buttom';
 import Logo from '../components/Logo';
 import Cover from '../components/Cover';
-import {Ionicons} from '@expo/vector-icons';
+import TabBarIcon from '../components/TabBarIcon';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const uriReflexion = 'http://okoconnect.com/karim/images/video-preview.jpeg';
@@ -50,9 +50,12 @@ const dataViajesenprogreso = [
  * */
 export default class Home extends Component {
   static navigationOptions = ({navigation}) => ({
-    headerTitle: (
+    headerStyle: {height: 68},
+    headerLeft: (
       // eslint-disable-next-line react-native/no-inline-styles
-      <Logo style={{width: 189, height: 47, resizeMode: 'contain'}} />
+      <View style={{flex: 1,justifyContent: 'flex-start',marginLeft:16, }}>
+        <Logo style={{width: 173, height: 43, resizeMode: 'contain', paddingBottom:2}} />
+      </View>
     ),
     headerRight: (
       <TouchableOpacity
@@ -60,11 +63,9 @@ export default class Home extends Component {
         onPress={() => {
           navigation.openDrawer();
         }}>
-        <Ionicons
-          name={'md-information-circle'}
-          size={24}
-          color={Colors.primaryDark}
-        />
+        <TabBarIcon name={'perfil'} style={{
+          height: 24
+        }} />
       </TouchableOpacity>
     ),
   });

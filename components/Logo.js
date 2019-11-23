@@ -13,9 +13,9 @@ import {Image} from 'react-native';
  */
 const Logo = ({style, isAlternative}) => {
   return !isAlternative ? (
-    <Image source={require('../assets/images/logo.png')} style={style} />
+    <Image source={{uri: 'http://okoconnect.com/karim/assets/images/logo.png'}} style={style} />
   ) : (
-    <Image source={require('../assets/images/logo2.png')} style={style} />
+    <Image source={{uri: 'http://okoconnect.com/karim/assets/images/logo2.png'}} style={style} />
   );
 };
 
