@@ -14,27 +14,25 @@ import Colors from '../constants/Colors';
 /**
  * @typedef {Object} ParamsNavigation
  * @prop {import('./AngelCartasScreen').Card} carta
- * @prop {import('./AngelCartasScreen').AngelMessage} mensaje
+ * @prop {import('../utils/API').AngelMensaje} mensaje
+ *
+ * @typedef Props
+ * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
  */
 
-const deviceWidth = Dims.window.width - Dims.regularSpace - 16;
-const deviceHeight = deviceWidth * 1.5 + 16;
+const deviceWidth = Dims.window.width - Dims.regularSpace - Dims.regularSpace;
+const deviceHeight = deviceWidth * 1.5 + Dims.regularSpace;
 const FIXED_BAR_WIDTH = 40;
-const BAR_SPACE = 8;
 
+/** @extends {Component<Props>} */
 export default class AngelScreen extends Component {
   animVal = new Animated.Value(0);
 
-  static navigationOptions = {
-    //title: 'Tu ángel',
-  };
-
   render() {
-    /**@type {ParamsNavigation} */
     const {carta, mensaje} = this.props.navigation.state.params;
     const numItems = carta.faces.length;
-    const itemWidth = FIXED_BAR_WIDTH / numItems - (numItems - 1) * BAR_SPACE;
-    
+    const itemWidth =
+      FIXED_BAR_WIDTH / numItems - (numItems - 1) * Dims.smallSpace;
     const imageArray = carta.faces.map((item, index) => {
       return (
         <ImageBackground
@@ -43,7 +41,7 @@ export default class AngelScreen extends Component {
           style={[styles.sliderImage]}>
           {index === 0 ? (
             //aca ira el titulo (mensaje.title)
-            <View></View>
+            <View />
           ) : (
             <View style={styles.topBox}>
               <Text style={styles.headline}>{mensaje.sentence}</Text>
@@ -65,7 +63,7 @@ export default class AngelScreen extends Component {
             styles.track,
             {
               width: itemWidth,
-              marginLeft: index === 0 ? 0 : BAR_SPACE,
+              marginLeft: index === 0 ? 0 : Dims.smallSpace,
             },
           ]}>
           <Animated.View
@@ -126,9 +124,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     left: '50%',
-    //requiere un valor numerico
-    //transform: [{translateX: '-50%'}],
-    //translateX: '-50%',
   },
   track: {
     backgroundColor: '#ccc',

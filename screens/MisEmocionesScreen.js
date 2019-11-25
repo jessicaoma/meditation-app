@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
-import {Button, Text, StyleSheet, Image} from 'react-native';
-import {DrawerNavigator} from 'react-navigation';
+import {Text, StyleSheet} from 'react-native';
 
+/**
+ * @typedef Props
+ * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @extends {Component<Props>}
+ */
 export default class MisEmocionesScreen extends Component {
   static navigationOptions = {
-    
+    //title: 'Paso',
   };
 
   _handleClick = () => {
@@ -21,4 +25,4 @@ export default class MisEmocionesScreen extends Component {
   }
 }
 
-
+const styles = StyleSheet.create({});

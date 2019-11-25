@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, Text, StyleSheet, FlatList, View, ScrollView} from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  FlatList,
+  View,
+  ScrollView,
+} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import ItemBubble from '../components/ItemBubble';
 import Colors from '../constants/Colors';
@@ -31,31 +38,31 @@ export default class ViajeCompletadosScreen extends Component {
     title: 'Ser Feliz',
     pasos: [
       {
-        id: 'title',
+        id: 'via1',
         status: 'viajeTitle',
         title: '¿Qué es ser feliz?',
         color: '#fdd58d',
       },
       {
-        id: 'title',
+        id: 'via2',
         title: 'Vive Incondicionalmente',
         status: 'viajeTitle',
         color: '#cbe3e2',
       },
       {
-        id: 'title',
+        id: 'via3',
         title: 'Un Viaje de Autoestima',
         color: '#f1dee1',
         status: 'viajeTitle',
       },
       {
-        id: 'title',
+        id: 'via4',
         title: 'Un Viaje de Vida Saludable',
         color: '#f1dee1',
         status: 'viajeTitle',
       },
       {
-        id: 'title',
+        id: 'via5',
         title: 'Otro Viaje',
         status: 'viajeTitle',
         color: '#a8aed4',
@@ -87,32 +94,38 @@ export default class ViajeCompletadosScreen extends Component {
     );
   };
 
-
-  keyExtractor = item => item.id.toString() + 'viaje';
+  keyExtractor = item => item.id;
   render() {
     return (
-      <>
-      <ScrollView contentInsetAdjustmentBehavior="automatic"
-                  style={styles.scrollView}>
-        <ScreenBg source={{uri: this.viaje.bgImg}} color={this.viaje.color}>
-            <Text style={styles.bigTitle}>¡Vas muy bien!</Text>
-            <Text style={styles.bigParagraph}>
-              Has completado viajes en estas categorías. Presiona en cada una para ver tu progreso.
-            </Text>
-            <FlatList
-              data={this.viaje.pasos}
-              renderItem={this.renderItem}
-              keyExtractor={this.keyExtractor}
-              style={styles.container}
-            />
-        </ScreenBg>
-      </ScrollView>
-      </>
+      <ScreenBg
+        source={{uri: this.viaje.bgImg}}
+        color={this.viaje.color}
+        styleView={styles.fullscreen}>
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scrollView}>
+          <Text style={styles.bigTitle}>¡Vas muy bien!</Text>
+          <Text style={styles.bigParagraph}>
+            Has completado viajes en estas categorías. Presiona en cada una para
+            ver tu progreso.
+          </Text>
+          <FlatList
+            data={this.viaje.pasos}
+            renderItem={this.renderItem}
+            keyExtractor={this.keyExtractor}
+            style={styles.container}
+          />
+        </ScrollView>
+      </ScreenBg>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  fullscreen: {
+    width: '100%',
+    height: '100%',
+  },
   scrollView: {
     paddingBottom: 50,
     paddingTop: Dimensions.regularSpace,
@@ -120,7 +133,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: Dimensions.regularSpace,
     paddingTop: Dimensions.regularSpace,
-    justifyContent: 'center',
+    //justifyContent: 'center',
   },
   bigTitle: {
     fontSize: 22,

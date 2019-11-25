@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {TouchableOpacity, Image, StyleSheet, View, Text} from 'react-native';
 import Colors from '../constants/Colors';
@@ -5,7 +6,7 @@ import Colors from '../constants/Colors';
 /**
  * @typedef {Object} Props Properties of the component
  * @property {import('react-native').ImageSourcePropType} source Source of the image to render
- * @property {(event: any) => void} [onPress] Callback used when the component is Press
+ * @property {(event: import('react-native').GestureResponderEvent) => void} [onPress] Callback used when the component is Press
  * @property {string} [title] Title of the component
  * @property {number} width Componenet width, is a square
  * @property {number} height Componenet height, is a rectangle
@@ -19,12 +20,12 @@ const HalfCover = ({source, onPress, title, width, height}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.halfCoverContainer, {width: width}]}>
-        <View style={[styles.button, {}]}>
+        <View style={styles.button}>
           <Image
             style={{
               width: width - 10,
               height: height - 10,
-              resizeMode: 'contain'
+              resizeMode: 'contain',
             }}
             source={source}
           />

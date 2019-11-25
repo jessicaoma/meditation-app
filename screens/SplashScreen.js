@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import {StyleSheet, SafeAreaView, Image, StatusBar} from 'react-native';
 import Colors from '../constants/Colors';
@@ -17,13 +18,21 @@ export default function SplashScreen({navigation}) {
   setTimeout(() => {
     navigation.navigate('Login');
   }, 1000);
+  //TODO cambiar la validacion pues ya no se usa expo snack
+  const envProd = process.env.NODE_ENV === 'production';
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.contaner}>
         <Image
-          // @ts-ignore
-          source={{uri: 'http://okoconnect.com/karim/assets/images/splash-bg.png'}}
+          source={
+            envProd
+              ? {
+                  uri:
+                    'http://okoconnect.com/karim/assets/images/splash-bg.png',
+                }
+              : require('../assets/images/splash-bg.png')
+          }
           style={styles.background}
         />
         <Logo style={styles.logo} />

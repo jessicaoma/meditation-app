@@ -5,7 +5,17 @@ import Colors from '../constants/Colors';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import Dimensions from '../constants/Dimensions';
+import API from '../utils/API';
 
+/**
+ * @typedef {Object} ParamsNavigation
+ * @prop {import('../utils/API').Categoria} categoria
+ *
+ * @typedef Props
+ * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
+ *
+ * @extends {Component<Props>}
+ */
 export default class Categoria extends Component {
   categoria = {
     id: 1,
@@ -48,15 +58,17 @@ export default class Categoria extends Component {
   };
 
   static navigationOptions = ({navigation}) => {
-    return {title: navigation.getParam('title', 'Categoria')};
+    return {
+      title: navigation.getParam('categoria', {title: 'Categoria'}).title,
+    };
   };
 
-  componentDidMount = () => {
-    //aca la llamada al servicio para la categoria
-  };
+  // TODO crear llamada a viajes para obtener los correspondientes a la categoria
+  //async componentDidMount = () => {
+  //  const viajes = await API.getViajesCategoria(this.props.navigation.state.params.categoria.id);
+  //};
 
   _goViaje = () => {
-    //alert('This is a button!');
     this.props.navigation.navigate('ViajeStack');
   };
 
@@ -125,8 +137,6 @@ const styles = StyleSheet.create({
   imageBG: {
     resizeMode: 'cover',
     borderRadius: 10,
-    //height: 210,
-    //marginBottom: 5,
   },
   containBG: {
     borderRadius: 20,

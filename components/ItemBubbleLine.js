@@ -3,6 +3,14 @@ import {Text, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 
+/**
+ * A button whit border radius 30º and a line on the botton
+ * @typedef Props
+ * @prop {string} color Primary color to used
+ * @prop { 'todo' | 'doing' | 'done'} status Status of the item
+ * @prop {(event: import('react-native').GestureResponderEvent) => void} [onPress] Handle press event
+ * @extends {Component<Props>}
+ */
 export default class ItemBubbleLine extends Component {
   render() {
     let {color, status, onPress} = this.props;

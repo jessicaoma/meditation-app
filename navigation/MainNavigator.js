@@ -1,11 +1,12 @@
 import {createStackNavigator} from 'react-navigation';
-
 import MeditacionScreen from '../screens/MeditacionScreen';
 import AudiolibroScreen from '../screens/AudiolibroScreen';
 import ReflexionScreen from '../screens/ReflexionScreen';
 import EmocionesNavigator from './EmocionesNavigator';
 import ViajeNavigator from './ViajeNavigator';
 import PerfilNavigation from './PerfilNavigation';
+import TutorialScreen from '../screens/TutorialScreen';
+import BienvenidaScreen from '../screens/BienvenidaScreen';
 
 const MainNavigator = createStackNavigator(
   {
@@ -28,6 +29,8 @@ const MainNavigator = createStackNavigator(
         header: null,
       },
     },
+    Tutorial: TutorialScreen,
+    Bienvenida: BienvenidaScreen,
   },
   {
     defaultNavigationOptions: {

@@ -3,7 +3,18 @@ import {Dimensions} from 'react-native';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-export default {
+/**
+ * @typedef {Object} Dimension
+ * @prop {{width:number, height:number}} window Dimensions of device
+ * @prop {boolean} isSmallDevice True if device less that 375
+ * @prop {number} smallSpace Space of 8 dp
+ * @prop {number} regularSpace Space of 16 dp
+ * @prop {number} bigSpace Space of 24 dp
+ * @prop {number} hugeSpace Space of 32 dp
+ */
+
+/** @type {Dimension} */
+const dimensions = {
   window: {
     width,
     height,
@@ -14,3 +25,5 @@ export default {
   bigSpace: 24,
   hugeSpace: 32,
 };
+
+export default dimensions;

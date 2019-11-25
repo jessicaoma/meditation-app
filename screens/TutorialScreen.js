@@ -7,10 +7,10 @@ import Player from '../player/Player';
  * @prop {import('react-navigation').NavigationScreenProp} [navigation]
  * @extends {Component<Props>}
  */
-export default class ReflexionScreen extends Component {
+export default class TutorialScreen extends Component {
   static navigationOptions = ({navigation}) => {
-    let reflexion = navigation.getParam('reflexion', {title: 'Meditación'});
-    return {title: reflexion.title, headerBackTitle: null};
+    //let reflexion = navigation.getParam('reflexion', {title: 'Meditación'});
+    return {title: 'Tutorial', headerBackTitle: null};
   };
 
   render() {
@@ -19,12 +19,15 @@ export default class ReflexionScreen extends Component {
     return (
       <>
         <ScreenBg
-          source={{uri: reflexion.imagebg}}
+          source={{
+            uri: 'http://okoconnect.com/karim/images/video-preview.jpeg',
+          }}
           color={reflexion.color}
           styleImage={{resizeMode: 'contain'}}>
           <Player
             source={{
-              uri: reflexion.media,
+              uri:
+                'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
             }}
             showControls
             shouldPlay

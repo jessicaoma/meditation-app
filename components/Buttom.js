@@ -5,8 +5,8 @@ import Colors from '../constants/Colors';
 /**
  * @typedef {Object} Props Properties of the component
  * @property {import('react-native').StyleProp<import('react-native').ViewStyle>} [style] Extra custom style for the component
- * @property {any} children Elements that render inside the component
- * @property {(event: any) => void} [onPress] Callback used when the component is Press
+ * @property {React.ReactNode} children Elements that render inside the component
+ * @property {(event: import('react-native').GestureResponderEvent) => void} [onPress] Handle press event
  */
 
 /**

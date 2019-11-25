@@ -1,116 +1,63 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  SectionList,
-  StyleSheet,
-  Image,
-  View,
-  StatusBar,
-} from 'react-native';
+import {Text, FlatList, StyleSheet, Image, View, StatusBar} from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
+import API from '../utils/API';
 
-const data = [
-  {
-    title: 'Categorías',
-    data: [
-      {
-        id: 1,
-        title: 'Ser feliz',
-        bg: '#fdd58d',
-        img: 'http://okoconnect.com/karim/images/cat1.png',
-      },
-      {
-        id: 2,
-        title: 'Emociones',
-        bg: '#f6e1aa',
-        img: 'http://okoconnect.com/karim/images/cat2.png',
-      },
-      {
-        id: 3,
-        title: 'Relaciones Personales',
-        bg: '#efbfba',
-        img: 'http://okoconnect.com/karim/images/cat3.png',
-      },
-      {
-        id: 4,
-        title: 'Autoestima',
-        bg: '#f1dee1',
-        img: 'http://okoconnect.com/karim/images/cat4.png',
-      },
-      {
-        id: 5,
-        title: 'Ansiedad y Estrés',
-        bg: '#d9def8',
-        img: 'http://okoconnect.com/karim/images/cat5.png',
-      },
-      {
-        id: 6,
-        title: 'Mindfulness',
-        bg: '#a8aed4',
-        img: 'http://okoconnect.com/karim/images/cat6.png',
-      },
-      {
-        id: 7,
-        title: 'Enfócate',
-        bg: '#d9f6f0',
-        img: 'http://okoconnect.com/karim/images/cat7.png',
-      },
-      {
-        id: 8,
-        title: 'Vida Saludable',
-        bg: '#cbe3e2',
-        img: 'http://okoconnect.com/karim/images/cat8.png',
-      },
-      {
-        id: 9,
-        title: 'Reinvéntate',
-        bg: '#f3ebf9',
-        img: 'http://okoconnect.com/karim/images/cat9.png',
-      },
-      {
-        id: 19,
-        title: 'Espiritualidad',
-        bg: '#b2a0bd',
-        img: 'http://okoconnect.com/karim/images/cat19.png',
-      },
-    ],
-  },
-];
-
-class Categorias extends Component {
+/**
+ * @typedef Props
+ * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @extends {Component<Props>}
+ */
+export default class Categorias extends Component {
   static navigationOptions = {
     header: null,
   };
+  /** @type {{categorias:import('../utils/API').Categoria[]}} */
+  state = {
+    categorias: [],
+  };
+
+  async componentDidMount() {
+    const data = await API.getCategorias();
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({
+      categorias: data,
+    });
+  }
+
+  /** @param {import('../utils/API').Categoria} item */
   _handleClick = item => {
-    //alert('This is a button!');
     this.props.navigation.navigate('Categoria', {
-      title: item.title,
-      bg: item.bg,
+      categoria: item,
     });
   };
-  keyExtractor = item => item.id.toString() + 'categoria';
+  /** @param {import('../utils/API').Categoria} item */
+  keyExtractor = item => item.id;
+
+  renderListHeader = () => <Text style={styles.sectionTitle}>Categorías</Text>;
+
+  /** @param {import('react-native').ListRenderItemInfo<import('../utils/API').Categoria>} info*/
+  renderItem = ({item}) => (
+    <Buttom
+      style={{backgroundColor: item.color || Colors.primaryDark}}
+      onPress={() => {
+        this._handleClick(item);
+      }}>
+      <Text style={styles.title_boxes}>{item.title}</Text>
+      <Image style={styles.image} source={{uri: item.itemImage}} />
+    </Buttom>
+  );
   render() {
     return (
       <>
         <View style={styles.statusBar} />
-        <SectionList
+        <FlatList
           style={styles.container}
-          sections={data}
-          renderItem={({item}) => (
-            <Buttom
-              style={{backgroundColor: item.bg || Colors.primaryDark}}
-              onPress={() => {
-                this._handleClick(item);
-              }}>
-              <Text style={styles.title_boxes}>{item.title}</Text>
-              <Image style={styles.image} source={{uri: item.img}} />
-            </Buttom>
-          )}
-          renderSectionHeader={({section: {title}}) => (
-            <Text style={styles.sectionTitle}>{title}</Text>
-          )}
+          data={this.state.categorias}
+          ListHeaderComponent={this.renderListHeader}
+          renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
         />
       </>
@@ -151,5 +98,3 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
   },
 });
-
-export default Categorias;
