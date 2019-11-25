@@ -1,5 +1,6 @@
+// @ts-nocheck
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, FlatList, Dimensions} from 'react-native';
+import {Text, StyleSheet, View, FlatList} from 'react-native';
 import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Constants from 'expo-constants';
@@ -11,52 +12,76 @@ import API from '../utils/API';
  * @prop {string} key Key used to identiface
  * @prop {NodeRequire[]} faces Array of images, in the index 0 is on the back side of the card, and index 1 is on the front side of the card
  *
- * @typedef {Object} AngelMessage
- * @prop {string} id Id
- * @prop {string} sentence Message of the angel
- * @prop {string} title Title of the angel
+ * @typedef Props
+ * @prop {import('react-navigation').NavigationScreenProp} navigation
  */
+
+//TODO cambiar la validacion pues ya no se usa expo snack
+const envProd = process.env.NODE_ENV === 'production';
+const numColumns = 2;
 
 /**@type {Card[]} */
 const data = [
   {
     key: 'cartaA',
     faces: [
-      require('../assets/images/angel/angel1.png'),
-      require('../assets/images/angel/angelreve1-vacio.png'),
+      envProd
+        ? {uri: 'http://okoconnect.com/karim/assets/images/angel/angel1.png'}
+        : require('../assets/images/angel/angel1.png'),
+      envProd
+        ? {
+            uri:
+              'http://okoconnect.com/karim/assets/images/angel/angelreve1-vacio.png',
+          }
+        : require('../assets/images/angel/angelreve1-vacio.png'),
     ],
   },
   {
     key: 'cartaB',
     faces: [
-      require('../assets/images/angel/angel2.png'),
-      require('../assets/images/angel/angelreve2-vacio.png'),
+      envProd
+        ? {uri: 'http://okoconnect.com/karim/assets/images/angel/angel2.png'}
+        : require('../assets/images/angel/angel2.png'),
+      envProd
+        ? {
+            uri:
+              'http://okoconnect.com/karim/assets/images/angel/angelreve2-vacio.png',
+          }
+        : require('../assets/images/angel/angelreve2-vacio.png'),
     ],
   },
   {
     key: 'cartaC',
     faces: [
-      require('../assets/images/angel/angel3.png'),
-      require('../assets/images/angel/angelreve3-vacio.png'),
+      envProd
+        ? {uri: 'http://okoconnect.com/karim/assets/images/angel/angel3.png'}
+        : require('../assets/images/angel/angel3.png'),
+      envProd
+        ? {
+            uri:
+              'http://okoconnect.com/karim/assets/images/angel/angelreve3-vacio.png',
+          }
+        : require('../assets/images/angel/angelreve3-vacio.png'),
     ],
   },
   {
     key: 'cartaD',
     faces: [
-      require('../assets/images/angel/angel4.png'),
-      require('../assets/images/angel/angelreve4-vacio.png'),
+      envProd
+        ? {uri: 'http://okoconnect.com/karim/assets/images/angel/angel4.png'}
+        : require('../assets/images/angel/angel4.png'),
+      envProd
+        ? {
+            uri:
+              'http://okoconnect.com/karim/assets/images/angel/angelreve4-vacio.png',
+          }
+        : require('../assets/images/angel/angelreve4-vacio.png'),
     ],
   },
 ];
 
-const numColumns = 2;
-
+/** @extends {Component<Props>} */
 export default class AngelCartasScreen extends Component {
-  // static navigationOptions = {
-  //   title: 'Tu ángel',
-  //   header: null,
-  // };
-
   constructor(props) {
     super(props);
     this.angelMessage = undefined;
@@ -64,11 +89,6 @@ export default class AngelCartasScreen extends Component {
 
   async componentDidMount() {
     this.angelMessage = await API.getAngelMessage();
-
-    // this.setState({
-    //   audioLibros: data,
-    // });
-    //console.log(this.state.meditaciones[0]);
   }
 
   /**
@@ -87,9 +107,6 @@ export default class AngelCartasScreen extends Component {
    * @param {import('react-native').ListRenderItemInfo<Card>} item
    */
   renderItem = ({item}) => {
-    // if (item.empty === true) {
-    //   return <View style={[styles.item, styles.itemInvisible]} />;
-    // }
     return (
       <HalfCover
         source={item.faces[0]}
@@ -98,7 +115,6 @@ export default class AngelCartasScreen extends Component {
         }}
         height={((Dims.window.width - 40) / numColumns) * 1.5}
         width={(Dims.window.width - 40) / numColumns}
-        //color={'transparent'}
       />
     );
   };
@@ -129,10 +145,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: Dims.regularSpace,
   },
-  item: {},
-  // itemInvisible: {
-  //   backgroundColor: 'transparent',
-  // },
   sectionTitle: {
     fontSize: 17,
     letterSpacing: 1.11,

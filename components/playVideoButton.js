@@ -1,22 +1,31 @@
+// @ts-nocheck
 import React from 'react';
 import {StyleSheet, Image, View, TouchableOpacity} from 'react-native';
 
 /**
+ * @typedef {Object} Props
+ * @prop {boolean} isShow True to show the botton
+ * @prop {(event: import('react-native').GestureResponderEvent) => void} onPress Callback to press event
+ */
+/**
  * Generic playVideoButton
- * @param {Object} props Props sended to the component
+ * @param {Props} props Props sended to the component
  */
 export default function PlayVideoButton({isShow, onPress}) {
+  //TODO cambiar la validacion pues ya no se usa expo snack
+  const envProd = process.env.NODE_ENV === 'production';
   return (
     <TouchableOpacity onPress={onPress}>
-      <View
-        style={[
-          styles.center,
-          {
-            display: isShow ? 'flex' : 'none',
-          },
-        ]}>
+      <View style={[styles.center, isShow ? styles.show : styles.hidden]}>
         <Image
-          source={require('../assets/images/iconsNavigations/iconVideo.png')}
+          source={
+            envProd
+              ? {
+                  uri:
+                    'http://okoconnect.com/karim/assets/images/iconsNavigations/iconVideo.png',
+                }
+              : require('../assets/images/iconsNavigations/iconVideo.png')
+          }
           style={[styles.floatCenterCenter]}
         />
       </View>
@@ -30,12 +39,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: '100%',
     width: '100%',
-    //activar si quiere verificar la ubicación del componente
-    //borderColor: '#00F',
-    //borderWidth: 1,
   },
   floatCenterCenter: {
     width: 60,
     height: 38,
+  },
+  hidden: {
+    display: 'none',
+  },
+  show: {
+    display: 'flex',
   },
 });
