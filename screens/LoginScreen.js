@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   StatusBar,
+  Image
 } from 'react-native';
 import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
@@ -65,9 +66,10 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Regular',
   },
   logo: {
-    maxWidth: 185,
-    height: 80,
+    width: 84,
+    height: 90,
     resizeMode: 'contain',
+    marginBottom: 5
   },
   button: {
     backgroundColor: Colors.second,

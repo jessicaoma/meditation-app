@@ -23,7 +23,7 @@ export default function SplashScreen({navigation}) {
       <SafeAreaView style={styles.contaner}>
         <Image
           // @ts-ignore
-          source={require('../assets/images/splash-bg.png')}
+          source={{uri: 'http://okoconnect.com/karim/assets/images/splash-bg.png'}}
           style={styles.background}
         />
         <Logo style={styles.logo} />
@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginTop: '-45%',
+    height: 50,
+    width: 200,
   },
   background: {
     width: '100%',

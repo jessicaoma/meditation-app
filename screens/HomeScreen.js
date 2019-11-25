@@ -12,6 +12,9 @@ import Colors from '../constants/Colors';
 import Buttom from '../components/Buttom';
 import Logo from '../components/Logo';
 import Cover from '../components/Cover';
+import {Ionicons} from '@expo/vector-icons';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import TabBarIcon from '../components/TabBarIcon';
 
 const uriReflexion = 'http://okoconnect.com/karim/images/video-preview.jpeg';
 const uricomomesiento = 'http://okoconnect.com/karim/images/comomesiento.png';
@@ -37,12 +40,36 @@ const dataViajesenprogreso = [
   {id: 2, title: 'crear buenos Habitos', bg: '#cbe3e2'},
 ];
 
+/**
+ * @typedef {object} Props
+ * @prop {import('react-navigation').NavigationScreenProp} [navigation]
+ */
+
+/**
+ * Home Screen
+ * @extends {Component<Props>}
+ * */
 export default class Home extends Component {
-  static navigationOptions = {
-    headerTitle: (
-      <Logo style={{width: 189, height: 47, resizeMode: 'contain'}} />
+  static navigationOptions = ({navigation}) => ({
+    headerStyle: {height: 68},
+    headerLeft: (
+      // eslint-disable-next-line react-native/no-inline-styles
+      <View style={{flex: 1,justifyContent: 'flex-start',marginLeft:16, }}>
+        <Logo style={{width: 173, height: 43, resizeMode: 'contain', paddingBottom:2}} />
+      </View>
     ),
-  };
+    headerRight: (
+      <TouchableOpacity
+        style={{marginRight: 16}}
+        onPress={() => {
+          navigation.openDrawer();
+        }}>
+        <TabBarIcon name={'perfil'} style={{
+          height: 24
+        }} />
+      </TouchableOpacity>
+    ),
+  });
 
   async componentDidMount() {
     // const data = await API.getMeditaciones();
@@ -53,8 +80,7 @@ export default class Home extends Component {
   }
 
   _handleClick = () => {
-    //alert('This is a button!');
-    //this.props.navigation.navigate('Viaje');
+    this.props.navigation.navigate('ViajeStack');
   };
 
   _renderItemLonuevo = ({item}) => (
@@ -74,13 +100,18 @@ export default class Home extends Component {
   );
 
   _handleReflexion = () => {
-    this.props.navigation.navigate('Reflexion',{
+    this.props.navigation.navigate('Reflexion', {
       reflexion: {
-        title : 'Reflexión del día',
-        color: '#fff',
-        media: 'http://okoconnect.com/karim/videos/v1_meditacion_1080.mp4'
-      }
+        title: 'Reflexión del día',
+        color: 'rgb(248, 247, 243)',
+        imagebg: uriReflexion,
+        media: 'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+      },
     });
+  };
+
+  _handleEmociones = () => {
+    this.props.navigation.navigate('EmocionesStack');
   };
 
   render() {
@@ -90,7 +121,7 @@ export default class Home extends Component {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           <Cover source={{uri: uriReflexion}} onPress={this._handleReflexion} />
-          <Buttom>
+          <Buttom onPress={this._handleEmociones}>
             <Text style={styles.title_boxes}>¿como me siento?</Text>
             <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
           </Buttom>

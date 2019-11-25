@@ -34,7 +34,7 @@ export default function Controls(props) {
         <TouchableOpacity onPress={props.onPress} disabled={props.isLoading}>
           <Ionicons
             name={props.isPlaying ? ICON_PAUSE_BUTTON : ICON_PLAY_BUTTON}
-            size={30}
+            size={25}
             color={colors.white}
             style={(styles.shadow, styles.playbuttons)}
           />
@@ -68,11 +68,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.35)',
-    paddingVertical: 10,
-    paddingHorizontal: 25,
+    paddingVertical: 2,
+    paddingHorizontal: 20,
     borderRadius: 15,
-    marginHorizontal: 20,
-    marginBottom: 30,
+    marginHorizontal: 10,
+    marginBottom: 10,
     //activar si quiere verificar la ubicación del componente
     //borderColor: '#F00',
     //borderWidth: 1,

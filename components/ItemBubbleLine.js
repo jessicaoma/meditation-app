@@ -15,15 +15,12 @@ export default class ItemBubbleLine extends Component {
         styleText: {
           fontWeight: 'bold',
         },
-        styleLine: {
-          backgroundColor: color,
-        },
         circle: {
           borderColor: Colors.primaryDark,
         },
         checkedCircle: {
           backgroundColor: color,
-        }
+        },
       });
     } else if (status === 'doing') {
       styleStatus = StyleSheet.create({
@@ -33,18 +30,14 @@ export default class ItemBubbleLine extends Component {
         styleText: {
           fontWeight: 'bold',
         },
-        styleLine: {
-          backgroundColor: Colors.borderWhite,
-        }, 
         circle: {
           borderColor: Colors.primaryDark,
         },
         checkedCircle: {
           backgroundColor: Colors.borderWhite,
-        }
+        },
       });
-    }
-    else if (status === 'viajeTitle') {
+    } else if (status === 'viajeTitle') {
       styleStatus = StyleSheet.create({
         styleContainer: {
           borderColor: color,
@@ -54,21 +47,16 @@ export default class ItemBubbleLine extends Component {
           fontWeight: 'bold',
           fontSize: 18,
         },
-        styleLine: {
-          backgroundColor: color,
-          height: 20,
-        },
         circle: {
-          display: 'none'
+          display: 'none',
         },
       });
     }
     return (
-      <>
       <TouchableOpacity
         style={[styles.container, styleStatus.styleContainer]}
         onPress={onPress}>
-        <View style={[styles.circle, styleStatus.circle]} >
+        <View style={[styles.circle, styleStatus.circle]}>
           <View style={[styles.checkedCircle, styleStatus.checkedCircle]} />
         </View>
         <Text style={[styles.text, styleStatus.styleText]}>
@@ -76,10 +64,6 @@ export default class ItemBubbleLine extends Component {
           {this.props.children}{' '}
         </Text>
       </TouchableOpacity>
-      <View style={[styles.containerLine]}>
-        <View style={[styles.line, styleStatus.styleLine]} />
-      </View>
-      </>
     );
   }
 }
@@ -97,22 +81,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    fontFamily: "MyriadPro-Semibold",
+    fontFamily: 'MyriadPro-Semibold',
     lineHeight: 46,
     fontSize: Dims.window.width * 0.038,
     letterSpacing: 0.89,
     color: Colors.gray,
-  },
-  containerLine: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  line: {
-    height: 15,
-    width: 3,
-    margin: 'auto',
-    backgroundColor: Colors.borderWhite,
   },
   circle: {
     height: 20,

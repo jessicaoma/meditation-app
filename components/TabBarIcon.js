@@ -16,20 +16,22 @@ export default function TabBarIcon({name, focused, tintColor}) {
   let source = null;
   switch (name) {
     case 'viajes':
-      source = require('../assets/images/iconsNavigations/iconViajes.png');
+      source = {uri: 'http://okoconnect.com/karim/assets/images/iconsNavigations/iconViajes.png'};
       break;
     case 'meditar':
-      source = require('../assets/images/iconsNavigations/iconMeditar.png');
+      source = {uri: 'http://okoconnect.com/karim/assets/images/iconsNavigations/iconMeditar.png'};
       break;
     case 'audiolibros':
-      source = require('../assets/images/iconsNavigations/iconLibros.png');
-
+      source = {uri: 'http://okoconnect.com/karim/assets/images/iconsNavigations/iconLibros.png'};
       break;
     case 'angel':
-      source = require('../assets/images/iconsNavigations/iconAngel.png');
+      source = {uri: 'http://okoconnect.com/karim/assets/images/iconsNavigations/iconAngel.png'};
+      break;
+    case 'perfil':
+      source = {uri: 'http://okoconnect.com/karim/assets/images/iconPerfil2.png'};
       break;
     default:
-      source = require('../assets/images/iconsNavigations/iconInicio.png');
+      source = {uri: 'http://okoconnect.com/karim/assets/images/iconsNavigations/iconInicio.png'};
       break;
   }
 
