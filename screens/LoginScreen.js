@@ -6,13 +6,17 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   StatusBar,
-  Image
 } from 'react-native';
 import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
 import Logo from '../components/Logo';
 import Dims from '../constants/Dimensions';
 
+/**
+ * @typedef Props
+ * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @extends {Component<Props>}
+ */
 export default class LoginScreen extends Component {
   handleLogin = () => {
     this.props.navigation.navigate('App');
@@ -69,7 +73,7 @@ const styles = StyleSheet.create({
     width: 84,
     height: 90,
     resizeMode: 'contain',
-    marginBottom: 5
+    marginBottom: 5,
   },
   button: {
     backgroundColor: Colors.second,

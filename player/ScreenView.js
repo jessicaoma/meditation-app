@@ -38,9 +38,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     top: 0,
-    //activar si quiere verificar la ubicación del componente
-    //borderColor: '#0F0',
-    //borderWidth: 1,
   },
   player: {
     width: '100%',

@@ -53,8 +53,15 @@ export default class Home extends Component {
     headerStyle: {height: 68},
     headerLeft: (
       // eslint-disable-next-line react-native/no-inline-styles
-      <View style={{flex: 1,justifyContent: 'flex-start',marginLeft:16, }}>
-        <Logo style={{width: 173, height: 43, resizeMode: 'contain', paddingBottom:2}} />
+      <View style={{flex: 1, justifyContent: 'flex-start', marginLeft: 16}}>
+        <Logo
+          style={{
+            width: 173,
+            height: 43,
+            resizeMode: 'contain',
+            paddingBottom: 2,
+          }}
+        />
       </View>
     ),
     headerRight: (
@@ -63,9 +70,13 @@ export default class Home extends Component {
         onPress={() => {
           navigation.openDrawer();
         }}>
-        <TabBarIcon name={'perfil'} style={{
-          height: 24
-        }} />
+        <TabBarIcon
+          name={'perfil'}
+          styleImage={{
+            height: 24,
+            width: 24,
+          }}
+        />
       </TouchableOpacity>
     ),
   });

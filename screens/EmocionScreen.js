@@ -3,12 +3,12 @@ import {Text, StyleSheet, View, ScrollView, Image} from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 
+/**
+ * @typedef Props
+ * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @extends {Component<Props>}
+ */
 export default class Emocion extends Component {
-  _handleClick = () => {
-    //alert('This is a button!');
-    //this.props.navigation.navigate('Viaje');
-  };
-
   render() {
     return (
       <>
@@ -22,7 +22,6 @@ export default class Emocion extends Component {
               varius, laoreet ultrices vitae mi per class rhoncus aliquet
               nostra, natoque.
             </Text>
-
             <View style={{flex: 1}}>
               <Image
                 style={{
@@ -34,7 +33,6 @@ export default class Emocion extends Component {
                 }}
               />
             </View>
-
             <Text style={styles.paragraph}>
               Antes de salir de la cama asegúrate de establecer la intención
               para el día que acaba de comenzar, perdónate por los errores de
