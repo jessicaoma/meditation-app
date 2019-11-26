@@ -3,6 +3,11 @@ import {View, StyleSheet} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 
+/**
+ * @typedef Props
+ * @prop {import('react-navigation').NavigationScreenProp<{param:{meditacion:import('../utils/API').Meditación}}>} navigation
+ * @extends {Component<Props>}
+ */
 export default class MeditacionScreen extends Component {
   static navigationOptions = ({navigation}) => {
     let meditacion = navigation.getParam('meditacion', {title: 'Meditación'});
@@ -13,7 +18,6 @@ export default class MeditacionScreen extends Component {
   audio = null;
 
   _handleEndIntro = status => {
-    console.log('end intro');
     this.audio.setState({showControls: true, showPlayer: true});
     this.audio._onPlayPausePressed();
   };
@@ -53,7 +57,7 @@ export default class MeditacionScreen extends Component {
               source={{
                 uri: meditacion.media,
               }}
-              //ref={this.refAudio}
+              ref={this.refAudio}
               showControls
               //showPlayFrame
               shouldPlay

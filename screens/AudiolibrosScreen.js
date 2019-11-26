@@ -16,8 +16,12 @@ const numColumns = 2;
 //Estoy restando los margenes laterales (16 + 16), y eso lo divido entre las columnas.
 const widthItem = (Dimensions.window.width - Dimensions.hugeSpace) / numColumns;
 
-//Para la separación entre los elementos de una fila, debe hacerse manual.
-
+/**
+ * @typedef Props
+ * @prop {import('react-navigation').NavigationScreenProp} navigation
+ *
+ * @extends {Component<Props>}
+ */
 export default class AudiolibrosScreen extends Component {
   static navigationOptions = {};
 
@@ -42,7 +46,7 @@ export default class AudiolibrosScreen extends Component {
 
   _renderItem = ({item}) => {
     return (
-      <View style={styles.item}>
+      <View>
         <HalfCover
           source={{uri: item.itemImage}}
           onPress={() => {
@@ -101,17 +105,6 @@ const styles = StyleSheet.create({
     color: Colors.gray,
     fontFamily: 'MyriadPro-Bold',
   },
-  item: {
-    //alignItems: 'flex-start',
-    //justifyContent: 'center',
-    //flex: 1,
-    //margin: 1,
-    //height: Dimensions.window.width / numColumns + 70,
-  },
-  // itemInvisible: {
-  //   backgroundColor: 'transparent',
-  // },
-  //Estilo entre las filas
   wrapperStyle: {
     marginBottom: Dimensions.bigSpace,
   },

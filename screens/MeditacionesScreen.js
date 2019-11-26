@@ -15,10 +15,16 @@ import API from '../utils/API';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 
+/**
+ * @typedef Props
+ * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @extends {Component<Props>}
+ */
 export default class MeditacionesScreen extends Component {
   static navigationOptions = {};
   constructor(props) {
     super(props);
+    /** @type {{meditaciones: import('../utils/API').Meditación[]}} */
     this.state = {
       meditaciones: [],
     };
@@ -31,12 +37,14 @@ export default class MeditacionesScreen extends Component {
     });
   }
 
+  /** @param {import('../utils/API').Meditación} item */
   _handleClick = item => {
     this.props.navigation.navigate('Meditacion', {
       meditacion: item,
     });
   };
 
+  /** @param {{item : import('../utils/API').Meditación}} item */
   _renderItem = ({item}) => {
     return (
       <Buttom
@@ -81,7 +89,7 @@ export default class MeditacionesScreen extends Component {
   _renderListEmpty = _ => {
     return <ActivityIndicator size="large" color={Colors.primaryDark} />;
   };
-
+  /** @param {import('../utils/API').Meditación} item */
   _keyExtractor = item => item.id;
 
   render = () => (

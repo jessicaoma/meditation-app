@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, FlatList, ScrollView} from 'react-native';
 import Colors from '../constants/Colors';
@@ -5,41 +6,65 @@ import HalfCover from '../components/HalfCover';
 import Dims from '../constants/Dimensions';
 
 /**
+ * @typedef Props
+ * @prop {import('react-navigation').NavigationScreenProp} navigation
+ *
  * @typedef {Object} Card
  * @prop {string} key
- * @prop {NodeRequire[]} faces
+ * @prop {NodeRequire | {uri: string}} image
  */
+
+//TODO cambiar la validacion pues ya no se usa expo snack
+const envProd = process.env.NODE_ENV === 'production';
+const numColumns = 2;
+
 /** @type {Card[]} */
 const data = [
   {
     key: 'cartaA',
-    // @ts-ignore
-    faces: [require('../assets/images/emociones/emocion1.png')],
+    image: envProd
+      ? {
+          uri:
+            'http://okoconnect.com/karim/assets/images/emociones/emocion1.png',
+        }
+      : require('../assets/images/emociones/emocion1.png'),
   },
   {
     key: 'cartaB',
-    // @ts-ignore
-    faces: [require('../assets/images/emociones/emocion2.png')],
+    image: envProd
+      ? {
+          uri:
+            'http://okoconnect.com/karim/assets/images/emociones/emocion2.png',
+        }
+      : require('../assets/images/emociones/emocion2.png'),
   },
   {
     key: 'cartaC',
-    // @ts-ignore
-    faces: [require('../assets/images/emociones/emocion3.png')],
+    image: envProd
+      ? {
+          uri:
+            'http://okoconnect.com/karim/assets/images/emociones/emocion3.png',
+        }
+      : require('../assets/images/emociones/emocion3.png'),
   },
   {
     key: 'cartaD',
-    // @ts-ignore
-    faces: [require('../assets/images/emociones/emocion4.png')],
+    image: envProd
+      ? {
+          uri:
+            'http://okoconnect.com/karim/assets/images/emociones/emocion4.png',
+        }
+      : require('../assets/images/emociones/emocion4.png'),
   },
 ];
 
-const numColumns = 2;
-
+/** @extends {Component<Props>} */
 export default class EmocionesScreen extends Component {
   /**
    * @param {Card} item
    */
   _handleClick = item => {
+    // TODO registrar selecion en el servidor
     this.props.navigation.navigate('Emocion', {
       carta: item,
     });
@@ -49,9 +74,6 @@ export default class EmocionesScreen extends Component {
    * @param {import('react-native').ListRenderItemInfo<Card>} item
    */
   renderItem = ({item}) => {
-    // if (item.empty === true) {
-    //   return <View style={[styles.item, styles.itemInvisible]} />;
-    // }
     return (
       <HalfCover
         source={item.faces[0]}

@@ -7,7 +7,7 @@ import Dims from '../constants/Dimensions';
  * @typedef {Object} Props Properties of the component
  * @property {string} [color] Backgroud color for the image, default value Colors.primary
  * @property {import('react-native').ImageSourcePropType} source Source of the image to render
- * @property {(event: any) => void} [onPress] Callback used when the component is Press
+ * @property {(event: import('react-native').GestureResponderEvent) => void} [onPress] Handle press event
  */
 
 /**

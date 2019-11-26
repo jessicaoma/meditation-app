@@ -12,9 +12,8 @@ import Colors from '../constants/Colors';
 import Buttom from '../components/Buttom';
 import Logo from '../components/Logo';
 import Cover from '../components/Cover';
-import {Ionicons} from '@expo/vector-icons';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import TabBarIcon from '../components/TabBarIcon';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const uriReflexion = 'http://okoconnect.com/karim/images/video-preview.jpeg';
 const uricomomesiento = 'http://okoconnect.com/karim/images/comomesiento.png';
@@ -54,8 +53,15 @@ export default class Home extends Component {
     headerStyle: {height: 68},
     headerLeft: (
       // eslint-disable-next-line react-native/no-inline-styles
-      <View style={{flex: 1,justifyContent: 'flex-start',marginLeft:16, }}>
-        <Logo style={{width: 173, height: 43, resizeMode: 'contain', paddingBottom:2}} />
+      <View style={{flex: 1, justifyContent: 'flex-start', marginLeft: 16}}>
+        <Logo
+          style={{
+            width: 173,
+            height: 43,
+            resizeMode: 'contain',
+            paddingBottom: 2,
+          }}
+        />
       </View>
     ),
     headerRight: (
@@ -64,9 +70,13 @@ export default class Home extends Component {
         onPress={() => {
           navigation.openDrawer();
         }}>
-        <TabBarIcon name={'perfil'} style={{
-          height: 24
-        }} />
+        <TabBarIcon
+          name={'perfil'}
+          styleImage={{
+            height: 24,
+            width: 24,
+          }}
+        />
       </TouchableOpacity>
     ),
   });
@@ -114,6 +124,14 @@ export default class Home extends Component {
     this.props.navigation.navigate('EmocionesStack');
   };
 
+  _handelBienvenida = () => {
+    this.props.navigation.navigate('Bienvenida');
+  };
+
+  _handleTutorial = () => {
+    this.props.navigation.navigate('Tutorial');
+  };
+
   render() {
     return (
       <>
@@ -140,11 +158,11 @@ export default class Home extends Component {
             keyExtractor={item => 'viajesenprogreso' + item.id}
           />
           <View style={styles.separador} />
-          <Buttom>
+          <Buttom onPress={this._handelBienvenida}>
             <Text style={styles.title_boxes}>BIENVENIDA</Text>
             <Image source={{uri: uriflor1}} style={styles.itemImage} />
           </Buttom>
-          <Buttom>
+          <Buttom onPress={this._handleTutorial}>
             <Text style={styles.title_boxes}>TUTORIAL</Text>
             <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
           </Buttom>

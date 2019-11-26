@@ -12,10 +12,26 @@ import {Image} from 'react-native';
  * @param {Props} props
  */
 const Logo = ({style, isAlternative}) => {
+  //TODO cambiar la validacion pues ya no se usa expo snack
+  const envProd = process.env.NODE_ENV === 'production';
   return !isAlternative ? (
-    <Image source={{uri: 'http://okoconnect.com/karim/assets/images/logo.png'}} style={style} />
+    <Image
+      source={
+        envProd
+          ? {uri: 'http://okoconnect.com/karim/assets/images/logo.png'}
+          : require('../assets/images/logo.png')
+      }
+      style={style}
+    />
   ) : (
-    <Image source={{uri: 'http://okoconnect.com/karim/assets/images/logo2.png'}} style={style} />
+    <Image
+      source={
+        envProd
+          ? {uri: 'http://okoconnect.com/karim/assets/images/logo2.png'}
+          : require('../assets/images/logo2.png')
+      }
+      style={style}
+    />
   );
 };
 

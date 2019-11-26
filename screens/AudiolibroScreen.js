@@ -3,7 +3,14 @@ import {StyleSheet} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 
+/**
+ * @typedef Props
+ * @prop {import('react-navigation').NavigationScreenProp} navigation
+ *
+ * @extends {Component<Props>}
+ */
 export default class AudiolibroScreen extends Component {
+  /** @param {{navigation : import('react-navigation').NavigationScreenProp}} param*/
   static navigationOptions = ({navigation}) => {
     let audiolibro = navigation.getParam('audiolibro', {title: 'Audiolibro'});
     return {title: audiolibro.title};

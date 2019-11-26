@@ -1,178 +1,186 @@
 import React, {Component} from 'react';
-import {TouchableOpacity,
-        Text, 
-        StyleSheet, 
-        Image, 
-        View, 
-        FlatList, 
-        ScrollView,
-        TextInput} from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  ScrollView,
+  TextInput,
+} from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
-import {HeaderBackButton} from 'react-navigation';
-import {Ionicons} from '@expo/vector-icons'; 
-import HomeScreen from '../screens/HomeScreen';
+import {Ionicons} from '@expo/vector-icons';
+import Constants from 'expo-constants';
 
 /**
- * @typedef Paso
- * @prop {string} id
- * @prop {string} title
- * @prop {string} status
- *
- * @typedef {Object} DataItemSeparator
- * @prop {boolean} highlighted
- * @prop {Paso[]} leadingItem
- *
  * @typedef {object} Props
  * @prop {import('react-navigation').NavigationScreenProp} [navigation]
- */
-
-/**
- * Viaje Screen
+ *
+ * @typedef PremiumFeature
+ * @prop {number} id
+ * @prop {string} title
+ *
+ * @typedef Prices
+ * @prop {number} id
+ * @prop {string} title
+ * @prop {string} cost
+ * @prop {string} description
+ *
  * @extends {Component<Props>}
  * */
 export default class PremiumScreen extends Component {
-
   static navigationOptions = {
     header: null,
   };
 
-  _handleClick = () => {
-    this.props.navigation.navigate('Viajes');
-  };
-  premium = {
-    features: [
+  features = {
+    /** @type {PremiumFeature[]} */
+    premium: [
       {
-        id:1,
+        id: 1,
         title: 'Reflexiones diarias. ',
       },
       {
-        id:2,
+        id: 2,
         title: 'Registro de emociones.',
       },
       {
-        id:3,
-        title: 'Viajes de desarrollo personal, con ejercicios y registro de reflexiones en diario de avance.',
+        id: 3,
+        title:
+          'Viajes de desarrollo personal, con ejercicios y registro de reflexiones en diario de avance.',
       },
       {
-        id:4,
+        id: 4,
         title: 'Meditaciones',
       },
       {
-        id:5,
+        id: 5,
         title: 'Audio libros de Karim Temple.',
       },
       {
-        id:6,
+        id: 6,
         title: 'Mensajes de los ángeles.',
       },
       {
-        id:7,
+        id: 7,
         title: 'Oraciones.',
       },
     ],
-  };
-  prices = {
-    features: [
+    /** @type {Prices[]} */
+    prices: [
       {
-        id:1,
+        id: 1,
         title: 'Plan Mensual',
         cost: '$0.00 / Mensuales',
         description: 'Se renueva automáticamente cada mes.',
       },
       {
-        id:2,
+        id: 2,
         title: 'Plan Anual',
         cost: '$0.00 / Anuales',
-        description: 'Paga anualmente el monto de $0.00. Se renueva automáticamente cada año.',
-      }
+        description:
+          'Paga anualmente el monto de $0.00. Se renueva automáticamente cada año.',
+      },
     ],
   };
 
-  renderItem = ({item}) => {
-    return (
-      <>
-        <View style={styles.list}>
-          <Ionicons name={'md-checkmark-circle-outline'} size={24} style={styles.iconList} />
-          <Text style={styles.textList}>{item.title}</Text>
-        </View>
-      </>
-    );
+  _handleClose = () => {
+    this.props.navigation.goBack(null);
   };
 
-  renderPriceBubble = ({item}) => {
-    return (
-        <>
-          <TouchableOpacity>
-            <View style={styles.priceBubble}>
-              <Text style={styles.titlePriceBubble}>{item.title}</Text>
-              <Text style={styles.costPriceBubble}>{item.cost}</Text>
-              <Text style={styles.descPriceBubble}>{item.description}</Text>
-            </View>
-          </TouchableOpacity>
-        </>
-    );
-  };
+  /** @param {Prices} plan */
+  _handleSelectPlan = plan => {};
+
+  /** @param {PremiumFeature} item */
+  renderPremiumItem = item => (
+    <View style={styles.list} key={`premium${item.id}`}>
+      <Ionicons
+        name={'md-checkmark-circle-outline'}
+        size={24}
+        style={styles.iconList}
+      />
+      <Text style={styles.textList}>{item.title}</Text>
+    </View>
+  );
+
+  /** @param {Prices} item */
+  renderPriceBubble = item => (
+    <TouchableOpacity
+      key={`price${item.id}`}
+      onPress={() => {
+        this._handleSelectPlan(item);
+      }}>
+      <View style={styles.priceBubble}>
+        <Text style={styles.titlePriceBubble}>{item.title}</Text>
+        <Text style={styles.costPriceBubble}>{item.cost}</Text>
+        <Text style={styles.descPriceBubble}>{item.description}</Text>
+      </View>
+    </TouchableOpacity>
+  );
 
   render() {
     return (
       <>
-      <ScrollView contentInsetAdjustmentBehavior="automatic"
-        style={styles.scrollView}>
-        <TouchableOpacity style={styles.close} onPress={this._handleClick}>
-          <View>
+        <View style={styles.statusBar} />
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scrollView}>
+          <TouchableOpacity style={styles.close} onPress={this._handleClose}>
             <Ionicons name={'md-close'} size={30} color={Colors.gray} />
-          </View>
-        </TouchableOpacity>
-        <Image source={{uri: 'http://okoconnect.com/karim/images/premium-top.png'}}
-                style={styles.topimage} />
-               
-        <View style={styles.container}>
-          <Text style={styles.bigTitle}>Elige un plan</Text>
-          <Text style={styles.bigParagraph}>  Accede a todo el contenido ilimitado de la plataforma, los planes de suscripción incluyen acceso a:</Text>
-          <FlatList
-            data={this.premium.features}
-            renderItem={this.renderItem}
-            style={styles.container}
+          </TouchableOpacity>
+          <Image
+            source={{uri: 'http://okoconnect.com/karim/images/premium-top.png'}}
+            style={styles.topimage}
           />
-
-          <FlatList
-            data={this.prices.features}
-            renderItem={this.renderPriceBubble}
-            style={styles.container}
-          />
-          <View style={{paddingHorizontal: Dimensions.regularSpace}}>
-            <View style={styles.priceBubble}>
-              <Text style={styles.titlePriceBubble}>Plan Corporativo</Text>
-              <Text style={styles.descPriceBubble}>Para planes corporativos o empresariales.</Text>
-              <TextInput
-                style={[styles.inputText]}
-                placeholder={'Correo electrónico'}
-                secureTextEntry={false}
-              />
-              <TouchableOpacity
-                onPress={this._handleClick}
-                style={[styles.button]}>
-                <Text style={styles.buttonLabel}>ENVIAR</Text>
-              </TouchableOpacity>
+          <View style={styles.container}>
+            <Text style={styles.bigTitle}>Elige un plan</Text>
+            <Text style={styles.bigParagraph}>
+              {' '}
+              Accede a todo el contenido ilimitado de la plataforma, los planes
+              de suscripción incluyen acceso a:
+            </Text>
+            <View style={styles.container}>
+              {this.features.premium.map(item => this.renderPremiumItem(item))}
+            </View>
+            <View style={styles.container}>
+              {this.features.prices.map(item => this.renderPriceBubble(item))}
+            </View>
+            <View style={{paddingHorizontal: Dimensions.regularSpace}}>
+              <View style={styles.priceBubble}>
+                <Text style={styles.titlePriceBubble}>Plan Corporativo</Text>
+                <Text style={styles.descPriceBubble}>
+                  Para planes corporativos o empresariales.
+                </Text>
+                <TextInput
+                  style={[styles.inputText]}
+                  placeholder={'Correo electrónico'}
+                  secureTextEntry={false}
+                />
+                <TouchableOpacity
+                  onPress={this._handleClose}
+                  style={[styles.button]}>
+                  <Text style={styles.buttonLabel}>ENVIAR</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
+        </ScrollView>
+        <View style={[styles.containerBottomButton]}>
+          <TouchableOpacity onPress={this._handleClose} style={[styles.button]}>
+            <Text style={styles.buttonLabel}>Empieza tu prueba gratis</Text>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
-      <View style={[styles.containerBottomButton]}>
-        <TouchableOpacity
-          onPress={this._handleClick}
-          style={[styles.button]}>
-          <Text style={styles.buttonLabel}>Empieza tu prueba gratis</Text>
-        </TouchableOpacity>
-      </View>
       </>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  statusBar: {
+    height: Constants.statusBarHeight,
+  },
   scrollView: {
     paddingBottom: 50,
     flex: 1,
@@ -195,6 +203,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 25,
     top: 25,
+    zIndex: 100,
   },
   bigTitle: {
     fontSize: 22,
@@ -276,7 +285,7 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Regular',
     backgroundColor: 'white',
     borderRadius: 10,
-    marginBottom: 15, 
+    marginBottom: 15,
     paddingHorizontal: 10,
     borderColor: '#b9c2df',
     borderWidth: 1,
@@ -304,5 +313,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     elevation: 4,
-  }
+  },
 });

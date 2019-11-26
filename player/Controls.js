@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
+// @ts-nocheck
+import React from 'react';
 import {Text, TouchableOpacity, StyleSheet, View, Platform} from 'react-native';
 import Slider from 'react-native-slider';
 import {Ionicons} from '@expo/vector-icons';
 import colors from '../constants/Colors';
-import PropTypes from 'prop-types';
-
 
 /**
  * @typedef {Object} Props Properties of the component
@@ -19,14 +18,16 @@ import PropTypes from 'prop-types';
 
 const ICON_PLAY_BUTTON = 'md-play';
 const ICON_PAUSE_BUTTON = 'md-pause';
-const sliderThumb = require('../assets/images/sliderimage.png');
+//TODO cambiar la validacion pues ya no se usa expo snack
+const envProd = process.env.NODE_ENV === 'production';
+const sliderThumb = envProd
+  ? {uri: 'http://okoconnect.com/karim/assets/images/sliderimage.png'}
+  : require('../assets/images/sliderimage.png');
 /**
  * Controls elements for the player
  * @param {Props} props sended to the component
  */
 export default function Controls(props) {
-
-
   return (
     <>
       <TouchableOpacity onPress={props.onPress} style={styles.playscreen} />
@@ -46,7 +47,7 @@ export default function Controls(props) {
           onSlidingComplete={props.onSlidingComplete}
           disabled={props.isLoading}
           minimumTrackTintColor={colors.white}
-          thumbTintColor={Platform.select({ ios: null, android: colors.white })}
+          thumbTintColor={Platform.select({ios: null, android: colors.white})}
           thumbImage={sliderThumb}
           thumbStyle={styles.thumb}
         />
@@ -73,9 +74,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginHorizontal: 10,
     marginBottom: 10,
-    //activar si quiere verificar la ubicación del componente
-    //borderColor: '#F00',
-    //borderWidth: 1,
   },
   playscreen: {
     position: 'absolute',
@@ -85,8 +83,6 @@ const styles = StyleSheet.create({
     top: 0,
     height: '100%',
     width: '100%',
-    //borderColor: '#F0F',
-    //borderWidth: 1,
   },
   thumb: {
     width: 10,
@@ -114,7 +110,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
   },
 });
