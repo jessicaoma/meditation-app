@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, FlatList, ActivityIndicator} from 'react-native';
 import ItemBubble from '../components/ItemBubble';
-import Colors from '../constants/Colors';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import Dimensions from '../constants/Dimensions';
@@ -9,7 +8,7 @@ import API from '../utils/API';
 
 /**
  * @typedef {Object} ParamsNavigation
- * @prop {import('../utils/API').Categoria} categoria
+ * @prop {import('../utils/types').Categoria} categoria
  *
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
@@ -17,7 +16,7 @@ import API from '../utils/API';
  * @extends {Component<Props>}
  */
 export default class Categoria extends Component {
-  categoria = {
+  /*categoria = {
     id: 1,
     title: 'Categoria',
     cover: 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
@@ -25,36 +24,49 @@ export default class Categoria extends Component {
       {
         id: 1,
         title: '¿Qué es ser feliz?',
-        status: 'done',
+        status: 2,
       },
       {
         id: 2,
         title: 'Viaja ligero',
-        status: 'doing',
+        status: 1,
       },
       {
         id: 3,
         title: 'Conectar con el corazón',
-        status: 'todo',
+        status: 0,
       },
       {
         id: 4,
         title: 'Vive incondicionalmente',
-        status: 'todo',
+        status: 0,
       },
       {
         id: 5,
         title: 'Acepta radicalmente',
-        status: 'todo',
+        status: 0,
       },
       {
         id: 6,
         title: 'Otro título',
-        status: 'todo',
+        status: 0,
       },
     ],
     color: this.props.navigation.getParam('bg', Colors.primary),
     bgImg: 'http://okoconnect.com/karim/images/viaje-bg-1.png',
+  };*/
+  /** @type {import('../utils/API').Categoria} */
+  categoria = {
+    id: 'cat1',
+    color: '#fdd58d',
+    itemImage: 'http://okoconnect.com/karim/images/cat1.png',
+    title: 'Ser feliz',
+    cover: 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
+    media: 'http://okoconnect.com/karim/videos/video2.mp4',
+    backgroundImage: 'http://okoconnect.com/karim/images/viaje-bg-1.png',
+  };
+  state = {
+    viajes: [],
   };
 
   static navigationOptions = ({navigation}) => {
@@ -63,10 +75,14 @@ export default class Categoria extends Component {
     };
   };
 
-  // TODO crear llamada a viajes para obtener los correspondientes a la categoria
-  //async componentDidMount = () => {
-  //  const viajes = await API.getViajesCategoria(this.props.navigation.state.params.categoria.id);
-  //};
+  componentDidMount = async () => {
+    const viajes = await API.getViajesCategoria(
+      this.props.navigation.state.params.categoria.id,
+      'example@example.com',
+    );
+    this.setState({viajes});
+    console.log(viajes);
+  };
 
   _goViaje = () => {
     this.props.navigation.navigate('ViajeStack');
@@ -76,13 +92,13 @@ export default class Categoria extends Component {
     return (
       <ScreenBg
         source={{
-          uri: 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
+          uri: this.categoria.cover,
         }}
         styleView={[styles.containBG, styles.cover]}
         styleImage={styles.imageBG}>
         <Player
           source={{
-            uri: 'http://okoconnect.com/karim/videos/video2.mp4',
+            uri: this.categoria.media,
           }}
           isVideo
           showControls
@@ -111,13 +127,14 @@ export default class Categoria extends Component {
   keyExtractor = item => item.id.toString() + 'viaje';
 
   render() {
+    this.categoria = this.props.navigation.state.params.categoria;
     return (
       <ScreenBg
-        source={{uri: this.categoria.bgImg}}
+        source={{uri: this.categoria.backgroundImage}}
         color={this.categoria.color}>
         <FlatList
           ListHeaderComponent={this.renderListHeader}
-          data={this.categoria.viajes}
+          data={this.state.viajes}
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
           style={styles.container}

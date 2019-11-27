@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
+import {enumStatus} from '../utils/types';
 
 /**
  * A button whit border radius 30º
  * @typedef Props
  * @prop {string} color Primary color to used
- * @prop { 'todo' | 'doing' | 'done'} status Status of the item
+ * @prop {enumStatus | string} status Status of the item
  * @prop {(event: import('react-native').GestureResponderEvent) => void} [onPress] Handle press event
  * @extends {Component<Props>}
  */
@@ -15,7 +16,7 @@ export default class ItemBubble extends Component {
   render() {
     let {color, status, onPress} = this.props;
     let styleStatus = {};
-    if (status === 'done') {
+    if (status === enumStatus.done) {
       styleStatus = StyleSheet.create({
         styleContainer: {
           borderColor: color,
@@ -25,7 +26,7 @@ export default class ItemBubble extends Component {
           fontWeight: 'bold',
         },
       });
-    } else if (status === 'doing') {
+    } else if (status === enumStatus.doing) {
       styleStatus = StyleSheet.create({
         styleContainer: {
           borderColor: color,

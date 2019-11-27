@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import {Text, FlatList, StyleSheet, Image, View, StatusBar} from 'react-native';
+import {
+  Text,
+  FlatList,
+  StyleSheet,
+  Image,
+  View,
+  StatusBar,
+  ActivityIndicator,
+} from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
@@ -14,7 +22,7 @@ export default class Categorias extends Component {
   static navigationOptions = {
     header: null,
   };
-  /** @type {{categorias:import('../utils/API').Categoria[]}} */
+  /** @type {{categorias:import('../utils/types').Categoria[]}} */
   state = {
     categorias: [],
   };
@@ -38,6 +46,10 @@ export default class Categorias extends Component {
 
   renderListHeader = () => <Text style={styles.sectionTitle}>Categorías</Text>;
 
+  renderListEmpty = _ => (
+    <ActivityIndicator size="large" color={Colors.primaryDark} />
+  );
+
   /** @param {import('react-native').ListRenderItemInfo<import('../utils/API').Categoria>} info*/
   renderItem = ({item}) => (
     <Buttom
@@ -59,6 +71,7 @@ export default class Categorias extends Component {
           ListHeaderComponent={this.renderListHeader}
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
+          ListEmptyComponent={this.renderListEmpty}
         />
       </>
     );
