@@ -5,22 +5,23 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Image,Button
+  Image,
 } from 'react-native';
-import { BarChart, Grid, XAxis} from 'react-native-svg-charts'
+import {BarChart, Grid, XAxis} from 'react-native-svg-charts';
 import ItemBubble from '../components/ItemBubble';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
 import {HeaderBackButton} from 'react-navigation';
-import {LogoEmocion1} from '../constants/LogoEmocion1';
-import {LogoEmocion2} from '../constants/LogoEmocion2';
-import {LogoEmocion3} from '../constants/LogoEmocion3';
-import {LogoEmocion4} from '../constants/LogoEmocion4';
+import LogoEmocion1 from '../constants/LogoEmocion1';
+import LogoEmocion2 from '../constants/LogoEmocion2';
+import LogoEmocion3 from '../constants/LogoEmocion3';
+import LogoEmocion4 from '../constants/LogoEmocion4';
+import {enumStatus} from '../utils/types';
 
-const fill = '#bfc6e2'
-const spacingInner = 0.5
-const spacingOuter = 0.5
+const fill = '#bfc6e2';
+const spacingInner = 0.5;
+const spacingOuter = 0.5;
 
 const tiempos = [
   {
@@ -37,37 +38,35 @@ const tiempos = [
   },
 ];
 
-
 export default class MisEmocionesScreen extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      emocionesData: [4,2,0,1],
+      emocionesData: [4, 2, 0, 1],
       keys: ['excited', 'happy', 'sad', 'depressed'],
       colors: ['#bfc6e2', '#bfc6e2', '#bfc6e2', '#bfc6e2'],
       title: 'Semanal',
-    }
+    };
   }
   onPressSemanal = () => {
     this.setState({
-      emocionesData: [4,2,0,1],
+      emocionesData: [4, 2, 0, 1],
       title: 'Semanal',
-    })
-  }
-  
+    });
+  };
+
   onPressMensual = () => {
     this.setState({
-      emocionesData: [17,7,4,1],
+      emocionesData: [17, 7, 4, 1],
       title: 'Mensual',
-    })
-  }
+    });
+  };
 
   onPressAnual = () => {
     this.setState({
-      emocionesData:[270,32,35,28],
-    })
-  }
-
+      emocionesData: [270, 32, 35, 28],
+    });
+  };
 
   static navigationOptions = ({navigation}) => ({
     title: 'Mis Emociones',
@@ -79,14 +78,18 @@ export default class MisEmocionesScreen extends Component {
     this.props.navigation.navigate('Paso');
   };
 
-
   keyExtractor = item => item.id;
   render() {
     return (
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.scrollView}>
-        <Image source={{uri: 'http://okoconnect.com/karim/images/misemociones-top.png'}} style={styles.image} />
+        <Image
+          source={{
+            uri: 'http://okoconnect.com/karim/images/misemociones-top.png',
+          }}
+          style={styles.image}
+        />
         <View style={styles.containerButtons}>
           <TouchableOpacity
             onPress={this.onPressSemanal}
@@ -102,16 +105,14 @@ export default class MisEmocionesScreen extends Component {
         <View style={styles.container}>
           <Text style={styles.bigParagraph}>Tu reporte {this.state.title}</Text>
 
-          <View style={{ padding: 20, height: 170 }}>
+          <View style={{padding: 20, height: 170}}>
             <BarChart
-                style={styles.barChart}
-                keys={ this.state.keys }
-                colors={ this.state.colors }
-                data={ this.state.emocionesData }
-                svg={{fill}}
-                contentInset={{ top: 30, }}
-            >
-            </BarChart>
+              style={styles.barChart}
+              keys={this.state.keys}
+              colors={this.state.colors}
+              data={this.state.emocionesData}
+              svg={{fill}}
+              contentInset={{top: 30}}></BarChart>
             <View style={styles.containerLabels}>
               <LogoEmocion1 />
               <LogoEmocion2 />
@@ -123,20 +124,22 @@ export default class MisEmocionesScreen extends Component {
           <View>
             <Text style={styles.bigTitle}>¡Sigue Así!</Text>
             <Text style={styles.bigParagraph}>
-              Esta semana has estado feliz 5 días. Sentir gratitud es tu mejor recompensa.
+              Esta semana has estado feliz 5 días. Sentir gratitud es tu mejor
+              recompensa.
             </Text>
             <Text style={styles.bigParagraph}>
-            Te recomiendo iniciar este viaje que te ayudará a sentirte cada día mejor</Text>
+              Te recomiendo iniciar este viaje que te ayudará a sentirte cada
+              día mejor
+            </Text>
             <ItemBubble
               color={'#fdd58d'}
-              status={'done'}
+              status={enumStatus.done}
               onPress={this._handleClick}>
               {'Ser Feliz'}
             </ItemBubble>
           </View>
-      </View>
+        </View>
       </ScrollView>
-
     );
   }
 }
@@ -156,7 +159,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 25,
     height: 30,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   containerButtons: {
     flex: 1,

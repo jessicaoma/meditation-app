@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  FlatList,
-  View,
-  ScrollView,
-} from 'react-native';
+import {Text, StyleSheet, FlatList, ScrollView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import ItemBubble from '../components/ItemBubble';
 import Colors from '../constants/Colors';

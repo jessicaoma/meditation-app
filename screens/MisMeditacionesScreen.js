@@ -10,10 +10,6 @@ import {
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
-import Constants from 'expo-constants';
-import API from '../utils/API';
-import ScreenBg from '../components/screenBg';
-import Player from '../player/Player';
 
 /**
  * @typedef Props
@@ -24,39 +20,45 @@ export default class MisMeditacionesScreen extends Component {
   static navigationOptions = {};
   constructor(props) {
     super(props);
-    /** @type {{meditaciones: import('../utils/API').Meditación[]}} */
+    /** @type {{meditaciones: import('../utils/types').Meditación[]}} */
     this.state = {
       meditaciones: [
-        {"id":"med1",
-        "title":"Meditación Básica",
-        "backgroundImage":"http://okoconnect.com/karim/images/meditar2-full.png",
-        "color":"#7883a4",
-        "itemImage":"http://okoconnect.com/karim/images/meditar2.png",
-        "intro":"http://okoconnect.com/karim/videos/pre_meditacion.mp4",
-        "media":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3",
-        "time":"05hr 22min",
+        {
+          id: 'med1',
+          title: 'Meditación Básica',
+          backgroundImage:
+            'http://okoconnect.com/karim/images/meditar2-full.png',
+          color: '#7883a4',
+          itemImage: 'http://okoconnect.com/karim/images/meditar2.png',
+          intro: 'http://okoconnect.com/karim/videos/pre_meditacion.mp4',
+          media:
+            'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+          time: '05hr 22min',
         },
         {
-        "id":"med2",
-        "title":"Meditación otra",
-        "backgroundImage":"http://okoconnect.com/karim/images/meditar4-full.png",
-        "color":"#7883a4",
-        "itemImage":"http://okoconnect.com/karim/images/meditar4.png",
-        "intro":"http://okoconnect.com/karim/videos/pre_meditacion.mp4","media":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3",
-        "time":"01hr 04min",
+          id: 'med2',
+          title: 'Meditación otra',
+          backgroundImage:
+            'http://okoconnect.com/karim/images/meditar4-full.png',
+          color: '#7883a4',
+          itemImage: 'http://okoconnect.com/karim/images/meditar4.png',
+          intro: 'http://okoconnect.com/karim/videos/pre_meditacion.mp4',
+          media:
+            'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+          time: '01hr 04min',
         },
       ],
     };
   }
 
-  /** @param {import('../utils/API').Meditación} item */
+  /** @param {import('../utils/types').Meditación} item */
   _handleClick = item => {
     this.props.navigation.navigate('Mis Meditaciones', {
       meditacion: item,
     });
   };
 
-  /** @param {{item : import('../utils/API').Meditación}} item */
+  /** @param {{item : import('../utils/types').Meditación}} item */
   _renderItem = ({item}) => {
     return (
       <Buttom
@@ -80,28 +82,23 @@ export default class MisMeditacionesScreen extends Component {
   _renderListEmpty = _ => {
     return <ActivityIndicator size="large" color={Colors.primaryDark} />;
   };
-  /** @param {import('../utils/API').Meditación} item */
+  /** @param {import('../utils/types').Meditación} item */
   _keyExtractor = item => item.id;
 
   render = () => (
-    <>
-      <View style={styles.statusBar} />
-      <FlatList
-        data={this.state.meditaciones}
-        renderItem={this._renderItem}
-        ListEmptyComponent={this._renderListEmpty}
-        style={styles.container}
-        keyExtractor={this._keyExtractor}
-      />
-    </>
+    <FlatList
+      data={this.state.meditaciones}
+      renderItem={this._renderItem}
+      ListEmptyComponent={this._renderListEmpty}
+      style={styles.container}
+      keyExtractor={this._keyExtractor}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  statusBar: {
-    height: Constants.statusBarHeight,
-  },
   container: {
+    paddingTop: Dims.regularSpace,
     paddingHorizontal: Dims.regularSpace,
     flex: 1,
   },

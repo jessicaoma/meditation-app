@@ -22,7 +22,7 @@ export default class DrawerContentComponents extends Component {
     const options = this.props.descriptors[item.key].options;
     return (
       <View style={[styles.itemStyle]} key={item.key}>
-        <TabBarIcon name={item.key} styleImage={styles.icon} />
+        <TabBarIcon name={item.key} />
         <Text
           style={[styles.labelStyle]}
           onPress={this.navigateToScreen(item.key)}>
