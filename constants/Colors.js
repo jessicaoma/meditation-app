@@ -23,7 +23,7 @@ const colors = {
   borderWhite: '#e3e3e3',
   backgroundSplash: '#e6e9f4',
   tabIconDefault: '#aeafbe',
-  tabIconSelected: '#515471',
+  tabIconSelected: '#494C6B',
   white: 'rgb(252, 253, 255)',
 };
 export default colors;

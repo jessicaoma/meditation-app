@@ -1,22 +1,20 @@
 // @ts-nocheck
 import React from 'react';
-import {StyleSheet, Image} from 'react-native';
-import {LogoInicio} from '../constants/LogoInicio';
-import {LogoViajes} from '../constants/LogoViajes';
-import {LogoPerfil} from '../constants/LogoPerfil';
-import {LogoPremium} from '../constants/LogoPremium';
-import {LogoAudiolibro} from '../constants/LogoAudiolibro';
-import {LogoMeditacion} from '../constants/LogoMeditacion';
-import {LogoAngel} from '../constants/LogoAngel';
-import {LogoEmociones} from '../constants/LogoEmociones';
-import {LogoDiario} from '../constants/LogoDiario';
-import {LogoViajesCompletados} from '../constants/LogoViajesCompletados';
-import {LogoMisMeditaciones} from '../constants/LogoMisMeditaciones';
+import LogoInicio from '../constants/LogoInicio';
+import LogoViajes from '../constants/LogoViajes';
+import LogoMeditacion from '../constants/LogoMeditacion';
+import LogoAudiolibro from '../constants/LogoAudiolibro';
+import LogoAngel from '../constants/LogoAngel';
+import LogoPerfil from '../constants/LogoPerfil';
+import LogoEmociones from '../constants/LogoEmociones';
+import LogoViajesCompletados from '../constants/LogoViajesCompletados';
+import LogoDiario from '../constants/LogoDiario';
+import LogoMisMeditaciones from '../constants/LogoMisMeditaciones';
+import LogoPremium from '../constants/LogoPremium';
 
 /**
  * @typedef {Object} Props
  * @property {string} name Name of the Tab Icon
- * @property {import('react-native').ImageStyle} [styleImage] Indicate that the icon selected
  * @property {string} [tintColor] Color to used in the icon
  */
 
@@ -24,10 +22,8 @@ import {LogoMisMeditaciones} from '../constants/LogoMisMeditaciones';
  * Tab Bar Icon Component
  * @param {Props} props
  */
-export default function TabBarIcon({name, styleImage, tintColor}) {
-
+export default function TabBarIcon({name, tintColor}) {
   function renderIcon() {
-    const envProd = process.env.NODE_ENV === 'production';
     switch (name) {
       default:
         return <LogoInicio tintColor={tintColor} />;
@@ -53,10 +49,5 @@ export default function TabBarIcon({name, styleImage, tintColor}) {
         return <LogoPremium tintColor={tintColor} />;
     }
   }
-  return (
-    renderIcon()
-  );
+  return renderIcon();
 }
-
-const styles = StyleSheet.create({
-});
