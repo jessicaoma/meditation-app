@@ -7,7 +7,7 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import {BarChart, Grid, XAxis} from 'react-native-svg-charts';
+import {BarChart} from 'react-native-svg-charts';
 import ItemBubble from '../components/ItemBubble';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
@@ -19,7 +19,7 @@ import LogoEmocion3 from '../constants/LogoEmocion3';
 import LogoEmocion4 from '../constants/LogoEmocion4';
 import {enumStatus} from '../utils/types';
 
-const fill = '#bfc6e2';
+/*const fill = '#bfc6e2';
 const spacingInner = 0.5;
 const spacingOuter = 0.5;
 
@@ -36,7 +36,7 @@ const tiempos = [
     label: 'Tu Año',
     value: 'anual',
   },
-];
+];*/
 
 export default class MisEmocionesScreen extends Component {
   constructor(props) {
@@ -81,9 +81,7 @@ export default class MisEmocionesScreen extends Component {
   keyExtractor = item => item.id;
   render() {
     return (
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={styles.scrollView}>
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
         <Image
           source={{
             uri: 'http://okoconnect.com/karim/images/misemociones-top.png',
@@ -105,14 +103,13 @@ export default class MisEmocionesScreen extends Component {
         <View style={styles.container}>
           <Text style={styles.bigParagraph}>Tu reporte {this.state.title}</Text>
 
-          <View style={{padding: 20, height: 170}}>
+          <View style={styles.barChartContainer}>
             <BarChart
               style={styles.barChart}
-              keys={this.state.keys}
-              colors={this.state.colors}
               data={this.state.emocionesData}
-              svg={{fill}}
-              contentInset={{top: 30}}></BarChart>
+              svg={{fill: '#bfc6e2'}}
+              contentInset={{top: 30}}
+            />
             <View style={styles.containerLabels}>
               <LogoEmocion1 />
               <LogoEmocion2 />
@@ -145,13 +142,10 @@ export default class MisEmocionesScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    paddingBottom: 60,
-  },
   container: {
     paddingHorizontal: Dimensions.regularSpace,
     paddingTop: Dimensions.regularSpace,
-    //justifyContent: 'center',
+    paddingBottom: Dimensions.hugeSpace,
   },
   containerLabels: {
     justifyContent: 'space-around',
@@ -170,11 +164,12 @@ const styles = StyleSheet.create({
     right: 20,
     top: 20,
   },
+  barChartContainer: {padding: 20, height: 170},
   barChart: {
     height: 140,
     borderLeftColor: '#cdd2de',
     borderBottomColor: '#cdd2de',
-    borderRightColor: '#cdd2de',
+    //borderRightColor: '#cdd2de',
     borderBottomWidth: 1,
     borderLeftWidth: 1,
     marginBottom: 20,

@@ -55,7 +55,7 @@ export default class Categoria extends Component {
     color: this.props.navigation.getParam('bg', Colors.primary),
     bgImg: 'http://okoconnect.com/karim/images/viaje-bg-1.png',
   };*/
-  /** @type {import('../utils/API').Categoria} */
+  /** @type {import('../utils/types').Categoria} */
   categoria = {
     id: 'cat1',
     color: '#fdd58d',
@@ -81,7 +81,6 @@ export default class Categoria extends Component {
       'example@example.com',
     );
     this.setState({viajes});
-    console.log(viajes);
   };
 
   _goViaje = () => {
