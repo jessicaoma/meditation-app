@@ -80,17 +80,22 @@ export default class ViajeScreen extends Component {
     headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
   });
 
-  _handleClick = () => {
+  _handleClick = index => {
     //alert('This is a button!');
-    this.props.navigation.navigate('Paso');
+    this.props.navigation.navigate('PasoA'
+    //   {pasos: this.viaje.pasos,
+    //   position: index,}
+    );
   };
-  renderItem = ({item}) => {
+  renderItem = ({item, index}) => {
     return (
       <>
         <ItemBubbleLine
           color={this.viaje.color}
           status={item.status}
-          onPress={this._handleClick}>
+          onPress={() => {
+            this._handleClick(index);
+          }}>
           {item.title}
         </ItemBubbleLine>
       </>
@@ -141,12 +146,14 @@ export default class ViajeScreen extends Component {
             keyExtractor={this.keyExtractor}
             style={styles.container}
             ItemSeparatorComponent={this.renderSeparator}
+            ListFooterComponent={
+              <TouchableOpacity
+                //onPress={this.handleContinue}
+                style={[styles.button]}>
+                <Text style={styles.buttonLabel}>Continuar mi viaje</Text>
+              </TouchableOpacity>
+            }
           />
-          <TouchableOpacity
-            //onPress={this.handleContinue}
-            style={[styles.button]}>
-            <Text style={styles.buttonLabel}>Continuar mi viaje</Text>
-          </TouchableOpacity>
         </ScreenBg>
       </>
     );
