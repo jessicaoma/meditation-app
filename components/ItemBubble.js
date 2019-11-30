@@ -48,6 +48,30 @@ export default class ItemBubble extends Component {
         },
       });
     }
+    else if (status === 'viajeDiario') {
+      styleStatus = StyleSheet.create({
+        styleContainer: {
+          borderColor: color,
+          backgroundColor: color,
+        },
+        styleText: {
+          fontWeight: 'bold',
+        },
+      });
+    }
+    else if (status === 'meditar-audiolibro') {
+      styleStatus = StyleSheet.create({
+        styleContainer: {
+          borderColor: '#ffffff',
+          backgroundColor: color,
+          borderRadius: 10,
+        },
+        styleText: {
+          fontWeight: 'regular',
+          color: 'white',
+        },
+      });
+    }
     return (
       <TouchableOpacity
         style={[styles.container, styleStatus.styleContainer]}
