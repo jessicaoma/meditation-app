@@ -5,6 +5,7 @@ import {
   View,
   FlatList,
   ActivityIndicator,
+  SafeAreaView
 } from 'react-native';
 import HalfCover from '../components/HalfCover';
 import Dimensions from '../constants/Dimensions';
@@ -70,6 +71,7 @@ export default class AudiolibrosScreen extends Component {
   render() {
     return (
       <>
+        <SafeAreaView>
         <View style={styles.statusBar} />
         <FlatList
           data={this.state.audioLibros}
@@ -81,6 +83,7 @@ export default class AudiolibrosScreen extends Component {
           ListHeaderComponent={this._renderListHeader}
           style={styles.container}
         />
+        </SafeAreaView>
       </>
     );
   }

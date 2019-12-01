@@ -7,6 +7,7 @@ import {
   View,
   ScrollView,
   TextInput,
+  SafeAreaView
 } from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
@@ -123,6 +124,7 @@ export default class PremiumScreen extends Component {
   render() {
     return (
       <>
+      <SafeAreaView>
         <View style={styles.statusBar} />
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
@@ -172,6 +174,7 @@ export default class PremiumScreen extends Component {
             <Text style={styles.buttonLabel}>Empieza tu prueba gratis</Text>
           </TouchableOpacity>
         </View>
+      </SafeAreaView>
       </>
     );
   }

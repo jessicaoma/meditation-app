@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   StatusBar,
+  SafeAreaView
 } from 'react-native';
 import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
@@ -26,6 +27,7 @@ export default class LoginScreen extends Component {
   render() {
     return (
       <>
+        <SafeAreaView>
         <StatusBar barStyle="dark-content" />
         <View style={styles.container}>
           <Logo isAlternative style={styles.logo} />
@@ -50,6 +52,7 @@ export default class LoginScreen extends Component {
           <View />
           <View />
         </View>
+        </SafeAreaView>
       </>
     );
   }

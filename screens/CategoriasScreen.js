@@ -7,6 +7,7 @@ import {
   View,
   StatusBar,
   ActivityIndicator,
+  SafeAreaView
 } from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
@@ -64,6 +65,7 @@ export default class Categorias extends Component {
   render() {
     return (
       <>
+        <SafeAreaView>
         <View style={styles.statusBar} />
         <FlatList
           style={styles.container}
@@ -73,6 +75,7 @@ export default class Categorias extends Component {
           keyExtractor={this.keyExtractor}
           ListEmptyComponent={this.renderListEmpty}
         />
+        </SafeAreaView>
       </>
     );
   }

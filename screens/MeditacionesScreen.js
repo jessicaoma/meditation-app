@@ -6,6 +6,7 @@ import {
   View,
   FlatList,
   ActivityIndicator,
+  SafeAreaView
 } from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
@@ -94,6 +95,7 @@ export default class MeditacionesScreen extends Component {
 
   render = () => (
     <>
+    <SafeAreaView>
       <View style={styles.statusBar} />
       <FlatList
         data={this.state.meditaciones}
@@ -103,6 +105,7 @@ export default class MeditacionesScreen extends Component {
         style={styles.container}
         keyExtractor={this._keyExtractor}
       />
+    </SafeAreaView>
     </>
   );
 }

@@ -6,6 +6,7 @@ import {
   View,
   ScrollView,
   Image,
+  SafeAreaView
 } from 'react-native';
 import {BarChart} from 'react-native-svg-charts';
 import ItemBubble from '../components/ItemBubble';
@@ -100,6 +101,7 @@ export default class MisEmocionesScreen extends Component {
   keyExtractor = item => item.id;
   render() {
     return (
+      <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <Image
           source={{
@@ -163,6 +165,7 @@ export default class MisEmocionesScreen extends Component {
           </View>
         </View>
       </ScrollView>
+      </SafeAreaView>
     );
   }
 }

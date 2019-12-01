@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 
@@ -21,6 +21,7 @@ export default class AudiolibroScreen extends Component {
     let audiolibro = navigation.getParam('audiolibro', {});
     return (
       <>
+        <SafeAreaView>
         <ScreenBg
           source={{uri: audiolibro.backgroundImage}}
           color={audiolibro.color}
@@ -34,6 +35,7 @@ export default class AudiolibroScreen extends Component {
             shouldPlay
           />
         </ScreenBg>
+        </SafeAreaView>
       </>
     );
   }

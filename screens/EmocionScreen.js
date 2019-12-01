@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, ScrollView, Image} from 'react-native';
+import {Text, StyleSheet, View, ScrollView, Image, SafeAreaView} from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 
@@ -12,6 +12,7 @@ export default class Emocion extends Component {
   render() {
     return (
       <>
+      <SafeAreaView>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
@@ -42,6 +43,7 @@ export default class Emocion extends Component {
             </Text>
           </View>
         </ScrollView>
+        </SafeAreaView>
       </>
     );
   }

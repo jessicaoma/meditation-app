@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
+import { SafeAreaView } from 'react-native';
 
 /**
  * @typedef {object} Props
@@ -18,6 +19,7 @@ export default class TutorialScreen extends Component {
     let reflexion = navigation.getParam('reflexion', {});
     return (
       <>
+      <SafeAreaView>
         <ScreenBg
           source={{
             uri: 'http://okoconnect.com/karim/images/video-preview.jpeg',
@@ -33,6 +35,7 @@ export default class TutorialScreen extends Component {
             shouldPlay
           />
         </ScreenBg>
+      </SafeAreaView>
       </>
     );
   }

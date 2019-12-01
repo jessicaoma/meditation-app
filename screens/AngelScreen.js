@@ -6,6 +6,7 @@ import {
   ScrollView,
   Text,
   ImageBackground,
+  SafeAreaView
 } from 'react-native';
 import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
@@ -81,6 +82,7 @@ export default class AngelScreen extends Component {
 
     return (
       <>
+        <SafeAreaView>
         <View style={styles.statusBar} />
         <View style={[styles.container]}>
           <ScrollView
@@ -96,6 +98,7 @@ export default class AngelScreen extends Component {
           </ScrollView>
           <View style={styles.barContainer}>{barArray}</View>
         </View>
+        </SafeAreaView>
       </>
     );
   }

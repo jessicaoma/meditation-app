@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, FlatList, ActivityIndicator} from 'react-native';
+import {StyleSheet, FlatList, ActivityIndicator, SafeAreaView} from 'react-native';
 import ItemBubble from '../components/ItemBubble';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
@@ -55,7 +55,7 @@ export default class Categoria extends Component {
     color: this.props.navigation.getParam('bg', Colors.primary),
     bgImg: 'http://okoconnect.com/karim/images/viaje-bg-1.png',
   };*/
-  /** @type {import('../utils/types').Categoria} */
+  /** @type {import('../utils/API').Categoria} */
   categoria = {
     id: 'cat1',
     color: '#fdd58d',
@@ -81,6 +81,7 @@ export default class Categoria extends Component {
       'example@example.com',
     );
     this.setState({viajes});
+    console.log(viajes);
   };
 
   _goViaje = () => {
@@ -128,6 +129,7 @@ export default class Categoria extends Component {
   render() {
     this.categoria = this.props.navigation.state.params.categoria;
     return (
+      <SafeAreaView>
       <ScreenBg
         source={{uri: this.categoria.backgroundImage}}
         color={this.categoria.color}>
@@ -140,6 +142,7 @@ export default class Categoria extends Component {
           ListEmptyComponent={this.renderListEmpty}
         />
       </ScreenBg>
+      </SafeAreaView>
     );
   }
 }

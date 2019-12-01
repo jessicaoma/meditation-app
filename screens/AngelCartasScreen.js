@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, FlatList} from 'react-native';
+import {Text, StyleSheet, View, FlatList, SafeAreaView} from 'react-native';
 import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Constants from 'expo-constants';
@@ -122,6 +122,7 @@ export default class AngelCartasScreen extends Component {
   render() {
     return (
       <>
+        <SafeAreaView>
         <View style={styles.statusBar} />
         <View style={styles.container}>
           <Text style={styles.sectionTitle}>Tu Ángel del día </Text>
@@ -132,6 +133,7 @@ export default class AngelCartasScreen extends Component {
           />
           <Text style={styles.suggestion}>Elige una carta para descubrir</Text>
         </View>
+        </SafeAreaView>
       </>
     );
   }

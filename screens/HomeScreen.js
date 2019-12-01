@@ -7,6 +7,7 @@ import {
   Text,
   View,
   PixelRatio,
+  SafeAreaView
 } from 'react-native';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
@@ -137,6 +138,7 @@ export default class Home extends Component {
   render() {
     return (
       <>
+      <SafeAreaView>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
@@ -174,6 +176,7 @@ export default class Home extends Component {
           </Buttom>
           <View style={styles.separador2} />
         </ScrollView>
+      </SafeAreaView>
       </>
     );
   }

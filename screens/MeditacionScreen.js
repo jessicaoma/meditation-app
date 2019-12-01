@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet,SafeAreaView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 
@@ -31,6 +31,7 @@ export default class MeditacionScreen extends Component {
     let meditacion = navigation.getParam('meditacion', {});
     return (
       <>
+      <SafeAreaView>
         <ScreenBg
           source={{uri: meditacion.backgroundImage}}
           color={meditacion.color}
@@ -65,6 +66,7 @@ export default class MeditacionScreen extends Component {
             {/* </View> */}
           </View>
         </ScreenBg>
+      </SafeAreaView>
       </>
     );
   }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, FlatList, ScrollView} from 'react-native';
+import {Text, StyleSheet, FlatList, ScrollView, SafeAreaView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import ItemBubble from '../components/ItemBubble';
 import Colors from '../constants/Colors';
@@ -77,12 +77,14 @@ export default class ViajeCompletadosScreen extends Component {
   renderItem = ({item}) => {
     return (
       <>
+      <SafeAreaView>
         <ItemBubble
           color={item.color}
           status={item.status}
           onPress={this._handleClick}>
           {item.title}
         </ItemBubble>
+      </SafeAreaView>
       </>
     );
   };

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, Text, StyleSheet, FlatList, View} from 'react-native';
+import {TouchableOpacity, Text, StyleSheet, FlatList, View, SafeAreaView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import ItemBubbleLine from '../components/ItemBubbleLine';
 import Colors from '../constants/Colors';
@@ -80,21 +80,17 @@ export default class ViajeScreen extends Component {
     headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
   });
 
-  _handleClick = index => {
-    //alert('This is a button!');
-    this.props.navigation.navigate('PasoA'
-    //   {pasos: this.viaje.pasos,
-    //   position: index,}
-    );
+  _handleClick = item => {
+    this.props.navigation.navigate(item.title);
   };
-  renderItem = ({item, index}) => {
+  renderItem = ({item}) => {
     return (
       <>
         <ItemBubbleLine
           color={this.viaje.color}
           status={item.status}
           onPress={() => {
-            this._handleClick(index);
+            this._handleClick(item);
           }}>
           {item.title}
         </ItemBubbleLine>
@@ -139,6 +135,7 @@ export default class ViajeScreen extends Component {
   render() {
     return (
       <>
+      <SafeAreaView>
         <ScreenBg source={{uri: this.viaje.bgImg}} color={this.viaje.color}>
           <FlatList
             data={this.viaje.pasos}
@@ -155,6 +152,7 @@ export default class ViajeScreen extends Component {
             }
           />
         </ScreenBg>
+      </SafeAreaView>
       </>
     );
   }
