@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     color: Colors.gray,
     position: 'absolute',
     marginTop: 12,
-    left: 5,
+    left: -5,
   },
   barChartContainer: {padding: 20, height: 170},
   barChart: {
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     width: '100%',
-    height: Dimensions.window.width,
+    height: Dimensions.window.width - 65,
     resizeMode: 'contain',
   },
   buttonReport: {
@@ -246,5 +246,6 @@ const styles = StyleSheet.create({
   textYAis: {
     fontSize: 13,
     color: Colors.gray,
+    textAlign: 'right',
   }
 });
