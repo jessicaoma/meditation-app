@@ -71,7 +71,7 @@ export default class AudiolibrosScreen extends Component {
   render() {
     return (
       <>
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1}}>
         <View style={styles.statusBar} />
         <FlatList
           data={this.state.audioLibros}

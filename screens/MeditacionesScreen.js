@@ -95,7 +95,7 @@ export default class MeditacionesScreen extends Component {
 
   render = () => (
     <>
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <View style={styles.statusBar} />
       <FlatList
         data={this.state.meditaciones}
@@ -111,6 +111,9 @@ export default class MeditacionesScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1
+  },
   statusBar: {
     height: Constants.statusBarHeight,
   },
