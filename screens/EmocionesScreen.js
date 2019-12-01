@@ -76,7 +76,7 @@ export default class EmocionesScreen extends Component {
   renderItem = ({item}) => {
     return (
       <HalfCover
-        source={item.faces[0]}
+        source={item.image}
         onPress={() => {
           this._handleClick(item);
         }}
