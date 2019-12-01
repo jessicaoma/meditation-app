@@ -113,8 +113,8 @@ export default class MisEmocionesScreen extends Component {
           <View style={styles.barChartContainer}>
 
               <View style={styles.containerYaxis}>
-                <Text>{this.state.yAxis[0].label}</Text>
-                <Text>{this.state.yAxis[1].label}</Text>
+                <Text style={styles.textYAis}>{this.state.yAxis[1].label}</Text>
+                <Text style={styles.textYAis}>{this.state.yAxis[0].label}</Text>
               </View>
               <BarChart
                 style={styles.barChart}
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     width: '100%',
-    height: Dimensions.window.height / 2,
+    height: Dimensions.window.width,
     resizeMode: 'contain',
   },
   buttonReport: {
@@ -243,4 +243,8 @@ const styles = StyleSheet.create({
     color: 'white',
     lineHeight: 12,
   },
+  textYAis: {
+    fontSize: 13,
+    color: Colors.gray,
+  }
 });
