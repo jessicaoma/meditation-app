@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
+  PixelRatio,
 } from 'react-native';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
@@ -14,6 +15,7 @@ import Logo from '../components/Logo';
 import Cover from '../components/Cover';
 import TabBarIcon from '../components/TabBarIcon';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import ScalableText from 'react-native-text';
 
 const uriReflexion = 'http://okoconnect.com/karim/images/video-preview.jpeg';
 const uricomomesiento = 'http://okoconnect.com/karim/images/comomesiento.png';
@@ -96,7 +98,7 @@ export default class Home extends Component {
   _renderItemLonuevo = ({item}) => (
     <Buttom
       style={[{backgroundColor: item.bg || Colors.primaryDark}, styles.box2]}>
-      <Text style={styles.title_boxes2}>{item.title}</Text>
+      <ScalableText style={styles.title_boxes2}>{item.title}</ScalableText>
       {/* <Image style={styles.itemCandado} source={{uri: item.img}} /> */}
     </Buttom>
   );
@@ -105,7 +107,7 @@ export default class Home extends Component {
     <Buttom
       style={[{backgroundColor: item.bg || Colors.primaryDark}, styles.box2]}
       onPress={this._handleClick}>
-      <Text style={styles.title_boxes2}>{item.title}</Text>
+      <ScalableText style={styles.title_boxes2}>{item.title}</ScalableText>
     </Buttom>
   );
 
@@ -140,17 +142,17 @@ export default class Home extends Component {
           style={styles.scrollView}>
           <Cover source={{uri: uriReflexion}} onPress={this._handleReflexion} />
           <Buttom onPress={this._handleEmociones}>
-            <Text style={styles.title_boxes}>¿como me siento?</Text>
+            <ScalableText style={styles.title_boxes}>¿como me siento?</ScalableText>
             <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
           </Buttom>
-          <Text style={styles.sectionTitle}>Lo nuevo</Text>
+          <ScalableText style={styles.sectionTitle}>Lo nuevo</ScalableText>
           <FlatList
             horizontal
             data={dataLonuevo}
             renderItem={this._renderItemLonuevo}
             keyExtractor={item => 'lonuevo' + item.id}
           />
-          <Text style={styles.sectionTitle}>Viajes en progreso</Text>
+          <ScalableText style={styles.sectionTitle}>Viajes en progreso</ScalableText>
           <FlatList
             horizontal
             data={dataViajesenprogreso}
@@ -159,15 +161,15 @@ export default class Home extends Component {
           />
           <View style={styles.separador} />
           <Buttom onPress={this._handelBienvenida}>
-            <Text style={styles.title_boxes}>BIENVENIDA</Text>
+            <ScalableText style={styles.title_boxes}>BIENVENIDA</ScalableText>
             <Image source={{uri: uriflor1}} style={styles.itemImage} />
           </Buttom>
           <Buttom onPress={this._handleTutorial}>
-            <Text style={styles.title_boxes}>TUTORIAL</Text>
+            <ScalableText style={styles.title_boxes}>TUTORIAL</ScalableText>
             <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
           </Buttom>
           <Buttom>
-            <Text style={styles.title_boxes}>CONVIERTETE EN PREMIUM</Text>
+            <ScalableText style={styles.title_boxes}>CONVIERTETE EN PREMIUM</ScalableText>
             <Image source={{uri: uriflor3}} style={styles.itemImage} />
           </Buttom>
           <View style={styles.separador2} />
@@ -183,7 +185,7 @@ const styles = StyleSheet.create({
     paddingTop: Dimensions.regularSpace,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: Dimensions.h2,
     letterSpacing: 1.11,
     lineHeight: 36,
     marginTop: 10,
@@ -193,15 +195,7 @@ const styles = StyleSheet.create({
     color: Colors.gray,
     fontFamily: 'MyriadPro-Bold',
   },
-  title_boxes: {
-    color: '#494c6b',
-    fontSize: Dimensions.window.width * 0.038,
-    letterSpacing: 0.055,
-    lineHeight: 20,
-    textTransform: 'uppercase',
-    alignSelf: 'center',
-    fontFamily: 'MyriadPro-Regular',
-  },
+  
   itemImage: {
     resizeMode: 'cover',
     width: 76,
@@ -219,19 +213,27 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     marginTop: Dimensions.smallSpace,
   },
-  itemCandado: {
-    resizeMode: 'contain',
-    width: 18,
-  },
-  title_boxes2: {
+  title_boxes: {
     color: '#494c6b',
-    fontSize: Dimensions.window.width * 0.038,
-    letterSpacing: 0.99,
+    fontSize: Dimensions.bubbleTitle,
+    letterSpacing: Dimensions.bubbleTitleSpacing,
     lineHeight: 20,
     textTransform: 'uppercase',
     alignSelf: 'center',
+    fontFamily: 'MyriadPro-Regular',
+    paddingTop:5,
+  },
+  title_boxes2: {
+    color: '#494c6b',
+    fontSize: Dimensions.bubbleTitle,
+    letterSpacing: Dimensions.bubbleTitleSpacing,
+    lineHeight: 20,
+    textTransform: 'uppercase',
+    fontFamily: 'MyriadPro-Regular',
+    alignSelf: 'center',
     flexWrap: 'wrap',
     flex: 1,
+    paddingTop:5,
   },
   box2: {
     minWidth: 198,

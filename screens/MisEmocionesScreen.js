@@ -17,54 +17,61 @@ import LogoEmocion1 from '../constants/LogoEmocion1';
 import LogoEmocion2 from '../constants/LogoEmocion2';
 import LogoEmocion3 from '../constants/LogoEmocion3';
 import LogoEmocion4 from '../constants/LogoEmocion4';
+import LogoPerfil from '../constants/LogoPerfil';
 import {enumStatus} from '../utils/types';
 
-/*const fill = '#bfc6e2';
-const spacingInner = 0.5;
-const spacingOuter = 0.5;
-
-const tiempos = [
-  {
-    label: 'Tu Semana',
-    value: 'semanal',
-  },
-  {
-    label: 'Tu Mes',
-    value: 'mensual',
-  },
-  {
-    label: 'Tu Año',
-    value: 'anual',
-  },
-];*/
 
 export default class MisEmocionesScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      emocionesData: [4, 2, 0, 1],
+      emocionesData: [3, 2, 0, 1, 1],
       keys: ['excited', 'happy', 'sad', 'depressed'],
       colors: ['#bfc6e2', '#bfc6e2', '#bfc6e2', '#bfc6e2'],
       title: 'Semanal',
+      yAxis: [{
+                value: 0,
+                label: '0',
+            },
+            {
+                value: 7,
+                label: '7',
+            },]
     };
   }
   onPressSemanal = () => {
     this.setState({
-      emocionesData: [4, 2, 0, 1],
+      emocionesData: [3, 2, 0, 1, 1],
       title: 'Semanal',
+      yAxis: [{
+                value: 0,
+                label: '0',
+            },
+            {
+                value: 7,
+                label: '7',
+            },]
     });
   };
 
   onPressMensual = () => {
     this.setState({
-      emocionesData: [17, 7, 4, 1],
+      emocionesData: [14, 7, 4, 1, 3],
       title: 'Mensual',
+      yAxis: [{
+                value: 0,
+                label: '0',
+            },
+            {
+                value: 30,
+                label: '30',
+            },]
     });
   };
 
   onPressAnual = () => {
     this.setState({
-      emocionesData: [270, 32, 35, 28],
+      emocionesData: [250, 32, 35, 28, 20],
     });
   };
 
@@ -84,7 +91,7 @@ export default class MisEmocionesScreen extends Component {
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <Image
           source={{
-            uri: 'http://okoconnect.com/karim/images/misemociones-top.png',
+            uri: 'http://okoconnect.com/karim/images/misemociones-top-crop.png',
           }}
           style={styles.image}
         />
@@ -104,25 +111,31 @@ export default class MisEmocionesScreen extends Component {
           <Text style={styles.bigParagraph}>Tu reporte {this.state.title}</Text>
 
           <View style={styles.barChartContainer}>
-            <BarChart
-              style={styles.barChart}
-              data={this.state.emocionesData}
-              svg={{fill: '#bfc6e2'}}
-              contentInset={{top: 30}}
-            />
+
+              <View style={styles.containerYaxis}>
+                <Text>{this.state.yAxis[0].label}</Text>
+                <Text>{this.state.yAxis[1].label}</Text>
+              </View>
+              <BarChart
+                style={styles.barChart}
+                data={this.state.emocionesData}
+                svg={{fill: '#bfc6e2'}}
+                contentInset={{top: 30}}
+              />
+
             <View style={styles.containerLabels}>
               <LogoEmocion1 />
               <LogoEmocion2 />
               <LogoEmocion3 />
               <LogoEmocion4 />
+              <LogoPerfil />
             </View>
           </View>
 
           <View>
-            <Text style={styles.bigTitle}>¡Sigue Así!</Text>
+            <Text style={styles.bigTitle}>¡Sigue así!</Text>
             <Text style={styles.bigParagraph}>
-              Esta semana has estado feliz 5 días. Sentir gratitud es tu mejor
-              recompensa.
+              Esta semana has estado feliz 5 días. Sentir gratitud es tu mejor recompensa.
             </Text>
             <Text style={styles.bigParagraph}>
               Te recomiendo iniciar este viaje que te ayudará a sentirte cada
@@ -164,6 +177,15 @@ const styles = StyleSheet.create({
     right: 20,
     top: 20,
   },
+  containerYaxis: {
+    width: 20,
+    height: 140,
+    justifyContent: 'space-between',
+    color: Colors.gray,
+    position: 'absolute',
+    marginTop: 12,
+    left: 5,
+  },
   barChartContainer: {padding: 20, height: 170},
   barChart: {
     height: 140,
@@ -201,8 +223,8 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     width: '100%',
-    height: 350,
-    resizeMode: 'cover',
+    height: Dimensions.window.height / 2,
+    resizeMode: 'contain',
   },
   buttonReport: {
     borderColor: 'white',

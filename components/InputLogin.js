@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
+import {Ionicons} from '@expo/vector-icons';
 
 /**
  * @typedef State
@@ -29,12 +30,12 @@ import Dims from '../constants/Dimensions';
 export default class InputLogin extends Component {
   /** @type {State} */
   state = {
-    icon: 'eye',
+    icon: 'md-eye',
     password: true,
   };
   _changeIcon = () => {
     this.setState(prevState => ({
-      icon: prevState.icon === 'eye' ? 'eye-off' : 'eye',
+      icon: prevState.icon === 'md-eye' ? 'md-eye-off' : 'md-eye',
       password: !prevState.password,
     }));
   };
@@ -43,7 +44,7 @@ export default class InputLogin extends Component {
     //TODO cambiar la validacion pues ya no se usa expo snack
     //TODO agregar imagen de eye-off
     const envProd = process.env.NODE_ENV === 'production';
-    return state === 'eye'
+    return state === 'md-eye'
       ? envProd
         ? {uri: 'http://okoconnect.com/karim/assets/images/eye.png'}
         : require('../assets/images/eye.png')
@@ -70,10 +71,11 @@ export default class InputLogin extends Component {
               onChange={onChange}
             />
             <TouchableOpacity onPress={this._changeIcon}>
-              <Image
-                source={this.getSource(this.state.icon)}
-                style={styles.eyeImage}
-              />
+              <Ionicons
+                  name={this.state.icon}
+                  size={24}
+                  style={styles.eyeImage} 
+                />
             </TouchableOpacity>
           </>
         )}
@@ -95,29 +97,30 @@ const styles = StyleSheet.create({
   },
   inputText: {
     width: '100%',
-    color: Colors.gray,
-    fontSize: 16,
+    color: '#4b4547',
+    fontSize: Dims.inputText,
     fontWeight: '400',
     letterSpacing: 1,
     lineHeight: 55,
-    paddingHorizontal: 0,
+    paddingHorizontal: 15,
     minHeight: 55,
     fontFamily: 'MyriadPro-Regular',
   },
   inputPassword: {
     width: '96%',
-    color: Colors.gray,
-    fontSize: 16,
+    color: '#4b4547',
+    fontSize: Dims.inputText,
     fontWeight: '400',
     letterSpacing: 1,
     lineHeight: 55,
-    paddingHorizontal: 0,
+    paddingHorizontal: 10,
     minHeight: 55,
     fontFamily: 'MyriadPro-Regular',
   },
   eyeImage: {
-    width: 22,
-    height: 15,
+    width: 24,
+    height: 24,
     resizeMode: 'contain',
+    color: '#97a3ce',
   },
 });

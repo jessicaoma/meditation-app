@@ -1,4 +1,4 @@
-// @ts-nocheck
+/// @ts-nocheck
 import React from 'react';
 import {Text, TouchableOpacity, StyleSheet, View, Platform} from 'react-native';
 import Slider from 'react-native-slider';
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 15,
     marginHorizontal: 10,
-    marginBottom: 10,
+    marginBottom: 20,
   },
   playscreen: {
     position: 'absolute',

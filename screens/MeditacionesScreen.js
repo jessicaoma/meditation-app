@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     paddingRight: 0,
   },
   sectionTitle: {
-    fontSize: 17,
+    fontSize: Dims.h2,
     letterSpacing: 1.11,
     lineHeight: 36,
     marginTop: Dims.regularSpace,
@@ -131,8 +131,8 @@ const styles = StyleSheet.create({
   },
   title_boxes: {
     color: 'white',
-    fontSize: Dims.window.width * 0.038,
-    letterSpacing: 0.055,
+    fontSize: Dims.bubbleTitle,
+    letterSpacing: Dims.bubbleTitleSpacing,
     lineHeight: 25,
     textTransform: 'uppercase',
     alignSelf: 'center',

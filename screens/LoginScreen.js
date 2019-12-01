@@ -12,6 +12,7 @@ import InputLogin from '../components/InputLogin';
 import Logo from '../components/Logo';
 import Dims from '../constants/Dimensions';
 
+
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
@@ -43,7 +44,7 @@ export default class LoginScreen extends Component {
             <TouchableOpacity
               onPress={this.handleLogin}
               style={[styles.button]}>
-              <Text style={styles.buttonLabel}>CREAR UNA CUENTA</Text>
+              <Text style={styles.buttonLabel}>Crear una cuenta</Text>
             </TouchableOpacity>
           </View>
           <View />
@@ -64,10 +65,11 @@ const styles = StyleSheet.create({
     paddingTop: Dims.hugeSpace + Dims.hugeSpace + Dims.hugeSpace,
   },
   welcomeTitle: {
-    color: '#aba0b5',
-    fontSize: 20,
+    color: '#97a3ce',
+    fontSize: Dims.h2,
     lineHeight: 36,
-    fontFamily: 'MyriadPro-Regular',
+    fontFamily: 'MyriadPro-Bold',
+    letterSpacing: 1.2,
   },
   logo: {
     width: 84,
@@ -92,16 +94,15 @@ const styles = StyleSheet.create({
   },
   buttonLabel: {
     color: 'white',
-    fontSize: Dims.window.width * 0.041,
-    fontWeight: 'bold',
+    fontSize: Dims.inputText,
     textAlign: 'center',
     letterSpacing: 1.5,
     lineHeight: 50,
-    fontFamily: 'MyriadPro-Regular',
+    fontFamily: 'MyriadPro-Bold',
   },
   forgetText: {
     color: Colors.gray,
-    fontSize: 16,
+    fontSize: Dims.inputText,
     lineHeight: 28,
     marginVertical: Dims.smallSpace,
   },

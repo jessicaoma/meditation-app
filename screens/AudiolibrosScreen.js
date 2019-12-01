@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dimensions.regularSpace,
   },
   sectionTitle: {
-    fontSize: 17,
+    fontSize: Dimensions.h2,
     letterSpacing: 1.11,
     lineHeight: 36,
     marginTop: Dimensions.regularSpace,
