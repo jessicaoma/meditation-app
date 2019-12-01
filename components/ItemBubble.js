@@ -65,10 +65,12 @@ export default class ItemBubble extends Component {
           borderColor: '#ffffff',
           backgroundColor: color,
           borderRadius: 10,
+          paddingVertical: Dims.regularSpace,
         },
         styleText: {
           fontWeight: 'regular',
           color: 'white',
+          lineHeight: 20,
         },
       });
     }

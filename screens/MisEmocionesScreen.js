@@ -34,6 +34,10 @@ export default class MisEmocionesScreen extends Component {
                 label: '0',
             },
             {
+                value: 3.5,
+                label: '3.5',
+            },
+            {
                 value: 7,
                 label: '7',
             },]
@@ -46,6 +50,10 @@ export default class MisEmocionesScreen extends Component {
       yAxis: [{
                 value: 0,
                 label: '0',
+            },
+            {
+                value: 3.5,
+                label: '3.5',
             },
             {
                 value: 7,
@@ -61,6 +69,10 @@ export default class MisEmocionesScreen extends Component {
       yAxis: [{
                 value: 0,
                 label: '0',
+            },
+            {
+                value: 15,
+                label: '15',
             },
             {
                 value: 30,
@@ -113,7 +125,8 @@ export default class MisEmocionesScreen extends Component {
           <View style={styles.barChartContainer}>
 
               <View style={styles.containerYaxis}>
-                <Text style={styles.textYAis}>{this.state.yAxis[1].label}</Text>
+                <Text style={styles.textYAis}>{this.state.yAxis[2].label}</Text>
+                <Text style={styles.textYAisInter}>{this.state.yAxis[1].label}</Text>
                 <Text style={styles.textYAis}>{this.state.yAxis[0].label}</Text>
               </View>
               <BarChart
@@ -183,7 +196,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     color: Colors.gray,
     position: 'absolute',
-    marginTop: 12,
+    marginTop: 16,
     left: -5,
   },
   barChartContainer: {padding: 20, height: 170},
@@ -245,6 +258,11 @@ const styles = StyleSheet.create({
   },
   textYAis: {
     fontSize: 13,
+    color: Colors.gray,
+    textAlign: 'right',
+  },
+  textYAisInter: {
+    fontSize: 11.5,
     color: Colors.gray,
     textAlign: 'right',
   }

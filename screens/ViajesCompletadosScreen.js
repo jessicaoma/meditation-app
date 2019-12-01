@@ -99,8 +99,7 @@ export default class ViajeCompletadosScreen extends Component {
           style={styles.scrollView}>
           <Text style={styles.bigTitle}>¡Vas muy bien!</Text>
           <Text style={styles.bigParagraph}>
-            Has completado viajes en estas categorías. Presiona en cada una para
-            ver tu progreso.
+            Has completado los siguientes viajes. Si deseas consultar nuevamente el contenido, presiona sobre el viaje de interés.
           </Text>
           <FlatList
             data={this.viaje.pasos}
