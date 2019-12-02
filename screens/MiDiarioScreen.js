@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, ScrollView, View, SafeAreaView} from 'react-native';
+import {StyleSheet, ScrollView, View, SafeAreaView} from 'react-native';
 import Dims from '../constants/Dimensions';
 import CalendarComponent from '../components/CalendarComponent';
 /**
@@ -15,13 +15,13 @@ export default class MiDiarioScreen extends Component {
   render() {
     return (
       <>
-      <SafeAreaView>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-          <View style={styles.container}>
-            <CalendarComponent />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+        <SafeAreaView>
+          <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <View style={styles.container}>
+              <CalendarComponent />
+            </View>
+          </ScrollView>
+        </SafeAreaView>
       </>
     );
   }

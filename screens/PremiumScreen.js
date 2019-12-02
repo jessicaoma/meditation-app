@@ -124,7 +124,7 @@ export default class PremiumScreen extends Component {
   render() {
     return (
       <>
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1}}>
           <View style={styles.statusBar} />
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"

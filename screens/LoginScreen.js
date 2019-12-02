@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   StatusBar,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
@@ -26,31 +26,31 @@ export default class LoginScreen extends Component {
   render() {
     return (
       <>
-        <SafeAreaView>
         <StatusBar barStyle="dark-content" />
-        <View style={styles.container}>
-          <Logo isAlternative style={styles.logo} />
-          <Text style={styles.welcomeTitle}>BIENVENIDO</Text>
-          <View style={styles.full}>
-            <InputLogin placeholder="Correo" type="text" />
-            <InputLogin placeholder="Constraseña" type="password" />
-            <TouchableOpacity
-              onPress={this.handleLogin}
-              style={[styles.button]}>
-              <Text style={styles.buttonLabel}>Iniciar Sesión</Text>
-            </TouchableOpacity>
-            <TouchableHighlight>
-              <Text style={styles.forgetText}>¿Olvidaste tu contraseña?</Text>
-            </TouchableHighlight>
-            <TouchableOpacity
-              onPress={this.handleLogin}
-              style={[styles.button]}>
-              <Text style={styles.buttonLabel}>Crear una cuenta</Text>
-            </TouchableOpacity>
+        <SafeAreaView style={{flex: 1}}>
+          <View style={styles.container}>
+            <Logo isAlternative style={styles.logo} />
+            <Text style={styles.welcomeTitle}>BIENVENIDO</Text>
+            <View style={styles.full}>
+              <InputLogin placeholder="Correo" type="text" />
+              <InputLogin placeholder="Constraseña" type="password" />
+              <TouchableOpacity
+                onPress={this.handleLogin}
+                style={[styles.button]}>
+                <Text style={styles.buttonLabel}>Iniciar Sesión</Text>
+              </TouchableOpacity>
+              <TouchableHighlight>
+                <Text style={styles.forgetText}>¿Olvidaste tu contraseña?</Text>
+              </TouchableHighlight>
+              <TouchableOpacity
+                onPress={this.handleLogin}
+                style={[styles.button]}>
+                <Text style={styles.buttonLabel}>Crear una cuenta</Text>
+              </TouchableOpacity>
+            </View>
+            <View />
+            <View />
           </View>
-          <View />
-          <View />
-        </View>
         </SafeAreaView>
       </>
     );

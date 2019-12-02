@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
   eyeImage: {
     width: 24,
     height: 24,
-    resizeMode: 'contain',
     color: '#97a3ce',
   },
 });

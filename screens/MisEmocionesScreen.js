@@ -6,7 +6,7 @@ import {
   View,
   ScrollView,
   Image,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import {BarChart} from 'react-native-svg-charts';
 import ItemBubble from '../components/ItemBubble';
@@ -107,71 +107,74 @@ export default class MisEmocionesScreen extends Component {
   render() {
     return (
       <SafeAreaView>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Image
-          source={{
-            uri: 'http://okoconnect.com/karim/images/misemociones-top-crop.png',
-          }}
-          style={styles.image}
-        />
-        <View style={styles.containerButtons}>
-          <TouchableOpacity
-            onPress={this.onPressSemanal}
-            style={[styles.buttonReport]}>
-            <Text style={styles.buttonLabel}>Tu semana</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.onPressMensual}
-            style={[styles.buttonReport]}>
-            <Text style={styles.buttonLabel}>Tu mes</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.container}>
-          <Text style={styles.bigParagraph}>Tu reporte {this.state.title}</Text>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+          <Image
+            source={{
+              uri:
+                'http://okoconnect.com/karim/images/misemociones-top-crop.png',
+            }}
+            style={styles.image}
+          />
+          <View style={styles.containerButtons}>
+            <TouchableOpacity
+              onPress={this.onPressSemanal}
+              style={[styles.buttonReport]}>
+              <Text style={styles.buttonLabel}>Tu semana</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={this.onPressMensual}
+              style={[styles.buttonReport]}>
+              <Text style={styles.buttonLabel}>Tu mes</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.container}>
+            <Text style={styles.bigParagraph}>
+              Tu reporte {this.state.title}
+            </Text>
 
-          <View style={styles.barChartContainer}>
-            <View style={styles.containerYaxis}>
-              <Text style={styles.textYAis}>{this.state.yAxis[2].label}</Text>
-              <Text style={styles.textYAisInter}>
-                {this.state.yAxis[1].label}
+            <View style={styles.barChartContainer}>
+              <View style={styles.containerYaxis}>
+                <Text style={styles.textYAis}>{this.state.yAxis[2].label}</Text>
+                <Text style={styles.textYAisInter}>
+                  {this.state.yAxis[1].label}
+                </Text>
+                <Text style={styles.textYAis}>{this.state.yAxis[0].label}</Text>
+              </View>
+              <BarChart
+                style={styles.barChart}
+                data={this.state.emocionesData}
+                svg={{fill: '#bfc6e2'}}
+                contentInset={{top: 30}}
+              />
+
+              <View style={styles.containerLabels}>
+                <LogoEmocion1 />
+                <LogoEmocion2 />
+                <LogoEmocion3 />
+                <LogoEmocion4 />
+                <LogoPerfil />
+              </View>
+            </View>
+
+            <View>
+              <Text style={styles.bigTitle}>¡Sigue así!</Text>
+              <Text style={styles.bigParagraph}>
+                Esta semana has estado feliz 5 días. Sentir gratitud es tu mejor
+                recompensa.
               </Text>
-              <Text style={styles.textYAis}>{this.state.yAxis[0].label}</Text>
-            </View>
-            <BarChart
-              style={styles.barChart}
-              data={this.state.emocionesData}
-              svg={{fill: '#bfc6e2'}}
-              contentInset={{top: 30}}
-            />
-
-            <View style={styles.containerLabels}>
-              <LogoEmocion1 />
-              <LogoEmocion2 />
-              <LogoEmocion3 />
-              <LogoEmocion4 />
-              <LogoPerfil />
+              <Text style={styles.bigParagraph}>
+                Te recomiendo iniciar este viaje que te ayudará a sentirte cada
+                día mejor
+              </Text>
+              <ItemBubble
+                color={'#fdd58d'}
+                status={enumStatus.done}
+                onPress={this._handleClick}>
+                {'Ser Feliz'}
+              </ItemBubble>
             </View>
           </View>
-
-          <View>
-            <Text style={styles.bigTitle}>¡Sigue así!</Text>
-            <Text style={styles.bigParagraph}>
-              Esta semana has estado feliz 5 días. Sentir gratitud es tu mejor
-              recompensa.
-            </Text>
-            <Text style={styles.bigParagraph}>
-              Te recomiendo iniciar este viaje que te ayudará a sentirte cada
-              día mejor
-            </Text>
-            <ItemBubble
-              color={'#fdd58d'}
-              status={enumStatus.done}
-              onPress={this._handleClick}>
-              {'Ser Feliz'}
-            </ItemBubble>
-          </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
       </SafeAreaView>
     );
   }

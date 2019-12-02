@@ -66,7 +66,8 @@ export default class ItemBubble extends Component {
           paddingVertical: Dims.regularSpace,
         },
         styleText: {
-          fontWeight: 'regular',
+          //fontWeight: 'regular',
+          fontFamily: 'MyriadPro-Regular',
           color: 'white',
           lineHeight: 20,
         },

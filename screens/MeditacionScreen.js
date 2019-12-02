@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet,SafeAreaView} from 'react-native';
+import {View, StyleSheet, SafeAreaView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 
@@ -31,13 +31,13 @@ export default class MeditacionScreen extends Component {
     let meditacion = navigation.getParam('meditacion', {});
     return (
       <>
-      <SafeAreaView>
-        <ScreenBg
-          source={{uri: meditacion.backgroundImage}}
-          color={meditacion.color}
-          styleImage={{resizeMode: 'cover'}}>
-          <View style={styles.container}>
-            {/* <Player
+        <SafeAreaView>
+          <ScreenBg
+            source={{uri: meditacion.backgroundImage}}
+            color={meditacion.color}
+            styleImage={{resizeMode: 'cover'}}>
+            <View style={styles.container}>
+              {/* <Player
               source={{
                 uri: 'http://okoconnect.com/karim/videos/pre_meditacion.mp4',
                 //uri: meditacion.media,
@@ -48,25 +48,25 @@ export default class MeditacionScreen extends Component {
               //showControls
               onEnd={this._handleEndIntro}
             /> */}
-            {/* <View
+              {/* <View
               style={[
                 styles.container,
                 StyleSheet.absoluteFill,
                 styles.border2,
               ]}> */}
-            <Player
-              source={{
-                uri: meditacion.media,
-              }}
-              ref={this.refAudio}
-              showControls
-              //showPlayFrame
-              shouldPlay
-            />
-            {/* </View> */}
-          </View>
-        </ScreenBg>
-      </SafeAreaView>
+              <Player
+                source={{
+                  uri: meditacion.media,
+                }}
+                ref={this.refAudio}
+                showControls
+                //showPlayFrame
+                shouldPlay
+              />
+              {/* </View> */}
+            </View>
+          </ScreenBg>
+        </SafeAreaView>
       </>
     );
   }

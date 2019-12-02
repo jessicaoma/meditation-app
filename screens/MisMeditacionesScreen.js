@@ -87,7 +87,7 @@ export default class MisMeditacionesScreen extends Component {
   _keyExtractor = item => item.id;
 
   render = () => (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <FlatList
         data={this.state.meditaciones}
         renderItem={this._renderItem}

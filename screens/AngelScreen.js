@@ -82,7 +82,7 @@ export default class AngelScreen extends Component {
 
     return (
       <>
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1}}>
           <View style={styles.statusBar} />
           <View style={[styles.container]}>
             <ScrollView

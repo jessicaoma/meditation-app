@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, Arrow, View, FlatList} from 'react-native';
+import {Text, StyleSheet, View, FlatList} from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
-import Dimensions from '../constants/Dimensions';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import ItemBubble from '../components/ItemBubble';
 import {Ionicons} from '@expo/vector-icons';
@@ -38,6 +37,8 @@ const monthNames = [
   'Noviembre',
   'Diciembre',
 ];
+// @ts-ignore
+// eslint-disable-next-line dot-notation
 LocaleConfig.locales['es'] = {
   monthNames: [
     'Enero',
@@ -385,7 +386,7 @@ export default class CalendarComponent extends Component {
             this.onPressGotData(day);
           }}
           renderArrow={direction => {
-            if (direction == 'left')
+            if (direction === 'left') {
               return (
                 <Ionicons
                   name={'md-arrow-dropleft'}
@@ -393,7 +394,8 @@ export default class CalendarComponent extends Component {
                   style={styles.arrow}
                 />
               );
-            if (direction == 'right')
+            }
+            if (direction === 'right') {
               return (
                 <Ionicons
                   name={'md-arrow-dropright'}
@@ -401,6 +403,7 @@ export default class CalendarComponent extends Component {
                   style={styles.arrow}
                 />
               );
+            }
           }}
           theme={theme}
         />

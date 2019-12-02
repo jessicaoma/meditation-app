@@ -1,13 +1,12 @@
+// @ts-nocheck
 import React, {Component} from 'react';
 import {
   FlatList,
   Image,
   ScrollView,
   StyleSheet,
-  Text,
   View,
-  PixelRatio,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
@@ -129,54 +128,61 @@ export default class Home extends Component {
     this.props.navigation.navigate('Tutorial');
   };
 
+  _handelPremium = () => {
+    this.props.navigation.navigate('Premium');
+  };
+
   render() {
     return (
       <>
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Cover source={{uri: uriReflexion}} onPress={this._handleReflexion} />
-          <Buttom onPress={this._handleEmociones}>
-            <ScalableText style={styles.title_boxes}>
-              ¿como me siento?
+        <SafeAreaView>
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            style={styles.scrollView}>
+            <Cover
+              source={{uri: uriReflexion}}
+              onPress={this._handleReflexion}
+            />
+            <Buttom onPress={this._handleEmociones}>
+              <ScalableText style={styles.title_boxes}>
+                ¿como me siento?
+              </ScalableText>
+              <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
+            </Buttom>
+            <ScalableText style={styles.sectionTitle}>Lo nuevo</ScalableText>
+            <FlatList
+              horizontal
+              data={dataLonuevo}
+              renderItem={this._renderItemLonuevo}
+              keyExtractor={item => 'lonuevo' + item.id}
+            />
+            <ScalableText style={styles.sectionTitle}>
+              Viajes en progreso
             </ScalableText>
-            <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
-          </Buttom>
-          <ScalableText style={styles.sectionTitle}>Lo nuevo</ScalableText>
-          <FlatList
-            horizontal
-            data={dataLonuevo}
-            renderItem={this._renderItemLonuevo}
-            keyExtractor={item => 'lonuevo' + item.id}
-          />
-          <ScalableText style={styles.sectionTitle}>
-            Viajes en progreso
-          </ScalableText>
-          <FlatList
-            horizontal
-            data={dataViajesenprogreso}
-            renderItem={this._renderItemViajesProgreso}
-            keyExtractor={item => 'viajesenprogreso' + item.id}
-          />
-          <View style={styles.separador} />
-          <Buttom onPress={this._handelBienvenida}>
-            <ScalableText style={styles.title_boxes}>BIENVENIDA</ScalableText>
-            <Image source={{uri: uriflor1}} style={styles.itemImage} />
-          </Buttom>
-          <Buttom onPress={this._handleTutorial}>
-            <ScalableText style={styles.title_boxes}>TUTORIAL</ScalableText>
-            <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
-          </Buttom>
-          <Buttom>
-            <ScalableText style={styles.title_boxes}>
-              CONVIERTETE EN PREMIUM
-            </ScalableText>
-            <Image source={{uri: uriflor3}} style={styles.itemImage} />
-          </Buttom>
-          <View style={styles.separador2} />
-        </ScrollView>
-      </SafeAreaView>
+            <FlatList
+              horizontal
+              data={dataViajesenprogreso}
+              renderItem={this._renderItemViajesProgreso}
+              keyExtractor={item => 'viajesenprogreso' + item.id}
+            />
+            <View style={styles.separador} />
+            <Buttom onPress={this._handelBienvenida}>
+              <ScalableText style={styles.title_boxes}>BIENVENIDA</ScalableText>
+              <Image source={{uri: uriflor1}} style={styles.itemImage} />
+            </Buttom>
+            <Buttom onPress={this._handleTutorial}>
+              <ScalableText style={styles.title_boxes}>TUTORIAL</ScalableText>
+              <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
+            </Buttom>
+            <Buttom onPress={this._handelPremium}>
+              <ScalableText style={styles.title_boxes}>
+                CONVIERTETE EN PREMIUM
+              </ScalableText>
+              <Image source={{uri: uriflor3}} style={styles.itemImage} />
+            </Buttom>
+            <View style={styles.separador2} />
+          </ScrollView>
+        </SafeAreaView>
       </>
     );
   }

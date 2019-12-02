@@ -6,7 +6,7 @@ import {
   View,
   FlatList,
   ActivityIndicator,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
@@ -95,24 +95,24 @@ export default class MeditacionesScreen extends Component {
 
   render = () => (
     <>
-    <SafeAreaView style={{flex: 1}}>
-      <View style={styles.statusBar} />
-      <FlatList
-        data={this.state.meditaciones}
-        renderItem={this._renderItem}
-        ListHeaderComponent={this._renderListHeader}
-        ListEmptyComponent={this._renderListEmpty}
-        style={styles.container}
-        keyExtractor={this._keyExtractor}
-      />
-    </SafeAreaView>
+      <SafeAreaView style={{flex: 1}}>
+        <View style={styles.statusBar} />
+        <FlatList
+          data={this.state.meditaciones}
+          renderItem={this._renderItem}
+          ListHeaderComponent={this._renderListHeader}
+          ListEmptyComponent={this._renderListEmpty}
+          style={styles.container}
+          keyExtractor={this._keyExtractor}
+        />
+      </SafeAreaView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
   safe: {
-    flex: 1
+    flex: 1,
   },
   statusBar: {
     height: Constants.statusBarHeight,

@@ -1,6 +1,13 @@
 // @ts-nocheck
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, FlatList, ScrollView, SafeAreaView} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  FlatList,
+  ScrollView,
+  SafeAreaView,
+} from 'react-native';
 import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Dims from '../constants/Dimensions';
@@ -90,23 +97,23 @@ export default class EmocionesScreen extends Component {
   render() {
     return (
       <>
-      <SafeAreaView>
-        <ScrollView contentInsetAdjustmentBehavior="automatic">
-          <View style={styles.container}>
-            <Text style={styles.sectionTitle}>Tus emociones </Text>
-            <FlatList
-              data={data}
-              renderItem={this.renderItem}
-              numColumns={numColumns}
-            />
-            <Text style={styles.suggestion}>
-              ¿Cómo te sientes hoy?.{'\n'}
-              Llevando un registro de tus emociones vas a concerte más a ti
-              misma.
-            </Text>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+        <SafeAreaView>
+          <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <View style={styles.container}>
+              <Text style={styles.sectionTitle}>Tus emociones </Text>
+              <FlatList
+                data={data}
+                renderItem={this.renderItem}
+                numColumns={numColumns}
+              />
+              <Text style={styles.suggestion}>
+                ¿Cómo te sientes hoy?.{'\n'}
+                Llevando un registro de tus emociones vas a concerte más a ti
+                misma.
+              </Text>
+            </View>
+          </ScrollView>
+        </SafeAreaView>
       </>
     );
   }

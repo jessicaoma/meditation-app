@@ -7,6 +7,7 @@ import ViajeNavigator from './ViajeNavigator';
 import PerfilNavigation from './PerfilNavigation';
 import TutorialScreen from '../screens/TutorialScreen';
 import BienvenidaScreen from '../screens/BienvenidaScreen';
+import PremiumScreen from '../screens/PremiumScreen';
 
 const MainNavigator = createStackNavigator(
   {
@@ -31,6 +32,12 @@ const MainNavigator = createStackNavigator(
     },
     Tutorial: TutorialScreen,
     Bienvenida: BienvenidaScreen,
+    Premium: {
+      screen: PremiumScreen,
+      navigationOptions: {
+        title: 'Convierte en Premium',
+      },
+    },
   },
   {
     defaultNavigationOptions: {
