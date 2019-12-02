@@ -1,26 +1,17 @@
 import React, {Component} from 'react';
 import {
   Animated,
+  Button,
   View,
   StyleSheet,
   ScrollView,
   Text,
   ImageBackground,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
-
-
-/**
- * @typedef {Object} ParamsNavigation
- * @prop {import('./AngelCartasScreen').Card} carta
- * @prop {import('../utils/API').AngelMensaje} mensaje
- *
- * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
- */
 
 const deviceWidth = Dims.window.width - Dims.regularSpace - Dims.regularSpace;
 const deviceHeight = deviceWidth * 1.5 + Dims.regularSpace;
@@ -44,14 +35,27 @@ const info = [
   },
 ];
 
-/** @extends {Component<Props>} */
-export default class ViajeHighlightScreen extends Component {
+/**
+ * Paso Tipo(A): Viaje Highlight
+ * @typedef {Object} ParamsNavigation
+ *
+ * @typedef Props
+ * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
+ *
+ * @extends {Component<Props>}
+ */
+export default class PasoAScreen extends Component {
   numItems = info.length;
   itemWidth = FIXED_BAR_WIDTH / this.numItems - (this.numItems - 1) * BAR_SPACE;
   animVal = new Animated.Value(0);
 
   static navigationOptions = {
-    title: 'Tu ángel',
+    title: 'Paso A',
+  };
+
+  _handleClick = () => {
+    //alert('This is a button!');
+    this.props.navigation.replace('PasoB');
   };
 
   render() {
@@ -102,23 +106,24 @@ export default class ViajeHighlightScreen extends Component {
 
     return (
       <>
-      <SafeAreaView>
-        <View style={styles.statusBar} />
-        <View style={[styles.container]}>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            scrollEventThrottle={10}
-            pagingEnabled
-            onScroll={Animated.event([
-              {nativeEvent: {contentOffset: {x: this.animVal}}},
-            ])}
-            style={styles.slider}>
-            {imageArray}
-          </ScrollView>
-          <View style={styles.barContainer}>{barArray}</View>
-        </View>
-      </SafeAreaView>
+        <SafeAreaView>
+          <View style={styles.statusBar} />
+          <View style={[styles.container]}>
+            <Button onPress={this._handleClick} title="Paso B" />
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              scrollEventThrottle={10}
+              pagingEnabled
+              onScroll={Animated.event([
+                {nativeEvent: {contentOffset: {x: this.animVal}}},
+              ])}
+              style={styles.slider}>
+              {imageArray}
+            </ScrollView>
+            <View style={styles.barContainer}>{barArray}</View>
+          </View>
+        </SafeAreaView>
       </>
     );
   }

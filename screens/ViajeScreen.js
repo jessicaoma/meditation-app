@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, Text, StyleSheet, FlatList, View, SafeAreaView} from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  FlatList,
+  View,
+  SafeAreaView,
+} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import ItemBubbleLine from '../components/ItemBubbleLine';
 import Colors from '../constants/Colors';
@@ -80,17 +87,20 @@ export default class ViajeScreen extends Component {
     headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
   });
 
-  _handleClick = item => {
-    this.props.navigation.navigate(item.title);
+  _handleClick = index => {
+    this.props.navigation.navigate('PasoA'
+    //   {pasos: this.viaje.pasos,
+    //   position: index,}
+    );
   };
-  renderItem = ({item}) => {
+  renderItem = ({item, index}) => {
     return (
       <>
         <ItemBubbleLine
           color={this.viaje.color}
           status={item.status}
           onPress={() => {
-            this._handleClick(item);
+            this._handleClick(index);
           }}>
           {item.title}
         </ItemBubbleLine>
@@ -135,24 +145,24 @@ export default class ViajeScreen extends Component {
   render() {
     return (
       <>
-      <SafeAreaView>
-        <ScreenBg source={{uri: this.viaje.bgImg}} color={this.viaje.color}>
-          <FlatList
-            data={this.viaje.pasos}
-            renderItem={this.renderItem}
-            keyExtractor={this.keyExtractor}
-            style={styles.container}
-            ItemSeparatorComponent={this.renderSeparator}
-            ListFooterComponent={
-              <TouchableOpacity
-                //onPress={this.handleContinue}
-                style={[styles.button]}>
-                <Text style={styles.buttonLabel}>Continuar mi viaje</Text>
-              </TouchableOpacity>
-            }
-          />
-        </ScreenBg>
-      </SafeAreaView>
+        <SafeAreaView>
+          <ScreenBg source={{uri: this.viaje.bgImg}} color={this.viaje.color}>
+            <FlatList
+              data={this.viaje.pasos}
+              renderItem={this.renderItem}
+              keyExtractor={this.keyExtractor}
+              style={styles.container}
+              ItemSeparatorComponent={this.renderSeparator}
+              ListFooterComponent={
+                <TouchableOpacity
+                  //onPress={this.handleContinue}
+                  style={[styles.button]}>
+                  <Text style={styles.buttonLabel}>Continuar mi viaje</Text>
+                </TouchableOpacity>
+              }
+            />
+          </ScreenBg>
+        </SafeAreaView>
       </>
     );
   }
