@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Image,
   View,
-  StatusBar,
   ActivityIndicator,
   SafeAreaView,
 } from 'react-native';
@@ -13,6 +12,7 @@ import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
+import Constants from 'expo-constants';
 
 /**
  * @typedef Props
@@ -83,7 +83,7 @@ export default class Categorias extends Component {
 
 const styles = StyleSheet.create({
   statusBar: {
-    height: StatusBar.currentHeight,
+    height: Constants.statusBarHeight,
   },
   container: {
     paddingHorizontal: Dims.regularSpace,
