@@ -3,8 +3,6 @@ const BASE_API =
     ? 'http://okotesting-001.azurewebsites.net/api/'
     : 'http://localhost:5000/api/';
 
-
-
 class Api {
   /** @return {Promise<import("./types").Meditación[]>} */
   async getMeditaciones() {
