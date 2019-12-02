@@ -1,19 +1,13 @@
 // @ts-nocheck
 import React, {Component} from 'react';
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {View, TextInput, StyleSheet, TouchableOpacity} from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import {Ionicons} from '@expo/vector-icons';
 
 /**
  * @typedef State
- * @property {'eye' | 'eye-off'} icon Icon to show in the input
+ * @property {'md-eye' | 'md-eye-off'} icon Icon to show in the input
  * @property {boolean} password Indicate that is a input password
  *
  * @typedef {Object} Props
@@ -34,22 +28,14 @@ export default class InputLogin extends Component {
     password: true,
   };
   _changeIcon = () => {
-    this.setState(prevState => ({
-      icon: prevState.icon === 'md-eye' ? 'md-eye-off' : 'md-eye',
-      password: !prevState.password,
-    }));
+    this.setState(
+      /** @param {State} prevState*/
+      prevState => ({
+        icon: prevState.icon === 'md-eye' ? 'md-eye-off' : 'md-eye',
+        password: !prevState.password,
+      }),
+    );
   };
-
-  getSource(state) {
-    //TODO cambiar la validacion pues ya no se usa expo snack
-    //TODO agregar imagen de eye-off
-    const envProd = process.env.NODE_ENV === 'production';
-    return state === 'md-eye'
-      ? envProd
-        ? {uri: 'http://okoconnect.com/karim/assets/images/eye.png'}
-        : require('../assets/images/eye.png')
-      : require('../assets/images/iconPerfil2.png');
-  }
 
   render() {
     var {placeholder, style, type, onChange} = this.props;
@@ -72,10 +58,10 @@ export default class InputLogin extends Component {
             />
             <TouchableOpacity onPress={this._changeIcon}>
               <Ionicons
-                  name={this.state.icon}
-                  size={24}
-                  style={styles.eyeImage} 
-                />
+                name={this.state.icon}
+                size={24}
+                style={styles.eyeImage}
+              />
             </TouchableOpacity>
           </>
         )}

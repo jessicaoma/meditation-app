@@ -123,16 +123,18 @@ export default class AngelCartasScreen extends Component {
     return (
       <>
         <SafeAreaView style={{flex: 1}}>
-        <View style={styles.statusBar} />
-        <View style={styles.container}>
-          <Text style={styles.sectionTitle}>Tu Ángel del día </Text>
-          <FlatList
-            data={data}
-            renderItem={this.renderItem}
-            numColumns={numColumns}
-          />
-          <Text style={styles.suggestion}>Elige una carta para descubrir</Text>
-        </View>
+          <View style={styles.statusBar} />
+          <View style={styles.container}>
+            <Text style={styles.sectionTitle}>Tu Ángel del día </Text>
+            <FlatList
+              data={data}
+              renderItem={this.renderItem}
+              numColumns={numColumns}
+            />
+            <Text style={styles.suggestion}>
+              Elige una carta para descubrir
+            </Text>
+          </View>
         </SafeAreaView>
       </>
     );

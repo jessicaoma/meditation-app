@@ -47,8 +47,7 @@ export default class ItemBubble extends Component {
           fontSize: 18,
         },
       });
-    }
-    else if (status === 'viajeDiario') {
+    } else if (status === 'viajeDiario') {
       styleStatus = StyleSheet.create({
         styleContainer: {
           borderColor: color,
@@ -58,8 +57,7 @@ export default class ItemBubble extends Component {
           fontWeight: 'bold',
         },
       });
-    }
-    else if (status === 'meditar-audiolibro') {
+    } else if (status === 'meditar-audiolibro') {
       styleStatus = StyleSheet.create({
         styleContainer: {
           borderColor: '#ffffff',

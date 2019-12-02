@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-
-//Importamos los componentes del package
 import Svg, {G, Path, Circle} from 'react-native-svg';
 import colors from './Colors';
 

@@ -22,19 +22,19 @@ export default class AudiolibroScreen extends Component {
     return (
       <>
         <SafeAreaView>
-        <ScreenBg
-          source={{uri: audiolibro.backgroundImage}}
-          color={audiolibro.color}
-          styleImage={styles.image}>
-          <Player
-            source={{
-              uri: audiolibro.media,
-            }}
-            showControls
-            //showPlayFrame
-            shouldPlay
-          />
-        </ScreenBg>
+          <ScreenBg
+            source={{uri: audiolibro.backgroundImage}}
+            color={audiolibro.color}
+            styleImage={styles.image}>
+            <Player
+              source={{
+                uri: audiolibro.media,
+              }}
+              showControls
+              //showPlayFrame
+              shouldPlay
+            />
+          </ScreenBg>
         </SafeAreaView>
       </>
     );

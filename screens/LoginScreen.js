@@ -13,7 +13,6 @@ import InputLogin from '../components/InputLogin';
 import Logo from '../components/Logo';
 import Dims from '../constants/Dimensions';
 
-
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
-import { SafeAreaView } from 'react-native';
+import {SafeAreaView} from 'react-native';
 
 /**
  * @typedef {object} Props
@@ -19,20 +19,20 @@ export default class ReflexionScreen extends Component {
     let reflexion = navigation.getParam('reflexion', {});
     return (
       <>
-      <SafeAreaView>
-        <ScreenBg
-          source={{uri: reflexion.imagebg}}
-          color={reflexion.color}
-          styleImage={{resizeMode: 'contain'}}>
-          <Player
-            source={{
-              uri: reflexion.media,
-            }}
-            showControls
-            shouldPlay
-          />
-        </ScreenBg>
-      </SafeAreaView>
+        <SafeAreaView>
+          <ScreenBg
+            source={{uri: reflexion.imagebg}}
+            color={reflexion.color}
+            styleImage={{resizeMode: 'contain'}}>
+            <Player
+              source={{
+                uri: reflexion.media,
+              }}
+              showControls
+              shouldPlay
+            />
+          </ScreenBg>
+        </SafeAreaView>
       </>
     );
   }

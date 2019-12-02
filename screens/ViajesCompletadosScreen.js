@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, FlatList, ScrollView, SafeAreaView} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  FlatList,
+  ScrollView,
+  SafeAreaView,
+} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import ItemBubble from '../components/ItemBubble';
 import Colors from '../constants/Colors';
@@ -77,14 +83,14 @@ export default class ViajeCompletadosScreen extends Component {
   renderItem = ({item}) => {
     return (
       <>
-      <SafeAreaView>
-        <ItemBubble
-          color={item.color}
-          status={item.status}
-          onPress={this._handleClick}>
-          {item.title}
-        </ItemBubble>
-      </SafeAreaView>
+        <SafeAreaView>
+          <ItemBubble
+            color={item.color}
+            status={item.status}
+            onPress={this._handleClick}>
+            {item.title}
+          </ItemBubble>
+        </SafeAreaView>
       </>
     );
   };
@@ -101,7 +107,8 @@ export default class ViajeCompletadosScreen extends Component {
           style={styles.scrollView}>
           <Text style={styles.bigTitle}>¡Vas muy bien!</Text>
           <Text style={styles.bigParagraph}>
-            Has completado los siguientes viajes. Si deseas consultar nuevamente el contenido, presiona sobre el viaje de interés.
+            Has completado los siguientes viajes. Si deseas consultar nuevamente
+            el contenido, presiona sobre el viaje de interés.
           </Text>
           <FlatList
             data={this.viaje.pasos}

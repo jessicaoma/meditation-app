@@ -7,7 +7,7 @@ import {
   View,
   StatusBar,
   ActivityIndicator,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
@@ -36,13 +36,13 @@ export default class Categorias extends Component {
     });
   }
 
-  /** @param {import('../utils/API').Categoria} item */
+  /** @param {import('../utils/types').Categoria} item */
   _handleClick = item => {
     this.props.navigation.navigate('Categoria', {
       categoria: item,
     });
   };
-  /** @param {import('../utils/API').Categoria} item */
+  /** @param {import('../utils/types').Categoria} item */
   keyExtractor = item => item.id;
 
   renderListHeader = () => <Text style={styles.sectionTitle}>Categorías</Text>;
@@ -51,7 +51,7 @@ export default class Categorias extends Component {
     <ActivityIndicator size="large" color={Colors.primaryDark} />
   );
 
-  /** @param {import('react-native').ListRenderItemInfo<import('../utils/API').Categoria>} info*/
+  /** @param {import('react-native').ListRenderItemInfo<import('../utils/types').Categoria>} info*/
   renderItem = ({item}) => (
     <Buttom
       style={{backgroundColor: item.color || Colors.primaryDark}}
@@ -66,15 +66,15 @@ export default class Categorias extends Component {
     return (
       <>
         <SafeAreaView>
-        <View style={styles.statusBar} />
-        <FlatList
-          style={styles.container}
-          data={this.state.categorias}
-          ListHeaderComponent={this.renderListHeader}
-          renderItem={this.renderItem}
-          keyExtractor={this.keyExtractor}
-          ListEmptyComponent={this.renderListEmpty}
-        />
+          <View style={styles.statusBar} />
+          <FlatList
+            style={styles.container}
+            data={this.state.categorias}
+            ListHeaderComponent={this.renderListHeader}
+            renderItem={this.renderItem}
+            keyExtractor={this.keyExtractor}
+            ListEmptyComponent={this.renderListEmpty}
+          />
         </SafeAreaView>
       </>
     );

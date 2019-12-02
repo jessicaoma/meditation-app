@@ -5,7 +5,7 @@ import {
   View,
   FlatList,
   ActivityIndicator,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import HalfCover from '../components/HalfCover';
 import Dimensions from '../constants/Dimensions';
@@ -38,7 +38,6 @@ export default class AudiolibrosScreen extends Component {
     this.setState({
       audioLibros: data,
     });
-    //console.log(this.state.meditaciones[0]);
   }
 
   _handleClick = item => {
@@ -72,17 +71,17 @@ export default class AudiolibrosScreen extends Component {
     return (
       <>
         <SafeAreaView style={{flex: 1}}>
-        <View style={styles.statusBar} />
-        <FlatList
-          data={this.state.audioLibros}
-          renderItem={this._renderItem}
-          numColumns={numColumns}
-          columnWrapperStyle={styles.wrapperStyle}
-          ListEmptyComponent={this._renderEmtpy}
-          keyExtractor={item => item.id}
-          ListHeaderComponent={this._renderListHeader}
-          style={styles.container}
-        />
+          <View style={styles.statusBar} />
+          <FlatList
+            data={this.state.audioLibros}
+            renderItem={this._renderItem}
+            numColumns={numColumns}
+            columnWrapperStyle={styles.wrapperStyle}
+            ListEmptyComponent={this._renderEmtpy}
+            keyExtractor={item => item.id}
+            ListHeaderComponent={this._renderListHeader}
+            style={styles.container}
+          />
         </SafeAreaView>
       </>
     );

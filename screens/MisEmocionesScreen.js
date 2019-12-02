@@ -21,7 +21,6 @@ import LogoEmocion4 from '../constants/LogoEmocion4';
 import LogoPerfil from '../constants/LogoPerfil';
 import {enumStatus} from '../utils/types';
 
-
 export default class MisEmocionesScreen extends Component {
   constructor(props) {
     super(props);
@@ -30,36 +29,40 @@ export default class MisEmocionesScreen extends Component {
       keys: ['excited', 'happy', 'sad', 'depressed'],
       colors: ['#bfc6e2', '#bfc6e2', '#bfc6e2', '#bfc6e2'],
       title: 'Semanal',
-      yAxis: [{
-                value: 0,
-                label: '0',
-            },
-            {
-                value: 3.5,
-                label: '3.5',
-            },
-            {
-                value: 7,
-                label: '7',
-            },]
+      yAxis: [
+        {
+          value: 0,
+          label: '0',
+        },
+        {
+          value: 3.5,
+          label: '3.5',
+        },
+        {
+          value: 7,
+          label: '7',
+        },
+      ],
     };
   }
   onPressSemanal = () => {
     this.setState({
       emocionesData: [3, 2, 0, 1, 1],
       title: 'Semanal',
-      yAxis: [{
-                value: 0,
-                label: '0',
-            },
-            {
-                value: 3.5,
-                label: '3.5',
-            },
-            {
-                value: 7,
-                label: '7',
-            },]
+      yAxis: [
+        {
+          value: 0,
+          label: '0',
+        },
+        {
+          value: 3.5,
+          label: '3.5',
+        },
+        {
+          value: 7,
+          label: '7',
+        },
+      ],
     });
   };
 
@@ -67,18 +70,20 @@ export default class MisEmocionesScreen extends Component {
     this.setState({
       emocionesData: [14, 7, 4, 1, 3],
       title: 'Mensual',
-      yAxis: [{
-                value: 0,
-                label: '0',
-            },
-            {
-                value: 15,
-                label: '15',
-            },
-            {
-                value: 30,
-                label: '30',
-            },]
+      yAxis: [
+        {
+          value: 0,
+          label: '0',
+        },
+        {
+          value: 15,
+          label: '15',
+        },
+        {
+          value: 30,
+          label: '30',
+        },
+      ],
     });
   };
 
@@ -125,18 +130,19 @@ export default class MisEmocionesScreen extends Component {
           <Text style={styles.bigParagraph}>Tu reporte {this.state.title}</Text>
 
           <View style={styles.barChartContainer}>
-
-              <View style={styles.containerYaxis}>
-                <Text style={styles.textYAis}>{this.state.yAxis[2].label}</Text>
-                <Text style={styles.textYAisInter}>{this.state.yAxis[1].label}</Text>
-                <Text style={styles.textYAis}>{this.state.yAxis[0].label}</Text>
-              </View>
-              <BarChart
-                style={styles.barChart}
-                data={this.state.emocionesData}
-                svg={{fill: '#bfc6e2'}}
-                contentInset={{top: 30}}
-              />
+            <View style={styles.containerYaxis}>
+              <Text style={styles.textYAis}>{this.state.yAxis[2].label}</Text>
+              <Text style={styles.textYAisInter}>
+                {this.state.yAxis[1].label}
+              </Text>
+              <Text style={styles.textYAis}>{this.state.yAxis[0].label}</Text>
+            </View>
+            <BarChart
+              style={styles.barChart}
+              data={this.state.emocionesData}
+              svg={{fill: '#bfc6e2'}}
+              contentInset={{top: 30}}
+            />
 
             <View style={styles.containerLabels}>
               <LogoEmocion1 />
@@ -150,7 +156,8 @@ export default class MisEmocionesScreen extends Component {
           <View>
             <Text style={styles.bigTitle}>¡Sigue así!</Text>
             <Text style={styles.bigParagraph}>
-              Esta semana has estado feliz 5 días. Sentir gratitud es tu mejor recompensa.
+              Esta semana has estado feliz 5 días. Sentir gratitud es tu mejor
+              recompensa.
             </Text>
             <Text style={styles.bigParagraph}>
               Te recomiendo iniciar este viaje que te ayudará a sentirte cada
@@ -268,5 +275,5 @@ const styles = StyleSheet.create({
     fontSize: 11.5,
     color: Colors.gray,
     textAlign: 'right',
-  }
+  },
 });

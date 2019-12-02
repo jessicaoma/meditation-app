@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
-import {StyleSheet, FlatList, ActivityIndicator, SafeAreaView} from 'react-native';
+import {
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+  SafeAreaView,
+} from 'react-native';
 import ItemBubble from '../components/ItemBubble';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
@@ -130,18 +135,18 @@ export default class Categoria extends Component {
     this.categoria = this.props.navigation.state.params.categoria;
     return (
       <SafeAreaView>
-      <ScreenBg
-        source={{uri: this.categoria.backgroundImage}}
-        color={this.categoria.color}>
-        <FlatList
-          ListHeaderComponent={this.renderListHeader}
-          data={this.state.viajes}
-          renderItem={this.renderItem}
-          keyExtractor={this.keyExtractor}
-          style={styles.container}
-          ListEmptyComponent={this.renderListEmpty}
-        />
-      </ScreenBg>
+        <ScreenBg
+          source={{uri: this.categoria.backgroundImage}}
+          color={this.categoria.color}>
+          <FlatList
+            ListHeaderComponent={this.renderListHeader}
+            data={this.state.viajes}
+            renderItem={this.renderItem}
+            keyExtractor={this.keyExtractor}
+            style={styles.container}
+            ListEmptyComponent={this.renderListEmpty}
+          />
+        </ScreenBg>
       </SafeAreaView>
     );
   }

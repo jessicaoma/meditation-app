@@ -73,13 +73,7 @@ export default class Home extends Component {
         onPress={() => {
           navigation.openDrawer();
         }}>
-        <TabBarIcon
-          name={'perfil'}
-          styleImage={{
-            height: 24,
-            width: 24,
-          }}
-        />
+        <TabBarIcon name={'perfil'} />
       </TouchableOpacity>
     ),
   });
@@ -144,7 +138,9 @@ export default class Home extends Component {
           style={styles.scrollView}>
           <Cover source={{uri: uriReflexion}} onPress={this._handleReflexion} />
           <Buttom onPress={this._handleEmociones}>
-            <ScalableText style={styles.title_boxes}>¿como me siento?</ScalableText>
+            <ScalableText style={styles.title_boxes}>
+              ¿como me siento?
+            </ScalableText>
             <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
           </Buttom>
           <ScalableText style={styles.sectionTitle}>Lo nuevo</ScalableText>
@@ -154,7 +150,9 @@ export default class Home extends Component {
             renderItem={this._renderItemLonuevo}
             keyExtractor={item => 'lonuevo' + item.id}
           />
-          <ScalableText style={styles.sectionTitle}>Viajes en progreso</ScalableText>
+          <ScalableText style={styles.sectionTitle}>
+            Viajes en progreso
+          </ScalableText>
           <FlatList
             horizontal
             data={dataViajesenprogreso}
@@ -171,7 +169,9 @@ export default class Home extends Component {
             <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
           </Buttom>
           <Buttom>
-            <ScalableText style={styles.title_boxes}>CONVIERTETE EN PREMIUM</ScalableText>
+            <ScalableText style={styles.title_boxes}>
+              CONVIERTETE EN PREMIUM
+            </ScalableText>
             <Image source={{uri: uriflor3}} style={styles.itemImage} />
           </Buttom>
           <View style={styles.separador2} />
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     color: Colors.gray,
     fontFamily: 'MyriadPro-Bold',
   },
-  
+
   itemImage: {
     resizeMode: 'cover',
     width: 76,
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     alignSelf: 'center',
     fontFamily: 'MyriadPro-Regular',
-    paddingTop:5,
+    paddingTop: 5,
   },
   title_boxes2: {
     color: '#494c6b',
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flexWrap: 'wrap',
     flex: 1,
-    paddingTop:5,
+    paddingTop: 5,
   },
   box2: {
     minWidth: 198,

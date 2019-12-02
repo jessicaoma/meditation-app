@@ -6,7 +6,7 @@ import {
   ScrollView,
   Text,
   ImageBackground,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
@@ -15,7 +15,7 @@ import Colors from '../constants/Colors';
 /**
  * @typedef {Object} ParamsNavigation
  * @prop {import('./AngelCartasScreen').Card} carta
- * @prop {import('../utils/API').AngelMensaje} mensaje
+ * @prop {import('../utils/types').AngelMensaje} mensaje
  *
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
@@ -83,21 +83,21 @@ export default class AngelScreen extends Component {
     return (
       <>
         <SafeAreaView>
-        <View style={styles.statusBar} />
-        <View style={[styles.container]}>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            scrollEventThrottle={10}
-            pagingEnabled
-            onScroll={Animated.event([
-              {nativeEvent: {contentOffset: {x: this.animVal}}},
-            ])}
-            style={styles.slider}>
-            {imageArray}
-          </ScrollView>
-          <View style={styles.barContainer}>{barArray}</View>
-        </View>
+          <View style={styles.statusBar} />
+          <View style={[styles.container]}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              scrollEventThrottle={10}
+              pagingEnabled
+              onScroll={Animated.event([
+                {nativeEvent: {contentOffset: {x: this.animVal}}},
+              ])}
+              style={styles.slider}>
+              {imageArray}
+            </ScrollView>
+            <View style={styles.barContainer}>{barArray}</View>
+          </View>
         </SafeAreaView>
       </>
     );

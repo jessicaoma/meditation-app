@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {NavigationActions} from 'react-navigation';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import Dimensions from '../constants/Dimensions';
 import Constants from 'expo-constants';
 import TabBarIcon from './TabBarIcon';
-import colors from '../constants/Colors';
 
 /**
  * Drawer Content Render
