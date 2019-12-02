@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Svg, {G, Path, Polygon} from 'react-native-svg';
+import Svg, {G, Polygon} from 'react-native-svg';
 import colors from './Colors';
 
 /**

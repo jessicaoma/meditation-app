@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, FlatList} from 'react-native';
+import {Text, StyleSheet, View, FlatList, SafeAreaView} from 'react-native';
 import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Constants from 'expo-constants';
@@ -122,16 +122,20 @@ export default class AngelCartasScreen extends Component {
   render() {
     return (
       <>
-        <View style={styles.statusBar} />
-        <View style={styles.container}>
-          <Text style={styles.sectionTitle}>Tu Ángel del día </Text>
-          <FlatList
-            data={data}
-            renderItem={this.renderItem}
-            numColumns={numColumns}
-          />
-          <Text style={styles.suggestion}>Elige una carta para descubrir</Text>
-        </View>
+        <SafeAreaView style={{flex: 1}}>
+          <View style={styles.statusBar} />
+          <View style={styles.container}>
+            <Text style={styles.sectionTitle}>Tu Ángel del día </Text>
+            <FlatList
+              data={data}
+              renderItem={this.renderItem}
+              numColumns={numColumns}
+            />
+            <Text style={styles.suggestion}>
+              Elige una carta para descubrir
+            </Text>
+          </View>
+        </SafeAreaView>
       </>
     );
   }
@@ -146,7 +150,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dims.regularSpace,
   },
   sectionTitle: {
-    fontSize: 17,
+    fontSize: Dims.h2,
     letterSpacing: 1.11,
     lineHeight: 36,
     marginTop: Dims.regularSpace,

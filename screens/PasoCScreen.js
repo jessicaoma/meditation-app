@@ -6,22 +6,23 @@ import {Button, Text, StyleSheet} from 'react-native';
  * @prop {import('react-navigation').NavigationScreenProp} navigation
  * @extends {Component<Props>}
  */
-export default class PasoScreenD extends Component {
+export default class PasoCScreen extends Component {
   static navigationOptions = {
     title: 'Paso',
   };
 
   _handleClick = () => {
     //alert('This is a button!');
-    this.props.navigation.replace('PasoE');
+
+    this.props.navigation.replace('PasoD');
   };
 
   render() {
     return (
       <>
-        <Text>Paso D</Text>
+        <Text>Paso C</Text>
         {/* <Text>{}</Text> */}
-        <Button onPress={this._handleClick} title="Paso E" />
+        <Button onPress={this._handleClick} title="Paso D" />
       </>
     );
   }

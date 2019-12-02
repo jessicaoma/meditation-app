@@ -6,6 +6,7 @@ import {
   View,
   FlatList,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
@@ -86,13 +87,15 @@ export default class MisMeditacionesScreen extends Component {
   _keyExtractor = item => item.id;
 
   render = () => (
-    <FlatList
-      data={this.state.meditaciones}
-      renderItem={this._renderItem}
-      ListEmptyComponent={this._renderListEmpty}
-      style={styles.container}
-      keyExtractor={this._keyExtractor}
-    />
+    <SafeAreaView style={{flex: 1}}>
+      <FlatList
+        data={this.state.meditaciones}
+        renderItem={this._renderItem}
+        ListEmptyComponent={this._renderListEmpty}
+        style={styles.container}
+        keyExtractor={this._keyExtractor}
+      />
+    </SafeAreaView>
   );
 }
 

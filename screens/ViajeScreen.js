@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, Text, StyleSheet, FlatList, View} from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  FlatList,
+  View,
+  SafeAreaView,
+} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import ItemBubbleLine from '../components/ItemBubbleLine';
 import Colors from '../constants/Colors';
@@ -81,7 +88,6 @@ export default class ViajeScreen extends Component {
   });
 
   _handleClick = index => {
-    //alert('This is a button!');
     this.props.navigation.navigate('PasoA'
     //   {pasos: this.viaje.pasos,
     //   position: index,}
@@ -139,22 +145,24 @@ export default class ViajeScreen extends Component {
   render() {
     return (
       <>
-        <ScreenBg source={{uri: this.viaje.bgImg}} color={this.viaje.color}>
-          <FlatList
-            data={this.viaje.pasos}
-            renderItem={this.renderItem}
-            keyExtractor={this.keyExtractor}
-            style={styles.container}
-            ItemSeparatorComponent={this.renderSeparator}
-            ListFooterComponent={
-              <TouchableOpacity
-                //onPress={this.handleContinue}
-                style={[styles.button]}>
-                <Text style={styles.buttonLabel}>Continuar mi viaje</Text>
-              </TouchableOpacity>
-            }
-          />
-        </ScreenBg>
+        <SafeAreaView>
+          <ScreenBg source={{uri: this.viaje.bgImg}} color={this.viaje.color}>
+            <FlatList
+              data={this.viaje.pasos}
+              renderItem={this.renderItem}
+              keyExtractor={this.keyExtractor}
+              style={styles.container}
+              ItemSeparatorComponent={this.renderSeparator}
+              ListFooterComponent={
+                <TouchableOpacity
+                  //onPress={this.handleContinue}
+                  style={[styles.button]}>
+                  <Text style={styles.buttonLabel}>Continuar mi viaje</Text>
+                </TouchableOpacity>
+              }
+            />
+          </ScreenBg>
+        </SafeAreaView>
       </>
     );
   }

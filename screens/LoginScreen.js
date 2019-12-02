@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   StatusBar,
+  SafeAreaView,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
@@ -26,29 +27,31 @@ export default class LoginScreen extends Component {
     return (
       <>
         <StatusBar barStyle="dark-content" />
-        <View style={styles.container}>
-          <Logo isAlternative style={styles.logo} />
-          <Text style={styles.welcomeTitle}>BIENVENIDO</Text>
-          <View style={styles.full}>
-            <InputLogin placeholder="Correo" type="text" />
-            <InputLogin placeholder="Constraseña" type="password" />
-            <TouchableOpacity
-              onPress={this.handleLogin}
-              style={[styles.button]}>
-              <Text style={styles.buttonLabel}>Iniciar Sesión</Text>
-            </TouchableOpacity>
-            <TouchableHighlight>
-              <Text style={styles.forgetText}>¿Olvidaste tu contraseña?</Text>
-            </TouchableHighlight>
-            <TouchableOpacity
-              onPress={this.handleLogin}
-              style={[styles.button]}>
-              <Text style={styles.buttonLabel}>CREAR UNA CUENTA</Text>
-            </TouchableOpacity>
+        <SafeAreaView style={{flex: 1}}>
+          <View style={styles.container}>
+            <Logo isAlternative style={styles.logo} />
+            <Text style={styles.welcomeTitle}>BIENVENIDO</Text>
+            <View style={styles.full}>
+              <InputLogin placeholder="Correo" type="text" />
+              <InputLogin placeholder="Constraseña" type="password" />
+              <TouchableOpacity
+                onPress={this.handleLogin}
+                style={[styles.button]}>
+                <Text style={styles.buttonLabel}>Iniciar Sesión</Text>
+              </TouchableOpacity>
+              <TouchableHighlight>
+                <Text style={styles.forgetText}>¿Olvidaste tu contraseña?</Text>
+              </TouchableHighlight>
+              <TouchableOpacity
+                onPress={this.handleLogin}
+                style={[styles.button]}>
+                <Text style={styles.buttonLabel}>Crear una cuenta</Text>
+              </TouchableOpacity>
+            </View>
+            <View />
+            <View />
           </View>
-          <View />
-          <View />
-        </View>
+        </SafeAreaView>
       </>
     );
   }
@@ -64,10 +67,11 @@ const styles = StyleSheet.create({
     paddingTop: Dims.hugeSpace + Dims.hugeSpace + Dims.hugeSpace,
   },
   welcomeTitle: {
-    color: '#aba0b5',
-    fontSize: 20,
+    color: '#97a3ce',
+    fontSize: Dims.h2,
     lineHeight: 36,
-    fontFamily: 'MyriadPro-Regular',
+    fontFamily: 'MyriadPro-Bold',
+    letterSpacing: 1.2,
   },
   logo: {
     width: 84,
@@ -92,16 +96,15 @@ const styles = StyleSheet.create({
   },
   buttonLabel: {
     color: 'white',
-    fontSize: Dims.window.width * 0.041,
-    fontWeight: 'bold',
+    fontSize: Dims.inputText,
     textAlign: 'center',
     letterSpacing: 1.5,
     lineHeight: 50,
-    fontFamily: 'MyriadPro-Regular',
+    fontFamily: 'MyriadPro-Bold',
   },
   forgetText: {
     color: Colors.gray,
-    fontSize: 16,
+    fontSize: Dims.inputText,
     lineHeight: 28,
     marginVertical: Dims.smallSpace,
   },

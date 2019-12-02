@@ -1,6 +1,13 @@
 // @ts-nocheck
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, FlatList, ScrollView} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  FlatList,
+  ScrollView,
+  SafeAreaView,
+} from 'react-native';
 import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Dims from '../constants/Dimensions';
@@ -76,7 +83,7 @@ export default class EmocionesScreen extends Component {
   renderItem = ({item}) => {
     return (
       <HalfCover
-        source={item.faces[0]}
+        source={item.image}
         onPress={() => {
           this._handleClick(item);
         }}
@@ -90,21 +97,23 @@ export default class EmocionesScreen extends Component {
   render() {
     return (
       <>
-        <ScrollView contentInsetAdjustmentBehavior="automatic">
-          <View style={styles.container}>
-            <Text style={styles.sectionTitle}>Tus emociones </Text>
-            <FlatList
-              data={data}
-              renderItem={this.renderItem}
-              numColumns={numColumns}
-            />
-            <Text style={styles.suggestion}>
-              ¿Cómo te sientes hoy?.{'\n'}
-              Llevando un registro de tus emociones vas a concerte más a ti
-              misma.
-            </Text>
-          </View>
-        </ScrollView>
+        <SafeAreaView>
+          <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <View style={styles.container}>
+              <Text style={styles.sectionTitle}>Tus emociones </Text>
+              <FlatList
+                data={data}
+                renderItem={this.renderItem}
+                numColumns={numColumns}
+              />
+              <Text style={styles.suggestion}>
+                ¿Cómo te sientes hoy?.{'\n'}
+                Llevando un registro de tus emociones vas a concerte más a ti
+                misma.
+              </Text>
+            </View>
+          </ScrollView>
+        </SafeAreaView>
       </>
     );
   }
@@ -116,7 +125,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dims.regularSpace,
   },
   sectionTitle: {
-    fontSize: 17,
+    fontSize: Dims.h2,
     letterSpacing: 1.11,
     lineHeight: 36,
     marginTop: Dims.regularSpace,

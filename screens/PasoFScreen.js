@@ -6,7 +6,7 @@ import {Button, Text, StyleSheet} from 'react-native';
  * @prop {import('react-navigation').NavigationScreenProp} navigation
  * @extends {Component<Props>}
  */
-export default class PasoScreenF extends Component {
+export default class PasoFScreen extends Component {
   static navigationOptions = {
     title: 'Paso',
   };

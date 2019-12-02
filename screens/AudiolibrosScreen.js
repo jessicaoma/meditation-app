@@ -5,6 +5,7 @@ import {
   View,
   FlatList,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import HalfCover from '../components/HalfCover';
 import Dimensions from '../constants/Dimensions';
@@ -37,7 +38,6 @@ export default class AudiolibrosScreen extends Component {
     this.setState({
       audioLibros: data,
     });
-    //console.log(this.state.meditaciones[0]);
   }
 
   _handleClick = item => {
@@ -70,17 +70,19 @@ export default class AudiolibrosScreen extends Component {
   render() {
     return (
       <>
-        <View style={styles.statusBar} />
-        <FlatList
-          data={this.state.audioLibros}
-          renderItem={this._renderItem}
-          numColumns={numColumns}
-          columnWrapperStyle={styles.wrapperStyle}
-          ListEmptyComponent={this._renderEmtpy}
-          keyExtractor={item => item.id}
-          ListHeaderComponent={this._renderListHeader}
-          style={styles.container}
-        />
+        <SafeAreaView style={{flex: 1}}>
+          <View style={styles.statusBar} />
+          <FlatList
+            data={this.state.audioLibros}
+            renderItem={this._renderItem}
+            numColumns={numColumns}
+            columnWrapperStyle={styles.wrapperStyle}
+            ListEmptyComponent={this._renderEmtpy}
+            keyExtractor={item => item.id}
+            ListHeaderComponent={this._renderListHeader}
+            style={styles.container}
+          />
+        </SafeAreaView>
       </>
     );
   }
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dimensions.regularSpace,
   },
   sectionTitle: {
-    fontSize: 17,
+    fontSize: Dimensions.h2,
     letterSpacing: 1.11,
     lineHeight: 36,
     marginTop: Dimensions.regularSpace,

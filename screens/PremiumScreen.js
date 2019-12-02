@@ -7,6 +7,7 @@ import {
   View,
   ScrollView,
   TextInput,
+  SafeAreaView,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
@@ -123,55 +124,63 @@ export default class PremiumScreen extends Component {
   render() {
     return (
       <>
-        <View style={styles.statusBar} />
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <TouchableOpacity style={styles.close} onPress={this._handleClose}>
-            <Ionicons name={'md-close'} size={30} color={Colors.gray} />
-          </TouchableOpacity>
-          <Image
-            source={{uri: 'http://okoconnect.com/karim/images/premium-top.png'}}
-            style={styles.topimage}
-          />
-          <View style={styles.container}>
-            <Text style={styles.bigTitle}>Elige un plan</Text>
-            <Text style={styles.bigParagraph}>
-              {' '}
-              Accede a todo el contenido ilimitado de la plataforma, los planes
-              de suscripción incluyen acceso a:
-            </Text>
+        <SafeAreaView style={{flex: 1}}>
+          <View style={styles.statusBar} />
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            style={styles.scrollView}>
+            <TouchableOpacity style={styles.close} onPress={this._handleClose}>
+              <Ionicons name={'md-close'} size={30} color={Colors.gray} />
+            </TouchableOpacity>
+            <Image
+              source={{
+                uri: 'http://okoconnect.com/karim/images/premium-top.png',
+              }}
+              style={styles.topimage}
+            />
             <View style={styles.container}>
-              {this.features.premium.map(item => this.renderPremiumItem(item))}
-            </View>
-            <View style={styles.container}>
-              {this.features.prices.map(item => this.renderPriceBubble(item))}
-            </View>
-            <View style={{paddingHorizontal: Dimensions.regularSpace}}>
-              <View style={styles.priceBubble}>
-                <Text style={styles.titlePriceBubble}>Plan Corporativo</Text>
-                <Text style={styles.descPriceBubble}>
-                  Para planes corporativos o empresariales.
-                </Text>
-                <TextInput
-                  style={[styles.inputText]}
-                  placeholder={'Correo electrónico'}
-                  secureTextEntry={false}
-                />
-                <TouchableOpacity
-                  onPress={this._handleClose}
-                  style={[styles.button]}>
-                  <Text style={styles.buttonLabel}>ENVIAR</Text>
-                </TouchableOpacity>
+              <Text style={styles.bigTitle}>Elige un plan</Text>
+              <Text style={styles.bigParagraph}>
+                {' '}
+                Accede a todo el contenido ilimitado de la plataforma, los
+                planes de suscripción incluyen acceso a:
+              </Text>
+              <View style={styles.container}>
+                {this.features.premium.map(item =>
+                  this.renderPremiumItem(item),
+                )}
+              </View>
+              <View style={styles.container}>
+                {this.features.prices.map(item => this.renderPriceBubble(item))}
+              </View>
+              <View style={{paddingHorizontal: Dimensions.regularSpace}}>
+                <View style={styles.priceBubble}>
+                  <Text style={styles.titlePriceBubble}>Plan Corporativo</Text>
+                  <Text style={styles.descPriceBubble}>
+                    Para planes corporativos o empresariales.
+                  </Text>
+                  <TextInput
+                    style={[styles.inputText]}
+                    placeholder={'Correo electrónico'}
+                    secureTextEntry={false}
+                  />
+                  <TouchableOpacity
+                    onPress={this._handleClose}
+                    style={[styles.button]}>
+                    <Text style={styles.buttonLabel}>ENVIAR</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
+          </ScrollView>
+          <View style={[styles.containerBottomButton]}>
+            <TouchableOpacity
+              onPress={this._handleClose}
+              style={[styles.button]}>
+              <Text style={styles.buttonLabel}>Empieza tu prueba gratis</Text>
+            </TouchableOpacity>
           </View>
-        </ScrollView>
-        <View style={[styles.containerBottomButton]}>
-          <TouchableOpacity onPress={this._handleClose} style={[styles.button]}>
-            <Text style={styles.buttonLabel}>Empieza tu prueba gratis</Text>
-          </TouchableOpacity>
-        </View>
+        </SafeAreaView>
       </>
     );
   }

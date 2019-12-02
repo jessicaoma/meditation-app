@@ -47,6 +47,31 @@ export default class ItemBubble extends Component {
           fontSize: 18,
         },
       });
+    } else if (status === 'viajeDiario') {
+      styleStatus = StyleSheet.create({
+        styleContainer: {
+          borderColor: color,
+          backgroundColor: color,
+        },
+        styleText: {
+          fontWeight: 'bold',
+        },
+      });
+    } else if (status === 'meditar-audiolibro') {
+      styleStatus = StyleSheet.create({
+        styleContainer: {
+          borderColor: '#ffffff',
+          backgroundColor: color,
+          borderRadius: 10,
+          paddingVertical: Dims.regularSpace,
+        },
+        styleText: {
+          //fontWeight: 'regular',
+          fontFamily: 'MyriadPro-Regular',
+          color: 'white',
+          lineHeight: 20,
+        },
+      });
     }
     return (
       <TouchableOpacity

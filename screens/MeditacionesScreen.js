@@ -6,6 +6,7 @@ import {
   View,
   FlatList,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
@@ -24,7 +25,7 @@ export default class MeditacionesScreen extends Component {
   static navigationOptions = {};
   constructor(props) {
     super(props);
-    /** @type {{meditaciones: import('../utils/API').Meditación[]}} */
+    /** @type {{meditaciones: import('../utils/types').Meditación[]}} */
     this.state = {
       meditaciones: [],
     };
@@ -37,14 +38,14 @@ export default class MeditacionesScreen extends Component {
     });
   }
 
-  /** @param {import('../utils/API').Meditación} item */
+  /** @param {import('../utils/types').Meditación} item */
   _handleClick = item => {
     this.props.navigation.navigate('Meditacion', {
       meditacion: item,
     });
   };
 
-  /** @param {{item : import('../utils/API').Meditación}} item */
+  /** @param {{item : import('../utils/types').Meditación}} item */
   _renderItem = ({item}) => {
     return (
       <Buttom
@@ -89,25 +90,30 @@ export default class MeditacionesScreen extends Component {
   _renderListEmpty = _ => {
     return <ActivityIndicator size="large" color={Colors.primaryDark} />;
   };
-  /** @param {import('../utils/API').Meditación} item */
+  /** @param {import('../utils/types').Meditación} item */
   _keyExtractor = item => item.id;
 
   render = () => (
     <>
-      <View style={styles.statusBar} />
-      <FlatList
-        data={this.state.meditaciones}
-        renderItem={this._renderItem}
-        ListHeaderComponent={this._renderListHeader}
-        ListEmptyComponent={this._renderListEmpty}
-        style={styles.container}
-        keyExtractor={this._keyExtractor}
-      />
+      <SafeAreaView style={{flex: 1}}>
+        <View style={styles.statusBar} />
+        <FlatList
+          data={this.state.meditaciones}
+          renderItem={this._renderItem}
+          ListHeaderComponent={this._renderListHeader}
+          ListEmptyComponent={this._renderListEmpty}
+          style={styles.container}
+          keyExtractor={this._keyExtractor}
+        />
+      </SafeAreaView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+  },
   statusBar: {
     height: Constants.statusBarHeight,
   },
@@ -119,7 +125,7 @@ const styles = StyleSheet.create({
     paddingRight: 0,
   },
   sectionTitle: {
-    fontSize: 17,
+    fontSize: Dims.h2,
     letterSpacing: 1.11,
     lineHeight: 36,
     marginTop: Dims.regularSpace,
@@ -131,8 +137,8 @@ const styles = StyleSheet.create({
   },
   title_boxes: {
     color: 'white',
-    fontSize: Dims.window.width * 0.038,
-    letterSpacing: 0.055,
+    fontSize: Dims.bubbleTitle,
+    letterSpacing: Dims.bubbleTitleSpacing,
     lineHeight: 25,
     textTransform: 'uppercase',
     alignSelf: 'center',

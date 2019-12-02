@@ -1,10 +1,17 @@
 import React, {Component} from 'react';
-import {StyleSheet, FlatList, ActivityIndicator} from 'react-native';
+import {
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+  SafeAreaView,
+  View,
+} from 'react-native';
 import ItemBubble from '../components/ItemBubble';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import Dimensions from '../constants/Dimensions';
 import API from '../utils/API';
+import Constants from 'expo-constants';
 
 /**
  * @typedef {Object} ParamsNavigation
@@ -81,6 +88,7 @@ export default class Categoria extends Component {
       'example@example.com',
     );
     this.setState({viajes});
+    console.log(viajes);
   };
 
   _goViaje = () => {
@@ -128,23 +136,29 @@ export default class Categoria extends Component {
   render() {
     this.categoria = this.props.navigation.state.params.categoria;
     return (
-      <ScreenBg
-        source={{uri: this.categoria.backgroundImage}}
-        color={this.categoria.color}>
-        <FlatList
-          ListHeaderComponent={this.renderListHeader}
-          data={this.state.viajes}
-          renderItem={this.renderItem}
-          keyExtractor={this.keyExtractor}
-          style={styles.container}
-          ListEmptyComponent={this.renderListEmpty}
-        />
-      </ScreenBg>
+      <SafeAreaView>
+        <View style={styles.statusBar} />
+        <ScreenBg
+          source={{uri: this.categoria.backgroundImage}}
+          color={this.categoria.color}>
+          <FlatList
+            ListHeaderComponent={this.renderListHeader}
+            data={this.state.viajes}
+            renderItem={this.renderItem}
+            keyExtractor={this.keyExtractor}
+            style={styles.container}
+            ListEmptyComponent={this.renderListEmpty}
+          />
+        </ScreenBg>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  statusBar: {
+    height: Constants.statusBarHeight,
+  },
   container: {
     paddingHorizontal: Dimensions.regularSpace,
     paddingTop: Dimensions.regularSpace,

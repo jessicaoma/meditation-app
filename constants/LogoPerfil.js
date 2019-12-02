@@ -4,7 +4,7 @@ import colors from './Colors';
 
 /**
  * @typedef Props
- * @prop {string} tintColor Color to used
+ * @prop {string} [tintColor] Color to used
  *
  * @extends {Component<Props>}
  */
@@ -13,7 +13,7 @@ export default class LogoPerfil extends Component {
     const opacity =
       this.props.tintColor === colors.tabIconDefault ? '0.5' : '1';
     return (
-      <Svg width="23px" height="23px" viewBox="0 0 23 23" opacity={opacity}>
+      <Svg width="24" height="24" viewBox="0 0 23 23" opacity={opacity}>
         <G
           id="Symbols"
           stroke="none"

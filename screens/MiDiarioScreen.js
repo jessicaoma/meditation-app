@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet} from 'react-native';
-
+import {StyleSheet, ScrollView, View, SafeAreaView} from 'react-native';
+import Dims from '../constants/Dimensions';
+import CalendarComponent from '../components/CalendarComponent';
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
@@ -11,18 +12,24 @@ export default class MiDiarioScreen extends Component {
     //title: 'Paso',
   };
 
-  _handleClick = () => {
-    //alert('This is a button!');
-    //this.props.navigation.navigate('Viaje');
-  };
-
   render() {
     return (
       <>
-        <Text>Mi Diario</Text>
+        <SafeAreaView>
+          <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <View style={styles.container}>
+              <CalendarComponent />
+            </View>
+          </ScrollView>
+        </SafeAreaView>
       </>
     );
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: Dims.regularSpace,
+  },
+});
