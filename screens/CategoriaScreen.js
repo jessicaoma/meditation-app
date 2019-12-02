@@ -4,12 +4,14 @@ import {
   FlatList,
   ActivityIndicator,
   SafeAreaView,
+  View,
 } from 'react-native';
 import ItemBubble from '../components/ItemBubble';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import Dimensions from '../constants/Dimensions';
 import API from '../utils/API';
+import Constants from 'expo-constants';
 
 /**
  * @typedef {Object} ParamsNavigation
@@ -60,7 +62,7 @@ export default class Categoria extends Component {
     color: this.props.navigation.getParam('bg', Colors.primary),
     bgImg: 'http://okoconnect.com/karim/images/viaje-bg-1.png',
   };*/
-  /** @type {import('../utils/API').Categoria} */
+  /** @type {import('../utils/types').Categoria} */
   categoria = {
     id: 'cat1',
     color: '#fdd58d',
@@ -135,6 +137,7 @@ export default class Categoria extends Component {
     this.categoria = this.props.navigation.state.params.categoria;
     return (
       <SafeAreaView>
+        <View style={styles.statusBar} />
         <ScreenBg
           source={{uri: this.categoria.backgroundImage}}
           color={this.categoria.color}>
@@ -153,6 +156,9 @@ export default class Categoria extends Component {
 }
 
 const styles = StyleSheet.create({
+  statusBar: {
+    height: Constants.statusBarHeight,
+  },
   container: {
     paddingHorizontal: Dimensions.regularSpace,
     paddingTop: Dimensions.regularSpace,
