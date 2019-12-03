@@ -6,9 +6,11 @@ import {
   ScrollView,
   Image,
   SafeAreaView,
+  TouchableOpacity
 } from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
+import {Ionicons} from '@expo/vector-icons';
 
 /**
  * @typedef Props
@@ -19,7 +21,7 @@ export default class Emocion extends Component {
   render() {
     return (
       <>
-        <SafeAreaView>
+        <SafeAreaView style={{flex:1,paddingBottom: 30}}>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
@@ -49,6 +51,15 @@ export default class Emocion extends Component {
                 dificultades.
                 {'\n'}Feliz Sábado ✨
               </Text>
+              <TouchableOpacity 
+                style={{flex:1,justifyContent:'center',alignItems:'center',marginBottom: 60}}>
+                  <Text style={styles.shareText}>Compartir</Text>
+                  <Ionicons
+                    name={'md-share'}
+                    size={35}
+                    style={styles.share}
+                  />
+            </TouchableOpacity>
             </View>
           </ScrollView>
         </SafeAreaView>
@@ -98,5 +109,14 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Regular',
     textAlign: 'center',
     paddingHorizontal: Dims.regularSpace,
+  },
+  shareText: {
+    color: Colors.gray,
+    fontFamily: 'MyriadPro-Regular',
+    textAlign: 'center',
+    letterSpacing: 1.2
+  },
+  share: {
+    color: Colors.primary,
   },
 });
