@@ -26,7 +26,7 @@ export default class MisEmocionesScreen extends Component {
     super(props);
     this.state = {
       emocionesData: [3, 2, 0, 2,],
-      keys: ['alegría', 'tristeza', 'ira', 'miedo'],
+      keys: ['Alegría', 'Ira', 'Miedo', 'Tristeza'],
       colors: ['#bfc6e2', '#bfc6e2', '#bfc6e2', '#bfc6e2'],
       title: 'Semanal',
       yAxis: [
@@ -148,19 +148,19 @@ export default class MisEmocionesScreen extends Component {
               />
               <View style={styles.containerLabels}>
                 <View style={styles.containerLabelsChild}>
-                  <Text style={styles.textTitleGraph}>Alegría</Text>
+                  <Text style={styles.textTitleGraph}>{this.state.keys[0]}</Text>
                   <LogoEmocion1 />
                 </View>
                 <View style={styles.containerLabelsChild}>
-                  <Text style={styles.textTitleGraph}>Miedo</Text>
+                  <Text style={styles.textTitleGraph}>{this.state.keys[1]}</Text>
                   <LogoEmocion2 />
                 </View>
                 <View style={styles.containerLabelsChild}>
-                  <Text style={styles.textTitleGraph}>Tristeza</Text>
+                  <Text style={styles.textTitleGraph}>{this.state.keys[2]}</Text>
                   <LogoEmocion3 />
                 </View>
                 <View style={styles.containerLabelsChild}>
-                  <Text style={styles.textTitleGraph}>Ira</Text>
+                  <Text style={styles.textTitleGraph}>{this.state.keys[3]}</Text>
                   <LogoEmocion4 />
                 </View>
               </View>
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     left: -5,
   },
-  barChartContainer: {padding: 20, height: 210},
+  barChartContainer: {padding: 20, height: 260},
   barChart: {
     height: 160,
     borderLeftColor: '#cdd2de',
@@ -290,7 +290,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   containerLabelsChild: {
-    flex: 1,
     flexDirection: 'column',
     textAlign: 'center',
     alignItems: 'center',
