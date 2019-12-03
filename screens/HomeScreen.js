@@ -56,14 +56,7 @@ export default class Home extends Component {
     headerLeft: (
       // eslint-disable-next-line react-native/no-inline-styles
       <View style={{flex: 1, justifyContent: 'flex-start', marginLeft: 16}}>
-        <Logo
-          style={{
-            width: 173,
-            height: 43,
-            resizeMode: 'contain',
-            paddingBottom: 2,
-          }}
-        />
+        <Logo />
       </View>
     ),
     headerRight: (

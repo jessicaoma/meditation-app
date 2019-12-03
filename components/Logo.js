@@ -1,6 +1,8 @@
 // @ts-nocheck
 import React from 'react';
-import {Image} from 'react-native';
+import {Image, View} from 'react-native';
+import LogoAppHeader from '../constants/LogoAppHeader';
+import LogoApp from '../constants/LogoApp';
 
 /**
  * @typedef {Object} Props
@@ -15,23 +17,9 @@ const Logo = ({style, isAlternative}) => {
   //TODO cambiar la validacion pues ya no se usa expo snack
   const envProd = process.env.NODE_ENV === 'production';
   return !isAlternative ? (
-    <Image
-      source={
-        envProd
-          ? {uri: 'http://okoconnect.com/karim/assets/images/logo.png'}
-          : require('../assets/images/logo.png')
-      }
-      style={style}
-    />
+    <View style={{width: 192,height: 44,}}><LogoAppHeader /></View>
   ) : (
-    <Image
-      source={
-        envProd
-          ? {uri: 'http://okoconnect.com/karim/assets/images/logo2.png'}
-          : require('../assets/images/logo2.png')
-      }
-      style={style}
-    />
+    <View style={{width: 84,height: 90,alignItems: 'center'}}><LogoApp /></View>
   );
 };
 
