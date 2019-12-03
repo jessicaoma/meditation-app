@@ -25,8 +25,8 @@ export default class MisEmocionesScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      emocionesData: [3, 2, 0, 1, 1],
-      keys: ['excited', 'happy', 'sad', 'depressed'],
+      emocionesData: [3, 2, 0, 2,],
+      keys: ['alegría', 'tristeza', 'ira', 'miedo'],
       colors: ['#bfc6e2', '#bfc6e2', '#bfc6e2', '#bfc6e2'],
       title: 'Semanal',
       yAxis: [
@@ -47,7 +47,7 @@ export default class MisEmocionesScreen extends Component {
   }
   onPressSemanal = () => {
     this.setState({
-      emocionesData: [3, 2, 0, 1, 1],
+      emocionesData: [3, 2, 0, 2,],
       title: 'Semanal',
       yAxis: [
         {
@@ -68,7 +68,7 @@ export default class MisEmocionesScreen extends Component {
 
   onPressMensual = () => {
     this.setState({
-      emocionesData: [14, 7, 4, 1, 3],
+      emocionesData: [14, 7, 4, 4,],
       title: 'Mensual',
       yAxis: [
         {
@@ -89,7 +89,7 @@ export default class MisEmocionesScreen extends Component {
 
   onPressAnual = () => {
     this.setState({
-      emocionesData: [250, 32, 35, 28, 20],
+      emocionesData: [250, 52, 35, 28],
     });
   };
 
@@ -146,13 +146,23 @@ export default class MisEmocionesScreen extends Component {
                 svg={{fill: '#bfc6e2'}}
                 contentInset={{top: 30}}
               />
-
               <View style={styles.containerLabels}>
-                <LogoEmocion1 />
-                <LogoEmocion2 />
-                <LogoEmocion3 />
-                <LogoEmocion4 />
-                <LogoPerfil />
+                <View style={styles.containerLabelsChild}>
+                  <Text style={styles.textTitleGraph}>Alegría</Text>
+                  <LogoEmocion1 />
+                </View>
+                <View style={styles.containerLabelsChild}>
+                  <Text style={styles.textTitleGraph}>Miedo</Text>
+                  <LogoEmocion2 />
+                </View>
+                <View style={styles.containerLabelsChild}>
+                  <Text style={styles.textTitleGraph}>Tristeza</Text>
+                  <LogoEmocion3 />
+                </View>
+                <View style={styles.containerLabelsChild}>
+                  <Text style={styles.textTitleGraph}>Ira</Text>
+                  <LogoEmocion4 />
+                </View>
               </View>
             </View>
 
@@ -192,7 +202,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 25,
     height: 30,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   containerButtons: {
     flex: 1,
@@ -205,23 +215,23 @@ const styles = StyleSheet.create({
   },
   containerYaxis: {
     width: 20,
-    height: 140,
+    height: 160,
     justifyContent: 'space-between',
     color: Colors.gray,
     position: 'absolute',
     marginTop: 16,
     left: -5,
   },
-  barChartContainer: {padding: 20, height: 170},
+  barChartContainer: {padding: 20, height: 210},
   barChart: {
-    height: 140,
+    height: 160,
     borderLeftColor: '#cdd2de',
     borderBottomColor: '#cdd2de',
     //borderRightColor: '#cdd2de',
     borderBottomWidth: 1,
     borderLeftWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 20,
+    marginBottom: 10,
+    paddingHorizontal: 10,
   },
   bigTitle: {
     fontSize: 22,
@@ -278,5 +288,18 @@ const styles = StyleSheet.create({
     fontSize: 11.5,
     color: Colors.gray,
     textAlign: 'right',
+  },
+  containerLabelsChild: {
+    flex: 1,
+    flexDirection: 'column',
+    textAlign: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  textTitleGraph: {
+    fontFamily: 'MyriadPro-Regular',
+    fontSize: 12,
+    color: '#aba0b5',
+    marginBottom: 5,
   },
 });
