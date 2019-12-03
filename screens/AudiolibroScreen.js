@@ -42,5 +42,5 @@ export default class AudiolibroScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  image: {resizeMode: 'contain'},
+  image: {resizeMode: 'cover'},
 });
