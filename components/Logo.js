@@ -17,9 +17,13 @@ const Logo = ({style, isAlternative}) => {
   //TODO cambiar la validacion pues ya no se usa expo snack
   const envProd = process.env.NODE_ENV === 'production';
   return !isAlternative ? (
-    <View style={{width: 192,height: 44,}}><LogoAppHeader /></View>
+    <View style={{width: 192, height: 44}}>
+      <LogoAppHeader />
+    </View>
   ) : (
-    <View style={{width: 84,height: 90,alignItems: 'center'}}><LogoApp /></View>
+    <View style={{width: 84, height: 90, alignItems: 'center'}}>
+      <LogoApp />
+    </View>
   );
 };
 
