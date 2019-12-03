@@ -132,7 +132,7 @@ export default class CalendarComponent extends Component {
             },
           ],
         },
-        {tipo: 'M', texto: 'Meditación: Ansiedad y estrés', bg: '#d9def8'},
+        {tipo: 'M', texto: 'Meditación: Ansiedad y estrés', bg: '#7883a4'},
         {tipo: 'A', texto: 'Inicio: Aprendiendo a Meditar', bg: '#50628f'},
       ],
       dayName: today,
@@ -161,7 +161,7 @@ export default class CalendarComponent extends Component {
     // TODO llamada al servidor, la estructura esta por definir (escucho propuestas)
     this.serverData = [
       {
-        fecha: '2019-11-30',
+        fecha: '2019-12-03',
         eventos: [
           {tipo: 'V', texto: 'Finalicé: ¿Qué es ser feliz?', bg: '#fdd58d'},
           {
@@ -184,14 +184,14 @@ export default class CalendarComponent extends Component {
               },
             ],
           },
-          {tipo: 'M', texto: 'Meditación: Ansiedad y estrés', bg: '#d9def8'},
+          {tipo: 'M', texto: 'Meditación: Ansiedad y estrés', bg: '#7883a4'},
           {tipo: 'A', texto: 'Inicio: Aprendiendo a Meditar', bg: '#50628f'},
         ],
       },
       {
         fecha: '2019-12-02',
         eventos: [
-          {tipo: 'M', texto: 'Meditación: Meditación: básica'},
+          {tipo: 'M', texto: 'Meditación: Meditación: básica', bg: '#7883a4'},
           {tipo: 'V', texto: 'Inicié: Ansiedad y estrés', bg: '#d9def8'},
           {tipo: 'A', texto: 'La Aventura Espiritual', bg: '#82d3eb'},
         ],
@@ -213,7 +213,7 @@ export default class CalendarComponent extends Component {
       {
         fecha: '2019-12-17',
         eventos: [
-          {tipo: 'M', texto: 'Meditación: Meditación avanzada'},
+          {tipo: 'M', texto: 'Meditación: Meditación avanzada', bg: '#7883a4'},
           {
             tipo: 'D',
             preguntas: [
@@ -248,7 +248,9 @@ export default class CalendarComponent extends Component {
       },
       {
         fecha: '2019-12-22',
-        eventos: [{tipo: 'M', texto: 'Meditación: Meditación básica'}],
+        eventos: [
+          {tipo: 'M', texto: 'Meditación: Meditación básica', bg: '#7883a4'},
+        ],
       },
       {
         fecha: '2019-12-23',
@@ -311,10 +313,7 @@ export default class CalendarComponent extends Component {
       return (
         <>
           <View style={styles.evento}>
-            <ItemBubble
-              style={styles.marginVertical}
-              color={item.bg}
-              status={'viajeDiario'}>
+            <ItemBubble color={item.bg} fill bold>
               {item.texto}
             </ItemBubble>
           </View>
@@ -324,10 +323,7 @@ export default class CalendarComponent extends Component {
       return (
         <>
           <View style={styles.evento}>
-            <ItemBubble
-              style={styles.marginVertical}
-              color={'#8088a5'}
-              status={'meditar-audiolibro'}>
+            <ItemBubble color={item.bg} likeButton>
               {item.texto}
             </ItemBubble>
           </View>
@@ -337,10 +333,7 @@ export default class CalendarComponent extends Component {
       return (
         <>
           <View style={styles.evento}>
-            <ItemBubble
-              style={styles.marginVertical}
-              color={item.bg}
-              status={'meditar-audiolibro'}>
+            <ItemBubble color={item.bg} likeButton>
               {item.texto}
             </ItemBubble>
           </View>

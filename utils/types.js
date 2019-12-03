@@ -50,7 +50,10 @@
  * @enum {number}
  */
 export const enumStatus = {
+  /** Value 0 */
   todo: 0,
+  /** Value 1 */
   doing: 1,
+  /** Value 2 */
   done: 2,
 };

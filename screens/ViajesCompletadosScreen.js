@@ -86,7 +86,9 @@ export default class ViajeCompletadosScreen extends Component {
         <SafeAreaView>
           <ItemBubble
             color={item.color}
-            status={item.status}
+            fill
+            bold
+            fontSize={18}
             onPress={this._handleClick}>
             {item.title}
           </ItemBubble>

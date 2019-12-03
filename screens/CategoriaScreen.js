@@ -10,6 +10,7 @@ import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import Dimensions from '../constants/Dimensions';
 import API from '../utils/API';
+import {enumStatus} from '../utils/types';
 
 /**
  * @typedef {Object} ParamsNavigation
@@ -21,45 +22,6 @@ import API from '../utils/API';
  * @extends {Component<Props>}
  */
 export default class Categoria extends Component {
-  /*categoria = {
-    id: 1,
-    title: 'Categoria',
-    cover: 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
-    viajes: [
-      {
-        id: 1,
-        title: '¿Qué es ser feliz?',
-        status: 2,
-      },
-      {
-        id: 2,
-        title: 'Viaja ligero',
-        status: 1,
-      },
-      {
-        id: 3,
-        title: 'Conectar con el corazón',
-        status: 0,
-      },
-      {
-        id: 4,
-        title: 'Vive incondicionalmente',
-        status: 0,
-      },
-      {
-        id: 5,
-        title: 'Acepta radicalmente',
-        status: 0,
-      },
-      {
-        id: 6,
-        title: 'Otro título',
-        status: 0,
-      },
-    ],
-    color: this.props.navigation.getParam('bg', Colors.primary),
-    bgImg: 'http://okoconnect.com/karim/images/viaje-bg-1.png',
-  };*/
   /** @type {import('../utils/types').Categoria} */
   categoria = {
     id: 'cat1',
@@ -71,6 +33,7 @@ export default class Categoria extends Component {
     backgroundImage: 'http://okoconnect.com/karim/images/viaje-bg-1.png',
   };
   state = {
+    /** @type {import('../utils/types').Viaje[]} */
     viajes: [],
   };
 
@@ -86,7 +49,7 @@ export default class Categoria extends Component {
       'example@example.com',
     );
     this.setState({viajes});
-    console.log(viajes);
+    //console.log(viajes);
   };
 
   _goViaje = () => {
@@ -114,16 +77,35 @@ export default class Categoria extends Component {
     );
   };
 
+  /** @type {import('react-native').ListRenderItem<import('../utils/types').Viaje>} */
   renderItem = ({item}) => {
-    return (
-      <ItemBubble
-        key={`viaje${item.id}`}
-        color={this.categoria.color}
-        status={item.status}
-        onPress={this._goViaje}>
-        {item.title}
-      </ItemBubble>
-    );
+    switch (item.status) {
+      case enumStatus.doing:
+        return (
+          <ItemBubble color={this.categoria.color} onPress={this._goViaje} bold>
+            {item.title}
+          </ItemBubble>
+        );
+      case enumStatus.done:
+        return (
+          <ItemBubble
+            color={this.categoria.color}
+            onPress={this._goViaje}
+            fill
+            bold>
+            {item.title}
+          </ItemBubble>
+        );
+      default:
+        return (
+          <ItemBubble
+            color={this.categoria.color}
+            onPress={this._goViaje}
+            disable>
+            {item.title}
+          </ItemBubble>
+        );
+    }
   };
 
   renderListEmpty = _ => {
