@@ -19,13 +19,12 @@ import LogoEmocion2 from '../constants/LogoEmocion2';
 import LogoEmocion3 from '../constants/LogoEmocion3';
 import LogoEmocion4 from '../constants/LogoEmocion4';
 import LogoPerfil from '../constants/LogoPerfil';
-import {enumStatus} from '../utils/types';
 
 export default class MisEmocionesScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      emocionesData: [3, 2, 0, 2,],
+      emocionesData: [3, 2, 0, 2],
       keys: ['Alegría', 'Ira', 'Miedo', 'Tristeza'],
       colors: ['#bfc6e2', '#bfc6e2', '#bfc6e2', '#bfc6e2'],
       title: 'Semanal',
@@ -47,7 +46,7 @@ export default class MisEmocionesScreen extends Component {
   }
   onPressSemanal = () => {
     this.setState({
-      emocionesData: [3, 2, 0, 2,],
+      emocionesData: [3, 2, 0, 2],
       title: 'Semanal',
       yAxis: [
         {
@@ -68,7 +67,7 @@ export default class MisEmocionesScreen extends Component {
 
   onPressMensual = () => {
     this.setState({
-      emocionesData: [14, 7, 4, 4,],
+      emocionesData: [14, 7, 4, 4],
       title: 'Mensual',
       yAxis: [
         {
@@ -148,19 +147,27 @@ export default class MisEmocionesScreen extends Component {
               />
               <View style={styles.containerLabels}>
                 <View style={styles.containerLabelsChild}>
-                  <Text style={styles.textTitleGraph}>{this.state.keys[0]}</Text>
+                  <Text style={styles.textTitleGraph}>
+                    {this.state.keys[0]}
+                  </Text>
                   <LogoEmocion1 />
                 </View>
                 <View style={styles.containerLabelsChild}>
-                  <Text style={styles.textTitleGraph}>{this.state.keys[1]}</Text>
+                  <Text style={styles.textTitleGraph}>
+                    {this.state.keys[1]}
+                  </Text>
                   <LogoEmocion2 />
                 </View>
                 <View style={styles.containerLabelsChild}>
-                  <Text style={styles.textTitleGraph}>{this.state.keys[2]}</Text>
+                  <Text style={styles.textTitleGraph}>
+                    {this.state.keys[2]}
+                  </Text>
                   <LogoEmocion3 />
                 </View>
                 <View style={styles.containerLabelsChild}>
-                  <Text style={styles.textTitleGraph}>{this.state.keys[3]}</Text>
+                  <Text style={styles.textTitleGraph}>
+                    {this.state.keys[3]}
+                  </Text>
                   <LogoEmocion4 />
                 </View>
               </View>
@@ -178,9 +185,10 @@ export default class MisEmocionesScreen extends Component {
               </Text>
               <ItemBubble
                 color={'#fdd58d'}
-                status={enumStatus.done}
+                fill
+                bold
                 onPress={this._handleClick}>
-                {'Ser Feliz'}
+                Ser Feliz
               </ItemBubble>
             </View>
           </View>
@@ -259,7 +267,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     width: '100%',
-    height: Dimensions.window.width - 65,
+    height: Dimensions.window.width - 80,
     resizeMode: 'contain',
   },
   buttonReport: {
