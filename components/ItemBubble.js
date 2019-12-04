@@ -8,11 +8,12 @@ import Colors from '../constants/Colors';
  * @typedef Props
  * @prop {string} color Primary color to used
  * @prop {(event: import('react-native').GestureResponderEvent) => void} [onPress] Handle press event
- * @prop {boolean} [disable] Indicates that the component border is gray. (not work whit hasButton)
- * @prop {boolean} [fill] Indicates changing the color of the background. (not work whit hasButton)
+ * @prop {boolean} [disable] Indicates that the component border is gray. (not work with hasButton)
+ * @prop {boolean} [fill] Indicates changing the color of the background. (not work with hasButton)
  * @prop {boolean} [bold] indicates that the text has fontWeight is bold.
  * @prop {number} [fontSize] Size of the font, default (Dims.window.width * 0.038)
  * @prop {boolean} [likeButton] Indicates use a look similar to Button
+ * @prop {boolean} [notMargin] Indicates that remove all margin
  * @prop {string} children Text to show
  * @extends {Component<Props>}
  */
@@ -26,6 +27,7 @@ export default class ItemBubble extends Component {
       fontSize,
       likeButton,
       onPress,
+      notMargin,
     } = this.props;
     let styleStatus = StyleSheet.create(
       likeButton
@@ -35,6 +37,7 @@ export default class ItemBubble extends Component {
               backgroundColor: color,
               borderRadius: 10,
               paddingVertical: Dims.regularSpace,
+              marginBottom: notMargin ? 0 : Dims.smallSpace,
             },
             styleText: {
               fontFamily: 'MyriadPro-Regular',
@@ -48,6 +51,7 @@ export default class ItemBubble extends Component {
             styleContainer: {
               borderColor: disable ? Colors.borderWhite : color,
               backgroundColor: fill ? color : 'white',
+              marginBottom: notMargin ? 0 : Dims.smallSpace,
             },
             styleText: {
               fontFamily: 'MyriadPro-Semibold',
@@ -136,7 +140,6 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingVertical: 0,
     paddingHorizontal: Dims.bigSpace,
-    borderColor: Colors.borderWhite,
     backgroundColor: 'white',
   },
   text: {

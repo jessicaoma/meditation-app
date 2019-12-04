@@ -12,16 +12,22 @@
  * @prop {string} [backgroundImage] Fondo de la categoria
  * @prop {string} color Color caracteristico de la categoria
  * @prop {string} itemImage Imagen para la lista
- * @prop {Viaje[]} [journeys] Lista de viajes hijos
+ * @prop {Viaje[]} [journeys] Lista de viajes
  *
  * @typedef {Object} Viaje
  * @prop {string} id Identificador
  * @prop {string} title Título
- * @prop {string} categoriaId]Categoria padre
+ * @prop {string} categoriaId Categoria padre
+ * @prop {string} backgroundImage Fondo del viaje
  * @prop {string} color Color caracteristico de la categoria padre
  * @prop {enumStatus} status Estatus del viaje
- * @prop {string} isFree Es gratuito o no
- * @prop {string} [journeys] Lista de viajes hijos
+ * @prop {boolean} isFree Es gratuito o no
+ * @prop {Paso[]} [steps] Lista de pasos en el viajes
+ *
+ * @typedef Paso
+ * @prop {string} id
+ * @prop {string} title
+ * @prop {enumStatus} status
  *
  * @typedef {Object} Meditación
  * @prop {string} id Identificador
@@ -31,7 +37,7 @@
  * @prop {string} backgroundImage Fondo de la meditación
  * @prop {string} color Color caracteristico de la meditación
  * @prop {string} itemImage Imagen para la lista
- * @prop {string} isFree Es gratuito o no
+ * @prop {boolean} isFree Es gratuito o no
  *
  * @typedef {Object} Audiolibro
  * @prop {string} id Identificador
@@ -41,7 +47,7 @@
  * @prop {string} color Color caracteristico del Audiolibro
  * @prop {string} itemImage Imagen para la lista
  * @prop {string} progress Indica hasta que punto se ha reproducido
- * @prop {string} isFree Es gratuito o no
+ * @prop {boolean} isFree Es gratuito o no
  */
 
 /**
