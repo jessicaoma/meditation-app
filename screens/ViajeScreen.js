@@ -6,6 +6,7 @@ import {
   FlatList,
   View,
   SafeAreaView,
+  ScrollView,
 } from 'react-native';
 import ScreenBg from '../components/screenBg';
 import ItemBubble from '../components/ItemBubble';
@@ -170,20 +171,31 @@ export default class ViajeScreen extends Component {
   render() {
     return (
       <>
-        <SafeAreaView>
-          <ScreenBg
-            source={{uri: this.viaje.backgroundImage}}
-            color={this.viaje.color}>
-            <FlatList
-              data={this.viaje.steps}
-              renderItem={this.renderItem}
-              keyExtractor={this.keyExtractor}
-              style={styles.container}
-              ItemSeparatorComponent={this.renderSeparator}
-              ListHeaderComponent={this.renderHeader}
-              ListFooterComponent={this.renderFooter}
-            />
-          </ScreenBg>
+       <SafeAreaView style={{flex: 1}}>
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            style={styles.scrollView}>
+            <View style={styles.container}>
+              <ScreenBg
+                source={{uri: this.viaje.backgroundImage}}
+                color={this.viaje.color}>
+                <FlatList
+                  data={this.viaje.steps}
+                  renderItem={this.renderItem}
+                  keyExtractor={this.keyExtractor}
+                  ItemSeparatorComponent={this.renderSeparator}
+                  ListHeaderComponent={this.renderHeader}
+                />
+              </ScreenBg>
+            </View>
+          </ScrollView>
+          <View style={[styles.containerBottomButton]}>
+            <TouchableOpacity
+              //onPress={this.handleContinue}
+              style={[styles.button]}>
+              <Text style={styles.buttonLabel}>Continuar mi viaje</Text>
+            </TouchableOpacity>
+          </View>
         </SafeAreaView>
       </>
     );
@@ -191,10 +203,20 @@ export default class ViajeScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    paddingBottom: 50,
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
   container: {
     paddingHorizontal: Dimensions.regularSpace,
     paddingTop: Dimensions.regularSpace,
-    height: '100%',
+  },
+  containerBottomButton: {
+    paddingVertical: Dimensions.regularSpace,
+    paddingHorizontal: Dimensions.regularSpace,
+    backgroundColor: 'rgba(255,255,255,0.75)',
   },
   button: {
     backgroundColor: Colors.second,
