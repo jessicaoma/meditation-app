@@ -14,8 +14,6 @@ import LogoApp from '../constants/LogoApp';
  * @param {Props} props
  */
 const Logo = ({style, isAlternative}) => {
-  //TODO cambiar la validacion pues ya no se usa expo snack
-  const envProd = process.env.NODE_ENV === 'production';
   return !isAlternative ? (
     <View style={{width: 192, height: 44}}>
       <LogoAppHeader />

@@ -132,13 +132,14 @@ export default class Home extends Component {
   render() {
     return (
       <>
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1}}>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
             <Cover
               source={{uri: uriReflexion}}
               onPress={this._handleReflexion}
+              style={styles.cover}
             />
             <Buttom onPress={this._handleEmociones}>
               <ScalableText style={styles.title_boxes}>
@@ -183,7 +184,7 @@ export default class Home extends Component {
               </ScalableText>
               <Image source={{uri: uriflor3}} style={styles.itemImage} />
             </Buttom>
-            <View style={styles.separador2} />
+            {/* <View style={styles.separador2} /> */}
           </ScrollView>
         </SafeAreaView>
       </>
@@ -194,6 +195,9 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
   scrollView: {
     paddingHorizontal: Dimensions.regularSpace,
+    height: '100%',
+  },
+  cover: {
     paddingTop: Dimensions.regularSpace,
   },
   sectionTitle: {
