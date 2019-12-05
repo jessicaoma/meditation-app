@@ -50,36 +50,26 @@ export default class PasoFScreen extends Component {
 
   render() {
     return (
-      <>
       <SafeAreaView style={{flex: 1}}>
-        <ImageBackground style={[styles.container]}
-          source={{uri: 'http://okoconnect.com/karim/images/slider-bg-8.png'}} >
-          <TouchableOpacity style={styles.close} onPress={this._handleClose}>
+        <ImageBackground
+          style={[styles.container]}
+          source={{uri: 'http://okoconnect.com/karim/images/slider-bg-8.png'}}>
+          <TouchableOpacity style={styles.close} onPress={this.nextStep}>
             <Ionicons name={'md-close'} size={30} color={Colors.gray} />
           </TouchableOpacity>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
-            
             <View style={styles.container}>
               <View style={styles.container}>
-               <Text style={styles.title}>Reto Personal</Text>
-               <Text style={styles.paragraph}>
-                Completa estas líneas en pocas palabras. Puedes descargarla y compartir tus respuestas con tus amigos y seres queridos en las redes sociales.
-               </Text>
-               <View style={styles.row}>
-                <Text style={styles.subtitle}>Hoy estoy agradecido por:</Text>
-                <TextInput
-                  style={styles.textarea}
-                  underlineColorAndroid="transparent"
-                  placeholder="Tu respuesta"
-                  placeholderTextColor="grey"
-                  numberOfLines={5}
-                  multiline={true}
-                />
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.subtitle}>Lo que más aprecio en mi vida es:</Text>
+                <Text style={styles.title}>Reto Personal</Text>
+                <Text style={styles.paragraph}>
+                  Completa estas líneas en pocas palabras. Puedes descargarla y
+                  compartir tus respuestas con tus amigos y seres queridos en
+                  las redes sociales.
+                </Text>
+                <View>
+                  <Text style={styles.subtitle}>Hoy estoy agradecido por:</Text>
                   <TextInput
                     style={styles.textarea}
                     underlineColorAndroid="transparent"
@@ -89,8 +79,10 @@ export default class PasoFScreen extends Component {
                     multiline={true}
                   />
                 </View>
-                <View style={styles.row}>
-                  <Text style={styles.subtitle}>Mi actitud frente al cambio es:</Text>
+                <View>
+                  <Text style={styles.subtitle}>
+                    Lo que más aprecio en mi vida es:
+                  </Text>
                   <TextInput
                     style={styles.textarea}
                     underlineColorAndroid="transparent"
@@ -100,8 +92,23 @@ export default class PasoFScreen extends Component {
                     multiline={true}
                   />
                 </View>
-                <View style={styles.row}>
-                  <Text style={styles.subtitle}>Las dificultades en la vida sirven para:</Text>
+                <View>
+                  <Text style={styles.subtitle}>
+                    Mi actitud frente al cambio es:
+                  </Text>
+                  <TextInput
+                    style={styles.textarea}
+                    underlineColorAndroid="transparent"
+                    placeholder="Tu respuesta"
+                    placeholderTextColor="grey"
+                    numberOfLines={5}
+                    multiline={true}
+                  />
+                </View>
+                <View>
+                  <Text style={styles.subtitle}>
+                    Las dificultades en la vida sirven para:
+                  </Text>
                   <TextInput
                     style={styles.textarea}
                     underlineColorAndroid="transparent"
@@ -115,15 +122,12 @@ export default class PasoFScreen extends Component {
             </View>
           </ScrollView>
           <View style={[styles.containerBottomButton]}>
-            <TouchableOpacity
-              onPress={this.nextStep}
-              style={[styles.button]}>
+            <TouchableOpacity onPress={this.nextStep} style={[styles.button]}>
               <Text style={styles.buttonLabel}>Guardar</Text>
             </TouchableOpacity>
           </View>
         </ImageBackground>
       </SafeAreaView>
-      </>
     );
   }
 }
@@ -157,7 +161,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 36,
     letterSpacing: 1.11,
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
   subtitle: {
     fontFamily: 'MyriadPro-Bold',
@@ -220,4 +224,3 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
 });
-

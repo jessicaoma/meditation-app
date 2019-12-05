@@ -34,62 +34,61 @@ export default class PasoGScreen extends Component {
     };
   };
 
-
-  nextStep = () => {
-    const {steps, position} = this.props.navigation.state.params;
-    const {type} = steps[position + 1];
-    this.props.navigation.replace(`Paso${type}`, {
-      steps,
-      position: position + 1,
-    });
+  returnJourney = () => {
+    this.props.navigation.goBack();
   };
-
 
   render() {
     return (
-      <>
-        <SafeAreaView style={{flex: 1}}>
-          
-          <TouchableOpacity style={styles.close} onPress={this.nextStep}>
-            <Ionicons name={'md-close'} size={30} color={Colors.gray} />
-          </TouchableOpacity>
+      <SafeAreaView style={{flex: 1}}>
+        <TouchableOpacity style={styles.close} onPress={this.returnJourney}>
+          <Ionicons name={'md-close'} size={30} color={Colors.gray} />
+        </TouchableOpacity>
+        <ImageBackground
+          style={[styles.container]}
+          source={{
+            uri: 'http://okoconnect.com/karim/images/slider-bg-2.png',
+          }}>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
-            <ImageBackground
-            style={[styles.container]}
-            source={{
-              uri: 'http://okoconnect.com/karim/images/slider-bg-2.png',
-            }}>
             <View style={styles.container}>
               <View style={styles.containerHalfBottom}>
                 <Text style={styles.headline}>Felicidades!</Text>
-                <Text style={styles.paragraph}>Haz terminado tu viaje "¿Qué es ser feliz?"</Text>
-                <TouchableOpacity 
-                  style={{flex:1,justifyContent:'center',alignItems:'center',marginBottom: 10}}>
-                    <Text style={styles.downloadtext}>Descarga</Text>
-                    <Ionicons
-                      name={'md-download'}
-                      size={35}
-                      style={styles.download}
-                    />
+                <Text style={styles.paragraph}>
+                  Haz terminado tu viaje "¿Qué es ser feliz?"
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 10,
+                  }}>
+                  <Text style={styles.downloadtext}>Descarga</Text>
+                  <Ionicons
+                    name={'md-download'}
+                    size={35}
+                    style={styles.download}
+                  />
                 </TouchableOpacity>
               </View>
             </View>
             <TouchableOpacity style={[styles.button]}>
-              <Text style={styles.buttonLabel}>Iniciar Viaje "Viaja Ligero"</Text>
+              <Text style={styles.buttonLabel}>
+                Iniciar Viaje "Viaja Ligero"
+              </Text>
             </TouchableOpacity>
-            </ImageBackground>
           </ScrollView>
-        </SafeAreaView>
-      </>
+        </ImageBackground>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   scrollView: {
-    paddingBottom: 50,
+    //paddingBottom: 50,
     flex: 1,
     width: '100%',
     height: '100%',
@@ -155,13 +154,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     elevation: 4,
-    marginBottom: 60
+    marginBottom: 60,
   },
   downloadtext: {
     color: Colors.gray,
     fontFamily: 'MyriadPro-Regular',
     textAlign: 'center',
-    letterSpacing: 1.2
+    letterSpacing: 1.2,
   },
   download: {
     color: Colors.primary,
