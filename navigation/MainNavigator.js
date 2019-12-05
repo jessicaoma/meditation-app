@@ -8,6 +8,8 @@ import PerfilNavigation from './PerfilNavigation';
 import TutorialScreen from '../screens/TutorialScreen';
 import BienvenidaScreen from '../screens/BienvenidaScreen';
 import PremiumScreen from '../screens/PremiumScreen';
+import CancionesScreen from '../screens/CancionesScreen';
+import CancionScreen from '../screens/CancionScreen';
 
 const MainNavigator = createStackNavigator(
   {
@@ -28,6 +30,18 @@ const MainNavigator = createStackNavigator(
       screen: ViajeNavigator,
       navigationOptions: {
         header: null,
+      },
+    },
+    Canciones: {
+      screen: CancionesScreen,
+      navigationOptions: {
+        title: 'Música',
+      },
+    },
+    Cancion: {
+      screen: CancionScreen,
+      navigationOptions: {
+        title: 'Canción 1',
       },
     },
     Tutorial: TutorialScreen,

@@ -125,6 +125,10 @@ export default class Home extends Component {
     this.props.navigation.navigate('Premium');
   };
 
+  _handleMusica = () => {
+    this.props.navigation.navigate('Canciones');
+  };
+
   render() {
     return (
       <>
@@ -141,6 +145,12 @@ export default class Home extends Component {
                 ¿como me siento?
               </ScalableText>
               <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
+            </Buttom>
+            <Buttom onPress={this._handleMusica}>
+              <ScalableText style={styles.title_boxes}>
+                Música
+              </ScalableText>
+              <Image source={{uri: uriflor3}} style={styles.itemImage} />
             </Buttom>
             <ScalableText style={styles.sectionTitle}>Lo nuevo</ScalableText>
             <FlatList
