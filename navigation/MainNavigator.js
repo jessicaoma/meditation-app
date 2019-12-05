@@ -38,12 +38,7 @@ const MainNavigator = createStackNavigator(
         title: 'Música',
       },
     },
-    Cancion: {
-      screen: CancionScreen,
-      navigationOptions: {
-        title: 'Canción 1',
-      },
-    },
+    Cancion: CancionScreen,
     Tutorial: TutorialScreen,
     Bienvenida: BienvenidaScreen,
     Premium: {
