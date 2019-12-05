@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
   },
   headline: {
     fontFamily: 'MyriadPro-Bold',
-    fontSize: 38,
+    fontSize: Dims.h1,
     lineHeight: 48,
     textAlign: 'center',
     color: Colors.gray,

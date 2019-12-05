@@ -35,7 +35,7 @@ const info = [
   {
     key: 'slide3',
     image: 'http://okoconnect.com/karim/images/slider-bg-1.png',
-    title: 'Analisa tu lista',
+    title: 'Analiza tu lista',
     text:
       '¿Cuáles te ayudan a disfrutar de la vida?\n¿Cuáles te gustaría cambiar?​​',
   },

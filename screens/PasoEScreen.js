@@ -38,24 +38,24 @@ export default class PasoEScreen extends Component {
     recomendaciones: [
       {
         id: 1,
-        image: 'http://okoconnect.com/karim/images/iconMeditar4.png',
+        image: 'http://okoconnect.com/karim/assets/images/iconMeditar4.png',
         title:
           '1. Asume que no puedes cumplir totalmente con las expectativas de los demás, no es posible ni sano.',
       },
       {
         id: 2,
-        image: 'http://okoconnect.com/karim/images/iconMeditar2.png',
+        image: 'http://okoconnect.com/karim/assets/images/iconMeditar2.png',
         title:
           '2. Para llegar a conocer lo que realmente deseas, es necesario pasar tiempo a solas, contigo mismo.',
       },
       {
         id: 3,
-        image: 'http://okoconnect.com/karim/images/iconNube.png',
+        image: 'http://okoconnect.com/karim/assets/images/iconNube.png',
         title: '3. Aprende a decir NO, sin remordimientos y sin culpa.',
       },
       {
         id: 4,
-        image: 'http://okoconnect.com/karim/images/iconMeditar3.png',
+        image: 'http://okoconnect.com/karim/assets/images/iconMeditar3.png',
         title:
           '4. La aceptación, la gratitud, y la buena vibra de parte de los demás son algo que hace sentir bien.',
       },
@@ -139,28 +139,28 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     color: Colors.gray,
     flexDirection: 'row',
-    paddingVertical: 8,
+    paddingVertical: 12,
     paddingRight: 20,
     width: '100%',
   },
   iconList: {
     //color: Colors.primary,
     marginTop: 5,
-    marginRight: 10,
+    marginRight: 15,
     height: 24,
     width: 24,
   },
   textList: {
     fontFamily: 'MyriadPro-Regular',
     color: Colors.gray,
-    fontSize: 19,
-    lineHeight: 36,
-    letterSpacing: 1.11,
+    fontSize: Dims.paragraph,
+    lineHeight: 25,
+    letterSpacing: 1.1,
     maxWidth: '90%',
   },
   buttonLabel: {
     color: 'white',
-    fontSize: Dims.window.width * 0.041,
+    fontSize: Dims.bubbleTitle,
     fontWeight: 'bold',
     textAlign: 'center',
     letterSpacing: 1.5,
