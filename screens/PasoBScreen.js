@@ -41,7 +41,7 @@ export default class PasoBScreen extends Component {
         <SafeAreaView style={{flex: 1}}>
           <ScreenBg
             source={{uri: 'http://okoconnect.com/karim/images/slider-bg-6.png'}}
-            color={'#fdd58d'}
+            //color={'#fdd58d'}
             styleImage={{resizeMode: 'cover'}}>
             <Player
               source={{

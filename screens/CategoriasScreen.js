@@ -65,7 +65,7 @@ export default class Categorias extends Component {
   render() {
     return (
       <>
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1}}>
           <View style={styles.statusBar} />
           <FlatList
             style={styles.container}

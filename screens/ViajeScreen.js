@@ -32,16 +32,22 @@ import CheckItem from '../components/CheckItem';
  * @extends {Component<Props>}
  * */
 export default class ViajeScreen extends Component {
-  /** @type {import('../utils/types').Viaje} */
-  viaje = {
-    id: 'via1',
-    title: '¿Qué es ser feliz?',
-    categoriaId: 'cat1',
-    isFree: true,
-    color: this.props.navigation.getParam('bg', '#fdd58d'),
-    backgroundImage: 'http://okoconnect.com/karim/images/viaje-bg-2.png',
-    status: enumStatus.doing,
-    steps: [
+  constructor(props){
+    super(props);
+
+    /** @type {import('../utils/types').Viaje} */
+    this.viaje = props.navigation.state.params.viaje;
+    /*{
+      id: 'via1',
+      title: '¿Qué es ser feliz?',
+      categoriaId: 'cat1',
+      isFree: true,
+      color: this.props.navigation.getParam('bg', '#fdd58d'),
+      backgroundImage: 'http://okoconnect.com/karim/images/viaje-bg-2.png',
+      status: enumStatus.doing,
+    };*/
+
+    this.viaje.steps = [
       {
         id: 'pas1',
         title: 'Comienza el viaje',
@@ -84,11 +90,12 @@ export default class ViajeScreen extends Component {
         status: enumStatus.todo,
         type: 'G',
       },
-    ],
-  };
+    ];
+  }
+  
 
   static navigationOptions = ({navigation}) => ({
-    title: '¿Qué es ser Feliz?',
+    title: navigation.getParam('viaje', {title: 'Viaje'}).title,
     headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
   });
 
@@ -156,7 +163,7 @@ export default class ViajeScreen extends Component {
   );
 
   renderHeader = () => (
-    <>
+    <View style={styles.containerHeader}>
       <ItemBubble color={this.viaje.color} fill bold fontSize={18} notMargin>
         {this.viaje.title}
       </ItemBubble>
@@ -165,14 +172,7 @@ export default class ViajeScreen extends Component {
           style={[styles.line, {backgroundColor: this.viaje.color, height: 20}]}
         />
       </View>
-    </>
-  );
-  renderFooter = () => (
-    <TouchableOpacity
-      //onPress={this.handleContinue}
-      style={[styles.button]}>
-      <Text style={styles.buttonLabel}>Continuar mi viaje</Text>
-    </TouchableOpacity>
+    </View>
   );
   renderListEmpty = _ => (
     <ActivityIndicator size="large" color={this.viaje.color} />
@@ -182,31 +182,29 @@ export default class ViajeScreen extends Component {
     return (
       <>
         <SafeAreaView style={{flex: 1}}>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={styles.scrollView}>
+          <ScreenBg
+            source={{uri: this.viaje.backgroundImage}}
+            //color={this.viaje.color}>
+            color={'#fff'}>
             <View style={styles.container}>
-              <ScreenBg
-                source={{uri: this.viaje.backgroundImage}}
-                color={this.viaje.color}>
-                <FlatList
-                  data={this.viaje.steps}
-                  renderItem={this.renderItem}
-                  keyExtractor={this.keyExtractor}
-                  ItemSeparatorComponent={this.renderSeparator}
-                  ListHeaderComponent={this.renderHeader}
-                  ListEmptyComponent={this.renderListEmpty}
-                />
-              </ScreenBg>
+              <FlatList
+                data={this.viaje.steps}
+                renderItem={this.renderItem}
+                keyExtractor={this.keyExtractor}
+                ItemSeparatorComponent={this.renderSeparator}
+                ListHeaderComponent={this.renderHeader}
+                ListEmptyComponent={this.renderListEmpty}
+                style={styles.containerList}
+              />
+              <View style={[styles.containerBottomButton]}>
+                <TouchableOpacity
+                  //onPress={this.handleContinue}
+                  style={[styles.button]}>
+                  <Text style={styles.buttonLabel}>Continuar mi viaje</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </ScrollView>
-          <View style={[styles.containerBottomButton]}>
-            <TouchableOpacity
-              //onPress={this.handleContinue}
-              style={[styles.button]}>
-              <Text style={styles.buttonLabel}>Continuar mi viaje</Text>
-            </TouchableOpacity>
-          </View>
+          </ScreenBg>
         </SafeAreaView>
       </>
     );
@@ -214,14 +212,14 @@ export default class ViajeScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    paddingBottom: 50,
-    flex: 1,
+  container: {
     width: '100%',
     height: '100%',
   },
-  container: {
+  containerList: {
     paddingHorizontal: Dimensions.regularSpace,
+  },
+  containerHeader: {
     paddingTop: Dimensions.regularSpace,
   },
   containerBottomButton: {
