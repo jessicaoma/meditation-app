@@ -18,10 +18,7 @@ import {Ionicons} from '@expo/vector-icons';
 
 const deviceWidth = Dims.window.width;
 const deviceHeight = '100%';
-const FIXED_BAR_WIDTH = 40;
-const BAR_SPACE = 8;
-
-
+const BAR_SPACE = 9;
 const info = [
   {
     key: 'slide1',
@@ -59,6 +56,10 @@ const info = [
       'Te invito a comenzar una emocionante aventura espiritual,\n¿Me acompañas?',
   },
 ];
+const numItems = info.length;
+const itemWidth = 5;
+
+
 
 /**
  * Paso Tipo(A): Viaje Highlight
@@ -70,9 +71,6 @@ const info = [
  * @extends {Component<Props>}
  */
 export default class PasoAScreen extends Component {
-  numItems = info.length;
-  //itemWidth = FIXED_BAR_WIDTH / this.numItems - (this.numItems - 1) * BAR_SPACE;
-  itemWidth = 5;
   animVal = new Animated.Value(0);
 
   static navigationOptions = {
@@ -124,7 +122,7 @@ export default class PasoAScreen extends Component {
 
       const scrollBarVal = this.animVal.interpolate({
         inputRange: [deviceWidth * (i - 1), deviceWidth * (i + 1)],
-        outputRange: [-this.itemWidth, this.itemWidth],
+        outputRange: [-itemWidth, itemWidth],
         extrapolate: 'clamp',
       });
 
@@ -134,7 +132,7 @@ export default class PasoAScreen extends Component {
           style={[
             styles.track,
             {
-              width: this.itemWidth,
+              width: itemWidth,
               marginLeft: i === 0 ? 0 : BAR_SPACE,
             },
           ]}>
@@ -142,7 +140,7 @@ export default class PasoAScreen extends Component {
             style={[
               styles.bar,
               {
-                width: this.itemWidth,
+                width: itemWidth,
                 transform: [{translateX: scrollBarVal}],
               },
             ]}
@@ -155,6 +153,7 @@ export default class PasoAScreen extends Component {
     return (
       <>
         <SafeAreaView style={{flex: 1}}>
+          
           <TouchableOpacity style={styles.close} onPress={this._handleClose}>
             <Ionicons name={'md-close'} size={30} color={Colors.gray} />
           </TouchableOpacity>
@@ -201,12 +200,14 @@ const styles = StyleSheet.create({
   },
   barContainer: {
     position: 'absolute',
-    zIndex: 2,
+    zIndex: 20,
     top: 30,
+    left: 0,
+    right: 0,
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    left: '53%',
-    transform: [{translateX: '-50%'}],
+    alignContent: 'center',
   },
   track: {
     backgroundColor: '#ccc',

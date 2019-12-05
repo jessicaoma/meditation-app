@@ -19,7 +19,6 @@ import {Ionicons} from '@expo/vector-icons';
 
 const deviceWidth = Dims.window.width - (Dims.bigSpace * 4);
 const deviceHeight = '100%';
-const FIXED_BAR_WIDTH = 40;
 const BAR_SPACE = 8;
 
 
@@ -194,11 +193,14 @@ const styles = StyleSheet.create({
   },
   barContainer: {
     position: 'absolute',
-    zIndex: 2,
+    zIndex: 20,
     top: 30,
+    left: 0,
+    right: 0,
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    left: '50%',
+    alignContent: 'center',
   },
   track: {
     backgroundColor: '#ccc',
@@ -235,7 +237,7 @@ const styles = StyleSheet.create({
   },
   close: {
     position: 'absolute',
-    left: 20,
+    right: 20,
     top: 20,
     zIndex: 100,
   },
