@@ -28,6 +28,7 @@
  * @prop {string} id
  * @prop {string} title
  * @prop {enumStatus} status
+ * @prop {string} type
  *
  * @typedef {Object} Meditación
  * @prop {string} id Identificador

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  ActivityIndicator,
   TouchableOpacity,
   Text,
   StyleSheet,
@@ -43,38 +44,45 @@ export default class ViajeScreen extends Component {
     steps: [
       {
         id: 'pas1',
-        title: 'Highlight',
+        title: 'Comienza el viaje',
         status: enumStatus.done,
+        type: 'A',
       },
       {
         id: 'pas2',
         title: 'Teoría 1',
         status: enumStatus.doing,
+        type: 'B',
       },
       {
         id: 'pas3',
         title: 'Reflexiones',
         status: enumStatus.todo,
+        type: 'C',
       },
       {
         id: 'pas4',
         title: 'Ejercicio',
         status: enumStatus.todo,
+        type: 'D',
       },
       {
         id: 'pas5',
         title: 'Recomendaciones',
         status: enumStatus.todo,
+        type: 'E',
       },
       {
         id: 'pas6',
         title: 'Diario',
         status: enumStatus.todo,
+        type: 'F',
       },
       {
         id: 'pas7',
         title: 'Cierre',
         status: enumStatus.todo,
+        type: 'G',
       },
     ],
   };
@@ -85,11 +93,11 @@ export default class ViajeScreen extends Component {
   });
 
   _handleClick = index => {
-    this.props.navigation.navigate(
-      'PasoA',
-      //   {pasos: this.viaje.pasos,
-      //   position: index,}
-    );
+    const {type} = this.viaje.steps[index];
+    this.props.navigation.navigate(`Paso${type}`, {
+      steps: this.viaje.steps,
+      position: index,
+    });
   };
   renderItem = ({item, index}) => {
     switch (item.status) {
@@ -166,12 +174,14 @@ export default class ViajeScreen extends Component {
       <Text style={styles.buttonLabel}>Continuar mi viaje</Text>
     </TouchableOpacity>
   );
-
+  renderListEmpty = _ => (
+    <ActivityIndicator size="large" color={this.viaje.color} />
+  );
   keyExtractor = item => item.id;
   render() {
     return (
       <>
-       <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1}}>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
@@ -185,6 +195,7 @@ export default class ViajeScreen extends Component {
                   keyExtractor={this.keyExtractor}
                   ItemSeparatorComponent={this.renderSeparator}
                   ListHeaderComponent={this.renderHeader}
+                  ListEmptyComponent={this.renderListEmpty}
                 />
               </ScreenBg>
             </View>

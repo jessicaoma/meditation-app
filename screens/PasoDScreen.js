@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {
   Animated,
-  Button,
   View,
   StyleSheet,
   ScrollView,
@@ -9,9 +8,7 @@ import {
   ImageBackground,
   SafeAreaView,
   TouchableOpacity,
-  Object,
 } from 'react-native';
-import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import {Ionicons} from '@expo/vector-icons';
@@ -20,13 +17,13 @@ const deviceWidth = Dims.window.width;
 const deviceHeight = '100%';
 const BAR_SPACE = 8;
 
-
 const info = [
   {
     key: 'slide1',
     image: 'http://okoconnect.com/karim/images/slider-bg-1.png',
     title: '¡Bienvenid@ de nuevo!',
-    text: 'Toma unos minutos para realizar este ejercicio. Es muy fácil, sólo necesitas papel, lapiz y ¡ganas de conectarte contigo misma!',
+    text:
+      'Toma unos minutos para realizar este ejercicio. Es muy fácil, sólo necesitas papel, lapiz y ¡ganas de conectarte contigo misma!',
   },
   {
     key: 'slide2',
@@ -45,8 +42,10 @@ const info = [
 ];
 
 /**
- * Paso Tipo(A): Viaje Highlight
+ * Paso Tipo(D): Ejercicio
  * @typedef {Object} ParamsNavigation
+ * @prop {import('../utils/types').Paso[]} steps
+ * @prop {number} position
  *
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
@@ -54,38 +53,42 @@ const info = [
  * @extends {Component<Props>}
  */
 export default class PasoDScreen extends Component {
-  numItems = info.length;
   //itemWidth = FIXED_BAR_WIDTH / this.numItems - (this.numItems - 1) * BAR_SPACE;
-  itemWidth = 5;
   animVal = new Animated.Value(0);
 
-  static navigationOptions = {
-    title: 'Ejercicio',
-    headerStyle: {
-      backgroundColor: 'rgba(255, 255, 255, 0.5)',
-    },
+  static navigationOptions = ({navigation}) => {
+    /** @type {ParamsNavigation} */
+    const {steps, position} = navigation.state.params;
+    return {
+      title: steps[position].title,
+      headerStyle: {
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+      },
+    };
   };
 
-  _handleClick = () => {
-      this.props.navigation.replace('PasoE');
-  };
-  _handleClose  = () => {
-    //alert('This is a button!');
-    this.props.navigation.replace('PasoE');
+  nextStep = () => {
+    const {steps, position} = this.props.navigation.state.params;
+    const {type} = steps[position + 1];
+    this.props.navigation.replace(`Paso${type}`, {
+      steps,
+      position: position + 1,
+    });
   };
 
   render() {
     let imageArray = [];
     let barArray = [];
+    const numItems = info.length;
+    const itemWidth = 5;
     info.forEach((item, i) => {
       const thisImage = (
         <ImageBackground
           key={`image${i}`}
           source={{uri: item.image}}
-          style={[styles.sliderImage]}
-         >
-          {i === (this.numItems - 1) ? (
-            <TouchableOpacity style={{flex:1}} onPress={this._handleClick}>
+          style={[styles.sliderImage]}>
+          {i === numItems - 1 ? (
+            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.containerHalfBottom}>
                 <Text style={styles.title}>{item.title}</Text>
                 <Text style={styles.paragraph}>{item.text}</Text>
@@ -97,15 +100,13 @@ export default class PasoDScreen extends Component {
               <Text style={styles.paragraph}>{item.text}</Text>
             </View>
           )}
-          
         </ImageBackground>
       );
       imageArray.push(thisImage);
-      
 
       const scrollBarVal = this.animVal.interpolate({
         inputRange: [deviceWidth * (i - 1), deviceWidth * (i + 1)],
-        outputRange: [-this.itemWidth, this.itemWidth],
+        outputRange: [-itemWidth, itemWidth],
         extrapolate: 'clamp',
       });
 
@@ -115,7 +116,7 @@ export default class PasoDScreen extends Component {
           style={[
             styles.track,
             {
-              width: this.itemWidth,
+              width: itemWidth,
               marginLeft: i === 0 ? 0 : BAR_SPACE,
             },
           ]}>
@@ -123,7 +124,7 @@ export default class PasoDScreen extends Component {
             style={[
               styles.bar,
               {
-                width: this.itemWidth,
+                width: itemWidth,
                 transform: [{translateX: scrollBarVal}],
               },
             ]}
@@ -136,7 +137,7 @@ export default class PasoDScreen extends Component {
     return (
       <>
         <SafeAreaView style={{flex: 1}}>
-          <TouchableOpacity style={styles.close} onPress={this._handleClose}>
+          <TouchableOpacity style={styles.close} onPress={this.nextStep}>
             <Ionicons name={'md-close'} size={30} color={Colors.gray} />
           </TouchableOpacity>
           <ScrollView
@@ -199,7 +200,7 @@ const styles = StyleSheet.create({
     top: 0,
     borderRadius: 5,
   },
-   paragraph: {
+  paragraph: {
     fontFamily: 'MyriadPro-Regular',
     fontSize: 18,
     lineHeight: 25,

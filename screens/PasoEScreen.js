@@ -6,7 +6,6 @@ import {
   Image,
   View,
   ScrollView,
-  TextInput,
   SafeAreaView,
   ImageBackground,
 } from 'react-native';
@@ -14,17 +13,25 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
 import {Ionicons} from '@expo/vector-icons';
-import Constants from 'expo-constants';
-
 
 /**
+ * Paso Tipo(E): Recomendaciones
+ * @typedef {Object} ParamsNavigation
+ * @prop {import('../utils/types').Paso[]} steps
+ * @prop {number} position
+ *
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
+ *
  * @extends {Component<Props>}
  */
 export default class PasoEScreen extends Component {
-  static navigationOptions = {
-    title: 'Recomendaciones',
+  static navigationOptions = ({navigation}) => {
+    /** @type {ParamsNavigation} */
+    const {steps, position} = navigation.state.params;
+    return {
+      title: steps[position].title,
+    };
   };
 
   info = {
@@ -32,40 +39,41 @@ export default class PasoEScreen extends Component {
       {
         id: 1,
         image: 'http://okoconnect.com/karim/images/iconMeditar4.png',
-        title: '1. Asume que no puedes cumplir totalmente con las expectativas de los demás, no es posible ni sano.',
+        title:
+          '1. Asume que no puedes cumplir totalmente con las expectativas de los demás, no es posible ni sano.',
       },
       {
         id: 2,
         image: 'http://okoconnect.com/karim/images/iconMeditar2.png',
-        title: '2. Para llegar a conocer lo que realmente deseas, es necesario pasar tiempo a solas, contigo mismo.',
+        title:
+          '2. Para llegar a conocer lo que realmente deseas, es necesario pasar tiempo a solas, contigo mismo.',
       },
       {
         id: 3,
         image: 'http://okoconnect.com/karim/images/iconNube.png',
-        title:
-          '3. Aprende a decir NO, sin remordimientos y sin culpa.',
+        title: '3. Aprende a decir NO, sin remordimientos y sin culpa.',
       },
       {
         id: 4,
         image: 'http://okoconnect.com/karim/images/iconMeditar3.png',
-        title: '4. La aceptación, la gratitud, y la buena vibra de parte de los demás son algo que hace sentir bien.',
+        title:
+          '4. La aceptación, la gratitud, y la buena vibra de parte de los demás son algo que hace sentir bien.',
       },
-    ]
+    ],
   };
 
-
-  _handleClick = () => {
-    //alert('This is a button!');
-    this.props.navigation.replace('PasoF');
+  nextStep = () => {
+    const {steps, position} = this.props.navigation.state.params;
+    const {type} = steps[position + 1];
+    this.props.navigation.replace(`Paso${type}`, {
+      steps,
+      position: position + 1,
+    });
   };
 
   renderItem = item => (
     <View style={styles.list} key={`recomendaciones${item.id}`}>
-      <Image
-        source={{uri: item.image}}
-        size={24}
-        style={styles.iconList}
-      />
+      <Image source={{uri: item.image}} style={styles.iconList} />
       <Text style={styles.textList}>{item.title}</Text>
     </View>
   );
@@ -73,33 +81,31 @@ export default class PasoEScreen extends Component {
   render() {
     return (
       <>
-      <SafeAreaView style={{flex: 1}}>
-        <ImageBackground style={[styles.container]}
-          source={{uri: 'http://okoconnect.com/karim/images/slider-bg-7.png'}} >
-          <TouchableOpacity style={styles.close} onPress={this._handleClose}>
-            <Ionicons name={'md-close'} size={30} color={Colors.gray} />
-          </TouchableOpacity>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={styles.scrollView}>
-            
-            <View style={styles.container}>
-              <View style={styles.container}>
-                {this.info.recomendaciones.map(item =>
-                  this.renderItem(item),
-                )}
-              </View>
-            </View>
-          </ScrollView>
-          <View style={[styles.containerBottomButton]}>
-            <TouchableOpacity
-              onPress={this._handleClick}
-              style={[styles.button]}>
-              <Text style={styles.buttonLabel}>Continuar</Text>
+        <SafeAreaView style={{flex: 1}}>
+          <ImageBackground
+            style={[styles.container]}
+            source={{
+              uri: 'http://okoconnect.com/karim/images/slider-bg-7.png',
+            }}>
+            <TouchableOpacity style={styles.close} onPress={this.nextStep}>
+              <Ionicons name={'md-close'} size={30} color={Colors.gray} />
             </TouchableOpacity>
-          </View>
-        </ImageBackground>
-      </SafeAreaView>
+            <ScrollView
+              contentInsetAdjustmentBehavior="automatic"
+              style={styles.scrollView}>
+              <View style={styles.container}>
+                <View style={styles.container}>
+                  {this.info.recomendaciones.map(item => this.renderItem(item))}
+                </View>
+              </View>
+            </ScrollView>
+            <View style={[styles.containerBottomButton]}>
+              <TouchableOpacity onPress={this.nextStep} style={[styles.button]}>
+                <Text style={styles.buttonLabel}>Continuar</Text>
+              </TouchableOpacity>
+            </View>
+          </ImageBackground>
+        </SafeAreaView>
       </>
     );
   }
@@ -138,7 +144,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   iconList: {
-    color: Colors.primary,
+    //color: Colors.primary,
     marginTop: 5,
     marginRight: 10,
     height: 24,

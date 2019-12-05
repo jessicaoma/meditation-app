@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {
   Animated,
-  Button,
   View,
   StyleSheet,
   ScrollView,
@@ -9,9 +8,7 @@ import {
   ImageBackground,
   SafeAreaView,
   TouchableOpacity,
-  Object,
 } from 'react-native';
-import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import {Ionicons} from '@expo/vector-icons';
@@ -34,20 +31,17 @@ const info = [
   {
     key: 'slide3',
     image: 'http://okoconnect.com/karim/images/slider-bg-1.png',
-    text:
-      'No requieres equipaje,\nni correr largas distancias.',
+    text: 'No requieres equipaje,\nni correr largas distancias.',
   },
   {
     key: 'slide4',
     image: 'http://okoconnect.com/karim/images/slider-bg-1.png',
-    text:
-      'Todo lo que necesitas\nestá dentro de ti.',
+    text: 'Todo lo que necesitas\nestá dentro de ti.',
   },
   {
     key: 'slide5',
     image: 'http://okoconnect.com/karim/images/slider-bg-1.png',
-    text:
-      'La felicidad que te rodea, está aquí y ahora',
+    text: 'La felicidad que te rodea, está aquí y ahora',
   },
   {
     key: 'slide6',
@@ -56,14 +50,12 @@ const info = [
       'Te invito a comenzar una emocionante aventura espiritual,\n¿Me acompañas?',
   },
 ];
-const numItems = info.length;
-const itemWidth = 5;
-
-
 
 /**
- * Paso Tipo(A): Viaje Highlight
+ * Paso Tipo(A): Highlight
  * @typedef {Object} ParamsNavigation
+ * @prop {import('../utils/types').Paso[]} steps
+ * @prop {number} position
  *
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
@@ -73,33 +65,39 @@ const itemWidth = 5;
 export default class PasoAScreen extends Component {
   animVal = new Animated.Value(0);
 
-  static navigationOptions = {
-    title: 'Comienza el viaje',
-    headerStyle: {
-      backgroundColor: 'rgba(255, 255, 255, 0.5)',
-    },
+  static navigationOptions = ({navigation}) => {
+    /** @type {ParamsNavigation} */
+    const {steps, position} = navigation.state.params;
+    return {
+      title: steps[position].title,
+      headerStyle: {
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+      },
+    };
   };
 
-  _handleClick = () => {
-      this.props.navigation.replace('PasoB');
-  };
-  _handleClose  = () => {
-    //alert('This is a button!');
-    this.props.navigation.replace('PasoB');
+  nextStep = () => {
+    const {steps, position} = this.props.navigation.state.params;
+    const {type} = steps[position + 1];
+    this.props.navigation.replace(`Paso${type}`, {
+      steps,
+      position: position + 1,
+    });
   };
 
   render() {
     let imageArray = [];
     let barArray = [];
+    const numItems = info.length;
+    const itemWidth = 5;
     info.forEach((item, i) => {
       const thisImage = (
         <ImageBackground
           key={`image${i}`}
           source={{uri: item.image}}
-          style={[styles.sliderImage]}
-         >
-          {i === (this.numItems - 1) ? (
-            <TouchableOpacity style={{flex:1}} onPress={this._handleClick}>
+          style={[styles.sliderImage]}>
+          {i === numItems - 1 ? (
+            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.containerHalfBottom}>
                 <Text style={styles.paragraphBottom}>{item.text}</Text>
               </View>
@@ -108,17 +106,14 @@ export default class PasoAScreen extends Component {
             <View style={styles.containerCenter}>
               <Text style={styles.headline}>{item.text}</Text>
             </View>
-          ) 
-          : (
+          ) : (
             <View style={styles.containerHalfBottom}>
               <Text style={styles.paragraphBottom}>{item.text}</Text>
             </View>
           )}
-          
         </ImageBackground>
       );
       imageArray.push(thisImage);
-      
 
       const scrollBarVal = this.animVal.interpolate({
         inputRange: [deviceWidth * (i - 1), deviceWidth * (i + 1)],
@@ -153,8 +148,7 @@ export default class PasoAScreen extends Component {
     return (
       <>
         <SafeAreaView style={{flex: 1}}>
-          
-          <TouchableOpacity style={styles.close} onPress={this._handleClose}>
+          <TouchableOpacity style={styles.close} onPress={this.nextStep}>
             <Ionicons name={'md-close'} size={30} color={Colors.gray} />
           </TouchableOpacity>
           <ScrollView

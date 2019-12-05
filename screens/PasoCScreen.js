@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {
   Animated,
-  Button,
   View,
   StyleSheet,
   ScrollView,
@@ -10,42 +9,45 @@ import {
   ImageBackground,
   SafeAreaView,
   TouchableOpacity,
-  Object,
 } from 'react-native';
-import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import {Ionicons} from '@expo/vector-icons';
 
-const deviceWidth = Dims.window.width - (Dims.bigSpace * 4);
+const deviceWidth = Dims.window.width - Dims.bigSpace * 4;
 const deviceHeight = '100%';
 const BAR_SPACE = 8;
-
 
 const info = [
   {
     key: 'slide1',
-    image: 'http://okoconnect.com/karim/assets/images/reflexiones/reflexion1.png',
+    image:
+      'http://okoconnect.com/karim/assets/images/reflexiones/reflexion1.png',
     title: '1. ¿Cuáles son tus cualidades y cómo es tu forma de ser?',
     text: 'Tímido o extrovertido, amable, envidioso.',
   },
   {
     key: 'slide2',
-    image: 'http://okoconnect.com/karim/assets/images/reflexiones/reflexion2.png',
+    image:
+      'http://okoconnect.com/karim/assets/images/reflexiones/reflexion2.png',
     title: '2. ¿Cuáles son tus capacidades?',
-    text: 'Hablar inglés, practicar artes marciales, hacer buenas fotos, cocinar rico.',
+    text:
+      'Hablar inglés, practicar artes marciales, hacer buenas fotos, cocinar rico.',
   },
   {
     key: 'slide3',
-    image: 'http://okoconnect.com/karim/assets/images/reflexiones/reflexion3.png',
+    image:
+      'http://okoconnect.com/karim/assets/images/reflexiones/reflexion3.png',
     title: '3. ¿Cuáles son tus puntos débiles?',
     text: 'Procrastinar, no tener fuerza de voluntad, no saber bailar.',
   },
 ];
 
 /**
- * Paso Tipo(A): Viaje Highlight
+ * Paso Tipo(C): Reflexiones
  * @typedef {Object} ParamsNavigation
+ * @prop {import('../utils/types').Paso[]} steps
+ * @prop {number} position
  *
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
@@ -53,59 +55,59 @@ const info = [
  * @extends {Component<Props>}
  */
 export default class PasoCScreen extends Component {
-  numItems = info.length;
   //itemWidth = FIXED_BAR_WIDTH / this.numItems - (this.numItems - 1) * BAR_SPACE;
-  itemWidth = 5;
   animVal = new Animated.Value(0);
 
-  static navigationOptions = {
-    title: 'Reflexiones',
-    headerStyle: {
-      backgroundColor: 'rgba(255, 255, 255, 0.5)',
-    },
+  static navigationOptions = ({navigation}) => {
+    /** @type {ParamsNavigation} */
+    const {steps, position} = navigation.state.params;
+    return {
+      title: steps[position].title,
+      headerStyle: {
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+      },
+    };
   };
 
-  _handleClick = () => {
-      this.props.navigation.replace('PasoD');
-  };
-  _handleClose  = () => {
-    //alert('This is a button!');
-    this.props.navigation.replace('PasoD');
+  nextStep = () => {
+    const {steps, position} = this.props.navigation.state.params;
+    const {type} = steps[position + 1];
+    this.props.navigation.replace(`Paso${type}`, {
+      steps,
+      position: position + 1,
+    });
   };
 
   render() {
     let imageArray = [];
     let barArray = [];
+    const numItems = info.length;
+    const itemWidth = 5;
     info.forEach((item, i) => {
       const thisImage = (
-        <ImageBackground
-          key={`image${i}`}
-          style={[styles.sliderImage]}
-         >
-          {i === (this.numItems - 1) ? (
-            <TouchableOpacity style={{flex:1}} onPress={this._handleClick}>
+        <View key={`image${i}`} style={[styles.sliderImage]}>
+          {i === numItems - 1 ? (
+            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.containerCard}>
-              <Image style={styles.image} source={{uri: item.image}} />
-              <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.paragraph}>{item.text}</Text>
-            </View>
+                <Image style={styles.image} source={{uri: item.image}} />
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.paragraph}>{item.text}</Text>
+              </View>
             </TouchableOpacity>
-            ) 
-          : (
+          ) : (
             <View style={styles.containerCard}>
               <Image style={styles.image} source={{uri: item.image}} />
               <Text style={styles.title}>{item.title}</Text>
               <Text style={styles.paragraph}>{item.text}</Text>
             </View>
           )}
-        </ImageBackground>
+        </View>
       );
       imageArray.push(thisImage);
-      
 
       const scrollBarVal = this.animVal.interpolate({
         inputRange: [deviceWidth * (i - 1), deviceWidth * (i + 1)],
-        outputRange: [-this.itemWidth, this.itemWidth],
+        outputRange: [-itemWidth, itemWidth],
         extrapolate: 'clamp',
       });
 
@@ -115,7 +117,7 @@ export default class PasoCScreen extends Component {
           style={[
             styles.track,
             {
-              width: this.itemWidth,
+              width: itemWidth,
               marginLeft: i === 0 ? 0 : BAR_SPACE,
             },
           ]}>
@@ -123,7 +125,7 @@ export default class PasoCScreen extends Component {
             style={[
               styles.bar,
               {
-                width: this.itemWidth,
+                width: itemWidth,
                 transform: [{translateX: scrollBarVal}],
               },
             ]}
@@ -136,10 +138,12 @@ export default class PasoCScreen extends Component {
     return (
       <>
         <SafeAreaView style={{flex: 1}}>
-          <ImageBackground style={[styles.container]}
-              source={{uri: 'http://okoconnect.com/karim/images/slider-bg-7.png'}}
-              >
-            <TouchableOpacity style={styles.close} onPress={this._handleClose}>
+          <ImageBackground
+            style={[styles.container]}
+            source={{
+              uri: 'http://okoconnect.com/karim/images/slider-bg-7.png',
+            }}>
+            <TouchableOpacity style={styles.close} onPress={this.nextStep}>
               <Ionicons name={'md-close'} size={30} color={Colors.gray} />
             </TouchableOpacity>
             <View style={styles.container}>
@@ -154,9 +158,9 @@ export default class PasoCScreen extends Component {
                 style={styles.slider}>
                 {imageArray}
               </ScrollView>
-          </View>
-          <View style={styles.barContainer}>{barArray}</View>
-        </ImageBackground>
+            </View>
+            <View style={styles.barContainer}>{barArray}</View>
+          </ImageBackground>
         </SafeAreaView>
       </>
     );
