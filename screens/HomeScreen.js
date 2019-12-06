@@ -27,7 +27,7 @@ const dataLonuevo = [
     id: 1,
     title: 'La aventura espiritual',
     img: 'http://okoconnect.com/karim/images/lock.png',
-    bg: '#83d4e9',
+    bg: '#dadff8',
   },
   {
     id: 2,
@@ -37,8 +37,8 @@ const dataLonuevo = [
   },
 ];
 const dataViajesenprogreso = [
-  {id: 1, title: 'Aprende a cambiar', bg: '#f3ebf9'},
-  {id: 2, title: 'crear buenos Habitos', bg: '#cbe3e2'},
+  {id: 1, title: 'Aprende a cambiar', bg: Colors.second},
+  {id: 2, title: 'crear buenos Habitos', bg: Colors.second},
 ];
 
 /**
@@ -94,7 +94,7 @@ export default class Home extends Component {
     <Buttom
       style={[{backgroundColor: item.bg || Colors.primaryDark}, styles.box2]}
       onPress={this._handleClick}>
-      <ScalableText style={styles.title_boxes2}>{item.title}</ScalableText>
+      <ScalableText style={styles.title_boxes}>{item.title}</ScalableText>
     </Buttom>
   );
 
@@ -145,13 +145,6 @@ export default class Home extends Component {
               <ScalableText style={styles.title_boxes}>
                 ¿como me siento?
               </ScalableText>
-              <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
-            </Buttom>
-            <Buttom onPress={this._handleMusica}>
-              <ScalableText style={styles.title_boxes}>
-                Música
-              </ScalableText>
-              <Image source={{uri: uriflor3}} style={styles.itemImage} />
             </Buttom>
             <ScalableText style={styles.sectionTitle}>Lo nuevo</ScalableText>
             <FlatList
@@ -172,17 +165,19 @@ export default class Home extends Component {
             <View style={styles.separador} />
             <Buttom onPress={this._handelBienvenida}>
               <ScalableText style={styles.title_boxes}>BIENVENIDA</ScalableText>
-              <Image source={{uri: uriflor1}} style={styles.itemImage} />
             </Buttom>
             <Buttom onPress={this._handleTutorial}>
               <ScalableText style={styles.title_boxes}>TUTORIAL</ScalableText>
-              <Image source={{uri: uricomomesiento}} style={styles.itemImage} />
+            </Buttom>
+            <Buttom onPress={this._handleMusica}>
+              <ScalableText style={styles.title_boxes}>
+                Música
+              </ScalableText>
             </Buttom>
             <Buttom onPress={this._handelPremium}>
               <ScalableText style={styles.title_boxes}>
                 CONVIERTETE EN PREMIUM
               </ScalableText>
-              <Image source={{uri: uriflor3}} style={styles.itemImage} />
             </Buttom>
             {/* <View style={styles.separador2} /> */}
           </ScrollView>
@@ -199,6 +194,14 @@ const styles = StyleSheet.create({
   },
   cover: {
     paddingTop: Dimensions.regularSpace,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
   },
   sectionTitle: {
     fontSize: Dimensions.h2,
@@ -209,14 +212,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
     marginLeft: 0,
     color: Colors.gray,
-    fontFamily: 'MyriadPro-Bold',
-  },
-
-  itemImage: {
-    resizeMode: 'cover',
-    width: 76,
-    borderBottomRightRadius: 20,
-    borderTopRightRadius: 20,
+    fontFamily: 'MyriadPro-Regular',
   },
   separador: {
     borderBottomColor: '#dcdcdc',
@@ -224,13 +220,8 @@ const styles = StyleSheet.create({
     marginTop: Dimensions.smallSpace,
     marginBottom: Dimensions.bigSpace,
   },
-  separador2: {
-    borderBottomColor: '#dcdcdc',
-    borderBottomWidth: 0,
-    marginTop: Dimensions.smallSpace,
-  },
   title_boxes: {
-    color: '#494c6b',
+    color: 'white',
     fontSize: Dimensions.bubbleTitle,
     letterSpacing: Dimensions.bubbleTitleSpacing,
     lineHeight: 20,
@@ -240,7 +231,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   title_boxes2: {
-    color: '#494c6b',
+    color: '#81777a',
     fontSize: Dimensions.bubbleTitle,
     letterSpacing: Dimensions.bubbleTitleSpacing,
     lineHeight: 20,
