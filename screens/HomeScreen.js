@@ -84,7 +84,7 @@ export default class Home extends Component {
 
   _renderItemLonuevo = ({item}) => (
     <Buttom
-      style={[{backgroundColor: item.bg || Colors.primaryDark}, styles.box2]}>
+      style={[{backgroundColor: item.bg || Colors.second}, styles.box2]}>
       <ScalableText style={styles.title_boxes2}>{item.title}</ScalableText>
       {/* <Image style={styles.itemCandado} source={{uri: item.img}} /> */}
     </Buttom>
@@ -92,7 +92,7 @@ export default class Home extends Component {
 
   _renderItemViajesProgreso = ({item}) => (
     <Buttom
-      style={[{backgroundColor: item.bg || Colors.primaryDark}, styles.box2]}
+      style={[{backgroundColor: item.bg || Colors.second}, styles.box2]}
       onPress={this._handleClick}>
       <ScalableText style={styles.title_boxes}>{item.title}</ScalableText>
     </Buttom>
@@ -141,7 +141,7 @@ export default class Home extends Component {
               onPress={this._handleReflexion}
               style={styles.cover}
             />
-            <Buttom onPress={this._handleEmociones}>
+            <Buttom onPress={this._handleEmociones} style={{backgroundColor: Colors.second}}>
               <ScalableText style={styles.title_boxes}>
                 ¿como me siento?
               </ScalableText>
@@ -163,18 +163,18 @@ export default class Home extends Component {
               keyExtractor={item => 'viajesenprogreso' + item.id}
             />
             <View style={styles.separador} />
-            <Buttom onPress={this._handelBienvenida}>
+            <Buttom onPress={this._handelBienvenida} style={{backgroundColor: Colors.second}}>
               <ScalableText style={styles.title_boxes}>BIENVENIDA</ScalableText>
             </Buttom>
-            <Buttom onPress={this._handleTutorial}>
+            <Buttom onPress={this._handleTutorial} style={{backgroundColor: Colors.second}}>
               <ScalableText style={styles.title_boxes}>TUTORIAL</ScalableText>
             </Buttom>
-            <Buttom onPress={this._handleMusica}>
+            <Buttom onPress={this._handleMusica} style={{backgroundColor: Colors.second}}>
               <ScalableText style={styles.title_boxes}>
                 Música
               </ScalableText>
             </Buttom>
-            <Buttom onPress={this._handelPremium}>
+            <Buttom onPress={this._handelPremium} style={{backgroundColor: Colors.second}}>
               <ScalableText style={styles.title_boxes}>
                 CONVIERTETE EN PREMIUM
               </ScalableText>
