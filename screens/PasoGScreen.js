@@ -3,7 +3,6 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
-  Image,
   View,
   ScrollView,
   SafeAreaView,
@@ -15,7 +14,7 @@ import Dimensions from '../constants/Dimensions';
 import {Ionicons} from '@expo/vector-icons';
 
 /**
- * Paso Tipo(E): Recomendaciones
+ * Paso Tipo(G): Cierre
  * @typedef {Object} ParamsNavigation
  * @prop {import('../utils/types').Paso[]} steps
  * @prop {number} position
@@ -92,10 +91,10 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
+    paddingHorizontal: Dimensions.regularSpace,
+    paddingTop: Dimensions.regularSpace,
   },
   container: {
-    paddingTop: Dimensions.regularSpace,
-    paddingHorizontal: Dimensions.regularSpace,
     flex: 1,
   },
   containerHalfBottom: {
