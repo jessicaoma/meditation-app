@@ -21,7 +21,7 @@ const ICON_PAUSE_BUTTON = 'md-pause';
 //TODO cambiar la validacion pues ya no se usa expo snack
 const envProd = process.env.NODE_ENV === 'production';
 const sliderThumb = envProd
-  ? {uri: 'http://okoconnect.com/karim/assets/images/sliderimage.png'}
+  ? {uri: 'http://okoconnect.com/karim/assets/images/sliderimage.png', width: 10, height: 10}
   : require('../assets/images/sliderimage.png');
 /**
  * Controls elements for the player
