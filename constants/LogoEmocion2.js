@@ -1,74 +1,26 @@
 import React, {Component} from 'react';
-import Svg, {G, Path, Circle} from 'react-native-svg';
+import Svg, {G, Path} from 'react-native-svg';
 
 export default class LogoEmocion2 extends Component {
   render() {
     return (
-      <Svg width="24px" height="24px" viewBox="0 0 24 24">
-        <G
-          id="Icons/Emociones/icon_e_2"
-          stroke="none"
-          strokeWidth="2"
-          fill="none"
-          fill-rule="evenodd">
-          <Circle
-            id="Oval"
-            fill="#494C6B"
-            fill-rule="nonzero"
-            cx="8"
-            cy="12"
-            r="1"
-          />
-          <Circle
-            id="Oval"
-            fill="#494C6B"
-            fill-rule="nonzero"
-            cx="16"
-            cy="12"
-            r="1"
-          />
-          <Circle
-            id="Oval"
-            stroke="#494C6B"
-            strokeWidth="2"
-            cx="12"
-            cy="12"
-            r="10"
-          />
-          <Path
-            d="M2,10 C8.66666667,9.45903663 12,6.79236996 12,2"
-            id="Path-19"
-            stroke="#494C6B"
-            strokeWidth="1.3"
-          />
-          <Path
-            d="M12,10 C18,9.45903663 21,6.79236996 21,2"
-            id="Path-19"
-            stroke="#494C6B"
-            strokeWidth="1.3"
-            transform="translate(16.500000, 6.000000) scale(-1, 1) translate(-16.500000, -6.000000) "
-          />
-          <Path
-            d="M4,7 C7.42857143,6.87087846 9.42857143,5.53754513 10,3"
-            id="Path-18"
-            stroke="#494C6B"
-            strokeWidth="1.3"
-          />
-          <Path
-            d="M14,6.98518279 C17.3994946,7.17651926 19.3994946,5.51479167 20,2"
-            id="Path-18-Copy"
-            stroke="#494C6B"
-            strokeWidth="1.3"
-            transform="translate(17.000000, 4.500000) scale(-1, 1) translate(-17.000000, -4.500000) "
-          />
-          <Path
-            d="M10,16.3108885 C10.4417123,16.7891004 11.108379,17.0282064 12,17.0282064 C12.891621,17.0282064 13.5582877,16.7891004 14,16.3108885"
-            id="Path-23"
-            stroke="#494C6B"
-            strokeWidth="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+      <Svg
+        stroke="#8e92a6"
+        //xmlns="http://www.w3.org/2000/Svg"
+        width="15px"
+        height="24px"
+        viewBox="0 0 12.12 22.52">
+        <G id="Layer_2" data-name="Layer 2">
+          <G
+            stroke="transparent"
+            fill="#8e92a6"
+            id="Layer_1-2"
+            data-name="Layer 1">
+            <Path
+              //class="cls-1"
+              d="M4.34,22.52l-.25,0a1,1,0,0,1-.8-1l-.05-7.82-2.11,0a1,1,0,0,1-.74-.3,1,1,0,0,1-.31-.73L0,.13,12.12,0,7.07,9.07,10,9a1,1,0,0,1,.89.49,1,1,0,0,1,0,1L5.26,21.94A1,1,0,0,1,4.34,22.52Zm-1.1-9.88a1,1,0,0,1,.73.3,1,1,0,0,1,.31.73l.05,7.82L10,10.06l-3,0a1.05,1.05,0,0,1-.9-.51,1,1,0,0,1,0-1l4.19-7.51L1,1.16l.07,11.51,2.11,0Z"
+            />
+          </G>
         </G>
       </Svg>
     );

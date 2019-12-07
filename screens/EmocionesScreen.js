@@ -32,7 +32,7 @@ const data = [
     image: envProd
       ? {
           uri:
-            'http://okoconnect.com/karim/assets/images/emociones/emocion1.png',
+            'http://okoconnect.com/karim/images/emocion1.png',
         }
       : require('../assets/images/emociones/emocion1.png'),
   },
@@ -41,7 +41,7 @@ const data = [
     image: envProd
       ? {
           uri:
-            'http://okoconnect.com/karim/assets/images/emociones/emocion2.png',
+            'http://okoconnect.com/karim/images/emocion2.png',
         }
       : require('../assets/images/emociones/emocion2.png'),
   },
@@ -50,7 +50,7 @@ const data = [
     image: envProd
       ? {
           uri:
-            'http://okoconnect.com/karim/assets/images/emociones/emocion3.png',
+            'http://okoconnect.com/karim/images/emocion3.png',
         }
       : require('../assets/images/emociones/emocion3.png'),
   },
@@ -59,7 +59,7 @@ const data = [
     image: envProd
       ? {
           uri:
-            'http://okoconnect.com/karim/assets/images/emociones/emocion4.png',
+            'http://okoconnect.com/karim/images/emocion4.png',
         }
       : require('../assets/images/emociones/emocion4.png'),
   },
@@ -87,7 +87,7 @@ export default class EmocionesScreen extends Component {
         onPress={() => {
           this._handleClick(item);
         }}
-        height={((Dims.window.width - 40) / numColumns) * 1.5}
+        height={((Dims.window.width) / numColumns) * 1.5}
         width={(Dims.window.width - 40) / numColumns}
         //color={'transparent'}
       />

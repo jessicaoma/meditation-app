@@ -19,14 +19,13 @@ import LogoEmocion2 from '../constants/LogoEmocion2';
 import LogoEmocion3 from '../constants/LogoEmocion3';
 import LogoEmocion4 from '../constants/LogoEmocion4';
 import LogoPerfil from '../constants/LogoPerfil';
-import {enumStatus} from '../utils/types';
 
 export default class MisEmocionesScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      emocionesData: [3, 2, 0, 1, 1],
-      keys: ['excited', 'happy', 'sad', 'depressed'],
+      emocionesData: [3, 2, 0, 2],
+      keys: ['Alegría', 'Ira', 'Miedo', 'Tristeza'],
       colors: ['#bfc6e2', '#bfc6e2', '#bfc6e2', '#bfc6e2'],
       title: 'Semanal',
       yAxis: [
@@ -47,7 +46,7 @@ export default class MisEmocionesScreen extends Component {
   }
   onPressSemanal = () => {
     this.setState({
-      emocionesData: [3, 2, 0, 1, 1],
+      emocionesData: [3, 2, 0, 2],
       title: 'Semanal',
       yAxis: [
         {
@@ -68,7 +67,7 @@ export default class MisEmocionesScreen extends Component {
 
   onPressMensual = () => {
     this.setState({
-      emocionesData: [14, 7, 4, 1, 3],
+      emocionesData: [14, 7, 4, 4],
       title: 'Mensual',
       yAxis: [
         {
@@ -89,7 +88,7 @@ export default class MisEmocionesScreen extends Component {
 
   onPressAnual = () => {
     this.setState({
-      emocionesData: [250, 32, 35, 28, 20],
+      emocionesData: [250, 52, 35, 28],
     });
   };
 
@@ -146,13 +145,31 @@ export default class MisEmocionesScreen extends Component {
                 svg={{fill: '#bfc6e2'}}
                 contentInset={{top: 30}}
               />
-
               <View style={styles.containerLabels}>
-                <LogoEmocion1 />
-                <LogoEmocion2 />
-                <LogoEmocion3 />
-                <LogoEmocion4 />
-                <LogoPerfil />
+                <View style={styles.containerLabelsChild}>
+                  <Text style={styles.textTitleGraph}>
+                    {this.state.keys[0]}
+                  </Text>
+                  <LogoEmocion1 />
+                </View>
+                <View style={styles.containerLabelsChild}>
+                  <Text style={styles.textTitleGraph}>
+                    {this.state.keys[1]}
+                  </Text>
+                  <LogoEmocion2 />
+                </View>
+                <View style={styles.containerLabelsChild}>
+                  <Text style={styles.textTitleGraph}>
+                    {this.state.keys[2]}
+                  </Text>
+                  <LogoEmocion3 />
+                </View>
+                <View style={styles.containerLabelsChild}>
+                  <Text style={styles.textTitleGraph}>
+                    {this.state.keys[3]}
+                  </Text>
+                  <LogoEmocion4 />
+                </View>
               </View>
             </View>
 
@@ -168,9 +185,10 @@ export default class MisEmocionesScreen extends Component {
               </Text>
               <ItemBubble
                 color={'#fdd58d'}
-                status={enumStatus.done}
+                fill
+                bold
                 onPress={this._handleClick}>
-                {'Ser Feliz'}
+                Ser Feliz
               </ItemBubble>
             </View>
           </View>
@@ -192,7 +210,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 25,
     height: 30,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   containerButtons: {
     flex: 1,
@@ -205,23 +223,23 @@ const styles = StyleSheet.create({
   },
   containerYaxis: {
     width: 20,
-    height: 140,
+    height: 160,
     justifyContent: 'space-between',
     color: Colors.gray,
     position: 'absolute',
     marginTop: 16,
     left: -5,
   },
-  barChartContainer: {padding: 20, height: 170},
+  barChartContainer: {padding: 20, height: 260},
   barChart: {
-    height: 140,
+    height: 160,
     borderLeftColor: '#cdd2de',
     borderBottomColor: '#cdd2de',
     //borderRightColor: '#cdd2de',
     borderBottomWidth: 1,
     borderLeftWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 20,
+    marginBottom: 10,
+    paddingHorizontal: 10,
   },
   bigTitle: {
     fontSize: 22,
@@ -249,7 +267,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     width: '100%',
-    height: Dimensions.window.width - 65,
+    height: Dimensions.window.width - 80,
     resizeMode: 'contain',
   },
   buttonReport: {
@@ -278,5 +296,17 @@ const styles = StyleSheet.create({
     fontSize: 11.5,
     color: Colors.gray,
     textAlign: 'right',
+  },
+  containerLabelsChild: {
+    flexDirection: 'column',
+    textAlign: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  textTitleGraph: {
+    fontFamily: 'MyriadPro-Regular',
+    fontSize: 12,
+    color: '#aba0b5',
+    marginBottom: 5,
   },
 });

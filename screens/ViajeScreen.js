@@ -1,28 +1,27 @@
 import React, {Component} from 'react';
 import {
+  ActivityIndicator,
   TouchableOpacity,
   Text,
   StyleSheet,
   FlatList,
   View,
   SafeAreaView,
+  ScrollView,
 } from 'react-native';
 import ScreenBg from '../components/screenBg';
-import ItemBubbleLine from '../components/ItemBubbleLine';
+import ItemBubble from '../components/ItemBubble';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
 import {HeaderBackButton} from 'react-navigation';
+import {enumStatus} from '../utils/types';
+import CheckItem from '../components/CheckItem';
 
 /**
- * @typedef Paso
- * @prop {string} id
- * @prop {string} title
- * @prop {string} status
- *
  * @typedef {Object} DataItemSeparator
  * @prop {boolean} highlighted
- * @prop {Paso[]} leadingItem
+ * @prop {import('../utils/types').Paso} leadingItem Item superior del separador
  *
  * @typedef {object} Props
  * @prop {import('react-navigation').NavigationScreenProp} [navigation]
@@ -33,134 +32,178 @@ import {HeaderBackButton} from 'react-navigation';
  * @extends {Component<Props>}
  * */
 export default class ViajeScreen extends Component {
-  viaje = {
-    id: 1,
-    title: 'Ser Feliz',
-    pasos: [
+  constructor(props){
+    super(props);
+
+    /** @type {import('../utils/types').Viaje} */
+    this.viaje = props.navigation.state.params.viaje;
+    /*{
+      id: 'via1',
+      title: '¿Qué es ser feliz?',
+      categoriaId: 'cat1',
+      isFree: true,
+      color: this.props.navigation.getParam('bg', '#fdd58d'),
+      backgroundImage: 'http://okoconnect.com/karim/images/viaje-bg-2.png',
+      status: enumStatus.doing,
+    };*/
+
+    this.viaje.steps = [
       {
-        id: 'title',
-        status: 'viajeTitle',
-        title: '¿Qué es ser feliz?',
+        id: 'pas1',
+        title: 'Comienza el viaje',
+        status: enumStatus.done,
+        type: 'A',
       },
       {
-        id: 1,
-        title: 'Highlight',
-        status: 'done',
-      },
-      {
-        id: 2,
+        id: 'pas2',
         title: 'Teoría 1',
-        status: 'todo',
+        status: enumStatus.doing,
+        type: 'B',
       },
       {
-        id: 3,
+        id: 'pas3',
         title: 'Reflexiones',
-        status: 'todo',
+        status: enumStatus.todo,
+        type: 'C',
       },
       {
-        id: 4,
+        id: 'pas4',
         title: 'Ejercicio',
-        status: 'todo',
+        status: enumStatus.todo,
+        type: 'D',
       },
       {
-        id: 5,
+        id: 'pas5',
         title: 'Recomendaciones',
-        status: 'todo',
+        status: enumStatus.todo,
+        type: 'E',
       },
       {
-        id: 6,
+        id: 'pas6',
         title: 'Diario',
-        status: 'todo',
+        status: enumStatus.todo,
+        type: 'F',
       },
       {
-        id: 7,
+        id: 'pas7',
         title: 'Cierre',
-        status: 'todo',
+        status: enumStatus.todo,
+        type: 'G',
       },
-    ],
-    color: this.props.navigation.getParam('bg', '#fdd58d'),
-    bgImg: 'http://okoconnect.com/karim/images/viaje-bg-2.png',
-  };
+    ];
+  }
+  
 
   static navigationOptions = ({navigation}) => ({
-    title: '¿Qué es ser Feliz?',
+    title: navigation.getParam('viaje', {title: 'Viaje'}).title,
     headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
   });
 
   _handleClick = index => {
-    this.props.navigation.navigate('PasoA'
-    //   {pasos: this.viaje.pasos,
-    //   position: index,}
-    );
+    const {type} = this.viaje.steps[index];
+    this.props.navigation.navigate(`Paso${type}`, {
+      steps: this.viaje.steps,
+      position: index,
+    });
   };
   renderItem = ({item, index}) => {
-    return (
-      <>
-        <ItemBubbleLine
-          color={this.viaje.color}
-          status={item.status}
-          onPress={() => {
-            this._handleClick(index);
-          }}>
-          {item.title}
-        </ItemBubbleLine>
-      </>
-    );
+    switch (item.status) {
+      case enumStatus.done:
+        return (
+          <CheckItem
+            color={this.viaje.color}
+            onPress={() => {
+              this._handleClick(index);
+            }}
+            checked>
+            {item.title}
+          </CheckItem>
+        );
+      case enumStatus.doing:
+        return (
+          <CheckItem
+            color={this.viaje.color}
+            onPress={() => {
+              this._handleClick(index);
+            }}>
+            {item.title}
+          </CheckItem>
+        );
+      default:
+        return (
+          <CheckItem
+            color={this.viaje.color}
+            onPress={() => {
+              this._handleClick(index);
+            }}
+            disable>
+            {item.title}
+          </CheckItem>
+        );
+    }
   };
 
   /**
    * @param {DataItemSeparator} data
    */
-  renderSeparator = data => {
-    let styleStatus = {};
-    let {color, status} = this.props;
-    if (status === 'done') {
-      styleStatus = StyleSheet.create({
-        styleLine: {
-          backgroundColor: color,
-        },
-      });
-    } else if (status === 'doing') {
-      styleStatus = StyleSheet.create({
-        styleLine: {
-          backgroundColor: Colors.borderWhite,
-        },
-      });
-    } else if (status === 'viajeTitle') {
-      styleStatus = StyleSheet.create({
-        styleLine: {
-          backgroundColor: this.viaje.color,
-          height: 20,
-        },
-      });
-    }
-    return (
-      <View style={[styles.containerLine]}>
-        <View style={[styles.line, styleStatus.styleLine]} />
-      </View>
-    );
-  };
+  renderSeparator = data => (
+    <View style={[styles.containerLine]}>
+      <View
+        style={[
+          styles.line,
+          {
+            backgroundColor:
+              data.leadingItem.status === enumStatus.done
+                ? this.viaje.color
+                : Colors.borderWhite,
+          },
+        ]}
+      />
+    </View>
+  );
 
-  keyExtractor = item => item.id.toString() + 'viaje';
+  renderHeader = () => (
+    <View style={styles.containerHeader}>
+      <ItemBubble color={this.viaje.color} fill bold fontSize={18} notMargin>
+        {this.viaje.title}
+      </ItemBubble>
+      <View style={[styles.containerLine]}>
+        <View
+          style={[styles.line, {backgroundColor: this.viaje.color, height: 20}]}
+        />
+      </View>
+    </View>
+  );
+  renderListEmpty = _ => (
+    <ActivityIndicator size="large" color={this.viaje.color} />
+  );
+  keyExtractor = item => item.id;
   render() {
     return (
       <>
-        <SafeAreaView>
-          <ScreenBg source={{uri: this.viaje.bgImg}} color={this.viaje.color}>
-            <FlatList
-              data={this.viaje.pasos}
-              renderItem={this.renderItem}
-              keyExtractor={this.keyExtractor}
-              style={styles.container}
-              ItemSeparatorComponent={this.renderSeparator}
-              ListFooterComponent={
+        <SafeAreaView style={{flex: 1}}>
+          <ScreenBg
+            source={{uri: this.viaje.backgroundImage}}
+            //color={this.viaje.color}>
+            color={'#fff'}>
+            <View style={styles.container}>
+              <FlatList
+                data={this.viaje.steps}
+                renderItem={this.renderItem}
+                keyExtractor={this.keyExtractor}
+                ItemSeparatorComponent={this.renderSeparator}
+                ListHeaderComponent={this.renderHeader}
+                ListEmptyComponent={this.renderListEmpty}
+                style={styles.containerList}
+              />
+              <View style={[styles.containerBottomButton]}>
                 <TouchableOpacity
                   //onPress={this.handleContinue}
                   style={[styles.button]}>
                   <Text style={styles.buttonLabel}>Continuar mi viaje</Text>
                 </TouchableOpacity>
-              }
-            />
+              </View>
+            </View>
           </ScreenBg>
         </SafeAreaView>
       </>
@@ -170,9 +213,19 @@ export default class ViajeScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: Dimensions.regularSpace,
-    paddingTop: Dimensions.regularSpace,
+    width: '100%',
     height: '100%',
+  },
+  containerList: {
+    paddingHorizontal: Dimensions.regularSpace,
+  },
+  containerHeader: {
+    paddingTop: Dimensions.regularSpace,
+  },
+  containerBottomButton: {
+    paddingVertical: Dimensions.regularSpace,
+    paddingHorizontal: Dimensions.regularSpace,
+    backgroundColor: 'rgba(255,255,255,0.75)',
   },
   button: {
     backgroundColor: Colors.second,

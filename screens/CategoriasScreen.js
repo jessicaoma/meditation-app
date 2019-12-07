@@ -65,7 +65,7 @@ export default class Categorias extends Component {
   render() {
     return (
       <>
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1}}>
           <View style={styles.statusBar} />
           <FlatList
             style={styles.container}
@@ -103,9 +103,10 @@ const styles = StyleSheet.create({
     color: '#494c6b',
     fontSize: Dims.bubbleTitle,
     letterSpacing: Dims.bubbleTitleSpacing,
-    lineHeight: 25,
+    lineHeight: 23,
     textTransform: 'uppercase',
     alignSelf: 'center',
+    maxWidth: '65%',
   },
   image: {
     resizeMode: 'cover',
