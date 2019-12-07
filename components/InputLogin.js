@@ -15,6 +15,9 @@ import {Ionicons} from '@expo/vector-icons';
  * @prop {import('react-native').TextStyle} [style] Styles
  * @prop {'text' | 'password'} [type] Type of the input text
  * @prop {(e: import('react-native').NativeSyntheticEvent<import('react-native').TextInputChangeEventData>) => void} [onChange] Callback to event change
+ * @prop {boolean} [blurOnSubmit] If true, the text field will blur when submitted. The default value is true.
+ * @prop {(e: import('react-native').NativeSyntheticEvent<import('react-native').TextInputSubmitEditingEventData>) => void} [onSubmitEditing] Callback that is called when the text input's submit button is pressed.
+ * @prop {(input: import('react-native').TextInput) => void} [inputRef] Reference of the Textinput
  */
 
 /**
@@ -38,7 +41,15 @@ export default class InputLogin extends Component {
   };
 
   render() {
-    var {placeholder, style, type, onChange} = this.props;
+    var {
+      placeholder,
+      style,
+      type,
+      onChange,
+      blurOnSubmit,
+      onSubmitEditing,
+      inputRef,
+    } = this.props;
     return (
       <View style={styles.container}>
         {type === 'text' ? (
@@ -47,6 +58,10 @@ export default class InputLogin extends Component {
             placeholder={placeholder}
             secureTextEntry={false}
             onChange={onChange}
+            returnKeyType={'next'}
+            blurOnSubmit={blurOnSubmit}
+            onSubmitEditing={onSubmitEditing}
+            ref={inputRef}
           />
         ) : (
           <>
@@ -55,6 +70,9 @@ export default class InputLogin extends Component {
               placeholder={placeholder}
               secureTextEntry={this.state.password}
               onChange={onChange}
+              blurOnSubmit={blurOnSubmit}
+              onSubmitEditing={onSubmitEditing}
+              ref={inputRef}
             />
             <TouchableOpacity onPress={this._changeIcon}>
               <Ionicons
