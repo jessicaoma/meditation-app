@@ -7,15 +7,14 @@ import {
   ActivityIndicator,
   SafeAreaView,
 } from 'react-native';
-import HalfCover from '../components/HalfCover';
+import BookListItem from '../components/BookListItem';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import Constants from 'expo-constants';
 import API from '../utils/API';
 
-const numColumns = 2;
 //Estoy restando los margenes laterales (16 + 16), y eso lo divido entre las columnas.
-const widthItem = (Dimensions.window.width - Dimensions.hugeSpace) / numColumns;
+const widthItem = Dimensions.window.width - (Dimensions.regularSpace * 2);
 
 /**
  * @typedef Props
@@ -46,15 +45,18 @@ export default class AudiolibrosScreen extends Component {
 
   _renderItem = ({item}) => {
     return (
-      <View>
-        <HalfCover
+      <View style={{alignSelf: 'stretch'}}>
+        <BookListItem
           source={{uri: item.itemImage}}
+          width={widthItem}
+          height={widthItem * 0.4286}
           onPress={() => {
             this._handleClick(item);
           }}
-          title={item.title}
-          width={widthItem}
-          height={widthItem}
+          onLoad={event => {
+            const {height, url, width} = event.nativeEvent.source;
+            console.log(height + ' ' + width);
+          }}
         />
       </View>
     );
@@ -75,8 +77,6 @@ export default class AudiolibrosScreen extends Component {
           <FlatList
             data={this.state.audioLibros}
             renderItem={this._renderItem}
-            numColumns={numColumns}
-            columnWrapperStyle={styles.wrapperStyle}
             ListEmptyComponent={this._renderEmtpy}
             keyExtractor={item => item.id}
             ListHeaderComponent={this._renderListHeader}
@@ -106,8 +106,5 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     color: Colors.gray,
     fontFamily: 'MyriadPro-Bold',
-  },
-  wrapperStyle: {
-    marginBottom: Dimensions.bigSpace,
   },
 });

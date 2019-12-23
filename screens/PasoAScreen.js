@@ -1,43 +1,61 @@
 import React, {Component} from 'react';
 import {
   Animated,
-  Button,
   View,
   StyleSheet,
   ScrollView,
   Text,
   ImageBackground,
   SafeAreaView,
+  TouchableOpacity,
 } from 'react-native';
-import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
+import {Ionicons} from '@expo/vector-icons';
 
-const deviceWidth = Dims.window.width - Dims.regularSpace - Dims.regularSpace;
-const deviceHeight = deviceWidth * 1.5 + Dims.regularSpace;
-const FIXED_BAR_WIDTH = 40;
-const BAR_SPACE = 8;
-
+const deviceWidth = Dims.window.width;
+const deviceHeight = '100%';
+const BAR_SPACE = 9;
 const info = [
   {
+    key: 'slide1',
     image: 'http://okoconnect.com/karim/images/slider-bg-0.png',
-    text: '',
+    text: 'Para ti,\n¿Qué es ser feliz?',
   },
   {
+    key: 'slide2',
     image: 'http://okoconnect.com/karim/images/slider-bg-1.png',
     text:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+      'Hoy darás el primer paso a una vida plena. En este viaje, te conectarás con #yoconscientey el momento presente.',
   },
   {
+    key: 'slide3',
+    image: 'http://okoconnect.com/karim/images/slider-bg-1.png',
+    text: 'No requieres equipaje,\nni correr largas distancias.',
+  },
+  {
+    key: 'slide4',
+    image: 'http://okoconnect.com/karim/images/slider-bg-1.png',
+    text: 'Todo lo que necesitas\nestá dentro de ti.',
+  },
+  {
+    key: 'slide5',
+    image: 'http://okoconnect.com/karim/images/slider-bg-1.png',
+    text: 'La felicidad que te rodea, está aquí y ahora',
+  },
+  {
+    key: 'slide6',
     image: 'http://okoconnect.com/karim/images/slider-bg-2.png',
     text:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+      'Te invito a comenzar una emocionante aventura espiritual,\n¿Me acompañas?',
   },
 ];
 
 /**
- * Paso Tipo(A): Viaje Highlight
+ * Paso Tipo(A): Highlight
  * @typedef {Object} ParamsNavigation
+ * @prop {import('../utils/types').Paso[]} steps
+ * @prop {number} position
  *
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
@@ -45,38 +63,61 @@ const info = [
  * @extends {Component<Props>}
  */
 export default class PasoAScreen extends Component {
-  numItems = info.length;
-  itemWidth = FIXED_BAR_WIDTH / this.numItems - (this.numItems - 1) * BAR_SPACE;
   animVal = new Animated.Value(0);
 
-  static navigationOptions = {
-    title: 'Paso A',
+  static navigationOptions = ({navigation}) => {
+    /** @type {ParamsNavigation} */
+    const {steps, position} = navigation.state.params;
+    return {
+      title: steps[position].title,
+      headerStyle: {
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+      },
+    };
   };
 
-  _handleClick = () => {
-    //alert('This is a button!');
-    this.props.navigation.replace('PasoB');
+  nextStep = () => {
+    const {steps, position} = this.props.navigation.state.params;
+    const {type} = steps[position + 1];
+    this.props.navigation.replace(`Paso${type}`, {
+      steps,
+      position: position + 1,
+    });
   };
 
   render() {
     let imageArray = [];
     let barArray = [];
+    const numItems = info.length;
+    const itemWidth = 5;
     info.forEach((item, i) => {
       const thisImage = (
         <ImageBackground
           key={`image${i}`}
           source={{uri: item.image}}
           style={[styles.sliderImage]}>
-          <View style={styles.topBox}>
-            <Text style={styles.headline}>{item.text}</Text>
-          </View>
+          {i === numItems - 1 ? (
+            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
+              <View style={styles.containerHalfBottom}>
+                <Text style={styles.paragraphBottom}>{item.text}</Text>
+              </View>
+            </TouchableOpacity>
+          ) : i === 0 ? (
+            <View style={styles.containerCenter}>
+              <Text style={styles.headline}>{item.text}</Text>
+            </View>
+          ) : (
+            <View style={styles.containerHalfBottom}>
+              <Text style={styles.paragraphBottom}>{item.text}</Text>
+            </View>
+          )}
         </ImageBackground>
       );
       imageArray.push(thisImage);
 
       const scrollBarVal = this.animVal.interpolate({
         inputRange: [deviceWidth * (i - 1), deviceWidth * (i + 1)],
-        outputRange: [-this.itemWidth, this.itemWidth],
+        outputRange: [-itemWidth, itemWidth],
         extrapolate: 'clamp',
       });
 
@@ -86,7 +127,7 @@ export default class PasoAScreen extends Component {
           style={[
             styles.track,
             {
-              width: this.itemWidth,
+              width: itemWidth,
               marginLeft: i === 0 ? 0 : BAR_SPACE,
             },
           ]}>
@@ -94,7 +135,7 @@ export default class PasoAScreen extends Component {
             style={[
               styles.bar,
               {
-                width: this.itemWidth,
+                width: itemWidth,
                 transform: [{translateX: scrollBarVal}],
               },
             ]}
@@ -107,22 +148,21 @@ export default class PasoAScreen extends Component {
     return (
       <>
         <SafeAreaView style={{flex: 1}}>
-          <View style={styles.statusBar} />
-          <View style={[styles.container]}>
-            <Button onPress={this._handleClick} title="Paso B" />
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              scrollEventThrottle={10}
-              pagingEnabled
-              onScroll={Animated.event([
-                {nativeEvent: {contentOffset: {x: this.animVal}}},
-              ])}
-              style={styles.slider}>
-              {imageArray}
-            </ScrollView>
-            <View style={styles.barContainer}>{barArray}</View>
-          </View>
+          <TouchableOpacity style={styles.close} onPress={this.nextStep}>
+            <Ionicons name={'md-close'} size={30} color={Colors.gray} />
+          </TouchableOpacity>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            scrollEventThrottle={10}
+            pagingEnabled
+            onScroll={Animated.event([
+              {nativeEvent: {contentOffset: {x: this.animVal}}},
+            ])}
+            style={styles.slider}>
+            {imageArray}
+          </ScrollView>
+          <View style={styles.barContainer}>{barArray}</View>
         </SafeAreaView>
       </>
     );
@@ -130,28 +170,38 @@ export default class PasoAScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: Dims.regularSpace,
-  },
-  statusBar: {
-    height: Constants.statusBarHeight,
-  },
   slider: {
-    marginTop: 20,
+    margin: 0,
   },
   sliderImage: {
     width: deviceWidth,
     height: deviceHeight,
+    position: 'relative',
     //resizeMode: 'contain',
+  },
+  containerCenter: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  containerHalfBottom: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    paddingTop: Dims.window.height / 2,
   },
   barContainer: {
     position: 'absolute',
-    zIndex: 2,
-    top: 10,
+    zIndex: 20,
+    top: 30,
+    left: 0,
+    right: 0,
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    left: '50%',
+    alignContent: 'center',
   },
   track: {
     backgroundColor: '#ccc',
@@ -167,20 +217,30 @@ const styles = StyleSheet.create({
     top: 0,
     borderRadius: 5,
   },
-  topBox: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headline: {
+  paragraphBottom: {
     fontFamily: 'MyriadPro-Regular',
     fontSize: 18,
     lineHeight: 33,
     textAlign: 'center',
     color: Colors.gray,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingHorizontal: 60,
+    paddingHorizontal: Dims.regularSpace,
+  },
+  headline: {
+    fontFamily: 'MyriadPro-Bold',
+    fontSize: Dims.h1,
+    lineHeight: 48,
+    textAlign: 'center',
+    color: Colors.gray,
+    letterSpacing: 2.2,
+    marginTop: -40,
+    paddingHorizontal: Dims.regularSpace,
+  },
+  close: {
+    position: 'absolute',
+    right: 20,
+    top: 20,
+    zIndex: 100,
   },
 });

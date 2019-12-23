@@ -10,6 +10,8 @@ import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import Dimensions from '../constants/Dimensions';
 import API from '../utils/API';
+import {enumStatus} from '../utils/types';
+
 
 /**
  * @typedef {Object} ParamsNavigation
@@ -21,47 +23,8 @@ import API from '../utils/API';
  * @extends {Component<Props>}
  */
 export default class Categoria extends Component {
+  /* @type {import('../utils/types').Categoria} */
   /*categoria = {
-    id: 1,
-    title: 'Categoria',
-    cover: 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
-    viajes: [
-      {
-        id: 1,
-        title: '¿Qué es ser feliz?',
-        status: 2,
-      },
-      {
-        id: 2,
-        title: 'Viaja ligero',
-        status: 1,
-      },
-      {
-        id: 3,
-        title: 'Conectar con el corazón',
-        status: 0,
-      },
-      {
-        id: 4,
-        title: 'Vive incondicionalmente',
-        status: 0,
-      },
-      {
-        id: 5,
-        title: 'Acepta radicalmente',
-        status: 0,
-      },
-      {
-        id: 6,
-        title: 'Otro título',
-        status: 0,
-      },
-    ],
-    color: this.props.navigation.getParam('bg', Colors.primary),
-    bgImg: 'http://okoconnect.com/karim/images/viaje-bg-1.png',
-  };*/
-  /** @type {import('../utils/types').Categoria} */
-  categoria = {
     id: 'cat1',
     color: '#fdd58d',
     itemImage: 'http://okoconnect.com/karim/images/cat1.png',
@@ -69,8 +32,9 @@ export default class Categoria extends Component {
     cover: 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
     media: 'http://okoconnect.com/karim/videos/video2.mp4',
     backgroundImage: 'http://okoconnect.com/karim/images/viaje-bg-1.png',
-  };
+  };*/
   state = {
+    /** @type {import('../utils/types').Viaje[]} */
     viajes: [],
   };
 
@@ -79,18 +43,24 @@ export default class Categoria extends Component {
       title: navigation.getParam('categoria', {title: 'Categoria'}).title,
     };
   };
+  constructor(props) {
+    super(props);
+    this.categoria = props.navigation.state.params.categoria;
+  }
 
   componentDidMount = async () => {
-    const viajes = await API.getViajesCategoria(
-      this.props.navigation.state.params.categoria.id,
-      'example@example.com',
-    );
+    //TODO regresar a usar this.categoria.id
+    const viajes = await API.getViajesCategoria('cat1', 'example@example.com');
     this.setState({viajes});
-    console.log(viajes);
+    //console.log(viajes);
   };
 
-  _goViaje = () => {
-    this.props.navigation.navigate('ViajeStack');
+  _goViaje = index => {
+    let viaje = this.state.viajes[index]
+    viaje.color = this.categoria.color;
+    this.props.navigation.navigate('ViajeStack', {
+      viaje
+    });
   };
 
   renderListHeader = _ => {
@@ -114,16 +84,44 @@ export default class Categoria extends Component {
     );
   };
 
-  renderItem = ({item}) => {
-    return (
-      <ItemBubble
-        key={`viaje${item.id}`}
-        color={this.categoria.color}
-        status={item.status}
-        onPress={this._goViaje}>
-        {item.title}
-      </ItemBubble>
-    );
+  /** @type {import('react-native').ListRenderItem<import('../utils/types').Viaje>} */
+  renderItem = ({item, index}) => {
+    switch (item.status) {
+      case enumStatus.doing:
+        return (
+          <ItemBubble
+            color={this.categoria.color}
+            onPress={() => {
+              this._goViaje(index);
+            }}
+            bold>
+            {item.title}
+          </ItemBubble>
+        );
+      case enumStatus.done:
+        return (
+          <ItemBubble
+            color={this.categoria.color}
+            onPress={() => {
+              this._goViaje(index);
+            }}
+            fill
+            bold>
+            {item.title}
+          </ItemBubble>
+        );
+      default:
+        return (
+          <ItemBubble
+            color={this.categoria.color}
+            onPress={() => {
+              this._goViaje(index);
+            }}
+            disable>
+            {item.title}
+          </ItemBubble>
+        );
+    }
   };
 
   renderListEmpty = _ => {
@@ -137,7 +135,8 @@ export default class Categoria extends Component {
       <SafeAreaView>
         <ScreenBg
           source={{uri: this.categoria.backgroundImage}}
-          color={this.categoria.color}>
+          // color={this.categoria.color}>
+          color={'#fff'}>
           <FlatList
             ListHeaderComponent={this.renderListHeader}
             data={this.state.viajes}

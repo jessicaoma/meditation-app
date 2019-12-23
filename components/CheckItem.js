@@ -1,65 +1,40 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 
 /**
- * A button whit border radius 30º and a line on the botton
+ * A Check Item
  * @typedef Props
  * @prop {string} color Primary color to used
- * @prop { 'todo' | 'doing' | 'done'} status Status of the item
  * @prop {(event: import('react-native').GestureResponderEvent) => void} [onPress] Handle press event
+ * @prop {boolean} [disable] Indicates that the component border is gray.
+ * @prop {boolean} [checked] Indicates that the component checkedCircle has color. (not work with disable)
+ * @prop {string} children Text to show
  * @extends {Component<Props>}
  */
-export default class ItemBubbleLine extends Component {
+export default class CheckItem extends Component {
   render() {
-    let {color, status, onPress} = this.props;
-    let styleStatus = {};
-    if (status === 'done') {
-      styleStatus = StyleSheet.create({
-        styleContainer: {
-          borderColor: color,
-        },
-        styleText: {
-          fontWeight: 'bold',
-        },
-        circle: {
-          borderColor: Colors.primaryDark,
-        },
-        checkedCircle: {
-          backgroundColor: color,
-        },
-      });
-    } else if (status === 'doing') {
-      styleStatus = StyleSheet.create({
-        styleContainer: {
-          borderColor: color,
-        },
-        styleText: {
-          fontWeight: 'bold',
-        },
-        circle: {
-          borderColor: Colors.primaryDark,
-        },
-        checkedCircle: {
-          backgroundColor: Colors.borderWhite,
-        },
-      });
-    } else if (status === 'viajeTitle') {
-      styleStatus = StyleSheet.create({
-        styleContainer: {
-          borderColor: color,
-          backgroundColor: color,
-        },
-        styleText: {
-          fontWeight: 'bold',
-          fontSize: 18,
-        },
-        circle: {
-          display: 'none',
-        },
-      });
-    }
+    let {color, disable, checked, onPress} = this.props;
+    let styleStatus = StyleSheet.create({
+      styleContainer: {
+        borderColor: disable ? Colors.borderWhite : color,
+      },
+      styleText: {
+        fontWeight: disable ? 'normal' : 'bold',
+      },
+      circle: {
+        borderColor: disable ? '#919394' : Colors.primaryDark,
+      },
+      checkedCircle: {
+        backgroundColor: disable
+          ? 'white'
+          : checked
+          ? color
+          : Colors.borderWhite,
+      },
+    });
+
     return (
       <TouchableOpacity
         style={[styles.container, styleStatus.styleContainer]}
@@ -84,7 +59,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dims.regularSpace,
     borderColor: Colors.borderWhite,
     backgroundColor: 'white',
-    //justifyContent: 'left',
     flexDirection: 'row',
     flex: 1,
   },
@@ -100,7 +74,6 @@ const styles = StyleSheet.create({
     width: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: '#919394',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
@@ -110,6 +83,5 @@ const styles = StyleSheet.create({
     width: 11,
     height: 11,
     borderRadius: 7,
-    backgroundColor: 'white',
   },
 });
