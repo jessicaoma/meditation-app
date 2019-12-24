@@ -13,3 +13,5 @@ web-report/
 .DS_Store
 *.kra
 *.png~
+package-lock.json
+
