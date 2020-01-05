@@ -29,39 +29,59 @@ const numColumns = 2;
 const data = [
   {
     key: 'cartaA',
+    bg: 'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-1.png',
+    header: 'http://okoconnect.com/karim/assets/images/emociones/header-emocion-1.png',
+    footer: 'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-1.png',
+    headerH: 0.1,
+    footerH: 0.35,
     image: envProd
       ? {
           uri:
-            'http://okoconnect.com/karim/images/emocion1.png',
+            'http://okoconnect.com/karim/assets/images/emociones/emocion-1.png',
         }
-      : require('../assets/images/emociones/emocion1.png'),
+      : require('../assets/images/emociones/emocion-1.png'),
   },
   {
     key: 'cartaB',
+    bg: 'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-2.png',
+    header: 'http://okoconnect.com/karim/assets/images/emociones/header-emocion-2.png',
+    footer: 'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-2.png',
+    headerH: 0.1,
+    footerH: 0.3,
     image: envProd
       ? {
           uri:
-            'http://okoconnect.com/karim/images/emocion2.png',
+            'http://okoconnect.com/karim/assets/images/emociones/emocion-2.png',
         }
-      : require('../assets/images/emociones/emocion2.png'),
+      : require('../assets/images/emociones/emocion-2.png'),
   },
   {
     key: 'cartaC',
+    bg: 'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-3.png',
+    header: 'http://okoconnect.com/karim/assets/images/emociones/header-emocion-3.png',
+    footer: 'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-3.png',
+    headerH: 0.35,
+    footerH: 0.35,
     image: envProd
       ? {
           uri:
-            'http://okoconnect.com/karim/images/emocion3.png',
+            'http://okoconnect.com/karim/assets/images/emociones/emocion-3.png',
         }
-      : require('../assets/images/emociones/emocion3.png'),
+      : require('../assets/images/emociones/emocion-3.png'),
   },
   {
     key: 'cartaD',
+    bg: 'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-4.png',
+    header: 'http://okoconnect.com/karim/assets/images/emociones/header-emocion-4.png',
+    footer: 'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-4.png',
+    headerH: 0.45,
+    footerH: 0.2,
     image: envProd
       ? {
           uri:
-            'http://okoconnect.com/karim/images/emocion4.png',
+            'http://okoconnect.com/karim/assets/images/emociones/emocion-4.png',
         }
-      : require('../assets/images/emociones/emocion4.png'),
+      : require('../assets/images/emociones/emocion-4.png'),
   },
 ];
 
@@ -73,7 +93,11 @@ export default class EmocionesScreen extends Component {
   _handleClick = item => {
     // TODO registrar selecion en el servidor
     this.props.navigation.navigate('Emocion', {
-      carta: item,
+      bg: item.bg,
+      header: item.header,
+      footer: item.footer,
+      headerH: item.headerH,
+      footerH: item.footerH,
     });
   };
 

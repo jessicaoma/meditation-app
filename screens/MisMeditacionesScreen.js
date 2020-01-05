@@ -7,10 +7,15 @@ import {
   FlatList,
   ActivityIndicator,
   SafeAreaView,
+  ScrollView,
 } from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
+import LogoPremio from '../constants/LogoPremio';
+import LogoReloj from '../constants/LogoReloj';
+
+import ScalableText from 'react-native-text';
 
 /**
  * @typedef Props
@@ -19,121 +24,109 @@ import Dims from '../constants/Dimensions';
  */
 export default class MisMeditacionesScreen extends Component {
   static navigationOptions = {};
-  constructor(props) {
-    super(props);
-    /** @type {{meditaciones: import('../utils/types').Meditación[]}} */
-    this.state = {
-      meditaciones: [
-        {
-          id: 'med1',
-          title: 'Meditación Básica',
-          backgroundImage:
-            'http://okoconnect.com/karim/images/meditar2-full.png',
-          color: '#7883a4',
-          itemImage: 'http://okoconnect.com/karim/images/meditar2.png',
-          intro: 'http://okoconnect.com/karim/videos/pre_meditacion.mp4',
-          media:
-            'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
-          time: '05hr 22min',
-        },
-        {
-          id: 'med2',
-          title: 'Meditación otra',
-          backgroundImage:
-            'http://okoconnect.com/karim/images/meditar4-full.png',
-          color: '#7883a4',
-          itemImage: 'http://okoconnect.com/karim/images/meditar4.png',
-          intro: 'http://okoconnect.com/karim/videos/pre_meditacion.mp4',
-          media:
-            'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
-          time: '01hr 04min',
-        },
-      ],
-    };
-  }
 
-  /** @param {import('../utils/types').Meditación} item */
-  _handleClick = item => {
-    this.props.navigation.navigate('Mis Meditaciones', {
-      meditacion: item,
-    });
-  };
-
-  /** @param {{item : import('../utils/types').Meditación}} item */
-  _renderItem = ({item}) => {
-    return (
-      <Buttom
-        key={item.id}
-        style={[
-          styles.button,
-          {backgroundColor: item.color || Colors.primaryDark},
-        ]}
-        onPress={() => {
-          this._handleClick(item);
-        }}>
-        <View style={styles.textContainer}>
-          <Text style={styles.title_boxes}>{item.title}</Text>
-          <Text style={styles.time}>{item.time}</Text>
-        </View>
-        <Image style={styles.image} source={{uri: item.itemImage}} />
-      </Buttom>
-    );
-  };
-
-  _renderListEmpty = _ => {
-    return <ActivityIndicator size="large" color={Colors.primaryDark} />;
-  };
-  /** @param {import('../utils/types').Meditación} item */
   _keyExtractor = item => item.id;
 
   render = () => (
-    <SafeAreaView style={{flex: 1}}>
-      <FlatList
-        data={this.state.meditaciones}
-        renderItem={this._renderItem}
-        ListEmptyComponent={this._renderListEmpty}
-        style={styles.container}
-        keyExtractor={this._keyExtractor}
-      />
-    </SafeAreaView>
+    <SafeAreaView>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+          <Image
+            resizeMode="cover"
+            source={{
+              uri:
+                'http://okoconnect.com/karim/assets/images/mis-meditaciones-header.png',
+            }}
+            style={styles.image}
+          />
+          <View style={styles.container}>
+
+            <View style={styles.container}>
+              <View>
+                <ScalableText style={styles.purpleTitle}>Mi record</ScalableText>
+              </View>
+
+              <View style={styles.inforowtitle}>
+                <LogoReloj/>
+                <ScalableText style={styles.bigParagraph}>
+                  Tiempo total meditado
+                </ScalableText>
+              </View>
+
+              <View style={styles.inforow}>
+                <ScalableText style={styles.bigTitle}>4.25</ScalableText>
+                <ScalableText style={styles.purpleTitle}>
+                  HORAS
+                </ScalableText>
+              </View>
+
+              <View style={styles.inforowtitle}>
+                <LogoPremio/>
+                <ScalableText style={styles.bigParagraph}>
+                  Sesiones completadas
+                </ScalableText>
+              </View>
+
+              <View style={styles.inforow}>
+                <ScalableText style={styles.bigTitle}>2</ScalableText>
+                <ScalableText style={styles.purpleTitle}>
+                  SESIONES
+                </ScalableText>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Dims.regularSpace,
-    paddingHorizontal: Dims.regularSpace,
-    flex: 1,
+    paddingHorizontal: Dims.bigSpace,
   },
-  button: {
-    paddingRight: 0,
-  },
-  textContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'flex-start',
-  },
-  title_boxes: {
-    color: 'white',
-    fontSize: Dims.window.width * 0.038,
-    letterSpacing: 0.055,
-    lineHeight: 25,
-    textTransform: 'uppercase',
-    alignSelf: 'flex-start',
-    textAlign: 'left',
+  purpleTitle: {
+    fontSize: Dims.paragraph,
+    color: '#9898E2',
     fontFamily: 'MyriadPro-Regular',
+    textAlign: 'left',
+    marginBottom: 20,
+  },
+  
+  inforowtitle: {
+    flex:0,
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center',
+    alignSelf:'flex-start',
+    marginBottom: 0
+  },
+  inforow: {
+    flex:1,
+    flexDirection:'row',
+    alignItems:'flex-end',
+    alignSelf:'center',
+    marginBottom: 20,
+    paddingVertical: 0,
+    paddingLeft: 50,
+  },
+  bigTitle: {
+    fontSize: 35,
+    lineHeight: 35,
+    padding: 0,
+    marginRight: 20,
+    color: '#8E92A6',
+    fontFamily: 'MyriadPro-Bold',
+    textAlign: 'left',
+  },
+  bigParagraph: {
+    color: '#ABA0B5',
+    fontSize: 14,
+    marginLeft: 20,
   },
   image: {
-    resizeMode: 'cover',
-    width: 92,
-    borderTopRightRadius: 50,
-    borderBottomRightRadius: 50,
+    flex: 1,
+    width: Dims.window.width,
+    height: Dims.window.width - 30,
   },
-  time: {
-    fontFamily: 'MyriadPro-Bold',
-    fontSize: Dims.window.width * 0.028,
-    color: 'white',
-  },
+
 });
+

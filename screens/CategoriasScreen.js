@@ -58,7 +58,7 @@ export default class Categorias extends Component {
       onPress={() => {
         this._handleClick(item);
       }}>
-      <Text style={styles.title_boxes}>{item.title}</Text>
+      <ScalableText style={styles.title_boxes}>{item.title}</ScalableText>
       <Image style={styles.image} source={{uri: item.itemImage}} />
     </Buttom>
   );

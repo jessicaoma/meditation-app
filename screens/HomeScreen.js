@@ -16,29 +16,27 @@ import Cover from '../components/Cover';
 import TabBarIcon from '../components/TabBarIcon';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import ScalableText from 'react-native-text';
+import ScreenBg from '../components/screenBg';
 
 const uriReflexion = 'http://okoconnect.com/karim/images/video-preview.jpeg';
-const uricomomesiento = 'http://okoconnect.com/karim/images/comomesiento.png';
-const uriflor1 = 'http://okoconnect.com/karim/images/flor1.png';
-const uriflor3 = 'http://okoconnect.com/karim/images/flor3.png';
 
 const dataLonuevo = [
   {
     id: 1,
-    title: 'La aventura espiritual',
+    title: 'Aventura espiritual',
     img: 'http://okoconnect.com/karim/images/lock.png',
-    bg: '#dadff8',
+    bg: '#DADFF8',
   },
   {
     id: 2,
     title: 'Viaje Ligero',
     img: 'http://okoconnect.com/karim/images/lock.png',
-    bg: '#fdd58d',
+    bg: '#FCD48C',
   },
 ];
 const dataViajesenprogreso = [
-  {id: 1, title: 'Aprende a cambiar', bg: Colors.second},
-  {id: 2, title: 'crear buenos Habitos', bg: Colors.second},
+  {id: 1, title: 'Aprende a cambiar', bg: '#97a3ce'},
+  {id: 2, title: 'crear buenos Habitos', bg: '#97a3ce'},
 ];
 
 /**
@@ -56,7 +54,14 @@ export default class Home extends Component {
     headerLeft: (
       // eslint-disable-next-line react-native/no-inline-styles
       <View style={{flex: 1, justifyContent: 'flex-start', marginLeft: 16}}>
-        <Logo />
+        <Logo
+          style={{
+            width: 173,
+            height: 43,
+            resizeMode: 'contain',
+            paddingBottom: 2,
+          }}
+        />
       </View>
     ),
     headerRight: (
@@ -84,7 +89,7 @@ export default class Home extends Component {
 
   _renderItemLonuevo = ({item}) => (
     <Buttom
-      style={[{backgroundColor: item.bg || Colors.second}, styles.box2]}>
+      style={[{backgroundColor: item.bg || Colors.primaryDark}, styles.box2]}>
       <ScalableText style={styles.title_boxes2}>{item.title}</ScalableText>
       {/* <Image style={styles.itemCandado} source={{uri: item.img}} /> */}
     </Buttom>
@@ -92,7 +97,7 @@ export default class Home extends Component {
 
   _renderItemViajesProgreso = ({item}) => (
     <Buttom
-      style={[{backgroundColor: item.bg || Colors.second}, styles.box2]}
+      style={[{backgroundColor: item.bg || Colors.primaryDark}, styles.box2]}
       onPress={this._handleClick}>
       <ScalableText style={styles.title_boxes}>{item.title}</ScalableText>
     </Buttom>
@@ -125,61 +130,71 @@ export default class Home extends Component {
     this.props.navigation.navigate('Premium');
   };
 
-  _handleMusica = () => {
+  _handelMusica = () => {
     this.props.navigation.navigate('Canciones');
   };
 
   render() {
     return (
       <>
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
-            <Cover
-              source={{uri: uriReflexion}}
-              onPress={this._handleReflexion}
-              style={styles.cover}
-            />
-            <Buttom onPress={this._handleEmociones} style={{backgroundColor: Colors.second}}>
-              <ScalableText style={styles.title_boxes}>
-                ¿como me siento?
-              </ScalableText>
-            </Buttom>
-            <ScalableText style={styles.sectionTitle}>Lo nuevo</ScalableText>
-            <FlatList
-              horizontal
-              data={dataLonuevo}
-              renderItem={this._renderItemLonuevo}
-              keyExtractor={item => 'lonuevo' + item.id}
-            />
-            <ScalableText style={styles.sectionTitle}>
-              Viajes en progreso
-            </ScalableText>
-            <FlatList
-              horizontal
-              data={dataViajesenprogreso}
-              renderItem={this._renderItemViajesProgreso}
-              keyExtractor={item => 'viajesenprogreso' + item.id}
-            />
-            <View style={styles.separador} />
-            <Buttom onPress={this._handelBienvenida} style={{backgroundColor: Colors.second}}>
-              <ScalableText style={styles.title_boxes}>BIENVENIDA</ScalableText>
-            </Buttom>
-            <Buttom onPress={this._handleTutorial} style={{backgroundColor: Colors.second}}>
-              <ScalableText style={styles.title_boxes}>TUTORIAL</ScalableText>
-            </Buttom>
-            <Buttom onPress={this._handleMusica} style={{backgroundColor: Colors.second}}>
-              <ScalableText style={styles.title_boxes}>
-                Música
-              </ScalableText>
-            </Buttom>
-            <Buttom onPress={this._handelPremium} style={{backgroundColor: Colors.second}}>
-              <ScalableText style={styles.title_boxes}>
-                CONVIERTETE EN PREMIUM
-              </ScalableText>
-            </Buttom>
-            {/* <View style={styles.separador2} /> */}
+              <ScreenBg
+              source={{uri: 'http://okoconnect.com/karim/assets/images/bg-inicio.png'}}
+              styleImage={{resizeMode: 'contain'}}
+              color='white'>
+                <Cover
+                  source={{uri: uriReflexion}}
+                  onPress={this._handleReflexion}
+                  style={styles.cover}
+                />
+                <Buttom 
+                  style={{backgroundColor: Colors.second}}
+                  onPress={this._handleEmociones}>
+                  <ScalableText style={styles.title_boxes}>
+                    ¿como me siento?
+                  </ScalableText>
+                </Buttom>
+                <ScalableText style={styles.sectionTitle}>Lo nuevo</ScalableText>
+                <FlatList
+                  horizontal
+                  data={dataLonuevo}
+                  renderItem={this._renderItemLonuevo}
+                  keyExtractor={item => 'lonuevo' + item.id}
+                />
+                <ScalableText style={styles.sectionTitle}>
+                  Viajes en progreso
+                </ScalableText>
+                <FlatList
+                  horizontal
+                  data={dataViajesenprogreso}
+                  renderItem={this._renderItemViajesProgreso}
+                  keyExtractor={item => 'viajesenprogreso' + item.id}
+                />
+                <View style={styles.separador} />
+                <Buttom
+                  style={{backgroundColor: Colors.second}}
+                  onPress={this._handelBienvenida}>
+                  <ScalableText style={styles.title_boxes}>BIENVENIDA</ScalableText>
+
+                </Buttom>
+                <Buttom 
+                  style={{backgroundColor: Colors.second}}
+                  onPress={this._handleTutorial}>
+                  <ScalableText style={styles.title_boxes}>TUTORIAL</ScalableText>
+                </Buttom>
+                <Buttom 
+                  style={{backgroundColor: Colors.second}}
+                  onPress={this._handelMusica}>
+                  <ScalableText style={styles.title_boxes}>
+                    MÚSICA
+                  </ScalableText>
+
+                </Buttom>
+                <View style={styles.separador2} />
+            </ScreenBg>
           </ScrollView>
         </SafeAreaView>
       </>
@@ -190,18 +205,17 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
   scrollView: {
     paddingHorizontal: Dimensions.regularSpace,
-    height: '100%',
+    paddingTop: Dimensions.regularSpace,
   },
   cover: {
     paddingTop: Dimensions.regularSpace,
+    elevation: 3,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 1,
     },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-    elevation: 4,
+    shadowOpacity: 0.22,
   },
   sectionTitle: {
     fontSize: Dimensions.h2,
@@ -211,7 +225,7 @@ const styles = StyleSheet.create({
     marginRight: 0,
     marginBottom: 3,
     marginLeft: 0,
-    color: Colors.gray,
+    color: '#ABA0B5',
     fontFamily: 'MyriadPro-Regular',
   },
   separador: {
@@ -220,8 +234,13 @@ const styles = StyleSheet.create({
     marginTop: Dimensions.smallSpace,
     marginBottom: Dimensions.bigSpace,
   },
+  separador2: {
+    borderBottomColor: '#dcdcdc',
+    borderBottomWidth: 0,
+    marginTop: Dimensions.smallSpace,
+  },
   title_boxes: {
-    color: 'white',
+    color: '#fff',
     fontSize: Dimensions.bubbleTitle,
     letterSpacing: Dimensions.bubbleTitleSpacing,
     lineHeight: 20,
@@ -229,9 +248,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: 'MyriadPro-Regular',
     paddingTop: 5,
+    paddingRight: 35,
   },
   title_boxes2: {
-    color: '#81777a',
+    color: '#81777A',
     fontSize: Dimensions.bubbleTitle,
     letterSpacing: Dimensions.bubbleTitleSpacing,
     lineHeight: 20,
@@ -241,6 +261,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flex: 1,
     paddingTop: 5,
+    paddingRight: 35,
   },
   box2: {
     minWidth: 198,

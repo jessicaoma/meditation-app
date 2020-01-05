@@ -8,16 +8,15 @@ import Dims from '../constants/Dimensions';
  * @property {string} [color] Backgroud color for the image, default value Colors.primary
  * @property {import('react-native').ImageSourcePropType} source Source of the image to render
  * @property {(event: import('react-native').GestureResponderEvent) => void} [onPress] Handle press event
- * @property {import('react-native').StyleProp<import('react-native').ViewStyle>} [style] Extra custom style for the component
  */
 
 /**
  * A image cover
  * @param {Props} props Props sended to the component
  */
-const Cover = ({source, onPress, color, style}) => {
+const Cover = ({source, onPress, color}) => {
   return (
-    <TouchableOpacity onPress={onPress} style={style}>
+    <TouchableOpacity onPress={onPress}>
       <Image
         source={source}
         style={[styles.image, {backgroundColor: color || Colors.primary}]}
@@ -30,8 +29,8 @@ export default Cover;
 
 const styles = StyleSheet.create({
   image: {
-    width: '100%',
-    minHeight: 366,
+    width: Dims.window.width - Dims.bigSpace - 6,
+    minHeight: Dims.window.width -  Dims.bigSpace - 6,
     resizeMode: 'cover',
     borderRadius: 20,
     marginBottom: Dims.bigSpace,

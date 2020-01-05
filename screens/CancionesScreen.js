@@ -10,6 +10,7 @@ import {
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
+import ScalableText from 'react-native-text';
 
 /**
  * @typedef Props
@@ -148,7 +149,7 @@ export default class Canciones extends Component {
       onPress={() => {
         this._handleClick(item);
       }}>
-      <Text style={styles.title_boxes}>{item.title}</Text>
+      <ScalableText style={styles.title_boxes}>{item.title}</ScalableText>
       <Image style={styles.image} source={{uri: item.itemImage}} />
     </Buttom>
   );

@@ -6,61 +6,66 @@ import {
   ScrollView,
   Image,
   SafeAreaView,
-  TouchableOpacity
 } from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
-import {Ionicons} from '@expo/vector-icons';
+import ScreenBg from '../components/screenBg';
+import ScalableText from 'react-native-text';
 
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
  * @extends {Component<Props>}
  */
+const headerDefault = 'http://okoconnect.com/karim/assets/images/emociones/header-emocion-1.png';
+
 export default class Emocion extends Component {
+
   render() {
+    const { navigation } = this.props;
+    console.log(JSON.stringify(navigation.getParam('header', '')));
+    console.log(JSON.stringify(navigation.getParam('footer', '')));
+    Number(navigation.getParam('headerH', '0.1'))
     return (
       <>
-        <SafeAreaView style={{flex:1,paddingBottom: 30}}>
+        <SafeAreaView>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
-            <View style={styles.container}>
-              <Text style={styles.bigTitle}>Alegría</Text>
-              <Text style={styles.bigParagraph}>
-                Lorem ipsum dolor sit amet consectetur adipiscing elit feugiat
-                id varius, laoreet ultrices vitae mi per class rhoncus aliquet
-                nostra, natoque.
-              </Text>
-              <View style={{flex: 1}}>
-                <Image
-                  style={{
-                    width: Dims.window.width - Dims.regularSpace,
-                    height: Dims.window.width - Dims.regularSpace,
-                  }}
-                  source={{
-                    uri: 'http://okoconnect.com/karim/images/oracion.jpeg',
-                  }}
-                />
+            <ScreenBg
+            source={{uri: navigation.getParam('bg', ''),}}
+            styleImage={{resizeMode: 'cover'}}>
+             
+              <Image
+                style={{
+                  width: '100%',
+                  height: Dims.window.height * Number(navigation.getParam('headerH', '0.1')),
+                }}
+                source={{
+                  uri: navigation.getParam('header', ''),
+                }}
+              />
+              <View style={styles.container}>
+                    <ScalableText style={styles.bigTitle}>
+                      Título 
+                    </ScalableText>
+                    <ScalableText style={styles.paragraph}>
+                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+                      {'\n'}Feliz Sábado ✨
+                    </ScalableText>
               </View>
-              <Text style={styles.paragraph}>
-                Antes de salir de la cama asegúrate de establecer la intención
-                para el día que acaba de comenzar, perdónate por los errores de
-                ayer, agradece y reza. Estes en problemas o no “Reza”. La
-                oración es la herramienta que te ayuda a enfrentar mejor las
-                dificultades.
-                {'\n'}Feliz Sábado ✨
-              </Text>
-              <TouchableOpacity 
-                style={{flex:1,justifyContent:'center',alignItems:'center',marginBottom: 60}}>
-                  <Text style={styles.shareText}>Compartir</Text>
-                  <Ionicons
-                    name={'md-share'}
-                    size={35}
-                    style={styles.share}
-                  />
-            </TouchableOpacity>
-            </View>
+              
+              <Image
+                style={{
+                  width: '100%',
+                  height: Dims.window.height * Number(navigation.getParam('footerH', '0.4')),
+                }}
+                source={{
+                  uri: navigation.getParam('footer', ''),
+                }}
+              />
+              
+            </ScreenBg>
           </ScrollView>
         </SafeAreaView>
       </>
@@ -69,54 +74,31 @@ export default class Emocion extends Component {
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    paddingHorizontal: Dims.regularSpace,
-    paddingTop: Dims.regularSpace,
-  },
   container: {
     flex: 1,
-    paddingHorizontal: Dims.regularSpace,
+    paddingHorizontal: 30,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
   bigTitle: {
-    fontSize: 22,
+    fontSize: 40,
     letterSpacing: 1.11,
-    lineHeight: 36,
+    lineHeight: 40,
     marginTop: Dims.regularSpace,
     marginRight: 0,
-    marginBottom: 20,
+    marginBottom: 10,
     marginLeft: 0,
-    color: Colors.gray,
-    fontFamily: 'MyriadPro-Bold',
+    color: 'white',
+    fontFamily: 'MyriadPro-Regular',
   },
   paragraph: {
-    fontSize: 16,
-    letterSpacing: 1,
-    lineHeight: 22,
+    fontSize: 15.5,
+    lineHeight: 14.5,
     marginBottom: 50,
-    color: Colors.gray,
+    letterSpacing: 0,
+    color: 'white',
     fontFamily: 'MyriadPro-Regular',
-    textAlign: 'center',
+    textAlign: 'left',
     paddingHorizontal: Dims.smallSpace,
-  },
-  bigParagraph: {
-    fontSize: 18,
-    letterSpacing: 1.11,
-    lineHeight: 24,
-    marginBottom: 5,
-    color: Colors.gray,
-    fontFamily: 'MyriadPro-Regular',
-    textAlign: 'center',
-    paddingHorizontal: Dims.regularSpace,
-  },
-  shareText: {
-    color: Colors.gray,
-    fontFamily: 'MyriadPro-Regular',
-    textAlign: 'center',
-    letterSpacing: 1.2
-  },
-  share: {
-    color: Colors.primary,
   },
 });
