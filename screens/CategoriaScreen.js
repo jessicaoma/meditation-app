@@ -12,6 +12,7 @@ import Dimensions from '../constants/Dimensions';
 import API from '../utils/API';
 import {enumStatus} from '../utils/types';
 
+
 /**
  * @typedef {Object} ParamsNavigation
  * @prop {import('../utils/types').Categoria} categoria
