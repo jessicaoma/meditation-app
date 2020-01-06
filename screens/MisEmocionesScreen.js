@@ -113,6 +113,7 @@ export default class MisEmocionesScreen extends Component {
                 'http://okoconnect.com/karim/images/misemociones-top-crop.png',
             }}
             style={styles.image}
+            resizeMode="cover"
           />
           <View style={styles.containerButtons}>
             <TouchableOpacity
@@ -267,7 +268,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     width: '100%',
-    height: Dimensions.window.width - 80,
+    height: Dimensions.window.width,
     resizeMode: 'contain',
   },
   buttonReport: {

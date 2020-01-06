@@ -15,6 +15,7 @@ import Constants from 'expo-constants';
 import API from '../utils/API';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
+import ScalableText from 'react-native-text';
 
 /**
  * @typedef Props
@@ -57,7 +58,7 @@ export default class MeditacionesScreen extends Component {
         onPress={() => {
           this._handleClick(item);
         }}>
-        <Text style={styles.title_boxes}>{item.title}</Text>
+        <ScalableText style={styles.title_boxes}>{item.title}</ScalableText>
         <Image style={styles.image} source={{uri: item.itemImage}} />
       </Buttom>
     );
@@ -111,9 +112,6 @@ export default class MeditacionesScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-  },
   statusBar: {
     height: Constants.statusBarHeight,
   },

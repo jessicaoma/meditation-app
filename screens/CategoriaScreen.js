@@ -11,7 +11,7 @@ import Player from '../player/Player';
 import Dimensions from '../constants/Dimensions';
 import API from '../utils/API';
 import {enumStatus} from '../utils/types';
-
+import ScalableText from 'react-native-text';
 
 /**
  * @typedef {Object} ParamsNavigation
