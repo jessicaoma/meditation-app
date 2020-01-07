@@ -143,7 +143,7 @@ export default class Home extends Component {
             style={styles.scrollView}>
               <ScreenBg
               source={{uri: 'http://okoconnect.com/karim/assets/images/bg-inicio.png'}}
-              styleImage={{resizeMode: 'contain'}}
+              styleImage={{resizeMode: 'repeat',}}
               color='white'>
                 <Cover
                   source={{uri: uriReflexion}}
@@ -209,27 +209,19 @@ const styles = StyleSheet.create({
   },
   cover: {
     paddingTop: Dimensions.regularSpace,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
   },
   sectionTitle: {
-    fontSize: Dimensions.h2,
+    fontSize: Dimensions.paragraph,
     letterSpacing: 1.11,
     lineHeight: 36,
-    marginTop: 10,
     marginRight: 0,
     marginBottom: 3,
-    marginLeft: 0,
+    marginLeft: 20,
     color: '#ABA0B5',
     fontFamily: 'MyriadPro-Regular',
   },
   separador: {
-    borderBottomColor: '#dcdcdc',
+    borderBottomColor: 'transparent',
     borderBottomWidth: 1,
     marginTop: Dimensions.smallSpace,
     marginBottom: Dimensions.bigSpace,

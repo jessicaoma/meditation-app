@@ -23,7 +23,7 @@ const HalfCover = ({source, onPress, title, width, height}) => {
         <View style={styles.button}>
           <Image
             style={{
-              width: width - 10,
+              width: width - 12,
               height: height - 10,
               resizeMode: 'contain',
             }}
