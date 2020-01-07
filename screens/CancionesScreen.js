@@ -115,11 +115,11 @@ export default class Canciones extends Component {
         id: 'can10',
         title: 'Canción 10',
         color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+        media: 'http://okoconnect.com/karim/canciones/vientosdepaz.wav',
         backgroundImage:
           'http://okoconnect.com/karim/assets/images/musica/musica10-preview.png',
         itemImage:
-          'http://okoconnect.com/karim/canciones/vientosdepaz.wav',
+          'http://okoconnect.com/karim/assets/images/musica/musica10.png',
       },
     ],
   };
