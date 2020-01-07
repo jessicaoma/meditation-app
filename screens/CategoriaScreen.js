@@ -11,7 +11,6 @@ import Player from '../player/Player';
 import Dimensions from '../constants/Dimensions';
 import API from '../utils/API';
 import {enumStatus} from '../utils/types';
-import ScalableText from 'react-native-text';
 
 /**
  * @typedef {Object} ParamsNavigation
@@ -159,15 +158,22 @@ const styles = StyleSheet.create({
   },
   imageBG: {
     resizeMode: 'cover',
-    borderRadius: 10,
+    borderRadius: 25,
   },
   containBG: {
-    borderRadius: 20,
+    borderRadius: 25,
     marginBottom: Dimensions.bigSpace,
   },
   cover: {
     height: 210,
     marginBottom: 10,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 3,
+      height: 5,
+    },
+    shadowOpacity: 0.22,
   },
   video: {
     borderRadius: 10,

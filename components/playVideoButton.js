@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React from 'react';
 import {StyleSheet, Image, View, TouchableOpacity} from 'react-native';
-
+import LogoPlayVideo from '../constants/LogoPlayVideo';
 /**
  * @typedef {Object} Props
  * @prop {boolean} isShow True to show the botton
@@ -17,17 +17,7 @@ export default function PlayVideoButton({isShow, onPress}) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.center, isShow ? styles.show : styles.hidden]}>
-        <Image
-          source={
-            envProd
-              ? {
-                  uri:
-                    'http://okoconnect.com/karim/assets/images/iconsNavigations/iconVideo.png',
-                }
-              : require('../assets/images/iconsNavigations/iconVideo.png')
-          }
-          style={[styles.floatCenterCenter]}
-        />
+        <LogoPlayVideo style={[styles.floatCenterCenter]}  />
       </View>
     </TouchableOpacity>
   );

@@ -1,7 +1,8 @@
 import React from 'react';
-import {TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {TouchableOpacity, Image, StyleSheet, View} from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
+import LogoPlayVideo from '../constants/LogoPlayVideo';
 
 /**
  * @typedef {Object} Props Properties of the component
@@ -16,11 +17,12 @@ import Dims from '../constants/Dimensions';
  */
 const Cover = ({source, onPress, color}) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} style={styles.container}>
       <Image
         source={source}
         style={[styles.image, {backgroundColor: color || Colors.primary}]}
       />
+      <View style={styles.playicon} onPress={onPress}><LogoPlayVideo /></View>
     </TouchableOpacity>
   );
 };
@@ -28,11 +30,28 @@ const Cover = ({source, onPress, color}) => {
 export default Cover;
 
 const styles = StyleSheet.create({
+  container: {
+    position: 'relative',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 3,
+      height: 5,
+    },
+    shadowOpacity: 0.22,
+    
+  },
   image: {
     width: Dims.window.width - Dims.bigSpace - 6,
     minHeight: Dims.window.width -  Dims.bigSpace - 6,
     resizeMode: 'cover',
     borderRadius: 20,
     marginBottom: Dims.bigSpace,
+    position: 'relative',
   },
+  playicon: {
+    position: 'absolute',
+    zIndex: 2,
+    top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'
+  }
 });
