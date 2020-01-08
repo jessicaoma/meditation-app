@@ -10,17 +10,18 @@ import Colors from '../constants/Colors';
  * @property {string} [title] Title of the component
  * @property {number} width Componenet width, is a square
  * @property {number} height Componenet height, is a rectangle
+ * @property {import('react-native').ViewStyle} style
  */
 
 /**
  * A image half cover
  * @param {Props} props Props sended to the component
  */
-const HalfCover = ({source, onPress, title, width, height}) => {
+const HalfCover = ({source, onPress, title, width, height, style}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.halfCoverContainer, {width: width}]}>
-        <View style={styles.button}>
+        <View style={[styles.button, style]}>
           <Image
             style={{
               width: width - 12,
