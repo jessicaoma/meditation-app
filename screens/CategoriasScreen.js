@@ -13,7 +13,7 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
 import Constants from 'expo-constants';
-
+import ScalableText from 'react-native-text';
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
