@@ -4,7 +4,8 @@ const BASE_API =
     : 'http://localhost:5000/api/';
 
 class Api {
-  /** @return {Promise<import("./types").Meditación[]>} */
+  /** Consulta las meditaciones
+   * @return {Promise<import("./types").Meditación[]>} */
   async getMeditaciones() {
     const query = await fetch(`${BASE_API}meditaciones`);
     const data = await query.json();
@@ -35,9 +36,9 @@ class Api {
 
   /**
    * @param {string} categoriaId
+   * @param {string} user
    * @return {Promise<import("./types").Viaje[]>} */
   async getViajesCategoria(categoriaId, user) {
-    // eslint-disable-next-line no-undef
     const myHeaders = new Headers({from: user});
     const query = await fetch(`${BASE_API}viajes/categoria/${categoriaId}`, {
       headers: myHeaders,
@@ -45,6 +46,24 @@ class Api {
     const data = await query.json();
     return data;
   }
+
+  // /**
+  //  * @param {string} user
+  //  * @return {Promise<import("./types").Viaje[]>} */
+  // async getViajesEnProgreso(user) {
+  //   const query = await fetch(`${BASE_API}viajes/enprogreso/${user}`);
+  //   const data = await query.json();
+  //   return data;
+  // }
+
+  // /**
+  //  * @param {string} user
+  //  * @return {Promise<import("./types").Viaje[]>} */
+  // async getViajesCompletadps(user) {
+  //   const query = await fetch(`${BASE_API}viajes/completados/${user}`);
+  //   const data = await query.json();
+  //   return data;
+  // }
 }
 
 export default new Api();

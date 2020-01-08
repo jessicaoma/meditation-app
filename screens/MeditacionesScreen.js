@@ -50,7 +50,6 @@ export default class MeditacionesScreen extends Component {
   _renderItem = ({item}) => {
     return (
       <Buttom
-        key={item.id}
         style={[
           styles.button,
           {backgroundColor: item.color || Colors.primaryDark},
@@ -58,13 +57,14 @@ export default class MeditacionesScreen extends Component {
         onPress={() => {
           this._handleClick(item);
         }}>
-        <ScalableText style={styles.title_boxes}>{item.title}</ScalableText>
-        <Image style={styles.image} source={{uri: item.itemImage}} />
+        <ScalableText style={styles.title_boxes}>{item.titulo}</ScalableText>
+        <Image style={styles.image} source={{uri: item.imagenLista}} />
       </Buttom>
     );
   };
 
   _renderListHeader = _ => {
+    //TODO el video cambiara de localizacion
     return (
       <View>
         <Text style={styles.sectionTitle}>Meditaciones</Text>
@@ -92,7 +92,7 @@ export default class MeditacionesScreen extends Component {
     return <ActivityIndicator size="large" color={Colors.primaryDark} />;
   };
   /** @param {import('../utils/types').Meditación} item */
-  _keyExtractor = item => item.id;
+  _keyExtractor = item => item.key;
 
   render = () => (
     <>

@@ -22,16 +22,6 @@ import {enumStatus} from '../utils/types';
  * @extends {Component<Props>}
  */
 export default class Categoria extends Component {
-  /* @type {import('../utils/types').Categoria} */
-  /*categoria = {
-    id: 'cat1',
-    color: '#fdd58d',
-    itemImage: 'http://okoconnect.com/karim/images/cat1.png',
-    title: 'Ser feliz',
-    cover: 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
-    media: 'http://okoconnect.com/karim/videos/video2.mp4',
-    backgroundImage: 'http://okoconnect.com/karim/images/viaje-bg-1.png',
-  };*/
   state = {
     /** @type {import('../utils/types').Viaje[]} */
     viajes: [],
@@ -44,21 +34,25 @@ export default class Categoria extends Component {
   };
   constructor(props) {
     super(props);
+    /** @type {import('../utils/types').Categoria} */
     this.categoria = props.navigation.state.params.categoria;
   }
 
   componentDidMount = async () => {
-    //TODO regresar a usar this.categoria.id
-    const viajes = await API.getViajesCategoria('cat1', 'example@example.com');
+    // TODO cambiar forma de obtener el correo del usuario
+    const viajes = await API.getViajesCategoria(
+      this.categoria.key,
+      'example@example.com',
+    );
     this.setState({viajes});
     //console.log(viajes);
   };
 
   _goViaje = index => {
-    let viaje = this.state.viajes[index]
+    let viaje = this.state.viajes[index];
     viaje.color = this.categoria.color;
     this.props.navigation.navigate('ViajeStack', {
-      viaje
+      viaje,
     });
   };
 
@@ -66,7 +60,7 @@ export default class Categoria extends Component {
     return (
       <ScreenBg
         source={{
-          uri: this.categoria.cover,
+          uri: this.categoria.imagenPrevia,
         }}
         styleView={[styles.containBG, styles.cover]}
         styleImage={styles.imageBG}>
@@ -85,7 +79,7 @@ export default class Categoria extends Component {
 
   /** @type {import('react-native').ListRenderItem<import('../utils/types').Viaje>} */
   renderItem = ({item, index}) => {
-    switch (item.status) {
+    switch (item.estado) {
       case enumStatus.doing:
         return (
           <ItemBubble
@@ -94,7 +88,7 @@ export default class Categoria extends Component {
               this._goViaje(index);
             }}
             bold>
-            {item.title}
+            {item.titulo}
           </ItemBubble>
         );
       case enumStatus.done:
@@ -106,7 +100,7 @@ export default class Categoria extends Component {
             }}
             fill
             bold>
-            {item.title}
+            {item.titulo}
           </ItemBubble>
         );
       default:
@@ -117,7 +111,7 @@ export default class Categoria extends Component {
               this._goViaje(index);
             }}
             disable>
-            {item.title}
+            {item.titulo}
           </ItemBubble>
         );
     }
@@ -126,14 +120,14 @@ export default class Categoria extends Component {
   renderListEmpty = _ => {
     return <ActivityIndicator size="large" color={this.categoria.color} />;
   };
-  keyExtractor = item => item.id.toString() + 'viaje';
+  keyExtractor = item => item.key;
 
   render() {
     this.categoria = this.props.navigation.state.params.categoria;
     return (
       <SafeAreaView>
         <ScreenBg
-          source={{uri: this.categoria.backgroundImage}}
+          source={{uri: this.categoria.imagenFondo}}
           // color={this.categoria.color}>
           color={'#fff'}>
           <FlatList

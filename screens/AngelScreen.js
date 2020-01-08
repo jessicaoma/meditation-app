@@ -30,7 +30,7 @@ export default class AngelScreen extends Component {
   animVal = new Animated.Value(0);
 
   render() {
-    const {carta, mensaje} = this.props.navigation.state.params;
+    const {carta, angel} = this.props.navigation.state.params;
     const numItems = carta.faces.length;
     const itemWidth =
       FIXED_BAR_WIDTH / numItems - (numItems - 1) * Dims.smallSpace;
@@ -41,11 +41,11 @@ export default class AngelScreen extends Component {
           source={item}
           style={[styles.sliderImage]}>
           {index === 0 ? (
-            //aca ira el titulo (mensaje.title)
+            //aca ira el titulo (angel.titulo)
             <View />
           ) : (
             <View style={styles.topBox}>
-              <Text style={styles.headline}>{mensaje.sentence}</Text>
+              <Text style={styles.headline}>{angel.mensaje}</Text>
             </View>
           )}
         </ImageBackground>

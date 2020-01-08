@@ -14,7 +14,7 @@ import Constants from 'expo-constants';
 import API from '../utils/API';
 
 //Estoy restando los margenes laterales (16 + 16), y eso lo divido entre las columnas.
-const widthItem = Dimensions.window.width - (Dimensions.regularSpace * 2);
+const widthItem = Dimensions.window.width - Dimensions.regularSpace * 2;
 
 /**
  * @typedef Props
@@ -28,6 +28,7 @@ export default class AudiolibrosScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      /** @type {import('../utils/types').Audiolibro[]} */
       audioLibros: [],
     };
   }
@@ -42,12 +43,12 @@ export default class AudiolibrosScreen extends Component {
   _handleClick = item => {
     this.props.navigation.navigate('Audiolibro', {audiolibro: item});
   };
-
+  /** @param {{item :import('../utils/types').Audiolibro}} item*/
   _renderItem = ({item}) => {
     return (
       <View style={{alignSelf: 'stretch'}}>
         <BookListItem
-          source={{uri: item.itemImage}}
+          source={{uri: item.imagenLista}}
           width={widthItem}
           height={widthItem * 0.4286}
           onPress={() => {
@@ -78,7 +79,7 @@ export default class AudiolibrosScreen extends Component {
             data={this.state.audioLibros}
             renderItem={this._renderItem}
             ListEmptyComponent={this._renderEmtpy}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.key}
             ListHeaderComponent={this._renderListHeader}
             style={styles.container}
           />

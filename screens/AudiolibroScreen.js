@@ -12,18 +12,21 @@ import Player from '../player/Player';
 export default class AudiolibroScreen extends Component {
   /** @param {{navigation : import('react-navigation').NavigationScreenProp}} param*/
   static navigationOptions = ({navigation}) => {
+    /** @type {import('../utils/types').Audiolibro} */
     let audiolibro = navigation.getParam('audiolibro', {title: 'Audiolibro'});
-    return {title: audiolibro.title};
+    return {title: audiolibro.titulo};
   };
-
+  //TODO registrar en pause/play el progreso
+  //TODO registrar al finalizar el audiolibro a 0
   render() {
     const {navigation} = this.props;
+    /** @type {import('../utils/types').Audiolibro} */
     let audiolibro = navigation.getParam('audiolibro', {});
     return (
       <>
         <SafeAreaView>
           <ScreenBg
-            source={{uri: audiolibro.backgroundImage}}
+            source={{uri: audiolibro.imagenFondo}}
             color={audiolibro.color}
             styleImage={styles.image}>
             <Player
