@@ -24,7 +24,7 @@ export default class Canciones extends Component {
       {
         id: 'can1',
         title: 'Canción 1',
-        media: 'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+        media: 'http://okoconnect.com/karim/canciones/brisadeotono.mp3',
         backgroundImage:
           'http://okoconnect.com/karim/assets/images/musica/musica1-preview.png',
         color: '#d9e0f9',
@@ -34,7 +34,7 @@ export default class Canciones extends Component {
       {
         id: 'can2',
         title: 'Canción 2',
-        media: 'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+        media: 'http://okoconnect.com/karim/canciones/brisasuave.mp3',
         backgroundImage:
           'http://okoconnect.com/karim/assets/images/musica/musica2-preview.png',
         color: '#d9e0f9',
@@ -44,7 +44,7 @@ export default class Canciones extends Component {
       {
         id: 'can3',
         title: 'Canción 3',
-        media: 'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+        media: 'http://okoconnect.com/karim/canciones/debajodelviento.mp3',
         backgroundImage:
           'http://okoconnect.com/karim/assets/images/musica/musica3-preview.png',
         color: '#d9e0f9',
@@ -55,7 +55,7 @@ export default class Canciones extends Component {
         id: 'can4',
         title: 'Canción 4',
         color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+        media: 'http://okoconnect.com/karim/canciones/ecos.mp3',
         backgroundImage:
           'http://okoconnect.com/karim/assets/images/musica/musica4-preview.png',
         itemImage:
@@ -65,7 +65,7 @@ export default class Canciones extends Component {
         id: 'can5',
         title: 'Canción 5',
         color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+        media: 'http://okoconnect.com/karim/canciones/lluviadeabril.mp3',
         backgroundImage:
           'http://okoconnect.com/karim/assets/images/musica/musica5-preview.png',
         itemImage:
@@ -75,7 +75,7 @@ export default class Canciones extends Component {
         id: 'can6',
         title: 'Canción 6',
         color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+        media: 'http://okoconnect.com/karim/canciones/miradaalcielo.mp3',
         backgroundImage:
           'http://okoconnect.com/karim/assets/images/musica/musica6-preview.png',
         itemImage:
@@ -85,7 +85,7 @@ export default class Canciones extends Component {
         id: 'can7',
         title: 'Canción 7',
         color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+        media: 'http://okoconnect.com/karim/canciones/musica6.mp3',
         backgroundImage:
           'http://okoconnect.com/karim/assets/images/musica/musica7-preview.png',
         itemImage:
@@ -95,7 +95,7 @@ export default class Canciones extends Component {
         id: 'can8',
         title: 'Canción 8',
         color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+        media: 'http://okoconnect.com/karim/canciones/musica7.mp3',
         backgroundImage:
           'http://okoconnect.com/karim/assets/images/musica/musica8-preview.png',
         itemImage:
@@ -105,7 +105,7 @@ export default class Canciones extends Component {
         id: 'can9',
         title: 'Canción 9',
         color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+        media: 'http://okoconnect.com/karim/canciones/unnuevoamanecer.mp3',
         backgroundImage:
           'http://okoconnect.com/karim/assets/images/musica/musica9-preview.png',
         itemImage:
@@ -115,7 +115,7 @@ export default class Canciones extends Component {
         id: 'can10',
         title: 'Canción 10',
         color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+        media: 'http://okoconnect.com/karim/canciones/vientosdepaz.mp3',
         backgroundImage:
           'http://okoconnect.com/karim/assets/images/musica/musica10-preview.png',
         itemImage:

@@ -17,7 +17,7 @@ const BookListItem = ({source, onPress, title, width, height}) => {
               width: width,
               resizeMode: 'contain',
               height: height,
-              borderRadius: 10,
+              borderRadius: 20,
             }}
             source={source}
           />
