@@ -4,7 +4,7 @@ import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 
 /**
- * Paso Tipo(B): Teoria
+ * Paso Tipo(B): Teoría
  * @typedef {Object} ParamsNavigation
  * @prop {import('../utils/types').Paso[]} steps
  * @prop {number} position

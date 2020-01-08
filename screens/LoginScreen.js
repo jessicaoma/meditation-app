@@ -22,7 +22,13 @@ export default class LoginScreen extends Component {
   handleLogin = () => {
     this.props.navigation.navigate('App');
   };
-
+  passwordRef = {};
+  refPassword = input => {
+    this.passwordRef = input;
+  };
+  goPassword = () => {
+    this.passwordRef.focus();
+  };
   render() {
     return (
       <>
@@ -32,8 +38,17 @@ export default class LoginScreen extends Component {
             <Logo isAlternative style={styles.logo} />
             <Text style={styles.welcomeTitle}>BIENVENIDO</Text>
             <View style={styles.full}>
-              <InputLogin placeholder="Correo" type="text" />
-              <InputLogin placeholder="Constraseña" type="password" />
+              <InputLogin
+                placeholder="Correo"
+                type="text"
+                onSubmitEditing={this.goPassword}
+                blurOnSubmit={false}
+              />
+              <InputLogin
+                placeholder="Constraseña"
+                type="password"
+                inputRef={this.refPassword}
+              />
               <TouchableOpacity
                 onPress={this.handleLogin}
                 style={[styles.button]}>

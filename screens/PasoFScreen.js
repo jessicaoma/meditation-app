@@ -3,7 +3,7 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
-  Image,
+  KeyboardAvoidingView,
   View,
   ScrollView,
   TextInput,
@@ -15,6 +15,7 @@ import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
 import {Ionicons} from '@expo/vector-icons';
 import Constants from 'expo-constants';
+import {Header} from 'react-navigation';
 
 /**
  * Paso Tipo(F): Diario
@@ -49,83 +50,96 @@ export default class PasoFScreen extends Component {
   };
 
   render() {
+    const statusBarHeight = Constants.statusBarHeight;
+    const navBarHeight = Header.HEIGHT;
+    const headerHeight = statusBarHeight + navBarHeight;
     return (
       <SafeAreaView style={{flex: 1}}>
         <ImageBackground
-          style={[styles.container]}
-          source={{uri: 'http://okoconnect.com/karim/images/slider-bg-8.png'}}>
-          <TouchableOpacity style={styles.close} onPress={this.nextStep}>
-            <Ionicons name={'md-close'} size={30} color={Colors.gray} />
-          </TouchableOpacity>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={styles.scrollView}>
-            <View style={styles.container}>
+          style={{height: '100%', width: '100%'}}
+          source={{
+            uri: 'http://okoconnect.com/karim/images/slider-bg-8.png',
+          }}>
+          <KeyboardAvoidingView
+            style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}
+            keyboardVerticalOffset={headerHeight}
+            behavior="padding">
+            <TouchableOpacity style={styles.close} onPress={this.nextStep}>
+              <Ionicons name={'md-close'} size={30} color={Colors.gray} />
+            </TouchableOpacity>
+            <ScrollView
+              contentInsetAdjustmentBehavior="automatic"
+              style={styles.scrollView}>
               <View style={styles.container}>
-                <Text style={styles.title}>Reto Personal</Text>
-                <Text style={styles.paragraph}>
-                  Completa estas líneas en pocas palabras. Puedes descargarla y
-                  compartir tus respuestas con tus amigos y seres queridos en
-                  las redes sociales.
-                </Text>
-                <View>
-                  <Text style={styles.subtitle}>Hoy estoy agradecido por:</Text>
-                  <TextInput
-                    style={styles.textarea}
-                    underlineColorAndroid="transparent"
-                    placeholder="Tu respuesta"
-                    placeholderTextColor="grey"
-                    numberOfLines={5}
-                    multiline={true}
-                  />
-                </View>
-                <View>
-                  <Text style={styles.subtitle}>
-                    Lo que más aprecio en mi vida es:
+                <View style={styles.container}>
+                  <Text style={styles.title}>Reto Personal</Text>
+                  <Text style={styles.paragraph}>
+                    Completa estas líneas en pocas palabras. Puedes descargarla
+                    y compartir tus respuestas con tus amigos y seres queridos
+                    en las redes sociales.
                   </Text>
-                  <TextInput
-                    style={styles.textarea}
-                    underlineColorAndroid="transparent"
-                    placeholder="Tu respuesta"
-                    placeholderTextColor="grey"
-                    numberOfLines={5}
-                    multiline={true}
-                  />
-                </View>
-                <View>
-                  <Text style={styles.subtitle}>
-                    Mi actitud frente al cambio es:
-                  </Text>
-                  <TextInput
-                    style={styles.textarea}
-                    underlineColorAndroid="transparent"
-                    placeholder="Tu respuesta"
-                    placeholderTextColor="grey"
-                    numberOfLines={5}
-                    multiline={true}
-                  />
-                </View>
-                <View>
-                  <Text style={styles.subtitle}>
-                    Las dificultades en la vida sirven para:
-                  </Text>
-                  <TextInput
-                    style={styles.textarea}
-                    underlineColorAndroid="transparent"
-                    placeholder="Tu respuesta"
-                    placeholderTextColor="grey"
-                    numberOfLines={5}
-                    multiline={true}
-                  />
+                  <View>
+                    <Text style={styles.subtitle}>
+                      Hoy estoy agradecido por:
+                    </Text>
+                    <TextInput
+                      style={styles.textarea}
+                      underlineColorAndroid="transparent"
+                      placeholder="Tu respuesta"
+                      placeholderTextColor="grey"
+                      numberOfLines={5}
+                      multiline={true}
+                    />
+                  </View>
+                  <View>
+                    <Text style={styles.subtitle}>
+                      Lo que más aprecio en mi vida es:
+                    </Text>
+                    <TextInput
+                      style={styles.textarea}
+                      underlineColorAndroid="transparent"
+                      placeholder="Tu respuesta"
+                      placeholderTextColor="grey"
+                      numberOfLines={5}
+                      multiline={true}
+                    />
+                  </View>
+                  <View>
+                    <Text style={styles.subtitle}>
+                      Mi actitud frente al cambio es:
+                    </Text>
+                    <TextInput
+                      style={styles.textarea}
+                      underlineColorAndroid="transparent"
+                      placeholder="Tu respuesta"
+                      placeholderTextColor="grey"
+                      numberOfLines={5}
+                      multiline={true}
+                    />
+                  </View>
+                  <View>
+                    <Text style={styles.subtitle}>
+                      Las dificultades en la vida sirven para:
+                    </Text>
+                    <TextInput
+                      style={styles.textarea}
+                      underlineColorAndroid="transparent"
+                      placeholder="Tu respuesta"
+                      placeholderTextColor="grey"
+                      numberOfLines={5}
+                      multiline={true}
+                      blurOnSubmit={false}
+                    />
+                  </View>
                 </View>
               </View>
+            </ScrollView>
+            <View style={[styles.containerBottomButton]}>
+              <TouchableOpacity onPress={this.nextStep} style={[styles.button]}>
+                <Text style={styles.buttonLabel}>Guardar</Text>
+              </TouchableOpacity>
             </View>
-          </ScrollView>
-          <View style={[styles.containerBottomButton]}>
-            <TouchableOpacity onPress={this.nextStep} style={[styles.button]}>
-              <Text style={styles.buttonLabel}>Guardar</Text>
-            </TouchableOpacity>
-          </View>
+          </KeyboardAvoidingView>
         </ImageBackground>
       </SafeAreaView>
     );

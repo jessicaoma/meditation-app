@@ -5,13 +5,14 @@ import Player from '../player/Player';
 
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp<{param:{meditacion:import('../utils/API').Meditación}}>} navigation
+ * @prop {import('react-navigation').NavigationScreenProp<{param:{meditacion:import('../utils/types').Meditación}}>} navigation
  * @extends {Component<Props>}
  */
 export default class MeditacionScreen extends Component {
   static navigationOptions = ({navigation}) => {
+    /** @type {import('../utils/types').Meditación} */
     let meditacion = navigation.getParam('meditacion', {title: 'Meditación'});
-    return {title: meditacion.title, headerBackTitle: null};
+    return {title: meditacion.titulo, headerBackTitle: null};
   };
 
   /** @type {Player} */
@@ -28,12 +29,13 @@ export default class MeditacionScreen extends Component {
 
   render() {
     const {navigation} = this.props;
+    /** @type {import('../utils/types').Meditación} */
     let meditacion = navigation.getParam('meditacion', {});
     return (
       <>
         <SafeAreaView>
           <ScreenBg
-            source={{uri: meditacion.backgroundImage}}
+            source={{uri: meditacion.imagenFondo}}
             color={meditacion.color}
             styleImage={{resizeMode: 'cover'}}>
             <View style={styles.container}>

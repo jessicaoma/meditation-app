@@ -7,7 +7,6 @@ import {
   FlatList,
   View,
   SafeAreaView,
-  ScrollView,
 } from 'react-native';
 import ScreenBg from '../components/screenBg';
 import ItemBubble from '../components/ItemBubble';
@@ -32,7 +31,7 @@ import CheckItem from '../components/CheckItem';
  * @extends {Component<Props>}
  * */
 export default class ViajeScreen extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     /** @type {import('../utils/types').Viaje} */
@@ -47,7 +46,7 @@ export default class ViajeScreen extends Component {
       status: enumStatus.doing,
     };*/
 
-    this.viaje.steps = [
+    this.viaje.pasos = [
       {
         id: 'pas1',
         title: 'Comienza el viaje',
@@ -92,17 +91,16 @@ export default class ViajeScreen extends Component {
       },
     ];
   }
-  
 
   static navigationOptions = ({navigation}) => ({
-    title: navigation.getParam('viaje', {title: 'Viaje'}).title,
+    title: navigation.getParam('viaje', {title: 'Viaje'}).titulo,
     headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
   });
 
   _handleClick = index => {
-    const {type} = this.viaje.steps[index];
+    const {type} = this.viaje.pasos[index];
     this.props.navigation.navigate(`Paso${type}`, {
-      steps: this.viaje.steps,
+      steps: this.viaje.pasos,
       position: index,
     });
   };
@@ -165,7 +163,7 @@ export default class ViajeScreen extends Component {
   renderHeader = () => (
     <View style={styles.containerHeader}>
       <ItemBubble color={this.viaje.color} fill bold fontSize={18} notMargin>
-        {this.viaje.title}
+        {this.viaje.titulo}
       </ItemBubble>
       <View style={[styles.containerLine]}>
         <View
@@ -183,12 +181,12 @@ export default class ViajeScreen extends Component {
       <>
         <SafeAreaView style={{flex: 1}}>
           <ScreenBg
-            source={{uri: this.viaje.backgroundImage}}
+            source={{uri: this.viaje.imagenFondo}}
             //color={this.viaje.color}>
             color={'#fff'}>
             <View style={styles.container}>
               <FlatList
-                data={this.viaje.steps}
+                data={this.viaje.pasos}
                 renderItem={this.renderItem}
                 keyExtractor={this.keyExtractor}
                 ItemSeparatorComponent={this.renderSeparator}

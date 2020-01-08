@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, {Component} from 'react';
 import {
   Text,
@@ -43,7 +44,7 @@ export default class Categorias extends Component {
     });
   };
   /** @param {import('../utils/types').Categoria} item */
-  keyExtractor = item => item.id;
+  keyExtractor = item => item.key;
 
   renderListHeader = () => <Text style={styles.sectionTitle}>Categorías</Text>;
 
@@ -58,8 +59,8 @@ export default class Categorias extends Component {
       onPress={() => {
         this._handleClick(item);
       }}>
-      <ScalableText style={styles.title_boxes}>{item.title}</ScalableText>
-      <Image style={styles.image} source={{uri: item.itemImage}} />
+      <ScalableText style={styles.title_boxes}>{item.titulo}</ScalableText>
+      <Image style={styles.image} source={{uri: item.imagenLista}} />
     </Buttom>
   );
   render() {

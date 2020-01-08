@@ -111,8 +111,9 @@ export default class EmocionesScreen extends Component {
         onPress={() => {
           this._handleClick(item);
         }}
-        height={((Dims.window.width) / numColumns) * 1.5}
+        height={(Dims.window.width / numColumns) * 1.5}
         width={(Dims.window.width - 40) / numColumns}
+        style={{backgroundColor:'#9898e2'}}
         //color={'transparent'}
       />
     );

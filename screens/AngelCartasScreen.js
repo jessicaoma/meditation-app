@@ -98,7 +98,7 @@ export default class AngelCartasScreen extends Component {
     if (this.angelMessage !== undefined) {
       this.props.navigation.navigate('Angel', {
         carta: item,
-        mensaje: this.angelMessage,
+        angel: this.angelMessage,
       });
     }
   };
