@@ -29,7 +29,7 @@ export default class Categoria extends Component {
 
   static navigationOptions = ({navigation}) => {
     return {
-      title: navigation.getParam('categoria', {title: 'Categoria'}).title,
+      title: navigation.getParam('categoria', {title: 'Categoria'}).titulo,
     };
   };
   constructor(props) {

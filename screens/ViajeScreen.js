@@ -93,7 +93,7 @@ export default class ViajeScreen extends Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    title: navigation.getParam('viaje', {title: 'Viaje'}).title,
+    title: navigation.getParam('viaje', {title: 'Viaje'}).titulo,
     headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
   });
 
