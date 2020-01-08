@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View,
   SafeAreaView,
+  ImageBackground,
 } from 'react-native';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
@@ -153,9 +154,17 @@ export default class Home extends Component {
                 <Buttom 
                   style={{backgroundColor: Colors.second}}
                   onPress={this._handleEmociones}>
-                  <ScalableText style={styles.title_boxes}>
-                    ¿como me siento?
-                  </ScalableText>
+                  <ImageBackground 
+                    resizeMode="contain"
+                    source={{
+                      uri:
+                        'http://okoconnect.com/karim/assets/images/home/bg-como-me-siento.png',
+                    }}
+                    style={styles.buttonBG}>
+                    <ScalableText style={styles.title_boxes}>
+                      ¿cómo me siento?
+                    </ScalableText>
+                  </ImageBackground>
                 </Buttom>
                 <ScalableText style={styles.sectionTitle}>Lo nuevo</ScalableText>
                 <FlatList
@@ -177,20 +186,41 @@ export default class Home extends Component {
                 <Buttom
                   style={{backgroundColor: Colors.second}}
                   onPress={this._handelBienvenida}>
+                  <ImageBackground 
+                    resizeMode="contain"
+                    source={{
+                      uri:
+                        'http://okoconnect.com/karim/assets/images/home/bg-bienvenida.png',
+                    }}
+                    style={styles.buttonBG}>
                   <ScalableText style={styles.title_boxes}>BIENVENIDA</ScalableText>
-
+                  </ImageBackground>
                 </Buttom>
                 <Buttom 
                   style={{backgroundColor: Colors.second}}
                   onPress={this._handleTutorial}>
+                  <ImageBackground 
+                    resizeMode="contain"
+                    source={{
+                      uri:
+                        'http://okoconnect.com/karim/assets/images/home/bg-tutorial.png',
+                    }}
+                    style={styles.buttonBG}>
                   <ScalableText style={styles.title_boxes}>TUTORIAL</ScalableText>
+                  </ImageBackground>
                 </Buttom>
                 <Buttom 
                   style={{backgroundColor: Colors.second}}
                   onPress={this._handelMusica}>
-                  <ScalableText style={styles.title_boxes}>
-                    MÚSICA
-                  </ScalableText>
+                  <ImageBackground 
+                    resizeMode="contain"
+                    source={{
+                      uri:
+                        'http://okoconnect.com/karim/assets/images/home/bg-musica.png',
+                    }}
+                    style={styles.buttonBG}>
+                  <ScalableText style={styles.title_boxes}>MÚSICA</ScalableText>
+                  </ImageBackground>
 
                 </Buttom>
                 <View style={styles.separador2} />
@@ -219,6 +249,13 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     color: '#ABA0B5',
     fontFamily: 'MyriadPro-Regular',
+  },
+  buttonBG: {
+    width: '100%',
+    height: 85,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
   },
   separador: {
     borderBottomColor: 'transparent',
