@@ -175,6 +175,19 @@ export default class Home extends Component {
                   </ScalableText>
                 </ImageBackground>
               </Buttom>
+              <Buttom
+                style={{backgroundColor: Colors.second}}
+                onPress={this._handelMusica}>
+                <ImageBackground
+                  resizeMode="contain"
+                  source={{
+                    uri:
+                      'http://okoconnect.com/karim/assets/images/home/bg-musica.png',
+                  }}
+                  style={styles.buttonBG}>
+                  <ScalableText style={styles.title_boxes}>MÚSICA</ScalableText>
+                </ImageBackground>
+              </Buttom>
               <ScalableText style={styles.sectionTitle}>Lo nuevo</ScalableText>
               <FlatList
                 horizontal
@@ -220,19 +233,6 @@ export default class Home extends Component {
                   <ScalableText style={styles.title_boxes}>
                     TUTORIAL
                   </ScalableText>
-                </ImageBackground>
-              </Buttom>
-              <Buttom
-                style={{backgroundColor: Colors.second}}
-                onPress={this._handelMusica}>
-                <ImageBackground
-                  resizeMode="contain"
-                  source={{
-                    uri:
-                      'http://okoconnect.com/karim/assets/images/home/bg-musica.png',
-                  }}
-                  style={styles.buttonBG}>
-                  <ScalableText style={styles.title_boxes}>MÚSICA</ScalableText>
                 </ImageBackground>
               </Buttom>
               <View style={styles.separador2} />
