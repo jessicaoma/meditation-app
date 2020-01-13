@@ -36,13 +36,13 @@ export default class Emocion extends Component {
         key: 'slide1',
         title: 'Título',
         class: 'styles.container',
-        text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet\nFeliz Sábado ✨\n\nDesliza para ver la oración. ->',
+        text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet\nFeliz Sábado ✨\n\n\n DESLIZA PARA VER ORACIÓN ➡️',
       },
       {
         key: 'slide2',
         title: 'Oración',
         class: 'styles.containerFloating',
-        text: 'Hoy darás el primer paso a una vida plena. En este viaje, te conectarás con #yoconscientey el momento presente.',
+        text: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet. \n\nAmén',
       },
     ];
 
@@ -91,8 +91,8 @@ export default class Emocion extends Component {
               }}
             />
           ) : (
-            <View style={{flex:1,flexDirection:'row',justifyContent:'space-around',paddingHorizontal:'30%'}}>
-              <TouchableOpacity ><LogoCompartir/></TouchableOpacity>
+            <View style={{flex:1,flexDirection:'row',justifyContent:'flex-end', paddingHorizontal: 50}}>
+              <TouchableOpacity style={{marginRight: 20}}><LogoCompartir/></TouchableOpacity>
               <TouchableOpacity ><LogoDescargar/></TouchableOpacity>
             </View>
           )}
@@ -178,12 +178,6 @@ const styles = StyleSheet.create({
     margin: 0,
     position: 'relative',
   },
-  sliderImage: {
-    width: deviceWidth,
-    height: deviceHeight,
-    position: 'relative',
-    //resizeMode: 'contain',
-  },
   bigTitle: {
     fontSize: 40,
     letterSpacing: 1.11,
@@ -197,12 +191,12 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     fontSize: 15.5,
-    lineHeight: 14.5,
+    lineHeight: 15.5,
     marginBottom: 50,
     letterSpacing: 0,
     color: 'white',
     fontFamily: 'MyriadPro-Regular',
-    textAlign: 'left',
+    textAlign: 'justify',
     paddingHorizontal: Dims.smallSpace,
   },
   barContainer: {
