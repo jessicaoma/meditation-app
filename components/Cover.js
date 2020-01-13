@@ -22,7 +22,9 @@ const Cover = ({source, onPress, color}) => {
         source={source}
         style={[styles.image, {backgroundColor: color || Colors.primary}]}
       />
-      <View style={styles.playicon} onPress={onPress}><LogoPlayVideo /></View>
+      <View style={styles.playicon}>
+        <LogoPlayVideo />
+      </View>
     </TouchableOpacity>
   );
 };
@@ -39,11 +41,10 @@ const styles = StyleSheet.create({
       height: 5,
     },
     shadowOpacity: 0.22,
-    
   },
   image: {
     width: Dims.window.width - Dims.bigSpace - 6,
-    minHeight: Dims.window.width -  Dims.bigSpace - 6,
+    minHeight: Dims.window.width - Dims.bigSpace - 6,
     resizeMode: 'cover',
     borderRadius: 20,
     marginBottom: Dims.bigSpace,
@@ -52,6 +53,11 @@ const styles = StyleSheet.create({
   playicon: {
     position: 'absolute',
     zIndex: 2,
-    top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'
-  }
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import Colors from '../constants/Colors';
-import ScalableText from 'react-native-text';
 
 /**
  * @typedef {Object} Props Properties of the component

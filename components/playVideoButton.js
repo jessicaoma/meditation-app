@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React from 'react';
-import {StyleSheet, Image, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import LogoPlayVideo from '../constants/LogoPlayVideo';
 /**
  * @typedef {Object} Props
@@ -12,8 +12,6 @@ import LogoPlayVideo from '../constants/LogoPlayVideo';
  * @param {Props} props Props sended to the component
  */
 export default function PlayVideoButton({isShow, onPress}) {
-  //TODO cambiar la validacion pues ya no se usa expo snack
-  const envProd = process.env.NODE_ENV === 'production';
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.center, isShow ? styles.show : styles.hidden]}>
