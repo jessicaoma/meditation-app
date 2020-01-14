@@ -150,9 +150,15 @@ export default class Home extends Component {
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
             <ScreenBg
-              source={{
-                uri: 'http://okoconnect.com/karim/assets/images/bg-inicio.png',
-              }}
+              source={
+                envProd
+                  ? {
+                      uri:
+                        'http://okoconnect.com/karim/assets/images/bg-inicio.png',
+                    }
+                  : require('../assets/images/bg-inicio.png')
+              }
+              // eslint-disable-next-line react-native/no-inline-styles
               styleImage={{resizeMode: 'repeat'}}
               color="white">
               <Cover
