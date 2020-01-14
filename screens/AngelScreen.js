@@ -38,6 +38,7 @@ export default class AngelScreen extends Component {
       return (
         <ImageBackground
           key={`cardimage${index}`}
+          // @ts-ignore
           source={item}
           style={[styles.sliderImage]}>
           {index === 0 ? (
@@ -62,6 +63,7 @@ export default class AngelScreen extends Component {
           key={`bar${index}`}
           style={[
             styles.track,
+            // eslint-disable-next-line react-native/no-inline-styles
             {
               width: itemWidth,
               marginLeft: index === 0 ? 0 : Dims.smallSpace,
@@ -82,7 +84,9 @@ export default class AngelScreen extends Component {
 
     return (
       <>
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{flex: 1}}>
           <View style={styles.statusBar} />
           <View style={[styles.container]}>
             <ScrollView

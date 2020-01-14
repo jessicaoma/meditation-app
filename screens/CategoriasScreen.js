@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {Component} from 'react';
 import {
   Text,
@@ -15,6 +14,7 @@ import Dims from '../constants/Dimensions';
 import API from '../utils/API';
 import Constants from 'expo-constants';
 import ScalableText from 'react-native-text';
+
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
@@ -66,7 +66,7 @@ export default class Categorias extends Component {
   render() {
     return (
       <>
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={styles.main}>
           <View style={styles.statusBar} />
           <FlatList
             style={styles.container}
@@ -83,6 +83,9 @@ export default class Categorias extends Component {
 }
 
 const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+  },
   statusBar: {
     height: Constants.statusBarHeight,
   },

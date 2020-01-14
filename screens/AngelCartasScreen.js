@@ -122,7 +122,7 @@ export default class AngelCartasScreen extends Component {
   render() {
     return (
       <>
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={styles.mainContainer}>
           <View style={styles.statusBar} />
           <View style={styles.container}>
             <Text style={styles.sectionTitle}>Tu Ángel del día </Text>
@@ -142,6 +142,9 @@ export default class AngelCartasScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+  },
   statusBar: {
     height: Constants.statusBarHeight,
   },

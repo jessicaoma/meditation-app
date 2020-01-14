@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react';
 import LogoInicio from '../constants/LogoInicio';
 import LogoViajes from '../constants/LogoViajes';

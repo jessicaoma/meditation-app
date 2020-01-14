@@ -12,7 +12,7 @@ import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
 import Logo from '../components/Logo';
 import Dims from '../constants/Dimensions';
-
+//TODO hacer todo el manejo
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
@@ -33,9 +33,9 @@ export default class LoginScreen extends Component {
     return (
       <>
         <StatusBar barStyle="dark-content" />
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={styles.flex1}>
           <View style={styles.container}>
-            <Logo isAlternative style={styles.logo} />
+            <Logo isAlternative />
             <Text style={styles.welcomeTitle}>BIENVENIDO</Text>
             <View style={styles.full}>
               <InputLogin
@@ -73,6 +73,7 @@ export default class LoginScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  flex1: {flex: 1},
   container: {
     flex: 1,
     alignItems: 'center',

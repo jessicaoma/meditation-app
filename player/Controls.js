@@ -21,7 +21,11 @@ const ICON_PAUSE_BUTTON = 'md-pause';
 //TODO cambiar la validacion pues ya no se usa expo snack
 const envProd = process.env.NODE_ENV === 'production';
 const sliderThumb = envProd
-  ? {uri: 'http://okoconnect.com/karim/assets/images/sliderimage.png', width: 10, height: 10}
+  ? {
+      uri: 'http://okoconnect.com/karim/assets/images/sliderimage.png',
+      width: 10,
+      height: 10,
+    }
   : require('../assets/images/sliderimage.png');
 /**
  * Controls elements for the player
@@ -31,7 +35,9 @@ export default function Controls(props) {
   return (
     <>
       <TouchableOpacity onPress={props.onPress} style={styles.playscreen} />
-      <View style={[styles.container, {opacity: props.isLoading ? 0.5 : 1.0}]}>
+      <View
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={[styles.container, {opacity: props.isLoading ? 0.5 : 1.0}]}>
         <TouchableOpacity onPress={props.onPress} disabled={props.isLoading}>
           <Ionicons
             name={props.isPlaying ? ICON_PAUSE_BUTTON : ICON_PLAY_BUTTON}

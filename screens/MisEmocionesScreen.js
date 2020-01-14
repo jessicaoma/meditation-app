@@ -18,7 +18,6 @@ import LogoEmocion1 from '../constants/LogoEmocion1';
 import LogoEmocion2 from '../constants/LogoEmocion2';
 import LogoEmocion3 from '../constants/LogoEmocion3';
 import LogoEmocion4 from '../constants/LogoEmocion4';
-import LogoPerfil from '../constants/LogoPerfil';
 
 export default class MisEmocionesScreen extends Component {
   constructor(props) {

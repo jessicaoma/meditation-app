@@ -22,6 +22,7 @@ import Dims from '../constants/Dimensions';
  */
 
 //TODO cambiar la validacion pues ya no se usa expo snack
+//TODO registrar seleccion
 const envProd = process.env.NODE_ENV === 'production';
 const numColumns = 2;
 
@@ -30,8 +31,10 @@ const data = [
   {
     key: 'cartaA',
     bg: 'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-1.png',
-    header: 'http://okoconnect.com/karim/assets/images/emociones/header-emocion-1.png',
-    footer: 'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-1.png',
+    header:
+      'http://okoconnect.com/karim/assets/images/emociones/header-emocion-1.png',
+    footer:
+      'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-1.png',
     headerH: 0.1,
     footerH: 0.35,
     image: envProd
@@ -44,8 +47,10 @@ const data = [
   {
     key: 'cartaB',
     bg: 'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-2.png',
-    header: 'http://okoconnect.com/karim/assets/images/emociones/header-emocion-2.png',
-    footer: 'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-2.png',
+    header:
+      'http://okoconnect.com/karim/assets/images/emociones/header-emocion-2.png',
+    footer:
+      'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-2.png',
     headerH: 0.1,
     footerH: 0.3,
     image: envProd
@@ -58,8 +63,10 @@ const data = [
   {
     key: 'cartaC',
     bg: 'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-3.png',
-    header: 'http://okoconnect.com/karim/assets/images/emociones/header-emocion-3.png',
-    footer: 'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-3.png',
+    header:
+      'http://okoconnect.com/karim/assets/images/emociones/header-emocion-3.png',
+    footer:
+      'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-3.png',
     headerH: 0.35,
     footerH: 0.35,
     image: envProd
@@ -72,8 +79,10 @@ const data = [
   {
     key: 'cartaD',
     bg: 'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-4.png',
-    header: 'http://okoconnect.com/karim/assets/images/emociones/header-emocion-4.png',
-    footer: 'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-4.png',
+    header:
+      'http://okoconnect.com/karim/assets/images/emociones/header-emocion-4.png',
+    footer:
+      'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-4.png',
     headerH: 0.45,
     footerH: 0.2,
     image: envProd
@@ -113,7 +122,8 @@ export default class EmocionesScreen extends Component {
         }}
         height={(Dims.window.width / numColumns) * 1.5}
         width={(Dims.window.width - 40) / numColumns}
-        style={{backgroundColor:'#9898e2'}}
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={{backgroundColor: '#9898e2'}}
         //color={'transparent'}
       />
     );

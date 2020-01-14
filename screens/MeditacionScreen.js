@@ -18,11 +18,6 @@ export default class MeditacionScreen extends Component {
   /** @type {Player} */
   audio = null;
 
-  _handleEndIntro = status => {
-    this.audio.setState({showControls: true, showPlayer: true});
-    this.audio._onPlayPausePressed();
-  };
-
   refAudio = ref => {
     this.audio = ref;
   };
@@ -37,25 +32,9 @@ export default class MeditacionScreen extends Component {
           <ScreenBg
             source={{uri: meditacion.imagenFondo}}
             color={meditacion.color}
+            // eslint-disable-next-line react-native/no-inline-styles
             styleImage={{resizeMode: 'cover'}}>
             <View style={styles.container}>
-              {/* <Player
-              source={{
-                uri: 'http://okoconnect.com/karim/videos/pre_meditacion.mp4',
-                //uri: meditacion.media,
-              }}
-              isVideo
-              resizeMode={'contain'}
-              shouldPlay
-              //showControls
-              onEnd={this._handleEndIntro}
-            /> */}
-              {/* <View
-              style={[
-                styles.container,
-                StyleSheet.absoluteFill,
-                styles.border2,
-              ]}> */}
               <Player
                 source={{
                   uri: meditacion.media,
@@ -65,7 +44,6 @@ export default class MeditacionScreen extends Component {
                 //showPlayFrame
                 shouldPlay
               />
-              {/* </View> */}
             </View>
           </ScreenBg>
         </SafeAreaView>

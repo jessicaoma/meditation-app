@@ -26,8 +26,8 @@ export default class MeditacionesScreen extends Component {
   static navigationOptions = {};
   constructor(props) {
     super(props);
-    /** @type {{meditaciones: import('../utils/types').Meditación[]}} */
     this.state = {
+      /** @type {import('../utils/types').Meditación[]} */
       meditaciones: [],
     };
   }
@@ -96,7 +96,7 @@ export default class MeditacionesScreen extends Component {
 
   render = () => (
     <>
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={styles.mainContainer}>
         <View style={styles.statusBar} />
         <FlatList
           data={this.state.meditaciones}
@@ -112,6 +112,9 @@ export default class MeditacionesScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+  },
   statusBar: {
     height: Constants.statusBarHeight,
   },

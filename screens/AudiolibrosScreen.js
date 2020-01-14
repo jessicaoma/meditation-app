@@ -46,17 +46,15 @@ export default class AudiolibrosScreen extends Component {
   /** @param {{item :import('../utils/types').Audiolibro}} item*/
   _renderItem = ({item}) => {
     return (
-      <View style={{alignSelf: 'stretch'}}>
+      <View
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={{alignSelf: 'stretch'}}>
         <BookListItem
           source={{uri: item.imagenLista}}
           width={widthItem}
           height={widthItem * 0.4286}
           onPress={() => {
             this._handleClick(item);
-          }}
-          onLoad={event => {
-            const {height, url, width} = event.nativeEvent.source;
-            console.log(height + ' ' + width);
           }}
         />
       </View>
@@ -73,7 +71,9 @@ export default class AudiolibrosScreen extends Component {
   render() {
     return (
       <>
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{flex: 1}}>
           <View style={styles.statusBar} />
           <FlatList
             data={this.state.audioLibros}

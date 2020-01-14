@@ -1,22 +1,10 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  StyleSheet,
-  Image,
-  View,
-  FlatList,
-  ActivityIndicator,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
-import Buttom from '../components/Buttom';
-import Colors from '../constants/Colors';
+import {StyleSheet, Image, View, SafeAreaView, ScrollView} from 'react-native';
 import Dims from '../constants/Dimensions';
 import LogoPremio from '../constants/LogoPremio';
 import LogoReloj from '../constants/LogoReloj';
-
 import ScalableText from 'react-native-text';
-
+//TODO llamar al api
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
@@ -29,53 +17,48 @@ export default class MisMeditacionesScreen extends Component {
 
   render = () => (
     <SafeAreaView>
-        <ScrollView contentInsetAdjustmentBehavior="automatic">
-          <Image
-            resizeMode="cover"
-            source={{
-              uri:
-                'http://okoconnect.com/karim/assets/images/mis-meditaciones-header.png',
-            }}
-            style={styles.image}
-          />
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
+        <Image
+          resizeMode="cover"
+          source={{
+            uri:
+              'http://okoconnect.com/karim/assets/images/mis-meditaciones-header.png',
+          }}
+          style={styles.image}
+        />
+        <View style={styles.container}>
           <View style={styles.container}>
+            <View>
+              <ScalableText style={styles.purpleTitle}>Mi record</ScalableText>
+            </View>
 
-            <View style={styles.container}>
-              <View>
-                <ScalableText style={styles.purpleTitle}>Mi record</ScalableText>
-              </View>
+            <View style={styles.inforowtitle}>
+              <LogoReloj />
+              <ScalableText style={styles.bigParagraph}>
+                Tiempo total meditado
+              </ScalableText>
+            </View>
 
-              <View style={styles.inforowtitle}>
-                <LogoReloj/>
-                <ScalableText style={styles.bigParagraph}>
-                  Tiempo total meditado
-                </ScalableText>
-              </View>
+            <View style={styles.inforow}>
+              <ScalableText style={styles.bigTitle}>4.25</ScalableText>
+              <ScalableText style={styles.purpleTitle}>HORAS</ScalableText>
+            </View>
 
-              <View style={styles.inforow}>
-                <ScalableText style={styles.bigTitle}>4.25</ScalableText>
-                <ScalableText style={styles.purpleTitle}>
-                  HORAS
-                </ScalableText>
-              </View>
+            <View style={styles.inforowtitle}>
+              <LogoPremio />
+              <ScalableText style={styles.bigParagraph}>
+                Sesiones completadas
+              </ScalableText>
+            </View>
 
-              <View style={styles.inforowtitle}>
-                <LogoPremio/>
-                <ScalableText style={styles.bigParagraph}>
-                  Sesiones completadas
-                </ScalableText>
-              </View>
-
-              <View style={styles.inforow}>
-                <ScalableText style={styles.bigTitle}>2</ScalableText>
-                <ScalableText style={styles.purpleTitle}>
-                  SESIONES
-                </ScalableText>
-              </View>
+            <View style={styles.inforow}>
+              <ScalableText style={styles.bigTitle}>2</ScalableText>
+              <ScalableText style={styles.purpleTitle}>SESIONES</ScalableText>
             </View>
           </View>
-        </ScrollView>
-      </SafeAreaView>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -90,20 +73,20 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     marginBottom: 20,
   },
-  
+
   inforowtitle: {
-    flex:0,
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'center',
-    alignSelf:'flex-start',
-    marginBottom: 0
+    flex: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
+    marginBottom: 0,
   },
   inforow: {
-    flex:1,
-    flexDirection:'row',
-    alignItems:'flex-end',
-    alignSelf:'center',
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    alignSelf: 'center',
     marginBottom: 20,
     paddingVertical: 0,
     paddingLeft: 50,
@@ -127,6 +110,4 @@ const styles = StyleSheet.create({
     width: Dims.window.width,
     height: Dims.window.width - 30,
   },
-
 });
-

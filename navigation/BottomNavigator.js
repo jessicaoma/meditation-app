@@ -1,6 +1,5 @@
 import React from 'react';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
-
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import AudiolibrosScreen from '../screens/AudiolibrosScreen';
@@ -63,9 +62,6 @@ const BottomNavigator = createBottomTabNavigator(
     tabBarOptions: {
       activeTintColor: Colors.tabIconSelected,
       inactiveTintColor: Colors.tabIconDefault,
-      labelStyle:{
-        // #Editar aca va los estilos, si no te funciona se debera usar tabBarLabel que debe regresar un React.Node y estar la altura de tabBarIcon.
-      }
     },
     initialRouteName: 'Home',
   },

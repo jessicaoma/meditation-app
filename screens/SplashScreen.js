@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react';
 import {StyleSheet, SafeAreaView, Image, StatusBar} from 'react-native';
 import Colors from '../constants/Colors';
@@ -35,7 +34,7 @@ export default function SplashScreen({navigation}) {
           }
           style={styles.background}
         />
-        <Logo style={styles.logo} />
+        <Logo />
       </SafeAreaView>
     </>
   );
@@ -48,11 +47,6 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  logo: {
-    marginTop: '-45%',
-    height: 50,
-    width: 200,
   },
   background: {
     width: '100%',

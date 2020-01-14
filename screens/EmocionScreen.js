@@ -7,7 +7,7 @@ import {
   Image,
   SafeAreaView,
   Animated,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import LogoCompartir from '../constants/LogoCompartir';
@@ -24,25 +24,28 @@ const BAR_SPACE = 9;
  * @prop {import('react-navigation').NavigationScreenProp} navigation
  * @extends {Component<Props>}
  */
-const headerDefault = 'http://okoconnect.com/karim/assets/images/emociones/header-emocion-1.png';
+const headerDefault =
+  'http://okoconnect.com/karim/assets/images/emociones/header-emocion-1.png';
 
 export default class Emocion extends Component {
   animVal = new Animated.Value(0);
 
   render() {
-    const { navigation } = this.props;
+    const {navigation} = this.props;
     const info = [
       {
         key: 'slide1',
         title: 'Título',
         class: 'styles.container',
-        text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet\nFeliz Sábado ✨\n\nDesliza para ver la oración. ->',
+        text:
+          'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet\nFeliz Sábado ✨\n\nDesliza para ver la oración. ->',
       },
       {
         key: 'slide2',
         title: 'Oración',
         class: 'styles.containerFloating',
-        text: 'Hoy darás el primer paso a una vida plena. En este viaje, te conectarás con #yoconscientey el momento presente.',
+        text:
+          'Hoy darás el primer paso a una vida plena. En este viaje, te conectarás con #yoconscientey el momento presente.',
       },
     ];
 
@@ -52,16 +55,18 @@ export default class Emocion extends Component {
     const itemWidth = 5;
     info.forEach((item, i) => {
       const thisImage = (
-        <ScrollView key={`image${i}`}
-        vertical
-        contentInsetAdjustmentBehavior="automatic"
-        style={styles.scrollView}>
-
+        <ScrollView
+          key={`image${i}`}
+          vertical
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scrollView}>
           {i === 0 ? (
             <Image
               style={{
                 width: deviceWidth,
-                height: Dims.window.height * Number(navigation.getParam('headerH', '0.1')),
+                height:
+                  Dims.window.height *
+                  Number(navigation.getParam('headerH', '0.1')),
               }}
               source={{
                 uri: navigation.getParam('header', ''),
@@ -71,29 +76,39 @@ export default class Emocion extends Component {
             <View style={{height: 50}}></View>
           )}
 
-          <View style={styles.container} >
-            <ScalableText style={styles.bigTitle}>
-              {item.title}
-            </ScalableText>
-            <ScalableText style={styles.paragraph}>
-              {item.text}
-            </ScalableText>
+          <View style={styles.container}>
+            <ScalableText style={styles.bigTitle}>{item.title}</ScalableText>
+            <ScalableText style={styles.paragraph}>{item.text}</ScalableText>
           </View>
           {i === 0 ? (
             <Image
               style={{
                 width: deviceWidth,
-                height: Dims.window.height * Number(navigation.getParam('footerH', '0.4')),
-                minHeight: Dims.window.height * Number(navigation.getParam('footerH', '0.4')),
+                height:
+                  Dims.window.height *
+                  Number(navigation.getParam('footerH', '0.4')),
+                minHeight:
+                  Dims.window.height *
+                  Number(navigation.getParam('footerH', '0.4')),
               }}
               source={{
                 uri: navigation.getParam('footer', ''),
               }}
             />
           ) : (
-            <View style={{flex:1,flexDirection:'row',justifyContent:'space-around',paddingHorizontal:'30%'}}>
-              <TouchableOpacity ><LogoCompartir/></TouchableOpacity>
-              <TouchableOpacity ><LogoDescargar/></TouchableOpacity>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                paddingHorizontal: '30%',
+              }}>
+              <TouchableOpacity>
+                <LogoCompartir />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <LogoDescargar />
+              </TouchableOpacity>
             </View>
           )}
         </ScrollView>
@@ -128,34 +143,29 @@ export default class Emocion extends Component {
         </View>
       );
       barArray.push(thisBar);
-
     });
 
-
-    Number(navigation.getParam('headerH', '0.1'))
+    Number(navigation.getParam('headerH', '0.1'));
     return (
       <>
         <SafeAreaView>
           <ScreenBg
-            source={{uri: navigation.getParam('bg', ''),}}
-            styleImage={{resizeMode: 'cover', height: Dims.window.height,}}>
-            
-
-              <View style={styles.barContainer}>{barArray}</View>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                scrollEventThrottle={10}
-                pagingEnabled
-                onScroll={Animated.event([
-                  {nativeEvent: {contentOffset: {x: this.animVal}}},
-                ])}
-                style={styles.slider}>
-                {imageArray}
-              </ScrollView>
-            
+            source={{uri: navigation.getParam('bg', '')}}
+            styleImage={{resizeMode: 'cover', height: Dims.window.height}}>
+            <View style={styles.barContainer}>{barArray}</View>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              scrollEventThrottle={10}
+              pagingEnabled
+              onScroll={Animated.event([
+                {nativeEvent: {contentOffset: {x: this.animVal}}},
+              ])}
+              style={styles.slider}>
+              {imageArray}
+            </ScrollView>
           </ScreenBg>
-       </SafeAreaView>
+        </SafeAreaView>
       </>
     );
   }
