@@ -9,9 +9,9 @@ import ItemBubble from '../components/ItemBubble';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import Dimensions from '../constants/Dimensions';
-import API from '../utils/API';
+import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
-
+//TODO control de que viaje visitar dado su estado
 /**
  * @typedef {Object} ParamsNavigation
  * @prop {import('../utils/types').Categoria} categoria
@@ -39,11 +39,7 @@ export default class Categoria extends Component {
   }
 
   componentDidMount = async () => {
-    // TODO cambiar forma de obtener el correo del usuario
-    const viajes = await API.getViajesCategoria(
-      this.categoria.key,
-      'example@example.com',
-    );
+    const viajes = await API.getViajesCategoria(this.categoria.key, user);
     this.setState({viajes});
     //console.log(viajes);
   };

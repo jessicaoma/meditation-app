@@ -11,6 +11,7 @@ import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
+import API from '../utils/API';
 
 /**
  * @typedef Props
@@ -20,8 +21,9 @@ import ScalableText from 'react-native-text';
 export default class Canciones extends Component {
   static navigationOptions = {};
   state = {
+    /** @type {import('../utils/types').Canción[]} */
     canciones: [
-      {
+      /*{
         id: 'can1',
         title: 'Canción 1',
         media: 'http://okoconnect.com/karim/canciones/brisadeotono.mp3',
@@ -120,28 +122,34 @@ export default class Canciones extends Component {
           'http://okoconnect.com/karim/assets/images/musica/musica10-preview.png',
         itemImage:
           'http://okoconnect.com/karim/assets/images/musica/musica10.png',
-      },
+      },*/
     ],
   };
 
-  /** @param {import('../utils/types').Categoria} item */
+  async componentDidMount() {
+    const data = await API.getCanciones();
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({
+      canciones: data,
+    });
+  }
+  /** @param {import('../utils/types').Canción} item */
   _handleClick = item => {
     this.props.navigation.navigate('Cancion', {
       cancion: item,
     });
   };
-  /** @param {import('../utils/types').Categoria} item */
-  keyExtractor = item => item.id;
+  /** @param {import('../utils/types').Canción} item */
+  keyExtractor = item => item.key;
 
   renderListHeader = () => <Text style={styles.sectionTitle}>Música</Text>;
 
-  renderListEmpty = _ => (
-    <ActivityIndicator size="large" color={'#d9e0f9'} />
-  );
+  renderListEmpty = _ => <ActivityIndicator size="large" color={'#d9e0f9'} />;
 
-  /** @param {import('react-native').ListRenderItemInfo<import('../utils/types').Categoria>} info*/
+  /** @param {import('react-native').ListRenderItemInfo<import('../utils/types').Canción>} info*/
   renderItem = ({item}) => (
     <Buttom
+      // eslint-disable-next-line react-native/no-inline-styles
       style={{
         backgroundColor: item.color || Colors.primaryDark,
         position: 'relative',
@@ -149,8 +157,8 @@ export default class Canciones extends Component {
       onPress={() => {
         this._handleClick(item);
       }}>
-      <ScalableText style={styles.title_boxes}>{item.title}</ScalableText>
-      <Image style={styles.image} source={{uri: item.itemImage}} />
+      <ScalableText style={styles.title_boxes}>{item.titulo}</ScalableText>
+      <Image style={styles.image} source={{uri: item.imagenLista}} />
     </Buttom>
   );
   render() {

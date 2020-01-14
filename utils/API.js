@@ -47,23 +47,60 @@ class Api {
     return data;
   }
 
-  // /**
-  //  * @param {string} user
-  //  * @return {Promise<import("./types").Viaje[]>} */
-  // async getViajesEnProgreso(user) {
-  //   const query = await fetch(`${BASE_API}viajes/enprogreso/${user}`);
-  //   const data = await query.json();
-  //   return data;
-  // }
+  /**
+   * @param {string} user
+   * @return {Promise<import("./types").Viaje[]>} */
+  async getViajesEnProgreso(user) {
+    const myHeaders = new Headers({from: user});
+    const query = await fetch(`${BASE_API}viajes/enprogreso`, {
+      headers: myHeaders,
+    });
+    const data = await query.json();
+    return data;
+  }
 
-  // /**
-  //  * @param {string} user
-  //  * @return {Promise<import("./types").Viaje[]>} */
-  // async getViajesCompletadps(user) {
-  //   const query = await fetch(`${BASE_API}viajes/completados/${user}`);
-  //   const data = await query.json();
-  //   return data;
-  // }
+  /** @return {Promise<import("./types").LoNuevo[]>} */
+  async getLoNuevo() {
+    //const myHeaders = new Headers({from: user});
+    const query = await fetch(`${BASE_API}lonuevo`, {
+      //headers: myHeaders,
+    });
+    const data = await query.json();
+    return data;
+  }
+
+  /** @return {Promise<import("./types").Reflexión>} */
+  async getReflexionDelDia() {
+    //const myHeaders = new Headers({from: user});
+    const query = await fetch(`${BASE_API}reflexion/deldia`, {
+      //headers: myHeaders,
+    });
+    const data = await query.json();
+    return data;
+  }
+
+  /**
+   * @param {string} user
+   * @return {Promise<import("./types").Viaje[]>} */
+  async getViajesCompletadps(user) {
+    const myHeaders = new Headers({from: user});
+    const query = await fetch(`${BASE_API}viajes/completados`, {
+      headers: myHeaders,
+    });
+    const data = await query.json();
+    return data;
+  }
+
+  /** Consulta las meditaciones
+   * @return {Promise<import("./types").Canción[]>} */
+  async getCanciones() {
+    const query = await fetch(`${BASE_API}canciones`);
+    const data = await query.json();
+    return data;
+  }
 }
 
 export default new Api();
+
+// TODO cambiar forma de obtener el correo del usuario 'example@example.com'
+export const user = 'asd';

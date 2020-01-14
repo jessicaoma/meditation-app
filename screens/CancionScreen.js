@@ -12,18 +12,20 @@ import Player from '../player/Player';
 export default class CancionScreen extends Component {
   /** @param {{navigation : import('react-navigation').NavigationScreenProp}} param*/
   static navigationOptions = ({navigation}) => {
-    let cancion = navigation.getParam('cancion', {title: 'Canción'});
-    return {title: cancion.title};
+    /** @type {import('../utils/types').Canción}*/
+    let cancion = navigation.getParam('cancion', {titulo: 'Canción'});
+    return {title: cancion.titulo};
   };
 
   render() {
     const {navigation} = this.props;
+    /** @type {import('../utils/types').Canción}*/
     let cancion = navigation.getParam('cancion', {});
     return (
       <>
         <SafeAreaView>
           <ScreenBg
-            source={{uri: cancion.backgroundImage}}
+            source={{uri: cancion.imagenFondo}}
             color={cancion.color}
             styleImage={styles.image}>
             <Player

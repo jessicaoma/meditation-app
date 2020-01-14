@@ -38,6 +38,15 @@
  * @prop {string} imagenLista Imagen para la lista
  * @prop {boolean} isFree Es gratuito o no
  *
+ * @typedef {Object} Canción
+ * @prop {string} key Identificador
+ * @prop {string} titulo Título
+ * @prop {string} media Ruta del audio correspondiente a la meditación
+ * @prop {string} imagenFondo Fondo de la meditación
+ * @prop {string} color Color caracteristico de la meditación
+ * @prop {string} imagenLista Imagen para la lista
+ * @prop {boolean} isFree Es gratuito o no
+ *
  * @typedef {Object} Audiolibro
  * @prop {string} key Identificador
  * @prop {string} titulo Título
@@ -47,6 +56,22 @@
  * @prop {string} imagenLista Imagen para la lista
  * @prop {string} progreso Indica hasta que punto se ha reproducido
  * @prop {boolean} isFree Es gratuito o no
+ *
+ * @typedef {Object} LoNuevo
+ * @prop {string} key Identificador
+ * @prop {enumLoNuevo} tipo Tipo de registro asociado
+ * @prop {Audiolibro} audiolibro Audiolibro asociada
+ * @prop {Canción} cancion Canción asociada
+ * @prop {Meditación} meditacion Meditación asociada
+ * @prop {Viaje} viaje Viaje asociado
+ *
+ * @typedef {Object} Reflexión
+ * @prop {string} titulo
+ * @prop {string} imagenFondo
+ * @prop {string} imagenPrevia
+ * @prop {string} color
+ * @prop {string} media
+ * @prop {string} texto
  */
 
 /**
@@ -61,4 +86,20 @@ export const enumStatus = {
   doing: 1,
   /** Value 2 */
   done: 2,
+};
+
+/**
+ * Enum for lonuevo type.
+ * @readonly
+ * @enum {number}
+ */
+export const enumLoNuevo = {
+  /** Value 0 */
+  viaje: 0,
+  /** Value 1 */
+  meditacion: 1,
+  /** Value 2 */
+  cancion: 2,
+  /** Value 3 */
+  audiolibro: 3,
 };

@@ -10,19 +10,22 @@ import {SafeAreaView} from 'react-native';
  */
 export default class ReflexionScreen extends Component {
   static navigationOptions = ({navigation}) => {
-    let reflexion = navigation.getParam('reflexion', {title: 'Meditación'});
-    return {title: reflexion.title, headerBackTitle: null};
+    /** @type {import("../utils/types").Reflexión} */
+    let reflexion = navigation.getParam('reflexion', {titulo: 'Meditación'});
+    return {title: reflexion.titulo, headerBackTitle: null};
   };
 
   render() {
     const {navigation} = this.props;
+    /** @type {import("../utils/types").Reflexión} */
     let reflexion = navigation.getParam('reflexion', {});
     return (
       <>
         <SafeAreaView>
           <ScreenBg
-            source={{uri: reflexion.imagebg}}
+            source={{uri: reflexion.imagenFondo}}
             color={reflexion.color}
+            // eslint-disable-next-line react-native/no-inline-styles
             styleImage={{resizeMode: 'contain'}}>
             <Player
               source={{
