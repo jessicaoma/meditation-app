@@ -1,5 +1,5 @@
 const BASE_API =
-  process.env.NODE_ENV === 'production'
+  process.env.NODE_ENV !== 'production'
     ? 'http://okotesting-001.azurewebsites.net/api/'
     : 'http://localhost:5000/api/';
 
@@ -103,4 +103,4 @@ class Api {
 export default new Api();
 
 // TODO cambiar forma de obtener el correo del usuario 'example@example.com'
-export const user = 'asd';
+export const user = 'asdf';
