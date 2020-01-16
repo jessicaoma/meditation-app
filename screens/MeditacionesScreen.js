@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     textTransform: 'uppercase',
     alignSelf: 'center',
+    maxWidth: '70%',
   },
   image: {
     resizeMode: 'cover',
