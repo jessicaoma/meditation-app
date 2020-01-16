@@ -165,5 +165,12 @@ const styles = StyleSheet.create({
   },
   cover: {
     height: 210,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 3,
+      height: 5,
+    },
+    shadowOpacity: 0.22,
   },
 });
