@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, SafeAreaView} from 'react-native';
+import {View, StyleSheet, SafeAreaView, TouchableOpacity} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
-import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
@@ -59,14 +58,14 @@ export default class MeditacionIntroScreen extends Component {
             <View style={styles.container}>
             	<View style={styles.subcontainer}>
 	              <ScalableText style={styles.sectionTitle}>{meditacion.titulo}</ScalableText>
-	              <Buttom
+	              <TouchableOpacity
 	                style={[ styles.button, {backgroundColor:  Colors.primaryDark},
 	                ]}
 	                onPress={() => {this._handleClick();}}>
 	                <ScalableText style={styles.title_boxes}>Prepárate para meditar</ScalableText>
 
-	              </Buttom>
-	              <Buttom
+	              </TouchableOpacity>
+	              <TouchableOpacity
 	                style={[
 	                  styles.button,
 	                  {backgroundColor: Colors.primaryDark},
@@ -74,7 +73,7 @@ export default class MeditacionIntroScreen extends Component {
 	                onPress={() => {this._handleClick();}}>
 	                <ScalableText style={styles.title_boxes}>Comenzar meditación</ScalableText>
 
-	              </Buttom>
+	              </TouchableOpacity>
 	            </View>
             </View>
           </ScreenBg>
@@ -102,7 +101,21 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    paddingHorizontal: 40,
+    backgroundColor: Colors.second,
+    borderRadius: 30,
+    alignSelf: 'stretch',
+    width: '100%',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
+    height: 50,
+    marginBottom: 15,
   },
   subcontainer: {
   	flex: 1,
