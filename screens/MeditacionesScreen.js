@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     alignSelf: 'center',
     maxWidth: '70%',
+    fontFamily: 'MyriadPro-Regular',
   },
   image: {
     resizeMode: 'cover',
