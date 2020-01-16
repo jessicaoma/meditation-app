@@ -1,5 +1,6 @@
 import {createStackNavigator} from 'react-navigation';
 import MeditacionScreen from '../screens/MeditacionScreen';
+import MeditacionIntroScreen from '../screens/MeditacionIntroScreen';
 import AudiolibroScreen from '../screens/AudiolibroScreen';
 import ReflexionScreen from '../screens/ReflexionScreen';
 import EmocionesNavigator from './EmocionesNavigator';
@@ -16,6 +17,10 @@ const MainNavigator = createStackNavigator(
     PerfilDrawer: {screen: PerfilNavigation, navigationOptions: {header: null}},
     Meditacion: {
       screen: MeditacionScreen,
+      //navigationOptions: {},
+    },
+    MeditacionIntro: {
+      screen: MeditacionIntroScreen,
       //navigationOptions: {},
     },
     Audiolibro: {screen: AudiolibroScreen, navigationOptions: {}},

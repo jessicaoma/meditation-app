@@ -33,8 +33,8 @@ const dimensions = {
   h1: 36,
   h2: 20,
   paragraph: 18,
-  bubbleTitle: 16.5,
-  bubbleTitleSpacing: 1.1,
+  bubbleTitle: 15.5,
+  bubbleTitleSpacing: 1,
   inputText: 16,
 };
 
