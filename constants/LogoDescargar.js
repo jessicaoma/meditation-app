@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import Svg, {G, Path, Polyline} from 'react-native-svg';
 
 /**
- * @typedef Props
- * @prop {string} tintColor Color to used
+ * @typedef {Object} Props
  *
  * @extends {Component<Props>}
  */

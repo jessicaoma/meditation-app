@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-  Text,
   StyleSheet,
   View,
   ScrollView,
@@ -16,6 +15,7 @@ import Dims from '../constants/Dimensions';
 import ScreenBg from '../components/screenBg';
 import ScalableText from 'react-native-text';
 
+//TODO consultar la emocion para obtener la oracion
 const deviceWidth = Dims.window.width;
 const deviceHeight = '100%';
 const BAR_SPACE = 9;
@@ -24,56 +24,46 @@ const BAR_SPACE = 9;
  * @prop {import('react-navigation').NavigationScreenProp} navigation
  * @extends {Component<Props>}
  */
-const headerDefault =
-  'http://okoconnect.com/karim/assets/images/emociones/header-emocion-1.png';
-
 export default class Emocion extends Component {
   animVal = new Animated.Value(0);
 
   render() {
-    const {navigation} = this.props;
+    /** @type {import('../utils/types').Emoción} */
+    const emocion = this.props.navigation.getParam('emocion', {});
     const info = [
       {
         key: 'slide1',
-        title: 'Título',
-        class: 'styles.container',
-        text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet\nFeliz Sábado ✨\n\n\n DESLIZA PARA VER ORACIÓN ➡️',
+        title: emocion.titulo,
+        text: emocion.descripcion,
       },
       {
         key: 'slide2',
         title: 'Oración',
-        class: 'styles.containerFloating',
-        text: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet. \n\nAmén',
+        text: emocion.oracion,
       },
     ];
 
     let imageArray = [];
     let barArray = [];
-    const numItems = info.length;
     const itemWidth = 5;
     info.forEach((item, i) => {
       const thisImage = (
         <ScrollView
           key={`image${i}`}
-          vertical
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           {i === 0 ? (
             <Image
               style={{
                 width: deviceWidth,
-                height:
-                  Dims.window.height *
-                  Number(navigation.getParam('headerH', '0.1')),
+                height: Dims.window.height * emocion.headerH,
               }}
-              source={{
-                uri: navigation.getParam('header', ''),
-              }}
+              source={{uri: emocion.header}}
             />
           ) : (
-            <View style={{height: 50}}></View>
+            // eslint-disable-next-line react-native/no-inline-styles
+            <View style={{height: 50}} />
           )}
-
           <View style={styles.container}>
             <ScalableText style={styles.bigTitle}>{item.title}</ScalableText>
             <ScalableText style={styles.paragraph}>{item.text}</ScalableText>
@@ -82,21 +72,28 @@ export default class Emocion extends Component {
             <Image
               style={{
                 width: deviceWidth,
-                height:
-                  Dims.window.height *
-                  Number(navigation.getParam('footerH', '0.4')),
-                minHeight:
-                  Dims.window.height *
-                  Number(navigation.getParam('footerH', '0.4')),
+                height: Dims.window.height * emocion.footerH,
+                minHeight: Dims.window.height * emocion.footerH,
               }}
-              source={{
-                uri: navigation.getParam('footer', ''),
-              }}
+              source={{uri: emocion.footer}}
             />
           ) : (
-            <View style={{flex:1,flexDirection:'row',justifyContent:'flex-end', paddingHorizontal: 50}}>
-              <TouchableOpacity style={{marginRight: 20}}><LogoCompartir/></TouchableOpacity>
-              <TouchableOpacity ><LogoDescargar/></TouchableOpacity>
+            <View
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                paddingHorizontal: 50,
+              }}>
+              <TouchableOpacity
+                // eslint-disable-next-line react-native/no-inline-styles
+                style={{marginRight: 20}}>
+                <LogoCompartir />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <LogoDescargar />
+              </TouchableOpacity>
             </View>
           )}
         </ScrollView>
@@ -114,6 +111,7 @@ export default class Emocion extends Component {
           key={`bar${i}`}
           style={[
             styles.track,
+            // eslint-disable-next-line react-native/no-inline-styles
             {
               width: itemWidth,
               marginLeft: i === 0 ? 0 : BAR_SPACE,
@@ -132,29 +130,26 @@ export default class Emocion extends Component {
       );
       barArray.push(thisBar);
     });
-
-    Number(navigation.getParam('headerH', '0.1'));
     return (
-      <>
-        <SafeAreaView>
-          <ScreenBg
-            source={{uri: navigation.getParam('bg', '')}}
-            styleImage={{resizeMode: 'cover', height: Dims.window.height}}>
-            <View style={styles.barContainer}>{barArray}</View>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              scrollEventThrottle={10}
-              pagingEnabled
-              onScroll={Animated.event([
-                {nativeEvent: {contentOffset: {x: this.animVal}}},
-              ])}
-              style={styles.slider}>
-              {imageArray}
-            </ScrollView>
-          </ScreenBg>
-        </SafeAreaView>
-      </>
+      <SafeAreaView>
+        <ScreenBg
+          source={{uri: emocion.imagenFondo}}
+          // eslint-disable-next-line react-native/no-inline-styles
+          styleImage={{resizeMode: 'cover', height: Dims.window.height}}>
+          <View style={styles.barContainer}>{barArray}</View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            scrollEventThrottle={10}
+            pagingEnabled
+            onScroll={Animated.event([
+              {nativeEvent: {contentOffset: {x: this.animVal}}},
+            ])}
+            style={styles.slider}>
+            {imageArray}
+          </ScrollView>
+        </ScreenBg>
+      </SafeAreaView>
     );
   }
 }

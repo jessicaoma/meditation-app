@@ -1,5 +1,5 @@
 const BASE_API =
-  process.env.NODE_ENV !== 'production'
+  process.env.NODE_ENV === 'production'
     ? 'http://okotesting-001.azurewebsites.net/api/'
     : 'http://localhost:5000/api/';
 
@@ -95,6 +95,14 @@ class Api {
    * @return {Promise<import("./types").Canción[]>} */
   async getCanciones() {
     const query = await fetch(`${BASE_API}canciones`);
+    const data = await query.json();
+    return data;
+  }
+
+  /** Consulta las meditaciones
+   * @return {Promise<import("./types").Emoción[]>} */
+   async getEmociones() {
+    const query = await fetch(`${BASE_API}emociones`);
     const data = await query.json();
     return data;
   }

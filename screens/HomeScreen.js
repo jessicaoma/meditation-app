@@ -61,8 +61,11 @@ export default class Home extends Component {
     /** @type {import("../utils/types").LoNuevo[]} */
     lonuevo: [],
     /** @type {import("../utils/types").Reflexión} */
-    // @ts-ignore
     reflexion: {},
+    /** @type {import("../utils/types").Video} */
+    tutorial: {},
+    /** @type {import("../utils/types").Video} */
+    bienvenida: {},
   };
 
   async componentDidMount() {
@@ -70,6 +73,7 @@ export default class Home extends Component {
     const enprogreso = await API.getViajesEnProgreso(user);
     const lonuevo = await API.getLoNuevo();
     const reflexion = await API.getReflexionDelDia();
+
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({enprogreso, lonuevo, reflexion});
   }
@@ -137,34 +141,39 @@ export default class Home extends Component {
     </Buttom>
   );
 
-  _renderListEmpty = _ => {
-    return (
-      <Buttom style={[{backgroundColor: Colors.primary}, styles.box2]}>
-        <ActivityIndicator size="large" color={colors.primaryDark} />
-      </Buttom>
-    );
-  };
+  _renderListEmpty = _ => (
+    <Buttom style={[{backgroundColor: Colors.primary}, styles.box2]}>
+      <ActivityIndicator size="large" color={colors.primaryDark} />
+    </Buttom>
+  );
 
   _goViaje = viaje => {
     this.props.navigation.navigate('Viaje', {viaje});
   };
 
-  _handleReflexion = () => {
+  goReflexion = () => {
     this.props.navigation.navigate('Reflexion', {
       reflexion: this.state.reflexion,
     });
   };
 
   _handleEmociones = () => {
+    //TODO verificar si ya esta en el redux, o consultar el server
     this.props.navigation.navigate('EmocionesStack');
   };
 
-  _handelBienvenida = () => {
-    this.props.navigation.navigate('Bienvenida');
+  goBienvenida = () => {
+    if (this.state.tutorial.media === undefined) return;
+    this.props.navigation.navigate('Bienvenida', {
+      video: this.state.bienvenida,
+    });
   };
 
-  _handleTutorial = () => {
-    this.props.navigation.navigate('Tutorial');
+  goTutorial = () => {
+    if (this.state.tutorial.media === undefined) return;
+    this.props.navigation.navigate('Tutorial', {
+      video: this.state.tutorial,
+    });
   };
 
   _handelPremium = () => {
@@ -195,7 +204,7 @@ export default class Home extends Component {
               color="#fff">
               <Cover
                 source={{uri: this.state.reflexion.imagenPrevia}}
-                onPress={this._handleReflexion}
+                onPress={this.goReflexion}
               />
               <Buttom
                 style={{backgroundColor: Colors.second}}
@@ -246,7 +255,7 @@ export default class Home extends Component {
               <View style={styles.separador} />
               <Buttom
                 style={{backgroundColor: Colors.second}}
-                onPress={this._handelBienvenida}>
+                onPress={this.goBienvenida}>
                 <ImageBackground
                   resizeMode="contain"
                   source={{
@@ -261,7 +270,7 @@ export default class Home extends Component {
               </Buttom>
               <Buttom
                 style={{backgroundColor: Colors.second}}
-                onPress={this._handleTutorial}>
+                onPress={this.goTutorial}>
                 <ImageBackground
                   resizeMode="contain"
                   source={{

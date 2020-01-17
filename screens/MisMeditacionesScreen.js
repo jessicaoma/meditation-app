@@ -4,6 +4,7 @@ import Dims from '../constants/Dimensions';
 import LogoPremio from '../constants/LogoPremio';
 import LogoReloj from '../constants/LogoReloj';
 import ScalableText from 'react-native-text';
+import colors from '../constants/Colors';
 //TODO llamar al api
 /**
  * @typedef Props
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
   },
   purpleTitle: {
     fontSize: Dims.paragraph,
-    color: '#9898E2',
+    color: colors.meditacion,
     fontFamily: 'MyriadPro-Regular',
     textAlign: 'left',
     marginBottom: 20,

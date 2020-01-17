@@ -10,6 +10,7 @@
  * @property {string} tabIconDefault Color of a tab icon when is not select
  * @property {string} tabIconSelected Color of a tab icon when is selected
  * @property {string} white Color that represent White
+ * @property {string} meditacion Color used to meditation screens
  */
 
 /**
@@ -25,5 +26,6 @@ const colors = {
   tabIconDefault: '#aeafbe',
   tabIconSelected: '#494C6B',
   white: 'rgb(252, 253, 255)',
+  meditacion: '#9898e2',
 };
 export default colors;

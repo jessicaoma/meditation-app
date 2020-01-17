@@ -72,6 +72,24 @@
  * @prop {string} color
  * @prop {string} media
  * @prop {string} texto
+ *
+ * @typedef {Object} Video
+ * @prop {string} titulo Título
+ * @prop {string} media Ruta del audio correspondiente a la meditación
+ * @prop {string} imagenFondo Fondo de la meditación
+ * @prop {string} color Color caracteristico de la meditación
+ *
+ * @typedef {Object} Emoción
+ * @prop {string} key Identificador
+ * @prop {string} titulo
+ * @prop {string} descripcion
+ * @prop {string} oracion
+ * @prop {string} imagenFondo
+ * @prop {string} header
+ * @prop {string} footer
+ * @prop {number} headerH
+ * @prop {number} footerH
+ * @prop {import('react-native').ImageSourcePropType} imagen
  */
 
 /**

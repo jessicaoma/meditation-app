@@ -7,37 +7,36 @@ import {
   FlatList,
   ScrollView,
   SafeAreaView,
+  ActivityIndicator,
 } from 'react-native';
-import Colors from '../constants/Colors';
+import colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Dims from '../constants/Dimensions';
+import API from '../utils/API';
 
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
- *
- * @typedef {Object} Card
- * @prop {string} key
- * @prop {NodeRequire | {uri: string}} image
  */
 
 //TODO cambiar la validacion pues ya no se usa expo snack
+//TODO se consultara las emociones para sus data base, y se guardara en redux
 //TODO registrar seleccion
 const envProd = process.env.NODE_ENV === 'production';
 const numColumns = 2;
 
-/** @type {Card[]} */
+// datos que son fijos dentro de la app
 const data = [
   {
-    key: 'cartaA',
-    bg: 'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-1.png',
+    imagenFondo:
+      'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-1.png',
     header:
       'http://okoconnect.com/karim/assets/images/emociones/header-emocion-1.png',
     footer:
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-1.png',
     headerH: 0.1,
     footerH: 0.35,
-    image: envProd
+    imagen: envProd
       ? {
           uri:
             'http://okoconnect.com/karim/assets/images/emociones/emocion-1.png',
@@ -45,15 +44,15 @@ const data = [
       : require('../assets/images/emociones/emocion-1.png'),
   },
   {
-    key: 'cartaB',
-    bg: 'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-2.png',
+    imagenFondo:
+      'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-2.png',
     header:
       'http://okoconnect.com/karim/assets/images/emociones/header-emocion-2.png',
     footer:
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-2.png',
     headerH: 0.1,
     footerH: 0.3,
-    image: envProd
+    imagen: envProd
       ? {
           uri:
             'http://okoconnect.com/karim/assets/images/emociones/emocion-2.png',
@@ -61,15 +60,15 @@ const data = [
       : require('../assets/images/emociones/emocion-2.png'),
   },
   {
-    key: 'cartaC',
-    bg: 'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-3.png',
+    imagenFondo:
+      'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-3.png',
     header:
       'http://okoconnect.com/karim/assets/images/emociones/header-emocion-3.png',
     footer:
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-3.png',
     headerH: 0.35,
     footerH: 0.35,
-    image: envProd
+    imagen: envProd
       ? {
           uri:
             'http://okoconnect.com/karim/assets/images/emociones/emocion-3.png',
@@ -77,15 +76,15 @@ const data = [
       : require('../assets/images/emociones/emocion-3.png'),
   },
   {
-    key: 'cartaD',
-    bg: 'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-4.png',
+    imagenFondo:
+      'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-4.png',
     header:
       'http://okoconnect.com/karim/assets/images/emociones/header-emocion-4.png',
     footer:
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-4.png',
     headerH: 0.45,
     footerH: 0.2,
-    image: envProd
+    imagen: envProd
       ? {
           uri:
             'http://okoconnect.com/karim/assets/images/emociones/emocion-4.png',
@@ -96,38 +95,54 @@ const data = [
 
 /** @extends {Component<Props>} */
 export default class EmocionesScreen extends Component {
+  state = {
+    emociones: [],
+  };
+  async componentDidMount() {
+    /** @type {import('../utils/types').Emoción[]}*/
+    let emociones = await API.getEmociones();
+    emociones.forEach((emocion, index) => {
+      let {imagenFondo, header, footer, headerH, footerH, imagen} = data[index];
+      emocion.imagenFondo = imagenFondo;
+      emocion.imagen = imagen;
+      emocion.header = header;
+      emocion.footer = footer;
+      emocion.headerH = headerH;
+      emocion.footerH = footerH;
+    });
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({emociones});
+  }
+
   /**
-   * @param {Card} item
+   * @param {import('../utils/types').Emoción} item
    */
   _handleClick = item => {
     // TODO registrar selecion en el servidor
     this.props.navigation.navigate('Emocion', {
-      bg: item.bg,
-      header: item.header,
-      footer: item.footer,
-      headerH: item.headerH,
-      footerH: item.footerH,
+      emocion: item,
     });
   };
 
   /**
-   * @param {import('react-native').ListRenderItemInfo<Card>} item
+   * @param {import('react-native').ListRenderItemInfo<import('../utils/types').Emoción>} item
    */
-  renderItem = ({item}) => {
-    return (
-      <HalfCover
-        source={item.image}
-        onPress={() => {
-          this._handleClick(item);
-        }}
-        height={(Dims.window.width / numColumns) * 1.5}
-        width={(Dims.window.width - 40) / numColumns}
-        // eslint-disable-next-line react-native/no-inline-styles
-        style={{backgroundColor: '#9898e2'}}
-        //color={'transparent'}
-      />
-    );
-  };
+  renderItem = ({item}) => (
+    <HalfCover
+      source={item.imagen}
+      onPress={() => {
+        this._handleClick(item);
+      }}
+      height={(Dims.window.width / numColumns) * 1.5}
+      width={(Dims.window.width - 40) / numColumns}
+      style={{backgroundColor: colors.meditacion}}
+      //color={'transparent'}
+    />
+  );
+
+  renderListEmpty = _ => (
+    <ActivityIndicator size="large" color={colors.meditacion} />
+  );
 
   render() {
     return (
@@ -137,9 +152,11 @@ export default class EmocionesScreen extends Component {
             <View style={styles.container}>
               <Text style={styles.sectionTitle}>Tus emociones </Text>
               <FlatList
-                data={data}
+                data={this.state.emociones}
                 renderItem={this.renderItem}
                 numColumns={numColumns}
+                ListEmptyComponent={this.renderListEmpty}
+                keyExtractor={item => item.key}
               />
               <Text style={styles.suggestion}>
                 ¿Cómo te sientes hoy?.{'\n'}
@@ -167,7 +184,7 @@ const styles = StyleSheet.create({
     marginRight: 0,
     marginBottom: 3,
     marginLeft: 0,
-    color: Colors.gray,
+    color: colors.gray,
     fontFamily: 'MyriadPro-Bold',
   },
   suggestion: {
