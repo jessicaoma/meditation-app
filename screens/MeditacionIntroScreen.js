@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, SafeAreaView, TouchableOpacity} from 'react-native';
 import ScreenBg from '../components/screenBg';
-import Player from '../player/Player';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
@@ -14,67 +13,55 @@ import ScalableText from 'react-native-text';
 export default class MeditacionIntroScreen extends Component {
   static navigationOptions = ({navigation}) => {
     /** @type {import('../utils/types').Meditación} */
-    let meditacion = navigation.getParam('meditacion', {title: 'Meditación'});
+    let meditacion = navigation.getParam('meditacion', {titulo: 'Meditación'});
     return {title: meditacion.titulo, headerBackTitle: null};
-    this.meditacion = navigation.getParam('meditacion', {title: 'Meditación'});
   };
 
   constructor(props) {
     super(props);
-    /** @type {import('../utils/types').Categoria} */
-    
+    /** @type {import('../utils/types').Meditación} */
+    this.meditacion = props.navigation.getParam('meditacion', {});
   }
 
-  /** @type {Player} */
-  audio = null;
-
-  refAudio = ref => {
-    this.audio = ref;
-  };
-
-  _handleClick = item => {
+  _handleClick = _ => {
     this.props.navigation.navigate('Meditacion', {
       meditacion: this.meditacion,
     });
   };
 
-
   render() {
-    const {navigation} = this.props;
-    /** @type {import('../utils/types').Meditación} */
-    let meditacion = navigation.getParam('meditacion', {});
-    this.meditacion = navigation.getParam('meditacion', {title: 'Meditación'});
-    /** @param {import('../utils/types').Meditación} item */
-	  
-
     return (
       <>
         <SafeAreaView>
           <ScreenBg
-            source={{uri: meditacion.imagenIntro}}
+            source={{uri: this.meditacion.imagenIntro}}
             color={'white'}
+            // eslint-disable-next-line react-native/no-inline-styles
             styleImage={{resizeMode: 'cover'}}>
-
             <View style={styles.container}>
-            	<View style={styles.subcontainer}>
-	              <ScalableText style={styles.sectionTitle}>{meditacion.titulo}</ScalableText>
-	              <TouchableOpacity
-	                style={[ styles.button, {backgroundColor:  Colors.primaryDark},
-	                ]}
-	                onPress={() => {this._handleClick();}}>
-	                <ScalableText style={styles.title_boxes}>Prepárate para meditar</ScalableText>
-
-	              </TouchableOpacity>
-	              <TouchableOpacity
-	                style={[
-	                  styles.button,
-	                  {backgroundColor: Colors.primaryDark},
-	                ]}
-	                onPress={() => {this._handleClick();}}>
-	                <ScalableText style={styles.title_boxes}>Comenzar meditación</ScalableText>
-
-	              </TouchableOpacity>
-	            </View>
+              <View style={styles.subcontainer}>
+                <ScalableText style={styles.sectionTitle}>
+                  {this.meditacion.titulo}
+                </ScalableText>
+                <TouchableOpacity
+                  style={[styles.button, {backgroundColor: Colors.primaryDark}]}
+                  onPress={() => {
+                    this._handleClick();
+                  }}>
+                  <ScalableText style={styles.title_boxes}>
+                    Prepárate para meditar
+                  </ScalableText>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.button, {backgroundColor: Colors.primaryDark}]}
+                  onPress={() => {
+                    this._handleClick();
+                  }}>
+                  <ScalableText style={styles.title_boxes}>
+                    Comenzar meditación
+                  </ScalableText>
+                </TouchableOpacity>
+              </View>
             </View>
           </ScreenBg>
         </SafeAreaView>
@@ -118,7 +105,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   subcontainer: {
-  	flex: 1,
+    flex: 1,
     alignSelf: 'center',
     justifyContent: 'flex-end',
     paddingBottom: Dims.regularSpace,

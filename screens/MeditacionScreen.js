@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, StyleSheet, SafeAreaView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
-
+//TODO regsitrar meditacion completada
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{param:{meditacion:import('../utils/types').Meditación}}>} navigation
@@ -11,7 +11,7 @@ import Player from '../player/Player';
 export default class MeditacionScreen extends Component {
   static navigationOptions = ({navigation}) => {
     /** @type {import('../utils/types').Meditación} */
-    let meditacion = navigation.getParam('meditacion', {title: 'Meditación'});
+    let meditacion = navigation.getParam('meditacion', {titulo: 'Meditación'});
     return {title: meditacion.titulo, headerBackTitle: null};
   };
 

@@ -37,6 +37,8 @@
  * @prop {string} color Color caracteristico de la meditación
  * @prop {string} imagenLista Imagen para la lista
  * @prop {boolean} isFree Es gratuito o no
+ * @prop {string} imagenIntro Imagen para la intro
+ * @prop {string} intro Ruta del audio para la intro
  *
  * @typedef {Object} Canción
  * @prop {string} key Identificador
