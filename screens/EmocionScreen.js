@@ -15,7 +15,6 @@ import Dims from '../constants/Dimensions';
 import ScreenBg from '../components/screenBg';
 import ScalableText from 'react-native-text';
 
-//TODO consultar la emocion para obtener la oracion
 const deviceWidth = Dims.window.width;
 const deviceHeight = '100%';
 const BAR_SPACE = 9;

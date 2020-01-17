@@ -19,6 +19,8 @@ import LogoEmocion2 from '../constants/LogoEmocion2';
 import LogoEmocion3 from '../constants/LogoEmocion3';
 import LogoEmocion4 from '../constants/LogoEmocion4';
 
+//TODO llamar api
+//TODO revisar comportamiento para seleccionar mes
 export default class MisEmocionesScreen extends Component {
   constructor(props) {
     super(props);
@@ -41,6 +43,7 @@ export default class MisEmocionesScreen extends Component {
           label: '7',
         },
       ],
+      dias: 7,
     };
   }
   onPressSemanal = () => {
@@ -61,6 +64,7 @@ export default class MisEmocionesScreen extends Component {
           label: '7',
         },
       ],
+      dias: 7,
     });
   };
 
@@ -82,12 +86,7 @@ export default class MisEmocionesScreen extends Component {
           label: '30',
         },
       ],
-    });
-  };
-
-  onPressAnual = () => {
-    this.setState({
-      emocionesData: [250, 52, 35, 28],
+      dias: 30,
     });
   };
 
@@ -143,7 +142,9 @@ export default class MisEmocionesScreen extends Component {
                 style={styles.barChart}
                 data={this.state.emocionesData}
                 svg={{fill: '#bfc6e2'}}
-                contentInset={{top: 30}}
+                //contentInset={{top: 30}}
+                gridMin={0}
+                gridMax={this.state.dias}
               />
               <View style={styles.containerLabels}>
                 <View style={styles.containerLabelsChild}>

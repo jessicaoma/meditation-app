@@ -118,7 +118,6 @@ export default class EmocionesScreen extends Component {
    * @param {import('../utils/types').Emoción} item
    */
   _handleClick = item => {
-    // TODO registrar selecion en el servidor
     this.props.navigation.navigate('Emocion', {
       emocion: item,
     });
