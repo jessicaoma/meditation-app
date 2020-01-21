@@ -1,3 +1,5 @@
+import {dateToStrYYYYMMDD} from './convert';
+
 const BASE_API =
   process.env.NODE_ENV === 'production'
     ? 'http://okotesting-001.azurewebsites.net/api/'
@@ -105,6 +107,25 @@ class Api {
     const query = await fetch(`${BASE_API}emociones`);
     const data = await query.json();
     return data;
+  }
+
+  /** Consulta las meditaciones
+   * @param {string} itemId Id de la meditacion
+   * @param {number} progreso duracion de la meditacion
+   */
+  async postDiarioMeditacion(itemId, progreso) {
+    const query = await fetch(`${BASE_API}diario/meditacion`, {
+      method: 'POST',
+      body: JSON.stringify({
+        itemId: itemId,
+        date: dateToStrYYYYMMDD(new Date()),
+        progreso: progreso,
+        usuario: user,
+      }),
+      headers: {'Content-Type': 'application/json'},
+    });
+    console.log(query);
+    console.log(await query.json());
   }
 }
 

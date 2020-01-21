@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View, StyleSheet, SafeAreaView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
+import API from '../utils/API';
 //TODO regsitrar meditacion completada
 /**
  * @typedef Props
@@ -35,6 +36,8 @@ export default class MeditacionScreen extends Component {
         isIntro: false,
       });
     } else {
+      // @ts-ignore
+      API.postDiarioMeditacion(this.meditacion.key, status.durationMillis);
       this.props.navigation.goBack();
     }
   };
