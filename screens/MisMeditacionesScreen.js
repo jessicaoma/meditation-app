@@ -5,6 +5,7 @@ import LogoPremio from '../constants/LogoPremio';
 import LogoReloj from '../constants/LogoReloj';
 import ScalableText from 'react-native-text';
 import colors from '../constants/Colors';
+import API, {user} from '../utils/API';
 //TODO llamar al api
 /**
  * @typedef Props
@@ -13,6 +14,15 @@ import colors from '../constants/Colors';
  */
 export default class MisMeditacionesScreen extends Component {
   static navigationOptions = {};
+  state = {
+    progreso: 0,
+    completadas: 0,
+  };
+  async componentDidMount() {
+    const data = await API.getMeditacionesCompletadas(user);
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState(data);
+  }
 
   _keyExtractor = item => item.id;
 
@@ -41,7 +51,9 @@ export default class MisMeditacionesScreen extends Component {
             </View>
 
             <View style={styles.inforow}>
-              <ScalableText style={styles.bigTitle}>4.25</ScalableText>
+              <ScalableText style={styles.bigTitle}>
+                {this.state.progreso}
+              </ScalableText>
               <ScalableText style={styles.purpleTitle}>HORAS</ScalableText>
             </View>
 
@@ -53,7 +65,9 @@ export default class MisMeditacionesScreen extends Component {
             </View>
 
             <View style={styles.inforow}>
-              <ScalableText style={styles.bigTitle}>2</ScalableText>
+              <ScalableText style={styles.bigTitle}>
+                {this.state.completadas}
+              </ScalableText>
               <ScalableText style={styles.purpleTitle}>SESIONES</ScalableText>
             </View>
           </View>

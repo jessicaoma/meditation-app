@@ -103,7 +103,7 @@ class Api {
 
   /** Consulta las meditaciones
    * @return {Promise<import("./types").Emoción[]>} */
-   async getEmociones() {
+  async getEmociones() {
     const query = await fetch(`${BASE_API}emociones`);
     const data = await query.json();
     return data;
@@ -126,6 +126,18 @@ class Api {
     });
     console.log(query);
     console.log(await query.json());
+  }
+
+  /**
+   * @param {string} user
+   * @return {Promise<import("./types").MeditacionesCompletadas>} */
+  async getMeditacionesCompletadas(user) {
+    const myHeaders = new Headers({from: user});
+    const query = await fetch(`${BASE_API}meditaciones/completadas`, {
+      headers: myHeaders,
+    });
+    const data = await query.json();
+    return data;
   }
 }
 

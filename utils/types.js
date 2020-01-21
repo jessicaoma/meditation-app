@@ -40,6 +40,10 @@
  * @prop {string} imagenIntro Imagen para la intro
  * @prop {string} intro Ruta del audio para la intro
  *
+ * @typedef {Object} MeditacionesCompletadas
+ * @prop {number} progreso
+ * @prop {number} completadas
+ *
  * @typedef {Object} Canción
  * @prop {string} key Identificador
  * @prop {string} titulo Título
