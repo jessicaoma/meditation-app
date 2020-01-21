@@ -23,9 +23,10 @@ export default class MeditacionIntroScreen extends Component {
     this.meditacion = props.navigation.getParam('meditacion', {});
   }
 
-  _handleClick = _ => {
-    this.props.navigation.navigate('Meditacion', {
+  goPlayerMeditar = isIntro => {
+    this.props.navigation.replace('Meditacion', {
       meditacion: this.meditacion,
+      isIntro,
     });
   };
 
@@ -46,7 +47,7 @@ export default class MeditacionIntroScreen extends Component {
                 <TouchableOpacity
                   style={[styles.button, {backgroundColor: Colors.primaryDark}]}
                   onPress={() => {
-                    this._handleClick();
+                    this.goPlayerMeditar(true);
                   }}>
                   <ScalableText style={styles.title_boxes}>
                     Prepárate para meditar
@@ -55,7 +56,7 @@ export default class MeditacionIntroScreen extends Component {
                 <TouchableOpacity
                   style={[styles.button, {backgroundColor: Colors.primaryDark}]}
                   onPress={() => {
-                    this._handleClick();
+                    this.goPlayerMeditar(false);
                   }}>
                   <ScalableText style={styles.title_boxes}>
                     Comenzar meditación

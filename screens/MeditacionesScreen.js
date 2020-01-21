@@ -33,7 +33,7 @@ export default class MeditacionesScreen extends Component {
   }
   async componentDidMount() {
     const data = await API.getMeditaciones();
-    // const data = 
+    // const data =
     // [{"key":"med1","titulo":"Básica","imagenIntro":"http://okoconnect.com/karim/images/meditar1-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar1-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar1.png","media":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","intro":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","isFree":true},
     // {"key":"med2","titulo":"El perdón","imagenIntro":"http://okoconnect.com/karim/images/meditar2-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar2-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar2.png","media":"http://okoconnect.com/karim/meditaciones/3_MeditacionParaPerdonar.mp3", "intro":"http://okoconnect.com/karim/meditaciones/3_MeditacionParaPerdonar.mp3","isFree":true},
     // {"key":"med3","titulo":"Gratitud","imagenIntro":"http://okoconnect.com/karim/images/meditar3-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar3-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar3.png","media":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3", "intro":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","isFree":true},
@@ -156,7 +156,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     maxWidth: '65%',
     fontFamily: 'MyriadPro-Regular',
-
   },
   image: {
     resizeMode: 'cover',
