@@ -104,6 +104,7 @@ const PerfilNavigation = createDrawerNavigator(
     defaultNavigationOptions: {
       //headerBackTitle: null,
     },
+    unmountInactiveRoutes: true,
   },
 );
 
