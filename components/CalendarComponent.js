@@ -5,7 +5,8 @@ import Dims from '../constants/Dimensions';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import ItemBubble from '../components/ItemBubble';
 import {Ionicons} from '@expo/vector-icons';
-
+import {dateToStrYYYYMMDD} from '../utils/convert';
+// TODO mover a la screen correctamente
 const theme = {
   backgroundColor: '#ffffff',
   calendarBackground: '#ffffff',
@@ -82,16 +83,6 @@ LocaleConfig.locales['es'] = {
 };
 LocaleConfig.defaultLocale = 'es';
 
-const getCurrentDayString = () => {
-  var now = new Date();
-  var year = now.getFullYear();
-  var month = now.getMonth() + 1;
-  var day = now.getDate();
-  return `${year}-${month > 9 ? month : '0' + month}-${
-    day > 9 ? day : '0' + day
-  }`;
-};
-
 const getDayTiyle = () => {
   var now = new Date();
   var year = now.getFullYear();
@@ -103,7 +94,7 @@ const getDayTiyle = () => {
 export default class CalendarComponent extends Component {
   constructor(props) {
     super(props);
-    const today = getCurrentDayString();
+    const today = dateToStrYYYYMMDD(new Date());
     const todayLongName = getDayTiyle();
     this.serverData = null;
     this.state = {
@@ -277,7 +268,7 @@ export default class CalendarComponent extends Component {
       },
     ];
 
-    this.setSelectedDay(getCurrentDayString());
+    this.setSelectedDay(dateToStrYYYYMMDD(new Date()));
   }
 
   /**

@@ -4,8 +4,10 @@ import {Audio} from 'expo-av';
 import Controls from './Controls';
 import ScreenView from './ScreenView';
 import PlayVideoButton from '../components/playVideoButton';
+import {millisToMinSeg} from '../utils/convert';
+//TODO agregar llamada en play/pause
+//TODO agregar posicion inicial para la reproduccion (audiolibro)
 
-//const VIDEO_CONTAINER_HEIGHT = (Dimensions.window.height * 2.0) / 5.0 - 14 * 2;
 /**
  * Player componet for all media used in the app
  * @typedef {object} Props
@@ -171,30 +173,13 @@ export default class Player extends Component {
     return 0;
   }
 
-  /** @param {number} millis */
-  _getMMSSFromMillis(millis) {
-    const totalSeconds = millis / 1000;
-    const seconds = Math.floor(totalSeconds % 60);
-    const minutes = Math.floor(totalSeconds / 60);
-
-    /** @param {number} number */
-    const padWithZero = number => {
-      const string = number.toString();
-      if (number < 10) {
-        return '0' + string;
-      }
-      return string;
-    };
-    return padWithZero(minutes) + ':' + padWithZero(seconds);
-  }
-
   _getTimestamp() {
     if (
       this.playbackInstance != null &&
       this.state.playbackInstancePosition != null &&
       this.state.playbackInstanceDuration != null
     ) {
-      return this._getMMSSFromMillis(this.state.playbackInstancePosition);
+      return millisToMinSeg(this.state.playbackInstancePosition);
     }
     return '';
   }
