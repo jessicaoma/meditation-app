@@ -82,7 +82,7 @@ class Api {
   /**
    * @param {string} user
    * @return {Promise<import("./types").Viaje[]>} */
-  async getViajesCompletadps(user) {
+  async getViajesCompletados(user) {
     const myHeaders = new Headers({from: user});
     const query = await fetch(`${BASE_API}viajes/completados`, {
       headers: myHeaders,

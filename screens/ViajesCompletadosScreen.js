@@ -5,6 +5,7 @@ import {
   FlatList,
   ScrollView,
   SafeAreaView,
+  ActivityIndicator,
 } from 'react-native';
 import ScreenBg from '../components/screenBg';
 import ItemBubble from '../components/ItemBubble';
@@ -12,74 +13,75 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
 import {HeaderBackButton} from 'react-navigation';
+import API, {user} from '../utils/API';
 
 /**
- * @typedef Paso
- * @prop {string} id
- * @prop {string} title
- * @prop {string} status
- *
- * @typedef {Object} DataItemSeparator
- * @prop {boolean} highlighted
- * @prop {Paso[]} leadingItem
- *
  * @typedef {object} Props
  * @prop {import('react-navigation').NavigationScreenProp} [navigation]
- */
-
-/**
- * Viaje Screen
+ *
+ * Viajes Completados Screen
  * @extends {Component<Props>}
  * */
 export default class ViajeCompletadosScreen extends Component {
-  viaje = {
-    id: 1,
-    title: 'Ser Feliz',
-    pasos: [
-      {
-        id: 'via1',
-        status: 'viajeTitle',
-        title: '¿Qué es ser feliz?',
-        color: '#fdd58d',
-      },
-      {
-        id: 'via2',
-        title: 'Vive Incondicionalmente',
-        status: 'viajeTitle',
-        color: '#cbe3e2',
-      },
-      {
-        id: 'via3',
-        title: 'Un Viaje de Autoestima',
-        color: '#f1dee1',
-        status: 'viajeTitle',
-      },
-      {
-        id: 'via4',
-        title: 'Un Viaje de Vida Saludable',
-        color: '#f1dee1',
-        status: 'viajeTitle',
-      },
-      {
-        id: 'via5',
-        title: 'Otro Viaje',
-        status: 'viajeTitle',
-        color: '#a8aed4',
-      },
-    ],
-    color: this.props.navigation.getParam('bg', '#fdd58d'),
-    bgImg: 'http://okoconnect.com/karim/images/tuangel-bg.png',
-  };
-
   static navigationOptions = ({navigation}) => ({
     title: 'Viajes Completados',
     headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
   });
-
-  _handleClick = () => {
-    //alert('This is a button!');
-    this.props.navigation.navigate('Paso');
+  state = {
+    /** @type {import("../utils/types").Viaje[]} */
+    viajes: [],
   };
+  componentDidMount = async () => {
+    const viajes = await API.getViajesCompletados(user);
+    this.setState({viajes});
+  };
+  // viaje = {
+  //   id: 1,
+  //   title: 'Ser Feliz',
+  //   pasos: [
+  //     {
+  //       id: 'via1',
+  //       status: 'viajeTitle',
+  //       title: '¿Qué es ser feliz?',
+  //       color: '#fdd58d',
+  //     },
+  //     {
+  //       id: 'via2',
+  //       title: 'Vive Incondicionalmente',
+  //       status: 'viajeTitle',
+  //       color: '#cbe3e2',
+  //     },
+  //     {
+  //       id: 'via3',
+  //       title: 'Un Viaje de Autoestima',
+  //       color: '#f1dee1',
+  //       status: 'viajeTitle',
+  //     },
+  //     {
+  //       id: 'via4',
+  //       title: 'Un Viaje de Vida Saludable',
+  //       color: '#f1dee1',
+  //       status: 'viajeTitle',
+  //     },
+  //     {
+  //       id: 'via5',
+  //       title: 'Otro Viaje',
+  //       status: 'viajeTitle',
+  //       color: '#a8aed4',
+  //     },
+  //   ],
+  //   color: this.props.navigation.getParam('bg', '#fdd58d'),
+  //   bgImg: 'http://okoconnect.com/karim/images/tuangel-bg.png',
+  // };
+  /** @param {import("../utils/types").Viaje} viaje*/
+  _handleClick = viaje => {
+    //alert('This is a button!');
+    this.props.navigation.navigate('ViajeStack', {
+      viaje,
+    });
+  };
+
+  /** @param {{item : import('../utils/types').Viaje}} item*/
   renderItem = ({item}) => {
     return (
       <>
@@ -89,20 +91,24 @@ export default class ViajeCompletadosScreen extends Component {
             fill
             bold
             fontSize={18}
-            onPress={this._handleClick}>
-            {item.title}
+            onPress={() => {
+              this._handleClick(item);
+            }}>
+            {item.titulo}
           </ItemBubble>
         </SafeAreaView>
       </>
     );
   };
-
-  keyExtractor = item => item.id;
+  keyExtractor = item => item.key;
+  renderListEmpty = _ => {
+    return <ActivityIndicator size="large" color={Colors.primaryDark} />;
+  };
   render() {
     return (
       <ScreenBg
-        source={{uri: this.viaje.bgImg}}
-        color={this.viaje.color}
+        source={{uri: 'http://okoconnect.com/karim/images/tuangel-bg.png'}}
+        color={'#fff'}
         styleView={styles.fullscreen}>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
@@ -113,10 +119,11 @@ export default class ViajeCompletadosScreen extends Component {
             el contenido, presiona sobre el viaje de interés.
           </Text>
           <FlatList
-            data={this.viaje.pasos}
+            data={this.state.viajes}
             renderItem={this.renderItem}
             keyExtractor={this.keyExtractor}
             style={styles.container}
+            ListEmptyComponent={this.renderListEmpty}
           />
         </ScrollView>
       </ScreenBg>
@@ -136,7 +143,6 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: Dimensions.regularSpace,
     paddingTop: Dimensions.regularSpace,
-    //justifyContent: 'center',
   },
   bigTitle: {
     fontSize: 22,
