@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'column',
     padding: 40,
-    minHeight: Dims.window.height - 120
+    minHeight: Dims.window.height - 120,
   },
   welcomeTitle: {
     color: '#ABA0B5',
@@ -155,17 +155,5 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Regular',
     width: '100%',
     minWidth: '100%',
-  },
-  forgetText: {
-    color: Colors.gray,
-    fontSize: Dims.inputText,
-    lineHeight: 28,
-    marginVertical: Dims.smallSpace,
-  },
-  full: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    padding: 25,
   },
 });

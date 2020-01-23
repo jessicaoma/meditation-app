@@ -91,13 +91,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     justifyContent: 'center',
+    minHeight: Dims.window.height / 1.65,
+    flexDirection: 'column',
   },
   content: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     flexDirection: 'column',
-    minHeight: Dims.window.height - 140,
+    minHeight: '90%'
   },
   header: {
     flex: 0,
@@ -113,12 +115,6 @@ const styles = StyleSheet.create({
     lineHeight: 36,
     fontFamily: 'MyriadPro-Regular',
     letterSpacing: 1.2,
-  },
-  logo: {
-    width: 84,
-    height: 90,
-    resizeMode: 'contain',
-    marginBottom: 5,
   },
   button: {
     backgroundColor: Colors.second,
