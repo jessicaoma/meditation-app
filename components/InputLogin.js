@@ -56,7 +56,7 @@ export default class InputLogin extends Component {
           <TextInput
             style={[styles.inputText, style]}
             placeholder={placeholder}
-            placeholderTextColor = "#ABA0B5"
+            placeholderTextColor="#ABA0B5"
             secureTextEntry={false}
             onChange={onChange}
             returnKeyType={'next'}
@@ -69,7 +69,7 @@ export default class InputLogin extends Component {
             <TextInput
               style={[styles.inputText, style]}
               placeholder={placeholder}
-              placeholderTextColor = "#ABA0B5"
+              placeholderTextColor="#ABA0B5"
               secureTextEntry={this.state.password}
               onChange={onChange}
               blurOnSubmit={blurOnSubmit}

@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  TouchableHighlight,
   StatusBar,
   SafeAreaView,
   ScrollView,
@@ -13,7 +12,6 @@ import Colors from '../constants/Colors';
 import LogoFacebook from '../constants/LogoFacebook';
 import LogoGoogle from '../constants/LogoGoogle';
 import InputLogin from '../components/InputLogin';
-import Logo from '../components/Logo';
 import Dims from '../constants/Dimensions';
 import ScreenBg from '../components/screenBg';
 //TODO hacer todo el manejo
@@ -26,9 +24,15 @@ export default class CrearCuentaScreen extends Component {
   handleLogin = () => {
     this.props.navigation.navigate('Login');
   };
+  emailRef = {};
   passwordRef = {};
+  passwordRef2 = {};
+
+  refEmail = input => {
+    this.emailRef = input;
+  };
   goEmail = () => {
-    this.passwordRef.focus();
+    this.emailRef.focus();
   };
   refPassword = input => {
     this.passwordRef = input;
@@ -36,62 +40,82 @@ export default class CrearCuentaScreen extends Component {
   goPassword = () => {
     this.passwordRef.focus();
   };
+  refPassword2 = input => {
+    this.passwordRef2 = input;
+  };
+  goPassword2 = () => {
+    this.passwordRef2.focus();
+  };
   render() {
     return (
       <>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView style={styles.flex1}>
-            <ScrollView contentInsetAdjustmentBehavior="automatic">
-                <ScreenBg
-                source={{uri: 'http://okoconnect.com/karim/images/crearcuenta-bg.png'}}
-                styleImage={{resizeMode: 'cover', height: Dims.window.height}}>
-                    <View style={styles.container}>
-                        <View style={styles.header}>
-                            <Text style={styles.welcomeTitle}>Crear cuenta con</Text>
-                            <View style={styles.sociallogos}>
-                              <TouchableOpacity onPress={this._changeIcon} style={{marginRight: 5}}><LogoFacebook /></TouchableOpacity>
-                              <TouchableOpacity onPress={this._changeIcon} style={{}}><LogoGoogle /></TouchableOpacity>
-                            </View>
-                            <Text style={styles.welcomeTitle}>ó registrarme vía email</Text>
-                        </View>
-                                
+          <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <ScreenBg
+              source={{
+                uri: 'http://okoconnect.com/karim/images/crearcuenta-bg.png',
+              }}
+              // eslint-disable-next-line react-native/no-inline-styles
+              styleImage={{resizeMode: 'cover', height: Dims.window.height}}>
+              <View style={styles.container}>
+                <View style={styles.header}>
+                  <Text style={styles.welcomeTitle}>Crear cuenta con</Text>
+                  <View style={styles.sociallogos}>
+                    <TouchableOpacity
+                      //onPress={this._changeIcon}
+                      // eslint-disable-next-line react-native/no-inline-styles
+                      style={{marginRight: 5}}>
+                      <LogoFacebook />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      //onPress={this._changeIcon}
+                      style={{}}>
+                      <LogoGoogle />
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={styles.welcomeTitle}>
+                    ó registrarme vía email
+                  </Text>
+                </View>
 
-                        <View style={styles.inputs}>
-                            <InputLogin
-                                placeholder="Nombre"
-                                type="text"
-                                onSubmitEditing={this.goEmail}
-                                blurOnSubmit={false}
-                            />
-                            <InputLogin
-                                placeholder="Correo"
-                                type="text"
-                                onSubmitEditing={this.goPassword}
-                                blurOnSubmit={false}
-                            />
-                            <InputLogin
-                                placeholder="Constraseña"
-                                type="password"
-                                onSubmitEditing={this.goPassword}
-                                inputRef={this.refPassword}
-                            />
-                            <InputLogin
-                                placeholder="Confirmar Constraseña"
-                                type="password"
-                                inputRef={this.refPassword}
-                            />
-                        </View>
+                <View /*style={styles.inputs}*/>
+                  <InputLogin
+                    placeholder="Nombre"
+                    type="text"
+                    onSubmitEditing={this.goEmail}
+                    blurOnSubmit={false}
+                  />
+                  <InputLogin
+                    placeholder="Correo"
+                    type="text"
+                    onSubmitEditing={this.goPassword}
+                    blurOnSubmit={false}
+                    inputRef={this.refEmail}
+                  />
+                  <InputLogin
+                    placeholder="Constraseña"
+                    type="password"
+                    onSubmitEditing={this.goPassword2}
+                    inputRef={this.refPassword}
+                  />
+                  <InputLogin
+                    placeholder="Confirmar Constraseña"
+                    type="password"
+                    inputRef={this.refPassword2}
+                  />
+                </View>
 
-                        <View>
-                            <TouchableOpacity
-                                onPress={this.handleLogin}
-                                style={[styles.button]}>
-                                <Text style={styles.buttonLabel}>¡LISTO!</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </ScreenBg>
-            </ScrollView>
+                <View>
+                  <TouchableOpacity
+                    onPress={this.handleLogin}
+                    style={[styles.button]}>
+                    <Text style={styles.buttonLabel}>¡LISTO!</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </ScreenBg>
+          </ScrollView>
         </SafeAreaView>
       </>
     );
@@ -124,7 +148,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     textAlign: 'center',
-    marginBottom: 15
+    marginBottom: 15,
   },
   sociallogos: {
     flex: 0,
