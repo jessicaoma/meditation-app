@@ -13,7 +13,7 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
 import {Ionicons} from '@expo/vector-icons';
-
+//TODO registrar avance
 /**
  * Paso Tipo(E): Recomendaciones
  * @typedef {Object} ParamsNavigation
@@ -30,62 +30,66 @@ export default class PasoEScreen extends Component {
     /** @type {ParamsNavigation} */
     const {steps, position} = navigation.state.params;
     return {
-      title: steps[position].title,
+      title: steps[position].titulo,
     };
   };
 
-  info = {
-    recomendaciones: [
-      {
-        id: 1,
-        image: 'http://okoconnect.com/karim/assets/images/iconMeditar4.png',
-        title:
-          '1. Asume que no puedes cumplir totalmente con las expectativas de los demás, no es posible ni sano.',
-      },
-      {
-        id: 2,
-        image: 'http://okoconnect.com/karim/assets/images/iconMeditar2.png',
-        title:
-          '2. Para llegar a conocer lo que realmente deseas, es necesario pasar tiempo a solas, contigo mismo.',
-      },
-      {
-        id: 3,
-        image: 'http://okoconnect.com/karim/assets/images/iconNube.png',
-        title: '3. Aprende a decir NO, sin remordimientos y sin culpa.',
-      },
-      {
-        id: 4,
-        image: 'http://okoconnect.com/karim/assets/images/iconMeditar3.png',
-        title:
-          '4. La aceptación, la gratitud, y la buena vibra de parte de los demás son algo que hace sentir bien.',
-      },
-    ],
-  };
+  // info = {
+  //   recomendaciones: [
+  //     {
+  //       id: 1,
+  //       image: 'http://okoconnect.com/karim/assets/images/iconMeditar4.png',
+  //       title:
+  //         '1. Asume que no puedes cumplir totalmente con las expectativas de los demás, no es posible ni sano.',
+  //     },
+  //     {
+  //       id: 2,
+  //       image: 'http://okoconnect.com/karim/assets/images/iconMeditar2.png',
+  //       title:
+  //         '2. Para llegar a conocer lo que realmente deseas, es necesario pasar tiempo a solas, contigo mismo.',
+  //     },
+  //     {
+  //       id: 3,
+  //       image: 'http://okoconnect.com/karim/assets/images/iconNube.png',
+  //       title: '3. Aprende a decir NO, sin remordimientos y sin culpa.',
+  //     },
+  //     {
+  //       id: 4,
+  //       image: 'http://okoconnect.com/karim/assets/images/iconMeditar3.png',
+  //       title:
+  //         '4. La aceptación, la gratitud, y la buena vibra de parte de los demás son algo que hace sentir bien.',
+  //     },
+  //   ],
+  // };
 
   nextStep = () => {
     const {steps, position} = this.props.navigation.state.params;
-    const {type} = steps[position + 1];
-    this.props.navigation.replace(`Paso${type}`, {
+    const {tipo} = steps[position + 1];
+    // @ts-ignore
+    this.props.navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
       steps,
       position: position + 1,
     });
   };
 
   renderItem = item => (
-    <View style={styles.list} key={`recomendaciones${item.id}`}>
-      <Image source={{uri: item.image}} style={styles.iconList} />
-      <Text style={styles.textList}>{item.title}</Text>
+    <View style={styles.list} key={item.key}>
+      <Image source={{uri: item.imagen}} style={styles.iconList} />
+      <Text style={styles.textList}>{item.titulo}</Text>
     </View>
   );
 
   render() {
+    const {steps, position} = this.props.navigation.state.params;
     return (
       <>
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{flex: 1}}>
           <ImageBackground
             style={[styles.container]}
             source={{
-              uri: 'http://okoconnect.com/karim/images/slider-bg-7.png',
+              uri: steps[position].imagenFondo,
             }}>
             <TouchableOpacity style={styles.close} onPress={this.nextStep}>
               <Ionicons name={'md-close'} size={30} color={Colors.gray} />
@@ -95,7 +99,9 @@ export default class PasoEScreen extends Component {
               style={styles.scrollView}>
               <View style={styles.container}>
                 <View style={styles.container}>
-                  {this.info.recomendaciones.map(item => this.renderItem(item))}
+                  {steps[position].contenidos.map(item =>
+                    this.renderItem(item),
+                  )}
                 </View>
               </View>
             </ScrollView>

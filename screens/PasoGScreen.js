@@ -12,7 +12,9 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
 import {Ionicons} from '@expo/vector-icons';
-
+//TODO registrar avance
+//TODO consultar viaje desde el redux
+//TODO consultar sigueinte viaje desde redux
 /**
  * Paso Tipo(G): Cierre
  * @typedef {Object} ParamsNavigation
@@ -29,7 +31,7 @@ export default class PasoGScreen extends Component {
     /** @type {ParamsNavigation} */
     const {steps, position} = navigation.state.params;
     return {
-      title: steps[position].title,
+      title: steps[position].titulo,
     };
   };
 
@@ -38,6 +40,7 @@ export default class PasoGScreen extends Component {
   };
 
   render() {
+    const {steps, position} = this.props.navigation.state.params;
     return (
       <SafeAreaView style={{flex: 1}}>
         <TouchableOpacity style={styles.close} onPress={this.returnJourney}>
@@ -46,7 +49,7 @@ export default class PasoGScreen extends Component {
         <ImageBackground
           style={[styles.container]}
           source={{
-            uri: 'http://okoconnect.com/karim/images/slider-bg-2.png',
+            uri: steps[position].imagenFondo,
           }}>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"

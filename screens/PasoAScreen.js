@@ -12,11 +12,11 @@ import {
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import {Ionicons} from '@expo/vector-icons';
-
+//TODO registrar avance
 const deviceWidth = Dims.window.width;
 const deviceHeight = '100%';
 const BAR_SPACE = 9;
-const info = [
+/*const info = [
   {
     key: 'slide1',
     image: 'http://okoconnect.com/karim/images/slider-bg-0.png',
@@ -49,7 +49,7 @@ const info = [
     text:
       'Te invito a comenzar una emocionante aventura espiritual,\n¿Me acompañas?',
   },
-];
+];*/
 
 /**
  * Paso Tipo(A): Highlight
@@ -69,7 +69,7 @@ export default class PasoAScreen extends Component {
     /** @type {ParamsNavigation} */
     const {steps, position} = navigation.state.params;
     return {
-      title: steps[position].title,
+      title: steps[position].titulo,
       headerStyle: {
         backgroundColor: 'rgba(255, 255, 255, 0.5)',
       },
@@ -78,37 +78,42 @@ export default class PasoAScreen extends Component {
 
   nextStep = () => {
     const {steps, position} = this.props.navigation.state.params;
-    const {type} = steps[position + 1];
-    this.props.navigation.replace(`Paso${type}`, {
+    const {tipo} = steps[position + 1];
+    // @ts-ignore
+    this.props.navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
       steps,
       position: position + 1,
     });
   };
 
   render() {
+    const {steps, position} = this.props.navigation.state.params;
     let imageArray = [];
     let barArray = [];
-    const numItems = info.length;
+    const numItems = steps[position].contenidos.length;
     const itemWidth = 5;
-    info.forEach((item, i) => {
+    steps[position].contenidos.forEach((item, i) => {
       const thisImage = (
         <ImageBackground
           key={`image${i}`}
-          source={{uri: item.image}}
+          source={{uri: item.imagen}}
           style={[styles.sliderImage]}>
           {i === numItems - 1 ? (
-            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
+            <TouchableOpacity
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{flex: 1}}
+              onPress={this.nextStep}>
               <View style={styles.containerHalfBottom}>
-                <Text style={styles.paragraphBottom}>{item.text}</Text>
+                <Text style={styles.paragraphBottom}>{item.texto}</Text>
               </View>
             </TouchableOpacity>
           ) : i === 0 ? (
             <View style={styles.containerCenter}>
-              <Text style={styles.headline}>{item.text}</Text>
+              <Text style={styles.headline}>{item.texto}</Text>
             </View>
           ) : (
             <View style={styles.containerHalfBottom}>
-              <Text style={styles.paragraphBottom}>{item.text}</Text>
+              <Text style={styles.paragraphBottom}>{item.texto}</Text>
             </View>
           )}
         </ImageBackground>
@@ -126,6 +131,7 @@ export default class PasoAScreen extends Component {
           key={`bar${i}`}
           style={[
             styles.track,
+            // eslint-disable-next-line react-native/no-inline-styles
             {
               width: itemWidth,
               marginLeft: i === 0 ? 0 : BAR_SPACE,
@@ -147,7 +153,9 @@ export default class PasoAScreen extends Component {
 
     return (
       <>
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{flex: 1}}>
           <TouchableOpacity style={styles.close} onPress={this.nextStep}>
             <Ionicons name={'md-close'} size={30} color={Colors.gray} />
           </TouchableOpacity>

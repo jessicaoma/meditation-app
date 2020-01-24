@@ -16,7 +16,10 @@ import Dimensions from '../constants/Dimensions';
 import {HeaderBackButton} from 'react-navigation';
 import {enumStatus} from '../utils/types';
 import CheckItem from '../components/CheckItem';
-
+import API, {user} from '../utils/API';
+//TODO llamar al api
+//TODO verificar que cada paso obtenga sus datos
+//TODO control dado el estado de los pasos
 /**
  * @typedef {Object} DataItemSeparator
  * @prop {boolean} highlighted
@@ -31,6 +34,11 @@ import CheckItem from '../components/CheckItem';
  * @extends {Component<Props>}
  * */
 export default class ViajeScreen extends Component {
+  state = {
+    /** @type {import('../utils/types').Paso[]} */
+    pasos: [],
+  };
+
   constructor(props) {
     super(props);
 
@@ -46,7 +54,7 @@ export default class ViajeScreen extends Component {
       status: enumStatus.doing,
     };*/
 
-    this.viaje.pasos = [
+    /*this.viaje.pasos = [
       {
         id: 'pas1',
         title: 'Comienza el viaje',
@@ -89,7 +97,13 @@ export default class ViajeScreen extends Component {
         status: enumStatus.todo,
         type: 'G',
       },
-    ];
+    ];*/
+  }
+
+  async componentDidMount() {
+    const pasos = await API.getPasosDelViaje(this.viaje.key, user);
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({pasos});
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -98,14 +112,17 @@ export default class ViajeScreen extends Component {
   });
 
   _handleClick = index => {
-    const {type} = this.viaje.pasos[index];
-    this.props.navigation.navigate(`Paso${type}`, {
-      steps: this.viaje.pasos,
+    const {tipo} = this.state.pasos[index];
+    // @ts-ignore
+    this.props.navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
+      steps: this.state.pasos,
       position: index,
     });
   };
+
+  /** @type {import('react-native').ListRenderItem<import('../utils/types').Paso>} */
   renderItem = ({item, index}) => {
-    switch (item.status) {
+    switch (item.estado) {
       case enumStatus.done:
         return (
           <CheckItem
@@ -114,7 +131,7 @@ export default class ViajeScreen extends Component {
               this._handleClick(index);
             }}
             checked>
-            {item.title}
+            {item.titulo}
           </CheckItem>
         );
       case enumStatus.doing:
@@ -124,7 +141,7 @@ export default class ViajeScreen extends Component {
             onPress={() => {
               this._handleClick(index);
             }}>
-            {item.title}
+            {item.titulo}
           </CheckItem>
         );
       default:
@@ -135,7 +152,7 @@ export default class ViajeScreen extends Component {
               this._handleClick(index);
             }}
             disable>
-            {item.title}
+            {item.titulo}
           </CheckItem>
         );
     }
@@ -151,7 +168,7 @@ export default class ViajeScreen extends Component {
           styles.line,
           {
             backgroundColor:
-              data.leadingItem.status === enumStatus.done
+              data.leadingItem.estado === enumStatus.done
                 ? this.viaje.color
                 : Colors.borderWhite,
           },
@@ -167,6 +184,7 @@ export default class ViajeScreen extends Component {
       </ItemBubble>
       <View style={[styles.containerLine]}>
         <View
+          // eslint-disable-next-line react-native/no-inline-styles
           style={[styles.line, {backgroundColor: this.viaje.color, height: 20}]}
         />
       </View>
@@ -175,18 +193,20 @@ export default class ViajeScreen extends Component {
   renderListEmpty = _ => (
     <ActivityIndicator size="large" color={this.viaje.color} />
   );
-  keyExtractor = item => item.id;
+  keyExtractor = item => item.key;
   render() {
     return (
       <>
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{flex: 1}}>
           <ScreenBg
             source={{uri: this.viaje.imagenFondo}}
             //color={this.viaje.color}>
             color={'#fff'}>
             <View style={styles.container}>
               <FlatList
-                data={this.viaje.pasos}
+                data={this.state.pasos}
                 renderItem={this.renderItem}
                 keyExtractor={this.keyExtractor}
                 ItemSeparatorComponent={this.renderSeparator}

@@ -24,10 +24,23 @@
  * @prop {Paso[]} [pasos] Lista de pasos en el viajes
  *
  * @typedef Paso
- * @prop {string} id
- * @prop {string} title
- * @prop {enumStatus} status
- * @prop {string} type
+ * @prop {string} key
+ * @prop {string} titulo
+ * @prop {string} categoriaId Categoria padre
+ * @prop {string} color Color caracteristico de la categoria padre
+ * @prop {enumStatus} estado
+ * @prop {string} [media] Video para Paso.Teoria
+ * @prop {string} imagenFondo Imagen de fondo (Teoria, Reflexiones, Ejercicio, Diario, Cierre)
+ * @prop {Contenido[]} contenidos Contenido del paso (slide, preguntas y respuestas, o recomendaciones)
+ * @prop {enumPaso} tipo
+ *
+ * @typedef Contenido
+ * @prop {string} key
+ * @prop {string} imagen
+ * @prop {string} texto
+ * @prop {string} titulo
+ * @prop {string} pregunta
+ * @prop {string} respuesta
  *
  * @typedef {Object} Meditación
  * @prop {string} key Identificador
@@ -126,4 +139,26 @@ export const enumLoNuevo = {
   cancion: 2,
   /** Value 3 */
   audiolibro: 3,
+};
+
+/**
+ * Enum for Paso type.
+ * @readonly
+ * @enum {number}
+ */
+export const enumPaso = {
+  /** Value 0 */
+  Highlight: 0,
+  /** Value 1 */
+  Teoria: 1,
+  /** Value 2 */
+  Reflexiones: 2,
+  /** Value 3 */
+  Ejercicio: 3,
+  /** Value 4 */
+  Recomendaciones: 4,
+  /** Value 5 */
+  Diario: 5,
+  /** Value 6 */
+  Cierre: 6,
 };

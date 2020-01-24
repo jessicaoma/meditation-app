@@ -114,7 +114,7 @@ class Api {
    * @param {number} progreso duracion de la meditacion
    */
   async postDiarioMeditacion(itemId, progreso) {
-    const query = await fetch(`${BASE_API}diario/meditacion`, {
+    await fetch(`${BASE_API}diario/meditacion`, {
       method: 'POST',
       body: JSON.stringify({
         itemId: itemId,
@@ -124,8 +124,6 @@ class Api {
       }),
       headers: {'Content-Type': 'application/json'},
     });
-    console.log(query);
-    console.log(await query.json());
   }
 
   /**
@@ -134,6 +132,19 @@ class Api {
   async getMeditacionesCompletadas(user) {
     const myHeaders = new Headers({from: user});
     const query = await fetch(`${BASE_API}meditaciones/completadas`, {
+      headers: myHeaders,
+    });
+    const data = await query.json();
+    return data;
+  }
+
+  /**
+   * @param {string} viajeId
+   * @param {string} user
+   * @return {Promise<import("./types").Viaje[]>} */
+  async getPasosDelViaje(viajeId, user) {
+    const myHeaders = new Headers({from: user});
+    const query = await fetch(`${BASE_API}pasos/viaje/${viajeId}`, {
       headers: myHeaders,
     });
     const data = await query.json();

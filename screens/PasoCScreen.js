@@ -13,12 +13,12 @@ import {
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import {Ionicons} from '@expo/vector-icons';
-
+//TODO registrar avance
 const deviceWidth = Dims.window.width - Dims.bigSpace * 4;
 const deviceHeight = '100%';
 const BAR_SPACE = 8;
 
-const info = [
+/*const info = [
   {
     key: 'slide1',
     image:
@@ -41,7 +41,7 @@ const info = [
     title: '3. ¿Cuáles son tus puntos débiles?',
     text: 'Procrastinar, no tener fuerza de voluntad, no saber bailar.',
   },
-];
+];*/
 
 /**
  * Paso Tipo(C): Reflexiones
@@ -62,7 +62,7 @@ export default class PasoCScreen extends Component {
     /** @type {ParamsNavigation} */
     const {steps, position} = navigation.state.params;
     return {
-      title: steps[position].title,
+      title: steps[position].titulo,
       headerStyle: {
         backgroundColor: 'rgba(255, 255, 255, 0.5)',
       },
@@ -71,8 +71,9 @@ export default class PasoCScreen extends Component {
 
   nextStep = () => {
     const {steps, position} = this.props.navigation.state.params;
-    const {type} = steps[position + 1];
-    this.props.navigation.replace(`Paso${type}`, {
+    const {tipo} = steps[position + 1];
+    // @ts-ignore
+    this.props.navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
       steps,
       position: position + 1,
     });
@@ -81,24 +82,29 @@ export default class PasoCScreen extends Component {
   render() {
     let imageArray = [];
     let barArray = [];
-    const numItems = info.length;
+    const {steps, position} = this.props.navigation.state.params;
+
+    const numItems = steps[position].contenidos.length;
     const itemWidth = 5;
-    info.forEach((item, i) => {
+    steps[position].contenidos.forEach((item, i) => {
       const thisImage = (
         <View key={`image${i}`} style={[styles.sliderImage]}>
           {i === numItems - 1 ? (
-            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
+            <TouchableOpacity
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{flex: 1}}
+              onPress={this.nextStep}>
               <View style={styles.containerCard}>
-                <Image style={styles.image} source={{uri: item.image}} />
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.paragraph}>{item.text}</Text>
+                <Image style={styles.image} source={{uri: item.imagen}} />
+                <Text style={styles.title}>{item.titulo}</Text>
+                <Text style={styles.paragraph}>{item.texto}</Text>
               </View>
             </TouchableOpacity>
           ) : (
             <View style={styles.containerCard}>
-              <Image style={styles.image} source={{uri: item.image}} />
-              <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.paragraph}>{item.text}</Text>
+              <Image style={styles.image} source={{uri: item.imagen}} />
+              <Text style={styles.title}>{item.titulo}</Text>
+              <Text style={styles.paragraph}>{item.texto}</Text>
             </View>
           )}
         </View>
@@ -116,6 +122,7 @@ export default class PasoCScreen extends Component {
           key={`bar${i}`}
           style={[
             styles.track,
+            // eslint-disable-next-line react-native/no-inline-styles
             {
               width: itemWidth,
               marginLeft: i === 0 ? 0 : BAR_SPACE,
@@ -137,11 +144,13 @@ export default class PasoCScreen extends Component {
 
     return (
       <>
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{flex: 1}}>
           <ImageBackground
             style={[styles.container]}
             source={{
-              uri: 'http://okoconnect.com/karim/images/slider-bg-7.png',
+              uri: steps[position].imagenFondo,
             }}>
             <TouchableOpacity style={styles.close} onPress={this.nextStep}>
               <Ionicons name={'md-close'} size={30} color={Colors.gray} />

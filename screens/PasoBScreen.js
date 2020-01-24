@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {SafeAreaView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
-
+//TODO registrar avance
 /**
  * Paso Tipo(B): Teoría
  * @typedef {Object} ParamsNavigation
@@ -19,7 +19,7 @@ export default class PasoBScreen extends Component {
     /** @type {ParamsNavigation} */
     const {steps, position} = navigation.state.params;
     return {
-      title: steps[position].title,
+      title: steps[position].titulo,
       headerStyle: {
         backgroundColor: 'rgba(255, 255, 255, 0.5)',
       },
@@ -28,25 +28,29 @@ export default class PasoBScreen extends Component {
 
   nextStep = () => {
     const {steps, position} = this.props.navigation.state.params;
-    const {type} = steps[position + 1];
-    this.props.navigation.replace(`Paso${type}`, {
+    const {tipo} = steps[position + 1];
+    // @ts-ignore
+    this.props.navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
       steps,
       position: position + 1,
     });
   };
 
   render() {
+    const {steps, position} = this.props.navigation.state.params;
     return (
       <>
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{flex: 1}}>
           <ScreenBg
-            source={{uri: 'http://okoconnect.com/karim/images/slider-bg-6.png'}}
+            source={{uri: steps[position].imagenFondo}}
             //color={'#fdd58d'}
+            // eslint-disable-next-line react-native/no-inline-styles
             styleImage={{resizeMode: 'cover'}}>
             <Player
               source={{
-                uri:
-                  'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
+                uri: steps[position].media,
               }}
               showPlayFrame
               showControls

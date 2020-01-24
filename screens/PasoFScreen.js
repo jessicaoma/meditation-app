@@ -16,7 +16,7 @@ import Dimensions from '../constants/Dimensions';
 import {Ionicons} from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import {Header} from 'react-navigation';
-
+//TODO registrar avance
 /**
  * Paso Tipo(F): Diario
  * @typedef {Object} ParamsNavigation
@@ -33,7 +33,7 @@ export default class PasoFScreen extends Component {
     /** @type {ParamsNavigation} */
     const {steps, position} = navigation.state.params;
     return {
-      title: steps[position].title,
+      title: steps[position].titulo,
       headerStyle: {
         backgroundColor: 'rgba(255, 255, 255, 0.5)',
       },
@@ -42,25 +42,51 @@ export default class PasoFScreen extends Component {
 
   nextStep = () => {
     const {steps, position} = this.props.navigation.state.params;
-    const {type} = steps[position + 1];
-    this.props.navigation.replace(`Paso${type}`, {
+    const {tipo} = steps[position + 1];
+    // @ts-ignore
+    this.props.navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
       steps,
       position: position + 1,
     });
   };
 
+  /**
+   * @param {import('../utils/types').Contenido} item
+   */
+  renderItem = (item /*, isEnd*/) => (
+    <View key={item.key}>
+      <Text style={styles.subtitle}>{item.pregunta}</Text>
+      <TextInput
+        style={styles.textarea}
+        underlineColorAndroid="transparent"
+        placeholder="Tu respuesta"
+        placeholderTextColor="grey"
+        numberOfLines={5}
+        multiline={true}
+        blurOnSubmit={true}
+        value={item.respuesta}
+      />
+    </View>
+  );
+
   render() {
     const statusBarHeight = Constants.statusBarHeight;
     const navBarHeight = Header.HEIGHT;
     const headerHeight = statusBarHeight + navBarHeight;
+    const {steps, position} = this.props.navigation.state.params;
+
     return (
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={{flex: 1}}>
         <ImageBackground
+          // eslint-disable-next-line react-native/no-inline-styles
           style={{height: '100%', width: '100%'}}
           source={{
-            uri: 'http://okoconnect.com/karim/images/slider-bg-8.png',
+            uri: steps[position].imagenFondo,
           }}>
           <KeyboardAvoidingView
+            // eslint-disable-next-line react-native/no-inline-styles
             style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}
             keyboardVerticalOffset={headerHeight}
             behavior="padding">
@@ -78,59 +104,11 @@ export default class PasoFScreen extends Component {
                     y compartir tus respuestas con tus amigos y seres queridos
                     en las redes sociales.
                   </Text>
-                  <View>
-                    <Text style={styles.subtitle}>
-                      Hoy estoy agradecido por:
-                    </Text>
-                    <TextInput
-                      style={styles.textarea}
-                      underlineColorAndroid="transparent"
-                      placeholder="Tu respuesta"
-                      placeholderTextColor="grey"
-                      numberOfLines={5}
-                      multiline={true}
-                    />
-                  </View>
-                  <View>
-                    <Text style={styles.subtitle}>
-                      Lo que más aprecio en mi vida es:
-                    </Text>
-                    <TextInput
-                      style={styles.textarea}
-                      underlineColorAndroid="transparent"
-                      placeholder="Tu respuesta"
-                      placeholderTextColor="grey"
-                      numberOfLines={5}
-                      multiline={true}
-                    />
-                  </View>
-                  <View>
-                    <Text style={styles.subtitle}>
-                      Mi actitud frente al cambio es:
-                    </Text>
-                    <TextInput
-                      style={styles.textarea}
-                      underlineColorAndroid="transparent"
-                      placeholder="Tu respuesta"
-                      placeholderTextColor="grey"
-                      numberOfLines={5}
-                      multiline={true}
-                    />
-                  </View>
-                  <View>
-                    <Text style={styles.subtitle}>
-                      Las dificultades en la vida sirven para:
-                    </Text>
-                    <TextInput
-                      style={styles.textarea}
-                      underlineColorAndroid="transparent"
-                      placeholder="Tu respuesta"
-                      placeholderTextColor="grey"
-                      numberOfLines={5}
-                      multiline={true}
-                      blurOnSubmit={false}
-                    />
-                  </View>
+                  {steps[position].contenidos.map((item, index, array) => {
+                    return this.renderItem(
+                      item /*, index + 1 === array.length*/,
+                    );
+                  })}
                 </View>
               </View>
             </ScrollView>
