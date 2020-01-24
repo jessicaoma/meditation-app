@@ -41,9 +41,7 @@ export default class MeditacionIntroScreen extends Component {
             styleImage={{resizeMode: 'cover'}}>
             <View style={styles.container}>
               <View style={styles.subcontainer}>
-                <ScalableText style={styles.sectionTitle}>
-                  {this.meditacion.titulo}
-                </ScalableText>
+                
                 <TouchableOpacity
                   style={[styles.button, {backgroundColor: Colors.primaryDark}]}
                   onPress={() => {

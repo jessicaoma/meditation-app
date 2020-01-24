@@ -56,6 +56,7 @@ export default class InputLogin extends Component {
           <TextInput
             style={[styles.inputText, style]}
             placeholder={placeholder}
+            placeholderTextColor = "#ABA0B5"
             secureTextEntry={false}
             onChange={onChange}
             returnKeyType={'next'}
@@ -66,8 +67,9 @@ export default class InputLogin extends Component {
         ) : (
           <>
             <TextInput
-              style={[styles.inputPassword, style]}
+              style={[styles.inputText, style]}
               placeholder={placeholder}
+              placeholderTextColor = "#ABA0B5"
               secureTextEntry={this.state.password}
               onChange={onChange}
               blurOnSubmit={blurOnSubmit}
@@ -96,23 +98,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.primary,
     paddingHorizontal: Dims.regularSpace,
-    marginBottom: Dims.bigSpace + Dims.bigSpace,
+    marginBottom: 20,
     alignItems: 'center',
   },
   inputText: {
     width: '100%',
-    color: '#4b4547',
-    fontSize: Dims.inputText,
-    fontWeight: '400',
-    letterSpacing: 1,
-    lineHeight: 55,
-    paddingHorizontal: 15,
-    minHeight: 55,
-    fontFamily: 'MyriadPro-Regular',
-  },
-  inputPassword: {
-    width: '96%',
-    color: '#4b4547',
+    height: '95%',
+    color: '#ABA0B5',
     fontSize: Dims.inputText,
     fontWeight: '400',
     letterSpacing: 1,
@@ -120,10 +112,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     minHeight: 55,
     fontFamily: 'MyriadPro-Regular',
+    backgroundColor: 'white',
+    borderRadius: 50,
+    position: 'relative',
   },
   eyeImage: {
     width: 24,
     height: 24,
     color: '#97a3ce',
+    position: 'absolute',
+    right: 0,
+    top: -13,
   },
 });

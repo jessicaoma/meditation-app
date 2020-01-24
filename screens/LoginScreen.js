@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
   StatusBar,
   SafeAreaView,
+  ScrollView,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
@@ -22,6 +23,9 @@ export default class LoginScreen extends Component {
   handleLogin = () => {
     this.props.navigation.navigate('App');
   };
+  handleCrearCuenta = () => {
+    this.props.navigation.navigate('CrearCuenta');
+  };
   passwordRef = {};
   refPassword = input => {
     this.passwordRef = input;
@@ -34,38 +38,46 @@ export default class LoginScreen extends Component {
       <>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView style={styles.flex1}>
-          <View style={styles.container}>
-            <Logo isAlternative />
-            <Text style={styles.welcomeTitle}>BIENVENIDO</Text>
-            <View style={styles.full}>
-              <InputLogin
-                placeholder="Correo"
-                type="text"
-                onSubmitEditing={this.goPassword}
-                blurOnSubmit={false}
-              />
-              <InputLogin
-                placeholder="Constraseña"
-                type="password"
-                inputRef={this.refPassword}
-              />
-              <TouchableOpacity
-                onPress={this.handleLogin}
-                style={[styles.button]}>
-                <Text style={styles.buttonLabel}>Iniciar Sesión</Text>
-              </TouchableOpacity>
-              <TouchableHighlight>
-                <Text style={styles.forgetText}>¿Olvidaste tu contraseña?</Text>
-              </TouchableHighlight>
-              <TouchableOpacity
-                onPress={this.handleLogin}
-                style={[styles.button]}>
-                <Text style={styles.buttonLabel}>Crear una cuenta</Text>
-              </TouchableOpacity>
-            </View>
-            <View />
-            <View />
-          </View>
+          <ScrollView contentInsetAdjustmentBehavior="automatic" >
+            <View style={styles.content}>
+                <View style={styles.header}>
+                    <Logo width='50%' isAlternative />
+                    <Text style={styles.welcomeTitle}>BIENVENIDO</Text>
+                </View>
+                <View style={styles.container}>
+                    <View style={styles.full}>
+                        <InputLogin
+                          placeholder="Correo"
+                          type="text"
+                          onSubmitEditing={this.goPassword}
+                          blurOnSubmit={false}
+                        />
+                        <InputLogin
+                          placeholder="Constraseña"
+                          type="password"
+                          inputRef={this.refPassword}
+                        />
+                        <TouchableOpacity
+                          onPress={this.handleLogin}
+                          style={[styles.button]}>
+                          <Text style={styles.buttonLabel}>Iniciar Sesión</Text>
+                        </TouchableOpacity>
+                        <TouchableHighlight>
+                          <Text style={styles.forgetText}>¿Olvidaste tu contraseña?</Text>
+                        </TouchableHighlight>
+                        
+                    </View>
+                </View>
+                <View style={styles.footer}>
+                    <TouchableOpacity
+                      onPress={this.handleCrearCuenta}
+                      style={[styles.button]}>
+                      <Text style={styles.buttonLabel}>Crear una cuenta</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>  
+            
+          </ScrollView>
         </SafeAreaView>
       </>
     );
@@ -78,22 +90,31 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: 'white',
+    justifyContent: 'center',
+    minHeight: Dims.window.height / 1.65,
+    flexDirection: 'column',
+  },
+  content: {
+    flex: 1,
+    alignItems: 'center',
     justifyContent: 'space-between',
-    minHeight: 100,
-    paddingTop: Dims.hugeSpace + Dims.hugeSpace + Dims.hugeSpace,
+    flexDirection: 'column',
+    minHeight: '90%'
+  },
+  header: {
+    flex: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    textAlign: 'center',
+    paddingTop: 50
   },
   welcomeTitle: {
-    color: '#97a3ce',
+    color: '#ABA0B5',
     fontSize: Dims.h2,
     lineHeight: 36,
-    fontFamily: 'MyriadPro-Bold',
+    fontFamily: 'MyriadPro-Regular',
     letterSpacing: 1.2,
-  },
-  logo: {
-    width: 84,
-    height: 90,
-    resizeMode: 'contain',
-    marginBottom: 5,
   },
   button: {
     backgroundColor: Colors.second,
@@ -110,16 +131,19 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 4,
   },
+  footer: {
+    paddingHorizontal: '6%',
+  },
   buttonLabel: {
     color: 'white',
     fontSize: Dims.inputText,
     textAlign: 'center',
-    letterSpacing: 1.5,
     lineHeight: 50,
-    fontFamily: 'MyriadPro-Bold',
+    fontFamily: 'MyriadPro-Regular',
+    minWidth: '100%',
   },
   forgetText: {
-    color: Colors.gray,
+    color: '#ABA0B5',
     fontSize: Dims.inputText,
     lineHeight: 28,
     marginVertical: Dims.smallSpace,
@@ -128,6 +152,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    padding: 25,
+    paddingHorizontal: 25,
   },
 });
