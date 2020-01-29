@@ -36,7 +36,7 @@ export default class MeditacionIntroScreen extends Component {
       <>
         <SafeAreaView>
           <ScreenBg
-            source={{}}
+            source={{uri: 'http://okoconnect.com/karim/images/crearcuenta-bg.png'}}
             color={Colors.second}
             // eslint-disable-next-line react-native/no-inline-styles
             styleImage={{resizeMode: 'cover'}}>
@@ -45,7 +45,7 @@ export default class MeditacionIntroScreen extends Component {
               <View style={styles.subcontainer}>
               <ScreenBg
                 source={{
-                  uri: 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
+                  uri: this.meditacion.imagenIntro,
                 }}
                 styleView={[styles.containBG, styles.cover]}
                 styleImage={styles.imageBG}>
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     padding: 20,
     textAlign: 'center',
     fontFamily: 'MyriadPro-Regular',
-    color: 'white',
+    color: Colors.primaryDark,
     fontSize: Dims.paragraph,
   },
   title_boxes: {
