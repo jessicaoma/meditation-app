@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, SafeAreaView, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
@@ -35,47 +35,49 @@ export default class MeditacionIntroScreen extends Component {
     return (
       <>
         <SafeAreaView>
-          <ScreenBg
-            source={{uri: 'http://okoconnect.com/karim/images/crearcuenta-bg.png'}}
-            color={Colors.second}
-            // eslint-disable-next-line react-native/no-inline-styles
-            styleImage={{resizeMode: 'cover'}}>
-            <View style={styles.container}>
-              
-              <View style={styles.subcontainer}>
-              <ScreenBg
-                source={{
-                  uri: this.meditacion.imagenIntro,
-                }}
-                styleView={[styles.containBG, styles.cover]}
-                styleImage={styles.imageBG}>
-                <Player
-                  source={{
-                    uri: 'http://okoconnect.com/karim/videos/videoanimadointro2.mp4',
-                  }}
-                  isVideo
-                  styleVideo={styles.video}
-                  showControls
-                  showPlayFrame
-                />
-              </ScreenBg>
-                <ScalableText style={styles.texto}>
-                    Para iniciar esta meditación cierra los ojos y comienza a relajarte, inhala y exhala profundamente tres veces y mientras lo haces comienza a sumergirte en tu cuerpo
-                  </ScalableText>
-
+          <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <ScreenBg
+              source={{uri: 'http://okoconnect.com/karim/images/crearcuenta-bg.png'}}
+              color={Colors.second}
+              // eslint-disable-next-line react-native/no-inline-styles
+              styleImage={{resizeMode: 'cover'}}>
+              <View style={styles.container}>
                 
-                <TouchableOpacity
-                  style={[styles.button, {backgroundColor: Colors.primaryDark}]}
-                  onPress={() => {
-                    this.goPlayerMeditar(false);
-                  }}>
-                  <ScalableText style={styles.title_boxes}>
-                    Comenzar meditación
-                  </ScalableText>
-                </TouchableOpacity>
+                <View style={styles.subcontainer}>
+                <ScreenBg
+                  source={{
+                    uri: this.meditacion.imagenIntro,
+                  }}
+                  styleView={[styles.containBG, styles.cover]}
+                  styleImage={styles.imageBG}>
+                  <Player
+                    source={{
+                      uri: 'http://okoconnect.com/karim/videos/videoanimadointro2.mp4',
+                    }}
+                    isVideo
+                    styleVideo={styles.video}
+                    showControls
+                    showPlayFrame
+                  />
+                </ScreenBg>
+                  <ScalableText style={styles.texto}>
+                      Para iniciar esta meditación cierra los ojos y comienza a relajarte, inhala y exhala profundamente tres veces y mientras lo haces comienza a sumergirte en tu cuerpo
+                    </ScalableText>
+
+                  
+                  <TouchableOpacity
+                    style={[styles.button, {backgroundColor: Colors.primaryDark}]}
+                    onPress={() => {
+                      this.goPlayerMeditar(false);
+                    }}>
+                    <ScalableText style={styles.title_boxes}>
+                      Comenzar meditación
+                    </ScalableText>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          </ScreenBg>
+            </ScreenBg>
+          </ScrollView>
         </SafeAreaView>
       </>
     );
@@ -86,18 +88,6 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-  },
-  sectionTitle: {
-    fontSize: Dims.h2,
-    letterSpacing: 1.11,
-    lineHeight: 36,
-    marginTop: Dims.regularSpace,
-    marginRight: 0,
-    marginBottom: 3,
-    marginLeft: 0,
-    color: Colors.gray,
-    fontFamily: 'MyriadPro-Bold',
-    textAlign: 'center',
   },
   imageBG: {
     resizeMode: 'cover',
@@ -136,7 +126,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingBottom: Dims.regularSpace,
     width: '100%',
-    paddingVertical: 50,
+    paddingVertical: 20,
     paddingHorizontal: Dims.regularSpace,
   },
   texto: {
