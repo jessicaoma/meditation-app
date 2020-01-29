@@ -4,6 +4,7 @@ import ScreenBg from '../components/screenBg';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
+import Player from '../player/Player';
 
 /**
  * @typedef Props
@@ -40,16 +41,29 @@ export default class MeditacionIntroScreen extends Component {
             // eslint-disable-next-line react-native/no-inline-styles
             styleImage={{resizeMode: 'cover'}}>
             <View style={styles.container}>
+              
               <View style={styles.subcontainer}>
-                <TouchableOpacity
-                  style={[styles.button, {backgroundColor: Colors.primaryDark}]}
-                  onPress={() => {
-                    this.goPlayerMeditar(true);
-                  }}>
-                  <ScalableText style={styles.title_boxes}>
-                    Prepárate para meditar
+              <ScreenBg
+                source={{
+                  uri: 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
+                }}
+                styleView={[styles.containBG, styles.cover]}
+                styleImage={styles.imageBG}>
+                <Player
+                  source={{
+                    uri: 'http://okoconnect.com/karim/videos/video2.mp4',
+                  }}
+                  isVideo
+                  styleVideo={styles.video}
+                  showControls
+                  showPlayFrame
+                />
+              </ScreenBg>
+                <ScalableText style={styles.texto}>
+                    Para iniciar esta meditación cierra los ojos y comienza a relajarte, inhala y exhala profundamente tres veces y mientras lo haces comienza a sumergirte en tu cuerpo
                   </ScalableText>
-                </TouchableOpacity>
+
+                
                 <TouchableOpacity
                   style={[styles.button, {backgroundColor: Colors.primaryDark}]}
                   onPress={() => {
@@ -85,8 +99,22 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Bold',
     textAlign: 'center',
   },
+  imageBG: {
+    resizeMode: 'cover',
+    borderRadius: 10,
+  },
+  cover: {
+    height: 210,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 3,
+      height: 5,
+    },
+    shadowOpacity: 0.22,
+  },
   button: {
-    backgroundColor: Colors.second,
+    backgroundColor: 'white',
     borderRadius: 30,
     alignSelf: 'stretch',
     width: '100%',
@@ -105,9 +133,17 @@ const styles = StyleSheet.create({
   subcontainer: {
     flex: 1,
     alignSelf: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     paddingBottom: Dims.regularSpace,
     width: '90%',
+    paddingVertical: 50,
+  },
+  texto: {
+    padding: 20,
+    textAlign: 'center',
+    fontFamily: 'MyriadPro-Regular',
+    color: 'white',
+    fontSize: Dims.paragraph,
   },
   title_boxes: {
     color: 'white',
