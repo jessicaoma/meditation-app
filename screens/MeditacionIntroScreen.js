@@ -36,8 +36,8 @@ export default class MeditacionIntroScreen extends Component {
       <>
         <SafeAreaView>
           <ScreenBg
-            source={{uri: this.meditacion.imagenIntro}}
-            color={'white'}
+            source={{}}
+            color={Colors.second}
             // eslint-disable-next-line react-native/no-inline-styles
             styleImage={{resizeMode: 'cover'}}>
             <View style={styles.container}>
