@@ -51,7 +51,7 @@ export default class MeditacionIntroScreen extends Component {
                 styleImage={styles.imageBG}>
                 <Player
                   source={{
-                    uri: 'http://okoconnect.com/karim/videos/video2.mp4',
+                    uri: 'http://okoconnect.com/karim/videos/videoanimadointro2.mp4',
                   }}
                   isVideo
                   styleVideo={styles.video}
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   cover: {
-    height: 210,
+    height: Dims.window.width - Dims.regularSpace - Dims.regularSpace,
     elevation: 5,
     shadowColor: '#000',
     shadowOffset: {
@@ -135,15 +135,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'space-between',
     paddingBottom: Dims.regularSpace,
-    width: '90%',
+    width: '100%',
     paddingVertical: 50,
+    paddingHorizontal: Dims.regularSpace,
   },
   texto: {
     padding: 20,
     textAlign: 'center',
     fontFamily: 'MyriadPro-Regular',
     color: Colors.primaryDark,
-    fontSize: Dims.paragraph,
+    fontSize: 16,
+    lineHeight: 20,
   },
   title_boxes: {
     color: 'white',
