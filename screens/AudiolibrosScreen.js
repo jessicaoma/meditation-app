@@ -12,6 +12,7 @@ import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import Constants from 'expo-constants';
 import API from '../utils/API';
+import {NavigationEvents} from 'react-navigation';
 
 //Estoy restando los margenes laterales (16 + 16), y eso lo divido entre las columnas.
 const widthItem = Dimensions.window.width - Dimensions.regularSpace * 2;
@@ -32,7 +33,11 @@ export default class AudiolibrosScreen extends Component {
       audioLibros: [],
     };
   }
-  async componentDidMount() {
+
+  async refeshData() {
+    this.setState({
+      audioLibros: [],
+    });
     const data = await API.getAudiolibros();
     //const data = [{"key":"aud1","titulo":"La aventura espiritual","imagenLista":"http://okoconnect.com/karim/images/libro3.png","imagenFondo":"http://okoconnect.com/karim/images/libro3-.png","color":"#82d3ea","media":"https://s3.amazonaws.com/exp-us-standard/audio/playlist-example/Comfort_Fit_-_03_-_Sorry.mp3","progreso":0,"isFree":true},{"key":"aud2","titulo":"101 Frases para reflexionar","imagenLista":"http://okoconnect.com/karim/images/libro2.png","imagenFondo":"http://okoconnect.com/karim/images/libro2-.png","color":"#ffffff","media":"https://s3.amazonaws.com/exp-us-standard/audio/playlist-example/Comfort_Fit_-_03_-_Sorry.mp3","progreso":0,"isFree":true},{"key":"aud3","titulo":"Aprendiendo a Meditar","imagenLista":"http://okoconnect.com/karim/images/libro1.png","imagenFondo":"http://okoconnect.com/karim/images/libro1-.png","color":"#50628e","media":"https://s3.amazonaws.com/exp-us-standard/audio/playlist-example/Comfort_Fit_-_03_-_Sorry.mp3","progreso":0,"isFree":true}];
     // eslint-disable-next-line react/no-did-mount-set-state
@@ -75,6 +80,11 @@ export default class AudiolibrosScreen extends Component {
         <SafeAreaView
           // eslint-disable-next-line react-native/no-inline-styles
           style={{flex: 1}}>
+          <NavigationEvents
+            onWillFocus={() => {
+              this.refeshData();
+            }}
+          />
           <View style={styles.statusBar} />
           <FlatList
             data={this.state.audioLibros}

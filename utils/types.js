@@ -73,7 +73,7 @@
  * @prop {string} imagenFondo Fondo del Audiolibro
  * @prop {string} color Color caracteristico del Audiolibro
  * @prop {string} imagenLista Imagen para la lista
- * @prop {string} progreso Indica hasta que punto se ha reproducido
+ * @prop {number} progreso Indica hasta que punto se ha reproducido
  * @prop {boolean} isFree Es gratuito o no
  *
  * @typedef {Object} LoNuevo

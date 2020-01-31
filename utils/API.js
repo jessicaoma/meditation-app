@@ -16,7 +16,10 @@ class Api {
 
   /** @returns {Promise<import("./types").Audiolibro[]>} */
   async getAudiolibros() {
-    const query = await fetch(`${BASE_API}audiolibros`);
+    const myHeaders = new Headers({from: user});
+    const query = await fetch(`${BASE_API}audiolibros`, {
+      headers: myHeaders,
+    });
     const data = await query.json();
     return data;
   }
@@ -149,6 +152,25 @@ class Api {
     });
     const data = await query.json();
     return data;
+  }
+
+  /** Consulta las meditaciones
+   * @param {string} itemId Id de la meditacion
+   * @param {number} progreso duracion de la meditacion
+   * @param {import('./types').enumStatus} progreso duracion de la meditacion
+   */
+  async putDiarioAudiolibro(itemId, progreso, estado) {
+    await fetch(`${BASE_API}diario/audiolibro`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        itemId: itemId,
+        date: dateToStrYYYYMMDD(new Date()),
+        progreso: progreso,
+        usuario: user,
+        estado,
+      }),
+      headers: {'Content-Type': 'application/json'},
+    });
   }
 }
 

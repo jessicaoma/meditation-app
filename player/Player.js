@@ -21,6 +21,7 @@ import {millisToMinSeg} from '../utils/convert';
  * @prop {(status: import('expo-av/build/AV').PlaybackStatus) => void} [onEnd] Callback when media is ends
  * @prop {(event: import('expo-av/build/Video.types').ReadyForDisplayEvent) => any} [onReadyForDisplay] Call when the video is ready to play
  * @prop {import('expo-av/build/Video.types').ResizeMode | 'stretch' | 'cover' | 'contain'} [resizeMode] How the video should be scaled for display in the component, default 'stretch'
+ * @prop {number} [startPosition] Set the starting point
  *
  * @extends {Component<Props>}
  */
@@ -76,8 +77,10 @@ export default class Player extends Component {
   async _loadNewPlaybackInstance() {
     const source = this.props.source;
     // https://docs.expo.io/versions/v35.0.0/sdk/av/#default-initial-playbackstatustoset
+    /** @type {import('expo-av/build/AV').PlaybackStatusToSet} */
     const initialStatus = {
       shouldPlay: this.props.shouldPlay,
+      positionMillis: this.props.startPosition || 0,
       //isLooping: this.props.isLooping,
     };
     if (initialStatus.shouldPlay) {
@@ -94,6 +97,12 @@ export default class Player extends Component {
         this._onPlaybackStatusUpdate,
       );
       this.playbackInstance = sound;
+      if (this.props.onReadyForDisplay !== undefined) {
+        this.props.onReadyForDisplay({
+          naturalSize: null,
+          status: await sound.getStatusAsync(),
+        });
+      }
     }
     this.setState({isLoading: false});
   }
