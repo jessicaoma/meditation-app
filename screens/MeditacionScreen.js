@@ -20,7 +20,6 @@ export default class MeditacionScreen extends Component {
     super(props);
     /** @type {import('../utils/types').Meditación} */
     this.meditacion = props.navigation.getParam('meditacion', {});
-    this.isIntro = props.navigation.getParam('isIntro', false);
   }
 
   // /** @type {Player} */
@@ -30,16 +29,9 @@ export default class MeditacionScreen extends Component {
   // };
   /** @param {import('expo-av/build/AV').PlaybackStatus} status */
   onEnd = status => {
-    if (this.isIntro) {
-      this.props.navigation.replace('Meditacion', {
-        meditacion: this.meditacion,
-        isIntro: false,
-      });
-    } else {
-      // @ts-ignore
-      API.postDiarioMeditacion(this.meditacion.key, status.durationMillis);
-      this.props.navigation.goBack();
-    }
+    // @ts-ignore
+    API.postDiarioMeditacion(this.meditacion.key, status.durationMillis);
+    this.props.navigation.goBack();
   };
 
   render() {
@@ -48,9 +40,7 @@ export default class MeditacionScreen extends Component {
         <SafeAreaView>
           <ScreenBg
             source={{
-              uri: this.isIntro
-                ? this.meditacion.imagenIntro
-                : this.meditacion.imagenFondo,
+              uri: this.meditacion.imagenFondo,
             }}
             color={this.meditacion.color}
             // eslint-disable-next-line react-native/no-inline-styles
@@ -58,9 +48,7 @@ export default class MeditacionScreen extends Component {
             <View style={styles.container}>
               <Player
                 source={{
-                  uri: this.isIntro
-                    ? this.meditacion.intro
-                    : this.meditacion.media,
+                  uri: this.meditacion.media,
                 }}
                 //ref={this.refAudio}
                 showControls

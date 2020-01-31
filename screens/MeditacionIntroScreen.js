@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import {View, StyleSheet, SafeAreaView, TouchableOpacity} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
@@ -24,10 +24,9 @@ export default class MeditacionIntroScreen extends Component {
     this.meditacion = props.navigation.getParam('meditacion', {});
   }
 
-  goPlayerMeditar = isIntro => {
+  goPlayerMeditar = _ => {
     this.props.navigation.replace('Meditacion', {
       meditacion: this.meditacion,
-      isIntro,
     });
   };
 
@@ -35,15 +34,15 @@ export default class MeditacionIntroScreen extends Component {
     return (
       <>
         <SafeAreaView>
-          <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <ScreenBg
-              source={{uri: 'http://okoconnect.com/karim/images/crearcuenta-bg.png'}}
-              color={Colors.second}
-              // eslint-disable-next-line react-native/no-inline-styles
-              styleImage={{resizeMode: 'cover'}}>
-              <View style={styles.container}>
-                
-                <View style={styles.subcontainer}>
+          <ScreenBg
+            source={{
+              uri: 'http://okoconnect.com/karim/images/crearcuenta-bg.png',
+            }}
+            color={Colors.second}
+            // eslint-disable-next-line react-native/no-inline-styles
+            styleImage={{resizeMode: 'cover'}}>
+            <View style={styles.container}>
+              <View style={styles.subcontainer}>
                 <ScreenBg
                   source={{
                     uri: this.meditacion.imagenIntro,
@@ -52,7 +51,7 @@ export default class MeditacionIntroScreen extends Component {
                   styleImage={styles.imageBG}>
                   <Player
                     source={{
-                      uri: 'http://okoconnect.com/karim/videos/videoanimadointro2.mp4',
+                      uri: this.meditacion.intro,
                     }}
                     isVideo
                     styleVideo={styles.video}
@@ -60,24 +59,22 @@ export default class MeditacionIntroScreen extends Component {
                     showPlayFrame
                   />
                 </ScreenBg>
-                  <ScalableText style={styles.texto}>
-                      Para iniciar esta meditación cierra los ojos y comienza a relajarte, inhala y exhala profundamente tres veces y mientras lo haces comienza a sumergirte en tu cuerpo
-                    </ScalableText>
+                <ScalableText style={styles.texto}>
+                  Para iniciar esta meditación cierra los ojos y comienza a
+                  relajarte, inhala y exhala profundamente tres veces y mientras
+                  lo haces comienza a sumergirte en tu cuerpo
+                </ScalableText>
 
-                  
-                  <TouchableOpacity
-                    style={[styles.button, {backgroundColor: Colors.primaryDark}]}
-                    onPress={() => {
-                      this.goPlayerMeditar(false);
-                    }}>
-                    <ScalableText style={styles.title_boxes}>
-                      Comenzar meditación
-                    </ScalableText>
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  style={[styles.button, {backgroundColor: Colors.primaryDark}]}
+                  onPress={this.goPlayerMeditar}>
+                  <ScalableText style={styles.title_boxes}>
+                    Comenzar meditación
+                  </ScalableText>
+                </TouchableOpacity>
               </View>
-            </ScreenBg>
-          </ScrollView>
+            </View>
+          </ScreenBg>
         </SafeAreaView>
       </>
     );
@@ -85,6 +82,8 @@ export default class MeditacionIntroScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  video: {},
+  containBG: {},
   container: {
     width: '100%',
     height: '100%',
