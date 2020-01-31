@@ -22,6 +22,7 @@ import {millisToMinSeg} from '../utils/convert';
  * @prop {(event: import('expo-av/build/Video.types').ReadyForDisplayEvent) => any} [onReadyForDisplay] Call when the video is ready to play
  * @prop {import('expo-av/build/Video.types').ResizeMode | 'stretch' | 'cover' | 'contain'} [resizeMode] How the video should be scaled for display in the component, default 'stretch'
  * @prop {number} [startPosition] Set the starting point
+ * @prop {(isPlaying: boolean) => void} [onPlayPause] Callback when is press the button play/pause
  *
  * @extends {Component<Props>}
  */
@@ -143,6 +144,9 @@ export default class Player extends Component {
         this.playbackInstance.pauseAsync();
       } else {
         this.playbackInstance.playAsync();
+      }
+      if (this.props.onPlayPause !== undefined) {
+        this.props.onPlayPause(this.state.isPlaying);
       }
     }
   };

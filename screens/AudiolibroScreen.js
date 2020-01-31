@@ -56,7 +56,16 @@ export default class AudiolibroScreen extends Component {
     }, timer);
   };
 
-  onPlayPause = isPlaing => {};
+  onPlayPause = isPlaying => {
+    if (isPlaying) {
+      clearInterval(this.interval);
+      this._callApi();
+    } else {
+      this.interval = setInterval(() => {
+        this._callApi();
+      }, timer);
+    }
+  };
 
   /** @param {Player} ref*/
   refPlayer = ref => {
@@ -84,6 +93,7 @@ export default class AudiolibroScreen extends Component {
               shouldPlay
               onEnd={this.onEnd}
               onReadyForDisplay={this.onReady}
+              onPlayPause={this.onPlayPause}
             />
           </ScreenBg>
         </SafeAreaView>
