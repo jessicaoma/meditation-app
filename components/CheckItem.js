@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
+import ScalableText from 'react-native-text';
 
 /**
  * A Check Item
@@ -42,10 +43,10 @@ export default class CheckItem extends Component {
         <View style={[styles.circle, styleStatus.circle]}>
           <View style={[styles.checkedCircle, styleStatus.checkedCircle]} />
         </View>
-        <Text style={[styles.text, styleStatus.styleText]}>
+        <ScalableText style={[styles.text, styleStatus.styleText]}>
           {' '}
           {this.props.children}{' '}
-        </Text>
+        </ScalableText>
       </TouchableOpacity>
     );
   }
@@ -60,14 +61,22 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderWhite,
     backgroundColor: 'white',
     flexDirection: 'row',
+    alignItems: 'center',
     flex: 1,
+    height: 60,
+
   },
   text: {
     fontFamily: 'MyriadPro-Semibold',
-    lineHeight: 46,
-    fontSize: Dims.window.width * 0.038,
+    lineHeight: 15,
+    fontSize: 13,
     letterSpacing: 0.89,
     color: Colors.gray,
+    paddingHorizontal: 6,
+    paddingTop: 4,
+    textTransform: 'capitalize',
+    flexWrap: 'wrap',
+    flex: 1,
   },
   circle: {
     height: 20,

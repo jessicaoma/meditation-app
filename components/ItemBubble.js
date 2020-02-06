@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
+import ScalableText from 'react-native-text';
 
 /**
  * A button whit border radius 30º
@@ -124,10 +125,10 @@ export default class ItemBubble extends Component {
       <TouchableOpacity
         style={[styles.container, styleStatus.styleContainer]}
         onPress={onPress}>
-        <Text style={[styles.text, styleStatus.styleText]}>
+        <ScalableText style={[styles.text, styleStatus.styleText]}>
           {' '}
           {this.props.children}{' '}
-        </Text>
+        </ScalableText>
       </TouchableOpacity>
     );
   }
@@ -141,12 +142,21 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     paddingHorizontal: Dims.bigSpace,
     backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    height: 60,
   },
   text: {
     fontFamily: 'MyriadPro-Semibold',
-    lineHeight: 46,
-    fontSize: Dims.window.width * 0.038,
+    lineHeight: 15,
+    fontSize: 13,
     letterSpacing: 0.89,
     color: Colors.gray,
+    paddingHorizontal: 6,
+    paddingTop: 4,
+    textTransform: 'capitalize',
+    flexWrap: 'wrap',
+    flex: 1,
   },
 });
