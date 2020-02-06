@@ -29,10 +29,13 @@ export default class MeditacionesScreen extends Component {
     this.state = {
       /** @type {import('../utils/types').Meditación[]} */
       meditaciones: [],
+      /** @type {import('../utils/types').Video} */
+      video: {},
     };
   }
   async componentDidMount() {
     const data = await API.getMeditaciones();
+    const video = await API.getVideo('Meditaciones');
     // const data =
     // [{"key":"med1","titulo":"Básica","imagenIntro":"http://okoconnect.com/karim/images/meditar1-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar1-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar1.png","media":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","intro":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","isFree":true},
     // {"key":"med2","titulo":"El perdón","imagenIntro":"http://okoconnect.com/karim/images/meditar2-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar2-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar2.png","media":"http://okoconnect.com/karim/meditaciones/3_MeditacionParaPerdonar.mp3", "intro":"http://okoconnect.com/karim/meditaciones/3_MeditacionParaPerdonar.mp3","isFree":true},
@@ -47,8 +50,15 @@ export default class MeditacionesScreen extends Component {
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
       meditaciones: data,
+      video,
     });
+    this.player._loadNewPlaybackInstance();
   }
+
+  /** @param {Player} ref*/
+  refPlayer = ref => {
+    this.player = ref;
+  };
 
   /** @param {import('../utils/types').Meditación} item */
   _handleClick = item => {
@@ -81,13 +91,16 @@ export default class MeditacionesScreen extends Component {
         <Text style={styles.sectionTitle}>Meditaciones</Text>
         <ScreenBg
           source={{
-            uri: 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
+            //uri: 'http://okoconnect.com/karim/images/viaje-1-video-preview.png',
+            uri: this.state.video.imagenFondo,
           }}
           styleView={[styles.containBG, styles.cover]}
           styleImage={styles.imageBG}>
           <Player
+            ref={this.refPlayer}
             source={{
-              uri: 'http://okoconnect.com/karim/videos/video2.mp4',
+              //uri: 'http://okoconnect.com/karim/videos/video2.mp4',
+              uri: this.state.video.media,
             }}
             isVideo
             styleVideo={styles.video}

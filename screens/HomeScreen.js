@@ -65,7 +65,7 @@ export default class Home extends Component {
     /** @type {import("../utils/types").Video} */
     tutorial: {},
     /** @type {import("../utils/types").Video} */
-    bienvenida: {},
+    bienvenida: undefined,
   };
 
   async componentDidMount() {
@@ -73,9 +73,9 @@ export default class Home extends Component {
     const enprogreso = await API.getViajesEnProgreso(user);
     const lonuevo = await API.getLoNuevo();
     const reflexion = await API.getReflexionDelDia();
-
+    const bienvenida = await API.getVideo('Bienvenida');
     // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({enprogreso, lonuevo, reflexion});
+    this.setState({enprogreso, lonuevo, reflexion, bienvenida});
   }
 
   /** @param {{item: import("../utils/types").LoNuevo}} item*/
@@ -163,14 +163,18 @@ export default class Home extends Component {
   };
 
   goBienvenida = () => {
-    if (this.state.tutorial.media === undefined) return;
+    if (this.state.bienvenida === undefined) {
+      return;
+    }
     this.props.navigation.navigate('Bienvenida', {
       video: this.state.bienvenida,
     });
   };
 
   goTutorial = () => {
-    if (this.state.tutorial.media === undefined) return;
+    if (this.state.tutorial.media === undefined) {
+      return;
+    }
     this.props.navigation.navigate('Tutorial', {
       video: this.state.tutorial,
     });

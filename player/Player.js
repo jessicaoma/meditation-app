@@ -77,6 +77,9 @@ export default class Player extends Component {
 
   async _loadNewPlaybackInstance() {
     const source = this.props.source;
+    if (typeof source !== 'number' && source.uri === undefined) {
+      return null;
+    }
     // https://docs.expo.io/versions/v35.0.0/sdk/av/#default-initial-playbackstatustoset
     /** @type {import('expo-av/build/AV').PlaybackStatusToSet} */
     const initialStatus = {

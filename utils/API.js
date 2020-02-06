@@ -172,6 +172,16 @@ class Api {
       headers: {'Content-Type': 'application/json'},
     });
   }
+
+  /** Busca uno de los siguientes videos (Bienvenida, Tutorial, MeditacionesIntro)
+   * @param {string} titulo Titulo del video
+   * @returns {Promise<import("./types").Video>}
+   */
+  async getVideo(titulo) {
+    const query = await fetch(`${BASE_API}videos/${titulo}`);
+    const data = await query.json();
+    return data;
+  }
 }
 
 export default new Api();
