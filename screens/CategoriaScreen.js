@@ -12,6 +12,7 @@ import Dimensions from '../constants/Dimensions';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 //TODO control de que viaje visitar dado su estado
+//TODO compartir color de la categoria
 /**
  * @typedef {Object} ParamsNavigation
  * @prop {import('../utils/types').Categoria} categoria
@@ -39,7 +40,7 @@ export default class Categoria extends Component {
   }
 
   componentDidMount = async () => {
-    const viajes = await API.getViajesCategoria(this.categoria.key, user);
+    let viajes = await API.getViajesCategoria(this.categoria.key, user);
     this.setState({viajes});
     //console.log(viajes);
   };
@@ -59,7 +60,8 @@ export default class Categoria extends Component {
           uri: this.categoria.imagenPrevia,
         }}
         styleView={[styles.containBG, styles.cover]}
-        styleImage={styles.imageBG}>
+        styleImage={styles.imageBG}
+        color={this.categoria.color}>
         <Player
           source={{
             uri: this.categoria.media,

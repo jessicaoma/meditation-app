@@ -167,7 +167,7 @@ export default class PasoAScreen extends Component {
             onScroll={Animated.event([
               {nativeEvent: {contentOffset: {x: this.animVal}}},
             ])}
-            style={styles.slider}>
+            style={[styles.slider, {backgroundColor: steps[position].color}]}>
             {imageArray}
           </ScrollView>
           <View style={styles.barContainer}>{barArray}</View>

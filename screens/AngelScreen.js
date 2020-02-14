@@ -15,7 +15,7 @@ import Colors from '../constants/Colors';
 /**
  * @typedef {Object} ParamsNavigation
  * @prop {import('./AngelCartasScreen').Card} carta
- * @prop {import('../utils/types').AngelMensaje} mensaje
+ * @prop {import('../utils/types').AngelMensaje} angel
  *
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
@@ -30,6 +30,7 @@ export default class AngelScreen extends Component {
   animVal = new Animated.Value(0);
 
   render() {
+    /** @type {ParamsNavigation} */
     const {carta, angel} = this.props.navigation.state.params;
     const numItems = carta.faces.length;
     const itemWidth =
@@ -46,7 +47,9 @@ export default class AngelScreen extends Component {
             <View />
           ) : (
             <View style={styles.topBox}>
-              <Text style={styles.headline}>{angel.mensaje}</Text>
+              <Text style={styles.headline}>
+                {angel.titulo} {angel.mensaje}
+              </Text>
             </View>
           )}
         </ImageBackground>

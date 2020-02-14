@@ -102,6 +102,9 @@ export default class ViajeScreen extends Component {
 
   async componentDidMount() {
     const pasos = await API.getPasosDelViaje(this.viaje.key, user);
+    pasos.forEach(paso => {
+      paso.color = this.viaje.color;
+    });
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({pasos});
   }

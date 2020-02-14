@@ -17,7 +17,7 @@ import {millisToMinSeg} from '../utils/convert';
  * @prop {boolean} [showPlayFrame] Indicate that the incial play button controls most be show, default false
  * @prop {boolean} [shouldPlay] A boolean describing if the media is supposed to play
  * @prop {import('react-native').ViewStyle|import('react-native').StyleSheet.absoluteFill} [style] Style to aplie to View container
- * @prop {import('react-native').ViewStyle} [styleVideo] Style for the video
+ * @prop {import('react-native').ViewStyle|import('react-native').ViewStyle[]} [styleVideo] Style for the video
  * @prop {(status: import('expo-av/build/AV').PlaybackStatus) => void} [onEnd] Callback when media is ends
  * @prop {(event: import('expo-av/build/Video.types').ReadyForDisplayEvent) => any} [onReadyForDisplay] Call when the video is ready to play
  * @prop {import('expo-av/build/Video.types').ResizeMode | 'stretch' | 'cover' | 'contain'} [resizeMode] How the video should be scaled for display in the component, default 'stretch'

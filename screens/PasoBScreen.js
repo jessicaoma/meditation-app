@@ -45,7 +45,7 @@ export default class PasoBScreen extends Component {
           style={{flex: 1}}>
           <ScreenBg
             source={{uri: steps[position].imagenFondo}}
-            //color={'#fdd58d'}
+            color={steps[position].color}
             // eslint-disable-next-line react-native/no-inline-styles
             styleImage={{resizeMode: 'cover'}}>
             <Player

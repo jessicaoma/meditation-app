@@ -148,7 +148,7 @@ export default class PasoCScreen extends Component {
           // eslint-disable-next-line react-native/no-inline-styles
           style={{flex: 1}}>
           <ImageBackground
-            style={[styles.container]}
+            style={[styles.container, {backgroundColor: steps[position].color}]}
             source={{
               uri: steps[position].imagenFondo,
             }}>
