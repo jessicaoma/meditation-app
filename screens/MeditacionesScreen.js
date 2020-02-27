@@ -124,7 +124,6 @@ export default class MeditacionesScreen extends Component {
       <SafeAreaView style={styles.mainContainer}>
         <NavigationEvents
           onWillBlur={payload => {
-            console.log("willblur")
             if (this.player.state.isPlaying) {
               this.player._onPlayPausePressed();
             }

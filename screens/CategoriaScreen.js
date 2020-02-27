@@ -133,7 +133,6 @@ export default class Categoria extends Component {
       <SafeAreaView>
         <NavigationEvents
           onWillBlur={payload => {
-            console.log("willblur")
             if (this.player.state.isPlaying) {
               this.player._onPlayPausePressed();
             }
