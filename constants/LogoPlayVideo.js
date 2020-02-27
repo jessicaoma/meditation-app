@@ -5,9 +5,9 @@ export default class LogoPlayVideo extends Component {
   render() {
     return (
       <Svg
-        viewBox="0 0 117.6 76.17"
+        viewBox="0 0 117.6 78"
         width="60"
-        height="38"
+        height="40"
         preserveAspectRatio="xMinYMin slice">
         <G id="Layer_2" data-name="Layer 2">
           <G id="Layer_1-2" data-name="Layer 1">
