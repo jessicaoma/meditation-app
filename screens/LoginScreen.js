@@ -53,7 +53,7 @@ export default class LoginScreen extends Component {
                     blurOnSubmit={false}
                   />
                   <InputLogin
-                    placeholder="Constraseña"
+                    placeholder="Contraseña"
                     type="password"
                     inputRef={this.refPassword}
                   />
