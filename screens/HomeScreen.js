@@ -74,8 +74,9 @@ export default class Home extends Component {
     const lonuevo = await API.getLoNuevo();
     const reflexion = await API.getReflexionDelDia();
     const bienvenida = await API.getVideo('Bienvenida');
+    const tutorial = await API.getVideo('Tutorial');
     // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({enprogreso, lonuevo, reflexion, bienvenida});
+    this.setState({enprogreso, lonuevo, reflexion, bienvenida, tutorial});
   }
 
   /** @param {{item: import("../utils/types").LoNuevo}} item*/
@@ -87,7 +88,6 @@ export default class Home extends Component {
       case enumLoNuevo.audiolibro:
         color = item.audiolibro.color;
         titulo = item.audiolibro.titulo;
-        //TODO pensar como hacer para el progreso en el audiolibro
         onpress = () => {
           this.props.navigation.navigate('AudioLibro', {
             audiolibro: item.audiolibro,
@@ -163,18 +163,12 @@ export default class Home extends Component {
   };
 
   goBienvenida = () => {
-    if (this.state.bienvenida === undefined) {
-      return;
-    }
     this.props.navigation.navigate('Bienvenida', {
       video: this.state.bienvenida,
     });
   };
 
   goTutorial = () => {
-    if (this.state.tutorial.media === undefined) {
-      return;
-    }
     this.props.navigation.navigate('Tutorial', {
       video: this.state.tutorial,
     });

@@ -5,38 +5,31 @@ import {SafeAreaView} from 'react-native';
 
 /**
  * @typedef {object} Props
- * @prop {import('react-navigation').NavigationScreenProp} [navigation]
+ * @prop {import('react-navigation').NavigationScreenProp} navigation
  * @extends {Component<Props>}
  */
 export default class TutorialScreen extends Component {
   static navigationOptions = ({navigation}) => {
-    //let reflexion = navigation.getParam('reflexion', {title: 'Meditación'});
-    return {title: 'Tutorial', headerBackTitle: null};
+    /** @type {import("../utils/types").Video} */
+    let video = navigation.getParam('video', {titulo: 'Turotial'});
+    return {title: video.titulo, headerBackTitle: null};
   };
 
   render() {
-    const {navigation} = this.props;
-    let reflexion = navigation.getParam('reflexion', {});
+    /** @type {import("../utils/types").Video} */
+    let video = this.props.navigation.getParam('video', {});
     return (
-      <>
-        <SafeAreaView>
-          <ScreenBg
-            source={{
-              uri: 'http://okoconnect.com/karim/images/video-preview.jpeg',
-            }}
-            color={reflexion.color}
-            styleImage={{resizeMode: 'contain'}}>
-            <Player
-              source={{
-                uri:
-                  'http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3',
-              }}
-              showControls
-              shouldPlay
-            />
-          </ScreenBg>
-        </SafeAreaView>
-      </>
+      <SafeAreaView
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={{flex: 1}}>
+        <ScreenBg
+          source={{uri: video.imagenFondo}}
+          color={video.color}
+          // eslint-disable-next-line react-native/no-inline-styles
+          styleImage={{resizeMode: 'contain'}}>
+          <Player source={{uri: video.media}} showControls shouldPlay isVideo />
+        </ScreenBg>
+      </SafeAreaView>
     );
   }
 }
