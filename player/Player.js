@@ -5,8 +5,6 @@ import Controls from './Controls';
 import ScreenView from './ScreenView';
 import PlayVideoButton from '../components/playVideoButton';
 import {millisToMinSeg} from '../utils/convert';
-//TODO agregar llamada en play/pause
-//TODO agregar posicion inicial para la reproduccion (audiolibro)
 
 /**
  * Player componet for all media used in the app

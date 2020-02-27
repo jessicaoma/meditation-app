@@ -6,7 +6,6 @@ import LogoReloj from '../constants/LogoReloj';
 import ScalableText from 'react-native-text';
 import colors from '../constants/Colors';
 import API, {user} from '../utils/API';
-//TODO llamar al api
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation

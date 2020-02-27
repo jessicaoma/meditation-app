@@ -11,6 +11,7 @@ import Player from '../player/Player';
 import Dimensions from '../constants/Dimensions';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
+import {NavigationEvents} from 'react-navigation';
 //TODO control de que viaje visitar dado su estado
 //TODO compartir color de la categoria
 /**
@@ -53,6 +54,11 @@ export default class Categoria extends Component {
     });
   };
 
+  /** @param {Player} ref*/
+  refPlayer = ref => {
+    this.player = ref;
+  };
+
   renderListHeader = _ => {
     return (
       <ScreenBg
@@ -63,6 +69,7 @@ export default class Categoria extends Component {
         styleImage={styles.imageBG}
         color={this.categoria.color}>
         <Player
+          ref={this.refPlayer}
           source={{
             uri: this.categoria.media,
           }}
@@ -124,6 +131,14 @@ export default class Categoria extends Component {
     this.categoria = this.props.navigation.state.params.categoria;
     return (
       <SafeAreaView>
+        <NavigationEvents
+          onWillBlur={payload => {
+            console.log("willblur")
+            if (this.player.state.isPlaying) {
+              this.player._onPlayPausePressed();
+            }
+          }}
+        />
         <ScreenBg
           source={{uri: this.categoria.imagenFondo}}
           // color={this.categoria.color}>

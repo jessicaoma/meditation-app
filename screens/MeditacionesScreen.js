@@ -16,6 +16,7 @@ import API from '../utils/API';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import ScalableText from 'react-native-text';
+import {NavigationEvents} from 'react-navigation';
 
 /**
  * @typedef Props
@@ -121,6 +122,14 @@ export default class MeditacionesScreen extends Component {
   render = () => (
     <>
       <SafeAreaView style={styles.mainContainer}>
+        <NavigationEvents
+          onWillBlur={payload => {
+            console.log("willblur")
+            if (this.player.state.isPlaying) {
+              this.player._onPlayPausePressed();
+            }
+          }}
+        />
         <View style={styles.statusBar} />
         <FlatList
           data={this.state.meditaciones}

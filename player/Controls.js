@@ -4,6 +4,7 @@ import {Text, TouchableOpacity, StyleSheet, View, Platform} from 'react-native';
 import Slider from 'react-native-slider';
 import {Ionicons} from '@expo/vector-icons';
 import colors from '../constants/Colors';
+import {envRemoto} from '../utils/types';
 
 /**
  * @typedef {Object} Props Properties of the component
@@ -18,9 +19,7 @@ import colors from '../constants/Colors';
 
 const ICON_PLAY_BUTTON = 'md-play';
 const ICON_PAUSE_BUTTON = 'md-pause';
-//TODO cambiar la validacion pues ya no se usa expo snack
-const envProd = process.env.NODE_ENV === 'production';
-const sliderThumb = envProd
+const sliderThumb = envRemoto
   ? {
       uri: 'http://okoconnect.com/karim/assets/images/sliderimage.png',
       width: 10,

@@ -31,8 +31,6 @@ export default class AudiolibroScreen extends Component {
   componentWillUnmount() {
     clearInterval(this.interval);
   }
-  //TODO registrar en pause/play el progreso
-  //TODO registrar al finalizar el audiolibro a 0
 
   /** @param {import('expo-av/build/AV').PlaybackStatus} status */
   onEnd = status => {

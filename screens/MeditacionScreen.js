@@ -3,7 +3,6 @@ import {View, StyleSheet, SafeAreaView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import API from '../utils/API';
-//TODO regsitrar meditacion completada
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{param:{meditacion:import('../utils/types').Meditación}}>} navigation
