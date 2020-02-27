@@ -16,12 +16,18 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "bundleIdentifier": "com.okotecnologia.karimtemple",
       "supportsTablet": true,
       "infoPlist": {
         "UIBackgroundModes": [
           "audio"
         ]
-      }
-    }
+      },
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.okotecnologia.karimtemple",
+      "versionCode": 1
+    },
   }
 }
