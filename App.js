@@ -5,8 +5,8 @@ import * as Font from 'expo-font';
 import React, {useState} from 'react';
 import {StatusBar, StyleSheet, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
-
 import AppNavigator from './navigation/AppNavigator';
+import {envRemoto} from './utils/types';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -32,8 +32,6 @@ export default function App(props) {
 }
 
 async function loadResourcesAsync() {
-  //TODO cambiar la validacion pues ya no se usa expo snack
-  const envProd = process.env.NODE_ENV === 'production';
   await Promise.all([
     Asset.loadAsync([
       require('./assets/images/splash-bg.png'),
@@ -57,16 +55,16 @@ async function loadResourcesAsync() {
       ...Ionicons.font,
       // We include SpaceMono because we use it in HomeScreen.js. Feel free to
       // remove this if you are not using it in your app
-      'MyriadPro-Bold': envProd
-        ? 'http://okoconnect.com/karim/assets/fonts/MyriadPro-bold.ttf'
-        : require('./assets/fonts/MyriadPro-bold.ttf'),
-      'MyriadPro-Semibold': envProd
-        ? 'http://okoconnect.com/karim/assets/fonts/MyriadPro-semibold.ttf'
-        : require('./assets/fonts/MyriadPro-semibold.ttf'),
-      'MyriadPro-Regular': envProd
-        ? 'http://okoconnect.com/karim/assets/fonts/MyriadPro-regular.ttf'
-        : require('./assets/fonts/MyriadPro-regular.ttf'),
-      'SFProText-Medium': envProd
+      'MyriadPro-Bold': envRemoto
+        ? 'http://okoconnect.com/karim/assets/fonts/MyriadPro-Bold.ttf'
+        : require('./assets/fonts/MyriadPro-Bold.ttf'),
+      'MyriadPro-Semibold': envRemoto
+        ? 'http://okoconnect.com/karim/assets/fonts/MyriadPro-Semibold.ttf'
+        : require('./assets/fonts/MyriadPro-Semibold.ttf'),
+      'MyriadPro-Regular': envRemoto
+        ? 'http://okoconnect.com/karim/assets/fonts/MyriadPro-Regular.ttf'
+        : require('./assets/fonts/MyriadPro-Regular.ttf'),
+      'SFProText-Medium': envRemoto
         ? 'http://okoconnect.com/karim/assets/fonts/SFProText-Medium.ttf'
         : require('./assets/fonts/SFProText-Medium.ttf'),
     }),

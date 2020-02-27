@@ -13,16 +13,15 @@ import colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
+import {envRemoto} from '../utils/types';
 
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
  */
 
-//TODO cambiar la validacion pues ya no se usa expo snack
 //TODO se consultara las emociones para sus data base, y se guardara en redux
 //TODO registrar seleccion
-const envProd = process.env.NODE_ENV === 'production';
 const numColumns = 2;
 
 // datos que son fijos dentro de la app
@@ -36,7 +35,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-1.png',
     headerH: 0.1,
     footerH: 0.35,
-    imagen: envProd
+    imagen: envRemoto
       ? {
           uri:
             'http://okoconnect.com/karim/assets/images/emociones/emocion-1.png',
@@ -52,7 +51,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-2.png',
     headerH: 0.1,
     footerH: 0.3,
-    imagen: envProd
+    imagen: envRemoto
       ? {
           uri:
             'http://okoconnect.com/karim/assets/images/emociones/emocion-2.png',
@@ -68,7 +67,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-3.png',
     headerH: 0.35,
     footerH: 0.35,
-    imagen: envProd
+    imagen: envRemoto
       ? {
           uri:
             'http://okoconnect.com/karim/assets/images/emociones/emocion-3.png',
@@ -84,7 +83,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-4.png',
     headerH: 0.45,
     footerH: 0.2,
-    imagen: envProd
+    imagen: envRemoto
       ? {
           uri:
             'http://okoconnect.com/karim/assets/images/emociones/emocion-4.png',

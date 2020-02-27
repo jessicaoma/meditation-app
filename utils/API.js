@@ -1,9 +1,10 @@
+/* eslint-disable no-undef */
 import {dateToStrYYYYMMDD} from './convert';
+import {envRemoto} from './types';
 
-const BASE_API =
-  process.env.NODE_ENV === 'production'
-    ? 'http://okotesting-001.azurewebsites.net/api/'
-    : 'http://localhost:5000/api/';
+const BASE_API = envRemoto
+  ? 'http://okotesting-001.azurewebsites.net/api/'
+  : 'http://localhost:5000/api/';
 
 class Api {
   /** Consulta las meditaciones

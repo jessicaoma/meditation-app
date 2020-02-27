@@ -6,6 +6,7 @@ import HalfCover from '../components/HalfCover';
 import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
+import {envRemoto} from '../utils/types';
 
 /**
  * @typedef {Object} Card
@@ -16,8 +17,7 @@ import API from '../utils/API';
  * @prop {import('react-navigation').NavigationScreenProp} navigation
  */
 
-//TODO cambiar la validacion pues ya no se usa expo snack
-const envProd = process.env.NODE_ENV === 'production';
+//TODO registrar seleccion
 const numColumns = 2;
 
 /**@type {Card[]} */
@@ -25,13 +25,13 @@ const data = [
   {
     key: 'cartaA',
     faces: [
-      envProd
-        ? {uri: 'http://okoconnect.com/karim/assets/images/angel/angel1.png'}
+      envRemoto
+        ? {uri: 'http://okoconnect.com/karim/assets/angeles/angel1.png'}
         : require('../assets/images/angel/angel1.png'),
-      envProd
+      envRemoto
         ? {
             uri:
-              'http://okoconnect.com/karim/assets/images/angel/angelreve1-vacio.png',
+              'http://okoconnect.com/karim/assets/angeles/angelreve1-vacio.png',
           }
         : require('../assets/images/angel/angelreve1-vacio.png'),
     ],
@@ -39,13 +39,13 @@ const data = [
   {
     key: 'cartaB',
     faces: [
-      envProd
-        ? {uri: 'http://okoconnect.com/karim/assets/images/angel/angel2.png'}
+      envRemoto
+        ? {uri: 'http://okoconnect.com/karim/assets/angeles/angel2.png'}
         : require('../assets/images/angel/angel2.png'),
-      envProd
+      envRemoto
         ? {
             uri:
-              'http://okoconnect.com/karim/assets/images/angel/angelreve2-vacio.png',
+              'http://okoconnect.com/karim/assets/angeles/angelreve2-vacio.png',
           }
         : require('../assets/images/angel/angelreve2-vacio.png'),
     ],
@@ -53,13 +53,13 @@ const data = [
   {
     key: 'cartaC',
     faces: [
-      envProd
-        ? {uri: 'http://okoconnect.com/karim/assets/images/angel/angel3.png'}
+      envRemoto
+        ? {uri: 'http://okoconnect.com/karim/assets/angeles/angel3.png'}
         : require('../assets/images/angel/angel3.png'),
-      envProd
+      envRemoto
         ? {
             uri:
-              'http://okoconnect.com/karim/assets/images/angel/angelreve3-vacio.png',
+              'http://okoconnect.com/karim/assets/angeles/angelreve3-vacio.png',
           }
         : require('../assets/images/angel/angelreve3-vacio.png'),
     ],
@@ -67,13 +67,13 @@ const data = [
   {
     key: 'cartaD',
     faces: [
-      envProd
-        ? {uri: 'http://okoconnect.com/karim/assets/images/angel/angel4.png'}
+      envRemoto
+        ? {uri: 'http://okoconnect.com/karim/assets/angeles/angel4.png'}
         : require('../assets/images/angel/angel4.png'),
-      envProd
+      envRemoto
         ? {
             uri:
-              'http://okoconnect.com/karim/assets/images/angel/angelreve4-vacio.png',
+              'http://okoconnect.com/karim/assets/angeles/angelreve4-vacio.png',
           }
         : require('../assets/images/angel/angelreve4-vacio.png'),
     ],

@@ -162,3 +162,5 @@ export const enumPaso = {
   /** Value 6 */
   Cierre: 6,
 };
+
+export const envRemoto = false;

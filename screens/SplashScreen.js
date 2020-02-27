@@ -1,8 +1,10 @@
+// @ts-nocheck
 import React from 'react';
 import {StyleSheet, SafeAreaView, Image, StatusBar} from 'react-native';
 import Colors from '../constants/Colors';
 import Logo from '../components/Logo';
 import Dimensions from '../constants/Dimensions';
+import {envRemoto} from '../utils/types';
 
 const aspectRadioImage = 320 / 236;
 /**
@@ -17,15 +19,14 @@ export default function SplashScreen({navigation}) {
   setTimeout(() => {
     navigation.navigate('Login');
   }, 1000);
-  //TODO cambiar la validacion pues ya no se usa expo snack
-  const envProd = process.env.NODE_ENV === 'production';
+  //TODO revisar como mejorar la experiencia
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.contaner}>
         <Image
           source={
-            envProd
+            envRemoto
               ? {
                   uri:
                     'http://okoconnect.com/karim/assets/images/splash-bg.png',
