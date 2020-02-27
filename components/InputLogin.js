@@ -67,7 +67,7 @@ export default class InputLogin extends Component {
         ) : (
           <>
             <TextInput
-              style={[styles.inputText, style]}
+              style={[styles.inputText, styles.inputPassword, style]}
               placeholder={placeholder}
               placeholderTextColor="#ABA0B5"
               secureTextEntry={this.state.password}
@@ -116,12 +116,14 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     position: 'relative',
   },
+  inputPassword: {
+    width: '92%',
+  },
   eyeImage: {
     width: 24,
     height: 24,
     color: '#97a3ce',
-    position: 'absolute',
+    position: 'relative',
     right: 0,
-    top: -13,
   },
 });
