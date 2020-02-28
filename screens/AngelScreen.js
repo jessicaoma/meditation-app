@@ -28,10 +28,12 @@ const FIXED_BAR_WIDTH = 40;
 /** @extends {Component<Props>} */
 export default class AngelScreen extends Component {
   animVal = new Animated.Value(0);
-
   render() {
     /** @type {ParamsNavigation} */
     const {carta, angel} = this.props.navigation.state.params;
+    const locationAfirma = angel.mensaje.indexOf('Afirma');
+    const mensajeSub = angel.mensaje.substring(0, locationAfirma);
+    const afirmaSup = angel.mensaje.substring(locationAfirma);
     const numItems = carta.faces.length;
     const itemWidth =
       FIXED_BAR_WIDTH / numItems - (numItems - 1) * Dims.smallSpace;
@@ -48,7 +50,8 @@ export default class AngelScreen extends Component {
           ) : (
             <View style={styles.topBox}>
               <Text style={styles.headline}>
-                {angel.titulo} {angel.mensaje}
+                <Text style={styles.negrita}>{angel.titulo}</Text> {mensajeSub}{' '}
+                <Text style={styles.negrita}>{afirmaSup}</Text>
               </Text>
             </View>
           )}
@@ -160,9 +163,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 33,
     textAlign: 'center',
+    textAlignVertical: 'center',
     color: Colors.gray,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 60,
+    height: '100%',
   },
+  negrita: {fontWeight: 'bold'},
 });
