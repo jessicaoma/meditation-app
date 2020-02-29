@@ -14,6 +14,7 @@ import Dims from '../constants/Dimensions';
 import API from '../utils/API';
 import Constants from 'expo-constants';
 import ScalableText from 'react-native-text';
+import SvgUri from 'react-native-svg-uri';
 
 /**
  * @typedef Props
@@ -59,8 +60,11 @@ export default class Categorias extends Component {
       onPress={() => {
         this._handleClick(item);
       }}>
-      <ScalableText style={styles.title_boxes}>{item.titulo}</ScalableText>
-      <Image style={styles.image} source={{uri: item.imagenLista}} />
+
+      <ScalableText style={styles.title_boxes}>{item.titulo} </ScalableText>
+      <SvgUri
+      style={styles.image}
+      source={{uri:item.imagenLista}} />
     </Buttom>
   );
   render() {
@@ -91,6 +95,7 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: Dims.regularSpace,
+    zIndex: 1,
   },
   sectionTitle: {
     fontSize: Dims.h2,
@@ -114,9 +119,14 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Regular',
   },
   image: {
-    resizeMode: 'cover',
-    width: 83,
-    borderBottomRightRadius: 20,
-    borderTopRightRadius: 20,
+    resizeMode: 'contain',
+    maxHeight:80,
+    width: 110,
+    borderBottomRightRadius: 25,
+    borderTopRightRadius: 25,
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
   },
 });
