@@ -94,13 +94,13 @@ export default class CrearCuentaScreen extends Component {
                     inputRef={this.refEmail}
                   />
                   <InputLogin
-                    placeholder="Constraseña"
+                    placeholder="Contraseña"
                     type="password"
                     onSubmitEditing={this.goPassword2}
                     inputRef={this.refPassword}
                   />
                   <InputLogin
-                    placeholder="Confirmar Constraseña"
+                    placeholder="Confirmar Contraseña"
                     type="password"
                     inputRef={this.refPassword2}
                   />
