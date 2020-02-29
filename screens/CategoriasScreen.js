@@ -32,6 +32,7 @@ export default class Categorias extends Component {
 
   async componentDidMount() {
     const data = await API.getCategorias();
+
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
       categorias: data,

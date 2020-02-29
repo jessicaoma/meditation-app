@@ -17,6 +17,7 @@ import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import ScalableText from 'react-native-text';
 import {NavigationEvents} from 'react-navigation';
+import SvgUri from 'react-native-svg-uri';
 
 /**
  * @typedef Props
@@ -37,18 +38,6 @@ export default class MeditacionesScreen extends Component {
   async componentDidMount() {
     const data = await API.getMeditaciones();
     const video = await API.getVideo('Meditaciones');
-    // const data =
-    // [{"key":"med1","titulo":"Básica","imagenIntro":"http://okoconnect.com/karim/images/meditar1-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar1-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar1.png","media":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","intro":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","isFree":true},
-    // {"key":"med2","titulo":"El perdón","imagenIntro":"http://okoconnect.com/karim/images/meditar2-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar2-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar2.png","media":"http://okoconnect.com/karim/meditaciones/3_MeditacionParaPerdonar.mp3", "intro":"http://okoconnect.com/karim/meditaciones/3_MeditacionParaPerdonar.mp3","isFree":true},
-    // {"key":"med3","titulo":"Gratitud","imagenIntro":"http://okoconnect.com/karim/images/meditar3-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar3-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar3.png","media":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3", "intro":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","isFree":true},
-    // {"key":"med4","titulo":"Conecta con tu corazón","imagenIntro":"http://okoconnect.com/karim/images/meditar4-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar4-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar4.png","media":"http://okoconnect.com/karim/meditaciones/2_MeditacionParaconectarconelcorazon.mp3", "intro":"http://okoconnect.com/karim/meditaciones/2_MeditacionParaconectarconelcorazon.mp3","isFree":true},
-    // {"key":"med5","titulo":"Conecta con tus ángeles","imagenIntro":"http://okoconnect.com/karim/images/meditar5-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar5-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar5.png","media":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3", "intro":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","isFree":true},
-    // {"key":"med6","titulo":"Habla con tu ira","imagenIntro":"http://okoconnect.com/karim/images/meditar6-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar6-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar6.png","media":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","intro":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","isFree":true},
-    // {"key":"med7","titulo":"Vuelve a tu centro","imagenIntro":"http://okoconnect.com/karim/images/meditar7-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar7-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar7.png","media":"https://s3.amazonaws.com/exp-us-standard/audio/playlist-example/Comfort_Fit_-_03_-_Sorry.mp3","intro":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","isFree":true},
-    // {"key":"med8","titulo":"Visualiza tus deseos","imagenIntro":"http://okoconnect.com/karim/images/meditar8-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar8-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar8.png","media":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","intro":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","isFree":true},
-    // {"key":"med9","titulo":"Equilibra tus chakras","imagenIntro":"http://okoconnect.com/karim/images/meditar9-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar9-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar9.png","media":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","intro":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","isFree":true},
-    // {"key":"med10","titulo":"Conecta con tu respiración","imagenIntro":"http://okoconnect.com/karim/images/meditar10-intro.png","imagenFondo":"http://okoconnect.com/karim/images/meditar10-full.png","color":"#7883a4","imagenLista":"http://okoconnect.com/karim/images/meditar10.png","media":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","intro":"http://okoconnect.com/karim/meditaciones/Meditacion-Basica.mp3","isFree":true}];
-    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
       meditaciones: data,
       video,
@@ -80,7 +69,7 @@ export default class MeditacionesScreen extends Component {
           this._handleClick(item);
         }}>
         <ScalableText style={styles.title_boxes}>{item.titulo}</ScalableText>
-        <Image style={styles.image} source={{uri: item.imagenLista}} />
+        <SvgUri style={styles.image} source={{uri: item.imagenLista}} />
       </Buttom>
     );
   };
@@ -179,10 +168,14 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Regular',
   },
   image: {
-    resizeMode: 'cover',
-    width: 92,
-    borderTopRightRadius: 50,
-    borderBottomRightRadius: 50,
+    resizeMode: 'contain',
+    width: 115,
+    borderTopRightRadius: 25,
+    borderBottomRightRadius: 25,
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
   },
   containBG: {
     borderRadius: 20,
