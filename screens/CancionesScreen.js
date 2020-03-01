@@ -12,6 +12,7 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import API from '../utils/API';
+import SvgUri from 'react-native-svg-uri';
 
 /**
  * @typedef Props
@@ -128,6 +129,7 @@ export default class Canciones extends Component {
 
   async componentDidMount() {
     const data = await API.getCanciones();
+    
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
       canciones: data,
@@ -158,7 +160,7 @@ export default class Canciones extends Component {
         this._handleClick(item);
       }}>
       <ScalableText style={styles.title_boxes}>{item.titulo}</ScalableText>
-      <Image style={styles.image} source={{uri: item.imagenLista}} />
+      <SvgUri style={styles.image} source={{uri: item.imagenLista}} />
     </Buttom>
   );
   render() {
@@ -204,8 +206,8 @@ const styles = StyleSheet.create({
     maxWidth: '75%',
   },
   image: {
-    resizeMode: 'contain',
-    width: 90,
+    resizeMode: 'cover',
+    width: 'auto',
     borderBottomRightRadius: 20,
     borderTopRightRadius: 20,
   },
