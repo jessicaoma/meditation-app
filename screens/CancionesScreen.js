@@ -3,7 +3,6 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  Image,
   ActivityIndicator,
   SafeAreaView,
 } from 'react-native';
@@ -129,7 +128,6 @@ export default class Canciones extends Component {
 
   async componentDidMount() {
     const data = await API.getCanciones();
-    
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
       canciones: data,

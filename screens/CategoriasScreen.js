@@ -3,7 +3,6 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  Image,
   View,
   ActivityIndicator,
   SafeAreaView,
@@ -61,11 +60,8 @@ export default class Categorias extends Component {
       onPress={() => {
         this._handleClick(item);
       }}>
-
-      <ScalableText style={styles.title_boxes}>{item.titulo} </ScalableText>
-      <SvgUri
-      style={styles.image}
-      source={{uri:item.imagenLista}} />
+      <ScalableText style={styles.title_boxes}>{item.titulo}</ScalableText>
+      <SvgUri style={styles.image} source={{uri: item.imagenLista}} />
     </Buttom>
   );
   render() {
@@ -121,7 +117,7 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: 'contain',
-    maxHeight:80,
+    maxHeight: 80,
     width: 110,
     borderBottomRightRadius: 25,
     borderTopRightRadius: 25,
