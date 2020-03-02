@@ -58,7 +58,7 @@ export default class PasoGScreen extends Component {
               <View style={styles.containerHalfBottom}>
                 <Text style={styles.headline}>Felicidades!</Text>
                 <Text style={styles.paragraph}>
-                  Haz terminado tu viaje "¿Qué es ser feliz?"
+                  {steps[position].contenidos[0].texto}
                 </Text>
                 <TouchableOpacity
                   style={{
