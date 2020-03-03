@@ -13,7 +13,7 @@ import Dims from '../constants/Dimensions';
 import API from '../utils/API';
 import Constants from 'expo-constants';
 import ScalableText from 'react-native-text';
-import SvgUri from 'react-native-svg-uri';
+import SvgUri from '../components/SvgUri';
 
 /**
  * @typedef Props

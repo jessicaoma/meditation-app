@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dims.regularSpace,
     marginBottom: 20,
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   inputText: {
     width: '100%',
@@ -112,7 +113,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     minHeight: 55,
     fontFamily: 'MyriadPro-Regular',
-    backgroundColor: 'white',
     borderRadius: 50,
     position: 'relative',
   },

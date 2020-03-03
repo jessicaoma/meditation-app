@@ -16,7 +16,7 @@ import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import ScalableText from 'react-native-text';
 import {NavigationEvents} from 'react-navigation';
-import SvgUri from 'react-native-svg-uri';
+import SvgUri from '../components/SvgUri';
 
 /**
  * @typedef Props

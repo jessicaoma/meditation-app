@@ -11,7 +11,7 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import API from '../utils/API';
-import SvgUri from 'react-native-svg-uri';
+import SvgUri from '../components/SvgUri';
 
 /**
  * @typedef Props
