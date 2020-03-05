@@ -4,6 +4,7 @@ import {
   FlatList,
   ActivityIndicator,
   SafeAreaView,
+  View,
 } from 'react-native';
 import ItemBubble from '../components/ItemBubble';
 import ScreenBg from '../components/screenBg';
@@ -12,6 +13,8 @@ import Dimensions from '../constants/Dimensions';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import {NavigationEvents} from 'react-navigation';
+import ScalableText from 'react-native-text';
+
 //TODO control de que viaje visitar dado su estado
 //TODO compartir color de la categoria
 /**
@@ -38,12 +41,13 @@ export default class Categoria extends Component {
     super(props);
     /** @type {import('../utils/types').Categoria} */
     this.categoria = props.navigation.state.params.categoria;
+    this.cantViajes = 0;
   }
 
   componentDidMount = async () => {
     let viajes = await API.getViajesCategoria(this.categoria.key, user);
     this.setState({viajes});
-    //console.log(viajes);
+    console.log(this.state.viajes.length);
   };
 
   _goViaje = index => {
@@ -53,7 +57,6 @@ export default class Categoria extends Component {
       viaje,
     });
   };
-
   /** @param {Player} ref*/
   refPlayer = ref => {
     this.player = ref;
@@ -61,6 +64,7 @@ export default class Categoria extends Component {
 
   renderListHeader = _ => {
     return (
+      <>
       <ScreenBg
         source={{
           uri: this.categoria.imagenPrevia,
@@ -79,6 +83,15 @@ export default class Categoria extends Component {
           styleVideo={styles.video}
         />
       </ScreenBg>
+      {this.state.viajes.length < 3 ? (
+          <View>
+            <ScalableText style={styles.textoViajes}>Amet commodo nulla facilisi nullam vehicula. Lectus proin nibh nisl condimentum. Duis ultricies lacus sed turpis tincidunt id. Enim nunc faucibus a pellentesque sit amet. </ScalableText></View>
+        ) : 
+        (
+          <View />
+        )
+      }
+      </>
     );
   };
 
@@ -142,6 +155,7 @@ export default class Categoria extends Component {
           source={{uri: this.categoria.imagenFondo}}
           // color={this.categoria.color}>
           color={'#fff'}>
+
           <FlatList
             ListHeaderComponent={this.renderListHeader}
             data={this.state.viajes}
@@ -183,5 +197,12 @@ const styles = StyleSheet.create({
   },
   video: {
     borderRadius: 10,
+  },
+  textoViajes: {
+    padding: 40,
+    color: '#665e61',
+    lineHeight: 22,
+    textAlign: 'center',
+    fontSize: Dimensions.paragraph,
   },
 });
