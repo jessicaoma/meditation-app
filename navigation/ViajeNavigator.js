@@ -23,6 +23,10 @@ const ViajeNavigator = createStackNavigator(
     initialRouteName: 'Viaje',
     defaultNavigationOptions: {
       headerBackTitle: null,
+      headerTitleStyle: {
+        color: '#030303',
+        fontFamily: 'MyriadPro-Semibold',
+      },
     },
   },
 );

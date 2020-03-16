@@ -11,12 +11,12 @@ import {
 import Colors from '../constants/Colors';
 import LogoCompartir from '../constants/LogoCompartir';
 import LogoDescargar from '../constants/LogoDescargar';
-import Dims from '../constants/Dimensions';
+import dimensions from '../constants/Dimensions';
 import ScreenBg from '../components/screenBg';
 import ScalableText from 'react-native-text';
 
-const deviceWidth = Dims.window.width;
-const deviceHeight = '100%';
+//const deviceWidth = Dims.window.width;
+//const deviceHeight = '100%';
 const BAR_SPACE = 9;
 /**
  * @typedef Props
@@ -52,47 +52,57 @@ export default class Emocion extends Component {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           {i === 0 ? (
-            <Image
-              style={{
-                width: deviceWidth,
-                height: Dims.window.height * emocion.headerH,
-              }}
-              source={{uri: emocion.header}}
-            />
+            //TODO quitar el tamaño del header bar
+            <View style={{minHeight: dimensions.window.height}}>
+              <Image
+                style={{
+                  width: dimensions.window.width,
+                  height: dimensions.window.height * emocion.headerH,
+                }}
+                source={{uri: emocion.header}}
+              />
+              <View style={styles.container}>
+                <ScalableText style={styles.bigTitle}>
+                  {item.title}
+                </ScalableText>
+                <ScalableText style={styles.paragraph}>
+                  {item.text}
+                </ScalableText>
+              </View>
+              <Image
+                style={{
+                  width: dimensions.window.width,
+                  height: dimensions.window.height * emocion.footerH,
+                  minHeight: dimensions.window.height * emocion.footerH,
+                }}
+                source={{uri: emocion.footer}}
+              />
+            </View>
           ) : (
-            // eslint-disable-next-line react-native/no-inline-styles
-            <View style={{height: 50}} />
-          )}
-          <View style={styles.container}>
-            <ScalableText style={styles.bigTitle}>{item.title}</ScalableText>
-            <ScalableText style={styles.paragraph}>{item.text}</ScalableText>
-          </View>
-          {i === 0 ? (
-            <Image
-              style={{
-                width: deviceWidth,
-                height: Dims.window.height * emocion.footerH,
-                minHeight: Dims.window.height * emocion.footerH,
-              }}
-              source={{uri: emocion.footer}}
-            />
-          ) : (
-            <View
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                paddingHorizontal: 50,
-              }}>
-              <TouchableOpacity
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{marginRight: 20}}>
-                <LogoCompartir />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <LogoDescargar />
-              </TouchableOpacity>
+            <View>
+              <View style={{height: 50}} />
+              <View style={styles.container}>
+                <ScalableText style={styles.bigTitle}>
+                  {item.title}
+                </ScalableText>
+                <ScalableText style={styles.paragraph}>
+                  {item.text}
+                </ScalableText>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
+                  paddingHorizontal: 50,
+                }}>
+                <TouchableOpacity style={{marginRight: 20}}>
+                  <LogoCompartir />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <LogoDescargar />
+                </TouchableOpacity>
+              </View>
             </View>
           )}
         </ScrollView>
@@ -100,7 +110,10 @@ export default class Emocion extends Component {
       imageArray.push(thisImage);
 
       const scrollBarVal = this.animVal.interpolate({
-        inputRange: [deviceWidth * (i - 1), deviceWidth * (i + 1)],
+        inputRange: [
+          dimensions.window.width * (i - 1),
+          dimensions.window.width * (i + 1),
+        ],
         outputRange: [-itemWidth, itemWidth],
         extrapolate: 'clamp',
       });
@@ -110,7 +123,7 @@ export default class Emocion extends Component {
           key={`bar${i}`}
           style={[
             styles.track,
-            // eslint-disable-next-line react-native/no-inline-styles
+
             {
               width: itemWidth,
               marginLeft: i === 0 ? 0 : BAR_SPACE,
@@ -130,11 +143,10 @@ export default class Emocion extends Component {
       barArray.push(thisBar);
     });
     return (
-      <SafeAreaView>
+      <SafeAreaView style={{flex: 1}}>
         <ScreenBg
           source={{uri: emocion.imagenFondo}}
-          // eslint-disable-next-line react-native/no-inline-styles
-          styleImage={{resizeMode: 'cover', height: Dims.window.height}}>
+          styleImage={{resizeMode: 'cover', height: dimensions.window.height}}>
           <View style={styles.barContainer}>{barArray}</View>
           <ScrollView
             horizontal
@@ -159,12 +171,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: deviceWidth,
+    width: dimensions.window.width,
     padding: 30,
   },
   scrollView: {
-    width: deviceWidth,
-    minHeight: deviceHeight,
+    width: dimensions.window.width,
   },
   slider: {
     margin: 0,
@@ -174,7 +185,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     letterSpacing: 1.11,
     lineHeight: 40,
-    marginTop: Dims.regularSpace,
+    marginTop: dimensions.regularSpace,
     marginRight: 0,
     marginBottom: 10,
     marginLeft: 0,
@@ -189,7 +200,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'MyriadPro-Regular',
     textAlign: 'justify',
-    paddingHorizontal: Dims.smallSpace,
+    paddingHorizontal: dimensions.smallSpace,
   },
   barContainer: {
     position: 'absolute',

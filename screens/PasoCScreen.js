@@ -18,31 +18,6 @@ const deviceWidth = Dims.window.width - Dims.bigSpace * 4;
 const deviceHeight = '100%';
 const BAR_SPACE = 8;
 
-/*const info = [
-  {
-    key: 'slide1',
-    image:
-      'http://okoconnect.com/karim/assets/images/reflexiones/reflexion1.png',
-    title: '1. ¿Cuáles son tus cualidades y cómo es tu forma de ser?',
-    text: 'Tímido o extrovertido, amable, envidioso.',
-  },
-  {
-    key: 'slide2',
-    image:
-      'http://okoconnect.com/karim/assets/images/reflexiones/reflexion2.png',
-    title: '2. ¿Cuáles son tus capacidades?',
-    text:
-      'Hablar inglés, practicar artes marciales, hacer buenas fotos, cocinar rico.',
-  },
-  {
-    key: 'slide3',
-    image:
-      'http://okoconnect.com/karim/assets/images/reflexiones/reflexion3.png',
-    title: '3. ¿Cuáles son tus puntos débiles?',
-    text: 'Procrastinar, no tener fuerza de voluntad, no saber bailar.',
-  },
-];*/
-
 /**
  * Paso Tipo(C): Reflexiones
  * @typedef {Object} ParamsNavigation
@@ -55,7 +30,6 @@ const BAR_SPACE = 8;
  * @extends {Component<Props>}
  */
 export default class PasoCScreen extends Component {
-  //itemWidth = FIXED_BAR_WIDTH / this.numItems - (this.numItems - 1) * BAR_SPACE;
   animVal = new Animated.Value(0);
 
   static navigationOptions = ({navigation}) => {
@@ -90,10 +64,7 @@ export default class PasoCScreen extends Component {
       const thisImage = (
         <View key={`image${i}`} style={[styles.sliderImage]}>
           {i === numItems - 1 ? (
-            <TouchableOpacity
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{flex: 1}}
-              onPress={this.nextStep}>
+            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.containerCard}>
                 <Image style={styles.image} source={{uri: item.imagen}} />
                 <Text style={styles.title}>{item.titulo}</Text>
@@ -122,7 +93,7 @@ export default class PasoCScreen extends Component {
           key={`bar${i}`}
           style={[
             styles.track,
-            // eslint-disable-next-line react-native/no-inline-styles
+
             {
               width: itemWidth,
               marginLeft: i === 0 ? 0 : BAR_SPACE,
@@ -143,35 +114,31 @@ export default class PasoCScreen extends Component {
     });
 
     return (
-      <>
-        <SafeAreaView
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{flex: 1}}>
-          <ImageBackground
-            style={[styles.container, {backgroundColor: steps[position].color}]}
-            source={{
-              uri: steps[position].imagenFondo,
-            }}>
-            <TouchableOpacity style={styles.close} onPress={this.nextStep}>
-              <Ionicons name={'md-close'} size={30} color={Colors.gray} />
-            </TouchableOpacity>
-            <View style={styles.container}>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                scrollEventThrottle={10}
-                pagingEnabled
-                onScroll={Animated.event([
-                  {nativeEvent: {contentOffset: {x: this.animVal}}},
-                ])}
-                style={styles.slider}>
-                {imageArray}
-              </ScrollView>
-            </View>
-            <View style={styles.barContainer}>{barArray}</View>
-          </ImageBackground>
-        </SafeAreaView>
-      </>
+      <SafeAreaView style={{flex: 1}}>
+        <ImageBackground
+          style={[styles.container, {backgroundColor: steps[position].color}]}
+          source={{
+            uri: steps[position].imagenFondo,
+          }}>
+          <TouchableOpacity style={styles.close} onPress={this.nextStep}>
+            <Ionicons name={'md-close'} size={30} color={Colors.gray} />
+          </TouchableOpacity>
+          <View style={styles.container}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              scrollEventThrottle={10}
+              pagingEnabled
+              onScroll={Animated.event([
+                {nativeEvent: {contentOffset: {x: this.animVal}}},
+              ])}
+              style={styles.slider}>
+              {imageArray}
+            </ScrollView>
+          </View>
+          <View style={styles.barContainer}>{barArray}</View>
+        </ImageBackground>
+      </SafeAreaView>
     );
   }
 }

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, SafeAreaView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
-
+//TODO comportamiento al finalizar el audio
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
@@ -22,27 +22,28 @@ export default class CancionScreen extends Component {
     /** @type {import('../utils/types').Canción}*/
     let cancion = navigation.getParam('cancion', {});
     return (
-      <>
-        <SafeAreaView>
-          <ScreenBg
-            source={{uri: cancion.imagenFondo}}
-            color={cancion.color}
-            styleImage={styles.image}>
-            <Player
-              source={{
-                uri: cancion.media,
-              }}
-              showControls
-              //showPlayFrame
-              shouldPlay
-            />
-          </ScreenBg>
-        </SafeAreaView>
-      </>
+      <SafeAreaView style={styles.safe}>
+        <ScreenBg
+          source={{uri: cancion.imagenFondo}}
+          color={cancion.color}
+          styleImage={styles.image}>
+          <Player
+            source={{
+              uri: cancion.media,
+            }}
+            showControls
+            shouldPlay
+          />
+        </ScreenBg>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   image: {resizeMode: 'cover'},
 });

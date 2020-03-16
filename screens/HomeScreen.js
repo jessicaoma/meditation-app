@@ -21,31 +21,22 @@ import ScreenBg from '../components/screenBg';
 import colors from '../constants/Colors';
 import {enumLoNuevo} from '../utils/types';
 
-const envProd = process.env.NODE_ENV === 'production';
-
-//const uriReflexion = 'http://okoconnect.com/karim/images/video-preview.jpeg';
-
-/**
- * @typedef {object} Props
- * @prop {import('react-navigation').NavigationScreenProp} [navigation]
- */
-
 /**
  * Home Screen
+ * @typedef {object} Props
+ * @prop {import('react-navigation').NavigationScreenProp} [navigation]
  * @extends {Component<Props>}
  * */
 export default class Home extends Component {
   static navigationOptions = ({navigation}) => ({
     headerStyle: {height: 68},
     headerLeft: (
-      // eslint-disable-next-line react-native/no-inline-styles
-      <View style={{flex: 1, justifyContent: 'flex-start', marginLeft: 16}}>
+      <View style={{marginLeft: 16}}>
         <Logo />
       </View>
     ),
     headerRight: (
       <TouchableOpacity
-        // eslint-disable-next-line react-native/no-inline-styles
         style={{marginRight: 16}}
         onPress={() => {
           navigation.openDrawer();
@@ -68,16 +59,14 @@ export default class Home extends Component {
     bienvenida: undefined,
   };
 
-  async componentDidMount() {
-    //TODO llamar al api para los videos
+  componentDidMount = async () => {
     const enprogreso = await API.getViajesEnProgreso(user);
     const lonuevo = await API.getLoNuevo();
     const reflexion = await API.getReflexionDelDia();
     const bienvenida = await API.getVideo('Bienvenida');
     const tutorial = await API.getVideo('Tutorial');
-    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({enprogreso, lonuevo, reflexion, bienvenida, tutorial});
-  }
+  };
 
   /** @param {{item: import("../utils/types").LoNuevo}} item*/
   _renderItemLonuevo = ({item}) => {
@@ -89,7 +78,7 @@ export default class Home extends Component {
         color = item.audiolibro.color;
         titulo = item.audiolibro.titulo;
         onpress = () => {
-          this.props.navigation.navigate('AudioLibro', {
+          this.props.navigation.navigate('Audiolibro', {
             audiolibro: item.audiolibro,
           });
         };
@@ -116,7 +105,7 @@ export default class Home extends Component {
         color = item.viaje.color;
         titulo = item.viaje.titulo;
         onpress = () => {
-          this._goViaje(item.viaje);
+          this.props.navigation.navigate('ViajeStack', {viaje: item.viaje});
         };
         break;
       default:
@@ -135,7 +124,7 @@ export default class Home extends Component {
     <Buttom
       style={[{backgroundColor: item.color || Colors.primaryDark}, styles.box2]}
       onPress={() => {
-        this._goViaje(item);
+        this.props.navigation.navigate('Viaje', {viaje: item});
       }}>
       <ScalableText style={styles.title_boxes2}>{item.titulo}</ScalableText>
     </Buttom>
@@ -146,10 +135,6 @@ export default class Home extends Component {
       <ActivityIndicator size="large" color={colors.primaryDark} />
     </Buttom>
   );
-
-  _goViaje = viaje => {
-    this.props.navigation.navigate('Viaje', {viaje});
-  };
 
   goReflexion = () => {
     this.props.navigation.navigate('Reflexion', {
@@ -184,108 +169,96 @@ export default class Home extends Component {
 
   render() {
     return (
-      <>
-        <SafeAreaView style={styles.container}>
-          <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <ScreenBg
-              source={
-                envProd
-                  ? {
-                      uri:
-                        'http://okoconnect.com/karim/assets/images/bg-inicio.png',
-                    }
-                  : require('../assets/images/bg-inicio.png')
-              }
-              // eslint-disable-next-line react-native/no-inline-styles
-              styleImage={{resizeMode: 'repeat'}}
-              styleView={styles.scrollView}
-              color="#fff">
-              <Cover
-                source={{uri: this.state.reflexion.imagenPrevia}}
-                onPress={this.goReflexion}
-              />
-              <Buttom
-                style={{backgroundColor: Colors.second}}
-                onPress={this._handleEmociones}>
-                <ImageBackground
-                  resizeMode="contain"
-                  source={{
-                    uri:
-                      'http://okoconnect.com/karim/assets/images/home/bg-como-me-siento.png',
-                  }}
-                  style={styles.buttonBG}>
-                  <ScalableText style={styles.title_boxes}>
-                    ¿cómo me siento?
-                  </ScalableText>
-                </ImageBackground>
-              </Buttom>
-              <Buttom
-                style={{backgroundColor: Colors.second}}
-                onPress={this._handelMusica}>
-                <ImageBackground
-                  resizeMode="contain"
-                  source={{
-                    uri:
-                      'http://okoconnect.com/karim/assets/images/home/bg-musica.png',
-                  }}
-                  style={styles.buttonBG}>
-                  <ScalableText style={styles.title_boxes}>MÚSICA</ScalableText>
-                </ImageBackground>
-              </Buttom>
-              <ScalableText style={styles.sectionTitle}>Lo nuevo</ScalableText>
-              <FlatList
-                horizontal
-                data={this.state.lonuevo}
-                renderItem={this._renderItemLonuevo}
-                keyExtractor={item => item.key}
-                ListEmptyComponent={this._renderListEmpty}
-              />
-              <ScalableText style={styles.sectionTitle}>
-                Viajes en progreso
-              </ScalableText>
-              <FlatList
-                horizontal
-                data={this.state.enprogreso}
-                renderItem={this._renderItemViajesProgreso}
-                keyExtractor={item => item.key}
-                ListEmptyComponent={this._renderListEmpty}
-              />
-              <View style={styles.separador} />
-              <Buttom
-                style={{backgroundColor: Colors.second}}
-                onPress={this.goBienvenida}>
-                <ImageBackground
-                  resizeMode="contain"
-                  source={{
-                    uri:
-                      'http://okoconnect.com/karim/assets/images/home/bg-bienvenida.png',
-                  }}
-                  style={styles.buttonBG}>
-                  <ScalableText style={styles.title_boxes}>
-                    BIENVENIDA
-                  </ScalableText>
-                </ImageBackground>
-              </Buttom>
-              <Buttom
-                style={{backgroundColor: Colors.second}}
-                onPress={this.goTutorial}>
-                <ImageBackground
-                  resizeMode="contain"
-                  source={{
-                    uri:
-                      'http://okoconnect.com/karim/assets/images/home/bg-tutorial.png',
-                  }}
-                  style={styles.buttonBG}>
-                  <ScalableText style={styles.title_boxes}>
-                    TUTORIAL
-                  </ScalableText>
-                </ImageBackground>
-              </Buttom>
-              <View style={styles.separador2} />
-            </ScreenBg>
-          </ScrollView>
-        </SafeAreaView>
-      </>
+      <SafeAreaView style={styles.container}>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+          <ScreenBg
+            source={require('../assets/images/bg-inicio.png')}
+            styleImage={{resizeMode: 'repeat'}}
+            styleView={styles.scrollView}
+            color="#fff">
+            <Cover
+              source={{uri: this.state.reflexion.imagenPrevia}}
+              onPress={this.goReflexion}
+            />
+            <Buttom
+              style={{backgroundColor: Colors.second}}
+              onPress={this._handleEmociones}>
+              <ImageBackground
+                resizeMode="contain"
+                source={{
+                  uri:
+                    'http://okoconnect.com/karim/assets/images/home/bg-como-me-siento.png',
+                }}
+                style={styles.buttonBG}>
+                <ScalableText style={styles.title_boxes}>
+                  ¿cómo me siento?
+                </ScalableText>
+              </ImageBackground>
+            </Buttom>
+            <Buttom
+              style={{backgroundColor: Colors.second}}
+              onPress={this._handelMusica}>
+              <ImageBackground
+                resizeMode="contain"
+                source={{
+                  uri:
+                    'http://okoconnect.com/karim/assets/images/home/bg-musica.png',
+                }}
+                style={styles.buttonBG}>
+                <ScalableText style={styles.title_boxes}>MÚSICA</ScalableText>
+              </ImageBackground>
+            </Buttom>
+            <ScalableText style={styles.sectionTitle}>Lo nuevo</ScalableText>
+            <FlatList
+              horizontal
+              data={this.state.lonuevo}
+              renderItem={this._renderItemLonuevo}
+              keyExtractor={item => item.key}
+              ListEmptyComponent={this._renderListEmpty}
+            />
+            <ScalableText style={styles.sectionTitle}>
+              Viajes en progreso
+            </ScalableText>
+            <FlatList
+              horizontal
+              data={this.state.enprogreso}
+              renderItem={this._renderItemViajesProgreso}
+              keyExtractor={item => item.key}
+              ListEmptyComponent={this._renderListEmpty}
+            />
+            <View style={styles.separador} />
+            <Buttom
+              style={{backgroundColor: Colors.second}}
+              onPress={this.goBienvenida}>
+              <ImageBackground
+                resizeMode="contain"
+                source={{
+                  uri:
+                    'http://okoconnect.com/karim/assets/images/home/bg-bienvenida.png',
+                }}
+                style={styles.buttonBG}>
+                <ScalableText style={styles.title_boxes}>
+                  BIENVENIDA
+                </ScalableText>
+              </ImageBackground>
+            </Buttom>
+            <Buttom
+              style={{backgroundColor: Colors.second}}
+              onPress={this.goTutorial}>
+              <ImageBackground
+                resizeMode="contain"
+                source={{
+                  uri:
+                    'http://okoconnect.com/karim/assets/images/home/bg-tutorial.png',
+                }}
+                style={styles.buttonBG}>
+                <ScalableText style={styles.title_boxes}>TUTORIAL</ScalableText>
+              </ImageBackground>
+            </Buttom>
+            <View style={styles.separador2} />
+          </ScreenBg>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

@@ -22,117 +22,15 @@ export default class Canciones extends Component {
   static navigationOptions = {};
   state = {
     /** @type {import('../utils/types').Canción[]} */
-    canciones: [
-      /*{
-        id: 'can1',
-        title: 'Canción 1',
-        media: 'http://okoconnect.com/karim/canciones/brisadeotono.mp3',
-        backgroundImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica1-preview.png',
-        color: '#d9e0f9',
-        itemImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica1.png',
-      },
-      {
-        id: 'can2',
-        title: 'Canción 2',
-        media: 'http://okoconnect.com/karim/canciones/brisasuave.mp3',
-        backgroundImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica2-preview.png',
-        color: '#d9e0f9',
-        itemImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica2.png',
-      },
-      {
-        id: 'can3',
-        title: 'Canción 3',
-        media: 'http://okoconnect.com/karim/canciones/debajodelviento.mp3',
-        backgroundImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica3-preview.png',
-        color: '#d9e0f9',
-        itemImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica3.png',
-      },
-      {
-        id: 'can4',
-        title: 'Canción 4',
-        color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/canciones/ecos.mp3',
-        backgroundImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica4-preview.png',
-        itemImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica4.png',
-      },
-      {
-        id: 'can5',
-        title: 'Canción 5',
-        color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/canciones/lluviadeabril.mp3',
-        backgroundImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica5-preview.png',
-        itemImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica5.png',
-      },
-      {
-        id: 'can6',
-        title: 'Canción 6',
-        color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/canciones/miradaalcielo.mp3',
-        backgroundImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica6-preview.png',
-        itemImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica6.png',
-      },
-      {
-        id: 'can7',
-        title: 'Canción 7',
-        color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/canciones/musica6.mp3',
-        backgroundImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica7-preview.png',
-        itemImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica7.png',
-      },
-      {
-        id: 'can8',
-        title: 'Canción 8',
-        color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/canciones/musica7.mp3',
-        backgroundImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica8-preview.png',
-        itemImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica8.png',
-      },
-      {
-        id: 'can9',
-        title: 'Canción 9',
-        color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/canciones/unnuevoamanecer.mp3',
-        backgroundImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica9-preview.png',
-        itemImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica9.png',
-      },
-      {
-        id: 'can10',
-        title: 'Canción 10',
-        color: '#d9e0f9',
-        media: 'http://okoconnect.com/karim/canciones/vientosdepaz.mp3',
-        backgroundImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica10-preview.png',
-        itemImage:
-          'http://okoconnect.com/karim/assets/images/musica/musica10.png',
-      },*/
-    ],
+    canciones: [],
   };
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     const data = await API.getCanciones();
-    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
       canciones: data,
     });
-  }
+  };
   /** @param {import('../utils/types').Canción} item */
   _handleClick = item => {
     this.props.navigation.navigate('Cancion', {
@@ -149,7 +47,6 @@ export default class Canciones extends Component {
   /** @param {import('react-native').ListRenderItemInfo<import('../utils/types').Canción>} info*/
   renderItem = ({item}) => (
     <Buttom
-      // eslint-disable-next-line react-native/no-inline-styles
       style={{
         backgroundColor: item.color || Colors.primaryDark,
         position: 'relative',
@@ -163,23 +60,25 @@ export default class Canciones extends Component {
   );
   render() {
     return (
-      <>
-        <SafeAreaView>
-          <FlatList
-            style={styles.container}
-            data={this.state.canciones}
-            ListHeaderComponent={this.renderListHeader}
-            renderItem={this.renderItem}
-            keyExtractor={this.keyExtractor}
-            ListEmptyComponent={this.renderListEmpty}
-          />
-        </SafeAreaView>
-      </>
+      <SafeAreaView style={styles.safe}>
+        <FlatList
+          style={styles.container}
+          data={this.state.canciones}
+          ListHeaderComponent={this.renderListHeader}
+          renderItem={this.renderItem}
+          keyExtractor={this.keyExtractor}
+          ListEmptyComponent={this.renderListEmpty}
+        />
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   container: {
     paddingHorizontal: Dims.regularSpace,
   },

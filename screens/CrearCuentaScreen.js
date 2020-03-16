@@ -48,84 +48,80 @@ export default class CrearCuentaScreen extends Component {
   };
   render() {
     return (
-      <>
+      <SafeAreaView style={styles.safe}>
         <StatusBar barStyle="dark-content" />
-        <SafeAreaView style={styles.flex1}>
-          <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <ScreenBg
-              source={{
-                uri: 'http://okoconnect.com/karim/images/crearcuenta-bg.png',
-              }}
-              // eslint-disable-next-line react-native/no-inline-styles
-              styleImage={{resizeMode: 'cover', height: Dims.window.height}}>
-              <View style={styles.container}>
-                <View style={styles.header}>
-                  <Text style={styles.welcomeTitle}>Crear cuenta con</Text>
-                  <View style={styles.sociallogos}>
-                    <TouchableOpacity
-                      //onPress={this._changeIcon}
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      style={{marginRight: 5}}>
-                      <LogoFacebook />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      //onPress={this._changeIcon}
-                      style={{}}>
-                      <LogoGoogle />
-                    </TouchableOpacity>
-                  </View>
-                  <Text style={styles.welcomeTitle}>
-                    ó registrarme vía email
-                  </Text>
-                </View>
-
-                <View /*style={styles.inputs}*/>
-                  <InputLogin
-                    placeholder="Nombre"
-                    type="text"
-                    onSubmitEditing={this.goEmail}
-                    blurOnSubmit={false}
-                  />
-                  <InputLogin
-                    placeholder="Correo"
-                    type="text"
-                    onSubmitEditing={this.goPassword}
-                    blurOnSubmit={false}
-                    inputRef={this.refEmail}
-                  />
-                  <InputLogin
-                    placeholder="Contraseña"
-                    type="password"
-                    onSubmitEditing={this.goPassword2}
-                    inputRef={this.refPassword}
-                  />
-                  <InputLogin
-                    placeholder="Confirmar Contraseña"
-                    type="password"
-                    inputRef={this.refPassword2}
-                  />
-                </View>
-
-                <View>
-                  <TouchableOpacity
-                    onPress={this.handleLogin}
-                    style={[styles.button]}>
-                    <Text style={styles.buttonLabel}>¡LISTO!</Text>
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scroll}>
+          <ScreenBg
+            source={{
+              uri: 'http://okoconnect.com/karim/images/crearcuenta-bg.png',
+            }}
+            color="white"
+            styleImage={{resizeMode: 'cover', height: Dims.window.height}}>
+            <View style={styles.container}>
+              <View style={styles.header}>
+                <Text style={styles.welcomeTitle}>Crear cuenta con</Text>
+                <View style={styles.sociallogos}>
+                  <TouchableOpacity style={{marginRight: 5}}>
+                    <LogoFacebook />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={{}}>
+                    <LogoGoogle />
                   </TouchableOpacity>
                 </View>
+                <Text style={styles.welcomeTitle}>ó registrarme vía email</Text>
               </View>
-            </ScreenBg>
-          </ScrollView>
-        </SafeAreaView>
-      </>
+              <View>
+                <InputLogin
+                  placeholder="Nombre"
+                  type="text"
+                  onSubmitEditing={this.goEmail}
+                  blurOnSubmit={false}
+                />
+                <InputLogin
+                  placeholder="Correo"
+                  type="text"
+                  onSubmitEditing={this.goPassword}
+                  blurOnSubmit={false}
+                  inputRef={this.refEmail}
+                />
+                <InputLogin
+                  placeholder="Contraseña"
+                  type="password"
+                  onSubmitEditing={this.goPassword2}
+                  inputRef={this.refPassword}
+                />
+                <InputLogin
+                  placeholder="Confirmar Contraseña"
+                  type="password"
+                  inputRef={this.refPassword2}
+                />
+              </View>
+              <View>
+                <TouchableOpacity
+                  onPress={this.handleLogin}
+                  style={[styles.button]}>
+                  <Text style={styles.buttonLabel}>¡LISTO!</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </ScreenBg>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  flex1: {
+  safe: {
     flex: 1,
+    backgroundColor: 'white',
   },
+  scroll: {
+    paddingTop: Dims.statusBarHeight,
+  },
+  fondo: {resizeMode: 'cover', height: Dims.window.height},
   container: {
     flex: 1,
     alignItems: 'center',

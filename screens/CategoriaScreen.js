@@ -17,6 +17,7 @@ import ScalableText from 'react-native-text';
 
 //TODO control de que viaje visitar dado su estado
 //TODO compartir color de la categoria
+//TODO comportamiento al finalizar el video
 /**
  * @typedef {Object} ParamsNavigation
  * @prop {import('../utils/types').Categoria} categoria
@@ -30,6 +31,7 @@ export default class Categoria extends Component {
   state = {
     /** @type {import('../utils/types').Viaje[]} */
     viajes: [],
+    isLoading: true,
   };
 
   static navigationOptions = ({navigation}) => {
@@ -45,9 +47,14 @@ export default class Categoria extends Component {
   }
 
   componentDidMount = async () => {
+    this.props.navigation.addListener('willBlur', () => {
+      if (this.player === null) return;
+      if (this.player.state.isPlaying) {
+        this.player._onPlayPausePressed();
+      }
+    });
     let viajes = await API.getViajesCategoria(this.categoria.key, user);
-    this.setState({viajes});
-    console.log(this.state.viajes.length);
+    this.setState({viajes, isLoading: false});
   };
 
   _goViaje = index => {
@@ -65,32 +72,33 @@ export default class Categoria extends Component {
   renderListHeader = _ => {
     return (
       <>
-      <ScreenBg
-        source={{
-          uri: this.categoria.imagenPrevia,
-        }}
-        styleView={[styles.containBG, styles.cover]}
-        styleImage={styles.imageBG}
-        color={this.categoria.color}>
-        <Player
-          ref={this.refPlayer}
+        <ScreenBg
           source={{
-            uri: this.categoria.media,
+            uri: this.categoria.imagenPrevia,
           }}
-          isVideo
-          showControls
-          showPlayFrame
-          styleVideo={styles.video}
-        />
-      </ScreenBg>
-      {this.state.viajes.length < 3 ? (
+          styleView={[styles.containBG, styles.cover]}
+          styleImage={styles.imageBG}
+          color={this.categoria.color}>
+          <Player
+            ref={this.refPlayer}
+            source={{
+              uri: this.categoria.media,
+            }}
+            isVideo
+            showControls
+            showPlayFrame
+            styleVideo={styles.video}
+          />
+        </ScreenBg>
+        {this.state.viajes.length > 0 && this.state.viajes.length < 3 && (
           <View>
-            <ScalableText style={styles.textoViajes}>Amet commodo nulla facilisi nullam vehicula. Lectus proin nibh nisl condimentum. Duis ultricies lacus sed turpis tincidunt id. Enim nunc faucibus a pellentesque sit amet. </ScalableText></View>
-        ) : 
-        (
-          <View />
-        )
-      }
+            <ScalableText style={styles.textoViajes}>
+              Amet commodo nulla facilisi nullam vehicula. Lectus proin nibh
+              nisl condimentum. Duis ultricies lacus sed turpis tincidunt id.
+              Enim nunc faucibus a pellentesque sit amet.{' '}
+            </ScalableText>
+          </View>
+        )}
       </>
     );
   };
@@ -135,8 +143,18 @@ export default class Categoria extends Component {
     }
   };
 
-  renderListEmpty = _ => {
-    return <ActivityIndicator size="large" color={this.categoria.color} />;
+  renderListEmpty = () => {
+    return this.state.isLoading ? (
+      <ActivityIndicator size="large" color={this.categoria.color} />
+    ) : (
+      <View>
+        <ScalableText style={styles.textoViajes}>
+          Amet commodo nulla facilisi nullam vehicula. Lectus proin nibh nisl
+          condimentum. Duis ultricies lacus sed turpis tincidunt id. Enim nunc
+          faucibus a pellentesque sit amet.{' '}
+        </ScalableText>
+      </View>
+    );
   };
   keyExtractor = item => item.key;
 
@@ -144,18 +162,7 @@ export default class Categoria extends Component {
     this.categoria = this.props.navigation.state.params.categoria;
     return (
       <SafeAreaView>
-        <NavigationEvents
-          onWillBlur={payload => {
-            if (this.player.state.isPlaying) {
-              this.player._onPlayPausePressed();
-            }
-          }}
-        />
-        <ScreenBg
-          source={{uri: this.categoria.imagenFondo}}
-          // color={this.categoria.color}>
-          color={'#fff'}>
-
+        <ScreenBg source={{uri: this.categoria.imagenFondo}} color={'#fff'}>
           <FlatList
             ListHeaderComponent={this.renderListHeader}
             data={this.state.viajes}

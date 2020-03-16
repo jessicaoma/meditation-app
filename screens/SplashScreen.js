@@ -4,40 +4,27 @@ import {StyleSheet, SafeAreaView, Image, StatusBar} from 'react-native';
 import Colors from '../constants/Colors';
 import Logo from '../components/Logo';
 import Dimensions from '../constants/Dimensions';
-import {envRemoto} from '../utils/types';
 
 const aspectRadioImage = 320 / 236;
+//TODO revisar como mejorar la experiencia (posiblemente se deba eliminar esta pantalla)
 /**
  * @typedef {Object} Props Properties of the component
  * @property {import('react-navigation').NavigationScreenProp} navigation Callback used when the component is Press
- */
-
-/**
  * @param {Props} props Properties
  */
 export default function SplashScreen({navigation}) {
   setTimeout(() => {
     navigation.navigate('Login');
   }, 1000);
-  //TODO revisar como mejorar la experiencia
   return (
-    <>
+    <SafeAreaView style={styles.contaner}>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={styles.contaner}>
-        <Image
-          source={
-            envRemoto
-              ? {
-                  uri:
-                    'http://okoconnect.com/karim/assets/images/splash-bg.png',
-                }
-              : require('../assets/images/splash-bg.png')
-          }
-          style={styles.background}
-        />
-        <Logo />
-      </SafeAreaView>
-    </>
+      <Image
+        source={require('../assets/images/splash-bg.png')}
+        style={styles.background}
+      />
+      <Logo />
+    </SafeAreaView>
   );
 }
 

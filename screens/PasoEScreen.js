@@ -34,34 +34,6 @@ export default class PasoEScreen extends Component {
     };
   };
 
-  // info = {
-  //   recomendaciones: [
-  //     {
-  //       id: 1,
-  //       image: 'http://okoconnect.com/karim/assets/images/iconMeditar4.png',
-  //       title:
-  //         '1. Asume que no puedes cumplir totalmente con las expectativas de los demás, no es posible ni sano.',
-  //     },
-  //     {
-  //       id: 2,
-  //       image: 'http://okoconnect.com/karim/assets/images/iconMeditar2.png',
-  //       title:
-  //         '2. Para llegar a conocer lo que realmente deseas, es necesario pasar tiempo a solas, contigo mismo.',
-  //     },
-  //     {
-  //       id: 3,
-  //       image: 'http://okoconnect.com/karim/assets/images/iconNube.png',
-  //       title: '3. Aprende a decir NO, sin remordimientos y sin culpa.',
-  //     },
-  //     {
-  //       id: 4,
-  //       image: 'http://okoconnect.com/karim/assets/images/iconMeditar3.png',
-  //       title:
-  //         '4. La aceptación, la gratitud, y la buena vibra de parte de los demás son algo que hace sentir bien.',
-  //     },
-  //   ],
-  // };
-
   nextStep = () => {
     const {steps, position} = this.props.navigation.state.params;
     const {tipo} = steps[position + 1];
@@ -82,37 +54,31 @@ export default class PasoEScreen extends Component {
   render() {
     const {steps, position} = this.props.navigation.state.params;
     return (
-      <>
-        <SafeAreaView
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{flex: 1}}>
-          <ImageBackground
-            style={[styles.container]}
-            source={{
-              uri: steps[position].imagenFondo,
-            }}>
-            <TouchableOpacity style={styles.close} onPress={this.nextStep}>
-              <Ionicons name={'md-close'} size={30} color={Colors.gray} />
-            </TouchableOpacity>
-            <ScrollView
-              contentInsetAdjustmentBehavior="automatic"
-              style={styles.scrollView}>
+      <SafeAreaView style={{flex: 1}}>
+        <ImageBackground
+          style={[styles.container]}
+          source={{
+            uri: steps[position].imagenFondo,
+          }}>
+          <TouchableOpacity style={styles.close} onPress={this.nextStep}>
+            <Ionicons name={'md-close'} size={30} color={Colors.gray} />
+          </TouchableOpacity>
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            style={styles.scrollView}>
+            <View style={styles.container}>
               <View style={styles.container}>
-                <View style={styles.container}>
-                  {steps[position].contenidos.map(item =>
-                    this.renderItem(item),
-                  )}
-                </View>
+                {steps[position].contenidos.map(item => this.renderItem(item))}
               </View>
-            </ScrollView>
-            <View style={[styles.containerBottomButton]}>
-              <TouchableOpacity onPress={this.nextStep} style={[styles.button]}>
-                <Text style={styles.buttonLabel}>Continuar</Text>
-              </TouchableOpacity>
             </View>
-          </ImageBackground>
-        </SafeAreaView>
-      </>
+          </ScrollView>
+          <View style={[styles.containerBottomButton]}>
+            <TouchableOpacity onPress={this.nextStep} style={[styles.button]}>
+              <Text style={styles.buttonLabel}>Continuar</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+      </SafeAreaView>
     );
   }
 }

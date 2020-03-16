@@ -1,17 +1,14 @@
-// @ts-nocheck
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, FlatList, SafeAreaView} from 'react-native';
 import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
-import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
-import {envRemoto} from '../utils/types';
 
 /**
  * @typedef {Object} Card
  * @prop {string} key Key used to identiface
- * @prop {NodeRequire[]} faces Array of images, in the index 0 is on the back side of the card, and index 1 is on the front side of the card
+ * @prop {import('react-native').ImageSourcePropType[]} faces Array of images, in the index 0 is on the back side of the card, and index 1 is on the front side of the card
  *
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
@@ -25,57 +22,29 @@ const data = [
   {
     key: 'cartaA',
     faces: [
-      envRemoto
-        ? {uri: 'http://okoconnect.com/karim/assets/angeles/angel1.png'}
-        : require('../assets/images/angel/angel1.png'),
-      envRemoto
-        ? {
-            uri:
-              'http://okoconnect.com/karim/assets/angeles/angelreve1-vacio.png',
-          }
-        : require('../assets/images/angel/angelreve1-vacio.png'),
+      require('../assets/images/angel/angel1.png'),
+      require('../assets/images/angel/angelreve1-vacio.png'),
     ],
   },
   {
     key: 'cartaB',
     faces: [
-      envRemoto
-        ? {uri: 'http://okoconnect.com/karim/assets/angeles/angel2.png'}
-        : require('../assets/images/angel/angel2.png'),
-      envRemoto
-        ? {
-            uri:
-              'http://okoconnect.com/karim/assets/angeles/angelreve2-vacio.png',
-          }
-        : require('../assets/images/angel/angelreve2-vacio.png'),
+      require('../assets/images/angel/angel2.png'),
+      require('../assets/images/angel/angelreve2-vacio.png'),
     ],
   },
   {
     key: 'cartaC',
     faces: [
-      envRemoto
-        ? {uri: 'http://okoconnect.com/karim/assets/angeles/angel3.png'}
-        : require('../assets/images/angel/angel3.png'),
-      envRemoto
-        ? {
-            uri:
-              'http://okoconnect.com/karim/assets/angeles/angelreve3-vacio.png',
-          }
-        : require('../assets/images/angel/angelreve3-vacio.png'),
+      require('../assets/images/angel/angel3.png'),
+      require('../assets/images/angel/angelreve3-vacio.png'),
     ],
   },
   {
     key: 'cartaD',
     faces: [
-      envRemoto
-        ? {uri: 'http://okoconnect.com/karim/assets/angeles/angel4.png'}
-        : require('../assets/images/angel/angel4.png'),
-      envRemoto
-        ? {
-            uri:
-              'http://okoconnect.com/karim/assets/angeles/angelreve4-vacio.png',
-          }
-        : require('../assets/images/angel/angelreve4-vacio.png'),
+      require('../assets/images/angel/angel4.png'),
+      require('../assets/images/angel/angelreve4-vacio.png'),
     ],
   },
 ];
@@ -121,22 +90,18 @@ export default class AngelCartasScreen extends Component {
 
   render() {
     return (
-      <>
-        <SafeAreaView style={styles.mainContainer}>
-          <View style={styles.statusBar} />
-          <View style={styles.container}>
-            <Text style={styles.sectionTitle}>Tu Ángel del día </Text>
-            <FlatList
-              data={data}
-              renderItem={this.renderItem}
-              numColumns={numColumns}
-            />
-            <Text style={styles.suggestion}>
-              Elige una carta para descubrir
-            </Text>
-          </View>
-        </SafeAreaView>
-      </>
+      <SafeAreaView style={styles.mainContainer}>
+        <View style={styles.statusBar} />
+        <View style={styles.container}>
+          <Text style={styles.sectionTitle}>Tu Ángel del día </Text>
+          <FlatList
+            data={data}
+            renderItem={this.renderItem}
+            numColumns={numColumns}
+          />
+          <Text style={styles.suggestion}>Elige una carta para descubrir</Text>
+        </View>
+      </SafeAreaView>
     );
   }
 }
@@ -144,9 +109,10 @@ export default class AngelCartasScreen extends Component {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    backgroundColor: 'white',
   },
   statusBar: {
-    height: Constants.statusBarHeight,
+    height: Dims.statusBarHeight,
   },
   container: {
     flex: 1,

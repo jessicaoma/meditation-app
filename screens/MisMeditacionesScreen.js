@@ -17,16 +17,15 @@ export default class MisMeditacionesScreen extends Component {
     progreso: 0,
     completadas: 0,
   };
-  async componentDidMount() {
+  componentDidMount = async () => {
     const data = await API.getMeditacionesCompletadas(user);
-    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState(data);
-  }
+  };
 
   _keyExtractor = item => item.id;
 
   render = () => (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safe}>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <Image
           resizeMode="cover"
@@ -77,6 +76,10 @@ export default class MisMeditacionesScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   container: {
     paddingHorizontal: Dims.bigSpace,
   },

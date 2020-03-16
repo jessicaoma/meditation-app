@@ -4,7 +4,6 @@ import {
   createStackNavigator,
   HeaderBackButton,
 } from 'react-navigation';
-
 import BottomNavigator from './BottomNavigator';
 import MisEmocionesScreen from '../screens/MisEmocionesScreen';
 import MiDiarioScreen from '../screens/MiDiarioScreen';
@@ -17,9 +16,6 @@ const PerfilNavigation = createDrawerNavigator(
   {
     Main: {
       screen: BottomNavigator,
-      navigationOptions: {
-        title: 'Janett Ramirez',
-      },
     },
     MisEmociones: {
       screen: createStackNavigator(
@@ -31,6 +27,10 @@ const PerfilNavigation = createDrawerNavigator(
             headerLeft: (
               <HeaderBackButton onPress={() => navigation.goBack(null)} />
             ),
+            headerTitleStyle: {
+              color: '#030303',
+              fontFamily: 'MyriadPro-Semibold',
+            },
           }),
         },
       ),
@@ -48,6 +48,10 @@ const PerfilNavigation = createDrawerNavigator(
             headerLeft: (
               <HeaderBackButton onPress={() => navigation.goBack(null)} />
             ),
+            headerTitleStyle: {
+              color: '#030303',
+              fontFamily: 'MyriadPro-Semibold',
+            },
           }),
         },
       ),
@@ -65,6 +69,10 @@ const PerfilNavigation = createDrawerNavigator(
             headerLeft: (
               <HeaderBackButton onPress={() => navigation.goBack(null)} />
             ),
+            headerTitleStyle: {
+              color: '#030303',
+              fontFamily: 'MyriadPro-Semibold',
+            },
           }),
         },
       ),
@@ -82,6 +90,10 @@ const PerfilNavigation = createDrawerNavigator(
             headerLeft: (
               <HeaderBackButton onPress={() => navigation.goBack(null)} />
             ),
+            headerTitleStyle: {
+              color: '#030303',
+              fontFamily: 'MyriadPro-Semibold',
+            },
           }),
         },
       ),
@@ -101,9 +113,6 @@ const PerfilNavigation = createDrawerNavigator(
     drawerType: 'slide',
     contentComponent: DrawerContentComponents,
     edgeWidth: 0,
-    defaultNavigationOptions: {
-      //headerBackTitle: null,
-    },
     unmountInactiveRoutes: true,
   },
 );

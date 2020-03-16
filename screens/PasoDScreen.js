@@ -17,30 +17,6 @@ const deviceWidth = Dims.window.width;
 const deviceHeight = '100%';
 const BAR_SPACE = 8;
 
-/*const info = [
-  {
-    key: 'slide1',
-    image: 'http://okoconnect.com/karim/images/slider-bg-1.png',
-    title: '¡Bienvenid@ de nuevo!',
-    text:
-      'Toma unos minutos para realizar este ejercicio. Es muy fácil, sólo necesitas papel, lapiz y ¡ganas de conectarte contigo misma!',
-  },
-  {
-    key: 'slide2',
-    image: 'http://okoconnect.com/karim/images/slider-bg-1.png',
-    title: 'Lista de Creencias',
-    text:
-      'Haz una lista de tus creencias siguiendo los cinco puntos de los que hablamos cualidades, capacidades, puntos débiles, como hablas de tu pasado, como crees que funciona el mundo.​',
-  },
-  {
-    key: 'slide3',
-    image: 'http://okoconnect.com/karim/images/slider-bg-1.png',
-    title: 'Analiza tu lista',
-    text:
-      '¿Cuáles te ayudan a disfrutar de la vida?\n¿Cuáles te gustaría cambiar?​​',
-  },
-];*/
-
 /**
  * Paso Tipo(D): Ejercicio
  * @typedef {Object} ParamsNavigation
@@ -53,7 +29,6 @@ const BAR_SPACE = 8;
  * @extends {Component<Props>}
  */
 export default class PasoDScreen extends Component {
-  //itemWidth = FIXED_BAR_WIDTH / this.numItems - (this.numItems - 1) * BAR_SPACE;
   animVal = new Animated.Value(0);
 
   static navigationOptions = ({navigation}) => {
@@ -91,10 +66,7 @@ export default class PasoDScreen extends Component {
           source={{uri: item.imagen}}
           style={[styles.sliderImage]}>
           {i === numItems - 1 ? (
-            <TouchableOpacity
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{flex: 1}}
-              onPress={this.nextStep}>
+            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.containerHalfBottom}>
                 <Text style={styles.title}>{item.titulo}</Text>
                 <Text style={styles.paragraph}>{item.texto}</Text>
@@ -121,7 +93,7 @@ export default class PasoDScreen extends Component {
           key={`bar${i}`}
           style={[
             styles.track,
-            // eslint-disable-next-line react-native/no-inline-styles
+
             {
               width: itemWidth,
               marginLeft: i === 0 ? 0 : BAR_SPACE,
@@ -142,27 +114,23 @@ export default class PasoDScreen extends Component {
     });
 
     return (
-      <>
-        <SafeAreaView
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{flex: 1}}>
-          <TouchableOpacity style={styles.close} onPress={this.nextStep}>
-            <Ionicons name={'md-close'} size={30} color={Colors.gray} />
-          </TouchableOpacity>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            scrollEventThrottle={10}
-            pagingEnabled
-            onScroll={Animated.event([
-              {nativeEvent: {contentOffset: {x: this.animVal}}},
-            ])}
-            style={[styles.slider, {backgroundColor: steps[position].color}]}>
-            {imageArray}
-          </ScrollView>
-          <View style={styles.barContainer}>{barArray}</View>
-        </SafeAreaView>
-      </>
+      <SafeAreaView style={{flex: 1}}>
+        <TouchableOpacity style={styles.close} onPress={this.nextStep}>
+          <Ionicons name={'md-close'} size={30} color={Colors.gray} />
+        </TouchableOpacity>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          scrollEventThrottle={10}
+          pagingEnabled
+          onScroll={Animated.event([
+            {nativeEvent: {contentOffset: {x: this.animVal}}},
+          ])}
+          style={[styles.slider, {backgroundColor: steps[position].color}]}>
+          {imageArray}
+        </ScrollView>
+        <View style={styles.barContainer}>{barArray}</View>
+      </SafeAreaView>
     );
   }
 }

@@ -9,7 +9,6 @@ const CategoriasNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'Categorias',
-    navigationOptions: {},
   },
 );
 

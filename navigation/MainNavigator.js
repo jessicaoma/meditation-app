@@ -8,7 +8,6 @@ import ViajeNavigator from './ViajeNavigator';
 import PerfilNavigation from './PerfilNavigation';
 import TutorialScreen from '../screens/TutorialScreen';
 import BienvenidaScreen from '../screens/BienvenidaScreen';
-import PremiumScreen from '../screens/PremiumScreen';
 import CancionesScreen from '../screens/CancionesScreen';
 import CancionScreen from '../screens/CancionScreen';
 
@@ -17,18 +16,20 @@ const MainNavigator = createStackNavigator(
     PerfilDrawer: {screen: PerfilNavigation, navigationOptions: {header: null}},
     Meditacion: {
       screen: MeditacionScreen,
-      //navigationOptions: {},
     },
     MeditacionIntro: {
       screen: MeditacionIntroScreen,
-      //navigationOptions: {},
     },
-    Audiolibro: {screen: AudiolibroScreen, navigationOptions: {}},
+    Audiolibro: {screen: AudiolibroScreen},
     Reflexion: ReflexionScreen,
     EmocionesStack: {
       screen: EmocionesNavigator,
       navigationOptions: {
         title: '¿Cómo me siento?',
+        headerTitleStyle: {
+          color: '#030303',
+          fontFamily: 'MyriadPro-Semibold',
+        },
       },
     },
     ViajeStack: {
@@ -46,12 +47,6 @@ const MainNavigator = createStackNavigator(
     Cancion: CancionScreen,
     Tutorial: TutorialScreen,
     Bienvenida: BienvenidaScreen,
-    Premium: {
-      screen: PremiumScreen,
-      navigationOptions: {
-        title: 'Convierte en Premium',
-      },
-    },
   },
   {
     defaultNavigationOptions: {

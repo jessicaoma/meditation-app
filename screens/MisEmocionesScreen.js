@@ -20,30 +20,14 @@ import LogoEmocion3 from '../constants/LogoEmocion3';
 import LogoEmocion4 from '../constants/LogoEmocion4';
 
 //TODO llamar api
-//TODO revisar comportamiento para seleccionar mes
 export default class MisEmocionesScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      emocionesData: [3, 2, 0, 2],
+      emocionesData: [],
       keys: ['Alegría', 'Ira', 'Miedo', 'Tristeza'],
       colors: ['#bfc6e2', '#bfc6e2', '#bfc6e2', '#bfc6e2'],
-      title: 'Semanal',
-      yAxis: [
-        {
-          value: 0,
-          label: '0',
-        },
-        {
-          value: 3.5,
-          label: '3.5',
-        },
-        {
-          value: 7,
-          label: '7',
-        },
-      ],
-      dias: 7,
+      yAxis: [{}, {}, {}],
     };
   }
   onPressSemanal = () => {
@@ -95,15 +79,18 @@ export default class MisEmocionesScreen extends Component {
     headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
   });
 
+  componentDidMount() {
+    this.onPressSemanal();
+  }
   _handleClick = () => {
-    //alert('This is a button!');
-    this.props.navigation.navigate('Paso');
+    //TODO manejo de viajes recomendados
+    //this.props.navigation.navigate('Paso');
   };
 
   keyExtractor = item => item.id;
   render() {
     return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.safe}>
         <ScrollView contentInsetAdjustmentBehavior="automatic">
           <Image
             source={{
@@ -200,6 +187,7 @@ export default class MisEmocionesScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  safe: {flex: 1, backgroundColor: 'white'},
   container: {
     paddingHorizontal: Dimensions.regularSpace,
     paddingTop: Dimensions.regularSpace,

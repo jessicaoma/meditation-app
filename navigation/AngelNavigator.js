@@ -9,7 +9,6 @@ const AngelNavigator = createSwitchNavigator(
   },
   {
     initialRouteName: 'Cartas',
-    //navigationOptions: {},
   },
 );
 

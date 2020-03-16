@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {TouchableOpacity, Image, StyleSheet, View, Text} from 'react-native';
 import Colors from '../constants/Colors';
@@ -10,7 +9,7 @@ import Colors from '../constants/Colors';
  * @property {string} [title] Title of the component
  * @property {number} width Componenet width, is a square
  * @property {number} height Componenet height, is a rectangle
- * @property {import('react-native').ViewStyle} style
+ * @property {import('react-native').ViewStyle} [style]
  */
 
 /**
@@ -26,7 +25,7 @@ const HalfCover = ({source, onPress, title, width, height, style}) => {
             style={{
               width: width - 12,
               height: height - 10,
-              resizeMode: 'contain',
+              resizeMode: 'stretch',
             }}
             source={source}
           />

@@ -12,11 +12,11 @@ const homeStack = createStackNavigator({Home: HomeScreen});
 
 const BottomNavigator = createBottomTabNavigator(
   {
-    Home: {
+    Inicio: {
       screen: homeStack,
       navigationOptions: {
         title: 'Inicio',
-        tabBarIcon: ({focused, horizontal, tintColor}) => (
+        tabBarIcon: ({tintColor}) => (
           <TabBarIcon name={'inicio'} tintColor={tintColor} />
         ),
       },
@@ -25,7 +25,7 @@ const BottomNavigator = createBottomTabNavigator(
       screen: CategoriasNavigator,
       navigationOptions: {
         title: 'Viajes',
-        tabBarIcon: ({focused, horizontal, tintColor}) => (
+        tabBarIcon: ({tintColor}) => (
           <TabBarIcon name={'viajes'} tintColor={tintColor} />
         ),
       },
@@ -34,7 +34,7 @@ const BottomNavigator = createBottomTabNavigator(
       screen: MeditacionesScreen,
       navigationOptions: {
         title: 'Meditar',
-        tabBarIcon: ({focused, horizontal, tintColor}) => (
+        tabBarIcon: ({tintColor}) => (
           <TabBarIcon name={'meditar'} tintColor={tintColor} />
         ),
       },
@@ -43,7 +43,7 @@ const BottomNavigator = createBottomTabNavigator(
       screen: AudiolibrosScreen,
       navigationOptions: {
         title: 'Audiolibros',
-        tabBarIcon: ({focused, horizontal, tintColor}) => (
+        tabBarIcon: ({tintColor}) => (
           <TabBarIcon name={'audiolibros'} tintColor={tintColor} />
         ),
       },
@@ -52,7 +52,7 @@ const BottomNavigator = createBottomTabNavigator(
       screen: AngelNavigator,
       navigationOptions: {
         title: 'Tu ángel',
-        tabBarIcon: ({focused, horizontal, tintColor}) => (
+        tabBarIcon: ({tintColor}) => (
           <TabBarIcon name={'angel'} tintColor={tintColor} />
         ),
       },
@@ -63,7 +63,9 @@ const BottomNavigator = createBottomTabNavigator(
       activeTintColor: Colors.tabIconSelected,
       inactiveTintColor: Colors.tabIconDefault,
     },
-    initialRouteName: 'Home',
+    initialRouteName: 'Inicio',
+    //TODO elimnar despues
+    resetOnBlur: true,
   },
 );
 

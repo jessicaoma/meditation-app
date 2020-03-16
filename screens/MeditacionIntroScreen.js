@@ -5,7 +5,7 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import Player from '../player/Player';
-
+//TODO comportamiento al finalizar video
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{param:{meditacion:import('../utils/types').Meditación}}>} navigation
@@ -32,56 +32,56 @@ export default class MeditacionIntroScreen extends Component {
 
   render() {
     return (
-      <>
-        <SafeAreaView>
-          <ScreenBg
-            source={{
-              uri: 'http://okoconnect.com/karim/images/crearcuenta-bg.png',
-            }}
-            color={Colors.second}
-            // eslint-disable-next-line react-native/no-inline-styles
-            styleImage={{resizeMode: 'cover'}}>
-            <View style={styles.container}>
-              <View style={styles.subcontainer}>
-                <ScreenBg
+      <SafeAreaView style={styles.safe}>
+        <ScreenBg
+          source={{
+            uri: 'http://okoconnect.com/karim/images/crearcuenta-bg.png',
+          }}
+          color={Colors.second}
+          styleImage={{resizeMode: 'cover'}}>
+          <View style={styles.container}>
+            <View style={styles.subcontainer}>
+              <ScreenBg
+                source={{
+                  uri: this.meditacion.imagenIntro,
+                }}
+                styleView={[styles.containBG, styles.cover]}
+                styleImage={styles.imageBG}>
+                <Player
                   source={{
-                    uri: this.meditacion.imagenIntro,
+                    uri: this.meditacion.intro,
                   }}
-                  styleView={[styles.containBG, styles.cover]}
-                  styleImage={styles.imageBG}>
-                  <Player
-                    source={{
-                      uri: this.meditacion.intro,
-                    }}
-                    isVideo
-                    styleVideo={styles.video}
-                    showControls
-                    showPlayFrame
-                  />
-                </ScreenBg>
-                <ScalableText style={styles.texto}>
-                  Para iniciar esta meditación cierra los ojos y comienza a
-                  relajarte, inhala y exhala profundamente tres veces y mientras
-                  lo haces comienza a sumergirte en tu cuerpo
+                  isVideo
+                  styleVideo={styles.video}
+                  showControls
+                  showPlayFrame
+                />
+              </ScreenBg>
+              <ScalableText style={styles.texto}>
+                Para iniciar esta meditación cierra los ojos y comienza a
+                relajarte, inhala y exhala profundamente tres veces y mientras
+                lo haces comienza a sumergirte en tu cuerpo
+              </ScalableText>
+              <TouchableOpacity
+                style={[styles.button, {backgroundColor: Colors.primaryDark}]}
+                onPress={this.goPlayerMeditar}>
+                <ScalableText style={styles.title_boxes}>
+                  Comenzar meditación
                 </ScalableText>
-
-                <TouchableOpacity
-                  style={[styles.button, {backgroundColor: Colors.primaryDark}]}
-                  onPress={this.goPlayerMeditar}>
-                  <ScalableText style={styles.title_boxes}>
-                    Comenzar meditación
-                  </ScalableText>
-                </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
             </View>
-          </ScreenBg>
-        </SafeAreaView>
-      </>
+          </View>
+        </ScreenBg>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   video: {},
   containBG: {},
   container: {
