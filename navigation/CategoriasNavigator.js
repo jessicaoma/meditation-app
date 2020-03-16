@@ -9,6 +9,13 @@ const CategoriasNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'Categorias',
+    defaultNavigationOptions: {
+      headerBackTitle: null,
+      headerTitleStyle: {
+        color: '#030303',
+        fontFamily: 'MyriadPro-Semibold',
+      },
+    },
   },
 );
 
