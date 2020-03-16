@@ -13,7 +13,7 @@ import Colors from '../constants/Colors';
 import API from '../utils/API';
 
 //Estoy restando los margenes laterales (16 + 16), y eso lo divido entre las columnas.
-const widthItem = Dimensions.window.width - Dimensions.regularSpace * 2;
+const widthItem = (Dimensions.window.width - Dimensions.regularSpace * 2) - 0;
 
 /**
  * @typedef Props
@@ -42,6 +42,7 @@ export default class AudiolibrosScreen extends Component {
       audioLibros: [],
     });
     const data = await API.getAudiolibros();
+    //const data = [{"key":"5024d96b-5c0e-472a-b213-d43ccaf509b5","titulo":"Aprendiendo a Meditar","imagenLista":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/iconolistado.png","imagenFondo":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/imagenaudio.png","color":"#50628e","media":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/audio.mp3","progreso":0,"isFree":true},{"key":"328799e1-d690-4dd4-bdc1-d9d970c6f4b8","titulo":"La aventura espiritual","imagenLista":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-3/iconolistado.png","imagenFondo":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-3/imagenaudio.png","color":"#82d3ea","media":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-3/audio.mp3","progreso":0,"isFree":true},{"key":"22e64578-6aac-4aaa-81d3-85b61c3d63ac","titulo":"101 Frases para reflexionar","imagenLista":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-2/iconolistado.png","imagenFondo":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-2/imagenaudio.png","color":"#ffffff","media":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-2/audio.mp3","progreso":0,"isFree":true}];
     this.setState({
       audioLibros: data,
     });
@@ -53,11 +54,13 @@ export default class AudiolibrosScreen extends Component {
   /** @param {{item :import('../utils/types').Audiolibro}} item*/
   _renderItem = ({item}) => {
     return (
-      <View style={styles.shadowBook}>
+      <View style={{marginBottom: 10}}
+        >
         <BookListItem
           source={{uri: item.imagenLista}}
           width={widthItem}
           height={widthItem * 0.4286}
+          
           onPress={() => {
             this._handleClick(item);
           }}
@@ -119,6 +122,10 @@ const styles = StyleSheet.create({
       height: 5,
     },
     shadowOpacity: 0.22,
-    marginBottom: 20,
+    zIndex: 999,
+    overflow: 'hidden',
+    flex: 1,
+    paddingBottom: 20,
+    paddingHorizontal: 5,
   },
 });

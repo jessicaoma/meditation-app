@@ -170,5 +170,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#665e61',
     paddingVertical: 10,
+    letterSpacing: 1,
   },
 });
