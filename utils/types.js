@@ -163,4 +163,4 @@ export const enumPaso = {
   Cierre: 6,
 };
 
-export const envRemoto = false;
+export const envRemoto = true;

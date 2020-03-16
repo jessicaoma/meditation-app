@@ -10,14 +10,12 @@ import {
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
-import Constants from 'expo-constants';
 import API from '../utils/API';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import ScalableText from 'react-native-text';
-import {NavigationEvents} from 'react-navigation';
 import SvgUri from '../components/SvgUri';
-
+//TODO comportamiento al finalizar video
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
@@ -34,7 +32,13 @@ export default class MeditacionesScreen extends Component {
       video: {},
     };
   }
-  async componentDidMount() {
+  componentDidMount = async () => {
+    this.props.navigation.addListener('willBlur', () => {
+      if (this.player === null) return;
+      if (this.player.state.isPlaying) {
+        this.player._onPlayPausePressed();
+      }
+    });
     const data = await API.getMeditaciones();
     const video = await API.getVideo('Meditaciones');
     this.setState({
@@ -42,7 +46,7 @@ export default class MeditacionesScreen extends Component {
       video,
     });
     this.player._loadNewPlaybackInstance();
-  }
+  };
 
   /** @param {Player} ref*/
   refPlayer = ref => {
@@ -108,35 +112,27 @@ export default class MeditacionesScreen extends Component {
   _keyExtractor = item => item.key;
 
   render = () => (
-    <>
-      <SafeAreaView style={styles.mainContainer}>
-        <NavigationEvents
-          onWillBlur={payload => {
-            if (this.player.state.isPlaying) {
-              this.player._onPlayPausePressed();
-            }
-          }}
-        />
-        <View style={styles.statusBar} />
-        <FlatList
-          data={this.state.meditaciones}
-          renderItem={this._renderItem}
-          ListHeaderComponent={this._renderListHeader}
-          ListEmptyComponent={this._renderListEmpty}
-          style={styles.container}
-          keyExtractor={this._keyExtractor}
-        />
-      </SafeAreaView>
-    </>
+    <SafeAreaView style={styles.mainContainer}>
+      <View style={styles.statusBar} />
+      <FlatList
+        data={this.state.meditaciones}
+        renderItem={this._renderItem}
+        ListHeaderComponent={this._renderListHeader}
+        ListEmptyComponent={this._renderListEmpty}
+        style={styles.container}
+        keyExtractor={this._keyExtractor}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    backgroundColor: 'white',
   },
   statusBar: {
-    height: Constants.statusBarHeight,
+    height: Dims.statusBarHeight,
   },
   container: {
     paddingHorizontal: Dims.regularSpace,

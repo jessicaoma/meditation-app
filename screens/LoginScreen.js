@@ -35,57 +35,60 @@ export default class LoginScreen extends Component {
   };
   render() {
     return (
-      <>
+      <SafeAreaView style={styles.safe}>
         <StatusBar barStyle="dark-content" />
-        <SafeAreaView style={styles.flex1}>
-          <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <View style={styles.content}>
-              <View style={styles.header}>
-                <Logo /*width="50%"*/ isAlternative />
-                <Text style={styles.welcomeTitle}>BIENVENIDO</Text>
-              </View>
-              <View style={styles.container}>
-                <View style={styles.full}>
-                  <InputLogin
-                    placeholder="Correo"
-                    type="text"
-                    onSubmitEditing={this.goPassword}
-                    blurOnSubmit={false}
-                  />
-                  <InputLogin
-                    placeholder="Contraseña"
-                    type="password"
-                    inputRef={this.refPassword}
-                  />
-                  <TouchableOpacity
-                    onPress={this.handleLogin}
-                    style={[styles.button]}>
-                    <Text style={styles.buttonLabel}>Iniciar Sesión</Text>
-                  </TouchableOpacity>
-                  <TouchableHighlight>
-                    <Text style={styles.forgetText}>
-                      ¿Olvidaste tu contraseña?
-                    </Text>
-                  </TouchableHighlight>
-                </View>
-              </View>
-              <View style={styles.footer}>
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scroll}>
+          <View style={styles.content}>
+            <View style={styles.header}>
+              <Logo isAlternative />
+              <Text style={styles.welcomeTitle}>BIENVENIDO</Text>
+            </View>
+            <View style={styles.container}>
+              <View style={styles.full}>
+                <InputLogin
+                  placeholder="Correo"
+                  type="text"
+                  onSubmitEditing={this.goPassword}
+                  blurOnSubmit={false}
+                />
+                <InputLogin
+                  placeholder="Contraseña"
+                  type="password"
+                  inputRef={this.refPassword}
+                />
                 <TouchableOpacity
-                  onPress={this.handleCrearCuenta}
+                  onPress={this.handleLogin}
                   style={[styles.button]}>
-                  <Text style={styles.buttonLabel}>Crear una cuenta</Text>
+                  <Text style={styles.buttonLabel}>Iniciar Sesión</Text>
                 </TouchableOpacity>
+                <TouchableHighlight>
+                  <Text style={styles.forgetText}>
+                    ¿Olvidaste tu contraseña?
+                  </Text>
+                </TouchableHighlight>
               </View>
             </View>
-          </ScrollView>
-        </SafeAreaView>
-      </>
+            <View style={styles.footer}>
+              <TouchableOpacity
+                onPress={this.handleCrearCuenta}
+                style={[styles.button]}>
+                <Text style={styles.buttonLabel}>Crear una cuenta</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  flex1: {flex: 1},
+  safe: {flex: 1, backgroundColor: 'white'},
+  scroll: {
+    paddingTop: Dims.statusBarHeight,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -99,7 +102,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'column',
-    minHeight: '90%',
+    minHeight: Dims.window.height * 0.9,
   },
   header: {
     flex: 0,
@@ -133,6 +136,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     paddingHorizontal: '6%',
+    paddingBottom: 15,
   },
   buttonLabel: {
     color: 'white',

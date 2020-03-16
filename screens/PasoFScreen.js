@@ -14,7 +14,6 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
 import {Ionicons} from '@expo/vector-icons';
-import Constants from 'expo-constants';
 import {Header} from 'react-navigation';
 //TODO registrar avance
 /**
@@ -70,23 +69,19 @@ export default class PasoFScreen extends Component {
   );
 
   render() {
-    const statusBarHeight = Constants.statusBarHeight;
+    const statusBarHeight = Dimensions.statusBarHeight;
     const navBarHeight = Header.HEIGHT;
     const headerHeight = statusBarHeight + navBarHeight;
     const {steps, position} = this.props.navigation.state.params;
 
     return (
-      <SafeAreaView
-        // eslint-disable-next-line react-native/no-inline-styles
-        style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1}}>
         <ImageBackground
-          // eslint-disable-next-line react-native/no-inline-styles
           style={{height: '100%', width: '100%'}}
           source={{
             uri: steps[position].imagenFondo,
           }}>
           <KeyboardAvoidingView
-            // eslint-disable-next-line react-native/no-inline-styles
             style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}
             keyboardVerticalOffset={headerHeight}
             behavior="padding">

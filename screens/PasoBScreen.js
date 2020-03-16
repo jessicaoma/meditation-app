@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {SafeAreaView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
+//TODO comportamiento al finalizar video
 //TODO registrar avance
 /**
  * Paso Tipo(B): Teoría
@@ -39,26 +40,21 @@ export default class PasoBScreen extends Component {
   render() {
     const {steps, position} = this.props.navigation.state.params;
     return (
-      <>
-        <SafeAreaView
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{flex: 1}}>
-          <ScreenBg
-            source={{uri: steps[position].imagenFondo}}
-            color={steps[position].color}
-            // eslint-disable-next-line react-native/no-inline-styles
-            styleImage={{resizeMode: 'cover'}}>
-            <Player
-              source={{
-                uri: steps[position].media,
-              }}
-              showPlayFrame
-              showControls
-              onEnd={this.nextStep}
-            />
-          </ScreenBg>
-        </SafeAreaView>
-      </>
+      <SafeAreaView style={{flex: 1}}>
+        <ScreenBg
+          source={{uri: steps[position].imagenFondo}}
+          color={steps[position].color}
+          styleImage={{resizeMode: 'cover'}}>
+          <Player
+            source={{
+              uri: steps[position].media,
+            }}
+            showPlayFrame
+            showControls
+            onEnd={this.nextStep}
+          />
+        </ScreenBg>
+      </SafeAreaView>
     );
   }
 }

@@ -10,9 +10,7 @@ import {
 import BookListItem from '../components/BookListItem';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
-import Constants from 'expo-constants';
 import API from '../utils/API';
-import {NavigationEvents} from 'react-navigation';
 
 //Estoy restando los margenes laterales (16 + 16), y eso lo divido entre las columnas.
 const widthItem = (Dimensions.window.width - Dimensions.regularSpace * 2) - 0;
@@ -20,7 +18,6 @@ const widthItem = (Dimensions.window.width - Dimensions.regularSpace * 2) - 0;
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
- *
  * @extends {Component<Props>}
  */
 export default class AudiolibrosScreen extends Component {
@@ -34,13 +31,17 @@ export default class AudiolibrosScreen extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.navigation.addListener('willFocus', () => {
+      this.refeshData();
+    });
+  }
+
   async refeshData() {
     this.setState({
       audioLibros: [],
     });
     const data = await API.getAudiolibros();
-    //const data = [{"key":"5024d96b-5c0e-472a-b213-d43ccaf509b5","titulo":"Aprendiendo a Meditar","imagenLista":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/iconolistado.png","imagenFondo":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/imagenaudio.png","color":"#50628e","media":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/audio.mp3","progreso":0,"isFree":true},{"key":"328799e1-d690-4dd4-bdc1-d9d970c6f4b8","titulo":"La aventura espiritual","imagenLista":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-3/iconolistado.png","imagenFondo":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-3/imagenaudio.png","color":"#82d3ea","media":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-3/audio.mp3","progreso":0,"isFree":true},{"key":"22e64578-6aac-4aaa-81d3-85b61c3d63ac","titulo":"101 Frases para reflexionar","imagenLista":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-2/iconolistado.png","imagenFondo":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-2/imagenaudio.png","color":"#ffffff","media":"http://okoconnect.com/karim/assets/audiolibros/audiolibro-2/audio.mp3","progreso":0,"isFree":true}];
-    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
       audioLibros: data,
     });
@@ -77,33 +78,25 @@ export default class AudiolibrosScreen extends Component {
 
   render() {
     return (
-      <>
-        <SafeAreaView
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{flex: 1}}>
-          <NavigationEvents
-            onWillFocus={() => {
-              this.refeshData();
-            }}
-          />
-          <View style={styles.statusBar} />
-          <FlatList
-            data={this.state.audioLibros}
-            renderItem={this._renderItem}
-            ListEmptyComponent={this._renderEmtpy}
-            keyExtractor={item => item.key}
-            ListHeaderComponent={this._renderListHeader}
-            style={styles.container}
-          />
-        </SafeAreaView>
-      </>
+      <SafeAreaView style={styles.safe}>
+        <View style={styles.statusBar} />
+        <FlatList
+          data={this.state.audioLibros}
+          renderItem={this._renderItem}
+          ListEmptyComponent={this._renderEmtpy}
+          keyExtractor={item => item.key}
+          ListHeaderComponent={this._renderListHeader}
+          style={styles.container}
+        />
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  safe: {flex: 1, backgroundColor: 'white'},
   statusBar: {
-    height: Constants.statusBarHeight,
+    height: Dimensions.statusBarHeight,
   },
   container: {
     flex: 1,

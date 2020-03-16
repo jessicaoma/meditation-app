@@ -8,7 +8,6 @@ import {
   ImageBackground,
   SafeAreaView,
 } from 'react-native';
-import Constants from 'expo-constants';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 
@@ -41,7 +40,6 @@ export default class AngelScreen extends Component {
       return (
         <ImageBackground
           key={`cardimage${index}`}
-          // @ts-ignore
           source={item}
           style={[styles.sliderImage]}>
           {index === 0 ? (
@@ -69,7 +67,6 @@ export default class AngelScreen extends Component {
           key={`bar${index}`}
           style={[
             styles.track,
-            // eslint-disable-next-line react-native/no-inline-styles
             {
               width: itemWidth,
               marginLeft: index === 0 ? 0 : Dims.smallSpace,
@@ -89,38 +86,38 @@ export default class AngelScreen extends Component {
     });
 
     return (
-      <>
-        <SafeAreaView
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{flex: 1}}>
-          <View style={styles.statusBar} />
-          <View style={[styles.container]}>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              scrollEventThrottle={10}
-              pagingEnabled
-              onScroll={Animated.event([
-                {nativeEvent: {contentOffset: {x: this.animVal}}},
-              ])}
-              style={styles.slider}>
-              {imageArray}
-            </ScrollView>
-            <View style={styles.barContainer}>{barArray}</View>
-          </View>
-        </SafeAreaView>
-      </>
+      <SafeAreaView style={styles.safe}>
+        <View style={styles.statusBar} />
+        <View style={[styles.container]}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            scrollEventThrottle={10}
+            pagingEnabled
+            onScroll={Animated.event([
+              {nativeEvent: {contentOffset: {x: this.animVal}}},
+            ])}
+            style={styles.slider}>
+            {imageArray}
+          </ScrollView>
+          <View style={styles.barContainer}>{barArray}</View>
+        </View>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   container: {
     flex: 1,
     paddingHorizontal: Dims.regularSpace,
   },
   statusBar: {
-    height: Constants.statusBarHeight,
+    height: Dims.statusBarHeight,
   },
   slider: {
     marginTop: 20,

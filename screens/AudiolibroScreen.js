@@ -70,36 +70,35 @@ export default class AudiolibroScreen extends Component {
     this.player = ref;
   };
   render() {
-    const {navigation} = this.props;
-    /** @type {import('../utils/types').Audiolibro} */
-    let audiolibro = navigation.getParam('audiolibro', {});
     return (
-      <>
-        <SafeAreaView>
-          <ScreenBg
-            source={{uri: audiolibro.imagenFondo}}
-            color={audiolibro.color}
-            styleImage={styles.image}>
-            <Player
-              ref={this.refPlayer}
-              source={{
-                uri: audiolibro.media,
-              }}
-              startPosition={audiolibro.progreso}
-              showControls
-              //showPlayFrame
-              shouldPlay
-              onEnd={this.onEnd}
-              onReadyForDisplay={this.onReady}
-              onPlayPause={this.onPlayPause}
-            />
-          </ScreenBg>
-        </SafeAreaView>
-      </>
+      <SafeAreaView style={styles.safe}>
+        <ScreenBg
+          source={{uri: this.audiolibro.imagenFondo}}
+          color={this.audiolibro.color}
+          styleImage={styles.image}>
+          <Player
+            ref={this.refPlayer}
+            source={{
+              uri: this.audiolibro.media,
+            }}
+            startPosition={this.audiolibro.progreso}
+            showControls
+            //showPlayFrame
+            shouldPlay
+            onEnd={this.onEnd}
+            onReadyForDisplay={this.onReady}
+            onPlayPause={this.onPlayPause}
+          />
+        </ScreenBg>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   image: {resizeMode: 'cover'},
 });

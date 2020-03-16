@@ -14,20 +14,22 @@ export default class MiDiarioScreen extends Component {
 
   render() {
     return (
-      <>
-        <SafeAreaView>
-          <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <View style={styles.container}>
-              <CalendarComponent />
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-      </>
+      <SafeAreaView style={styles.safe}>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+          <View style={styles.container}>
+            <CalendarComponent />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   container: {
     flex: 1,
     paddingHorizontal: Dims.regularSpace,

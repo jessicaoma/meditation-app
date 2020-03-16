@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {NavigationActions} from 'react-navigation';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import Dimensions from '../constants/Dimensions';
-import Constants from 'expo-constants';
 import TabBarIcon from './TabBarIcon';
 
 /**
@@ -34,14 +33,16 @@ export default class DrawerContentComponents extends Component {
   render() {
     return (
       <View>
-        <View style={styles.container}>
-          <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>Janett Ramirez</Text>
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.headerContainer}>
+              <Text style={styles.headerText}>Janett Ramirez</Text>
+            </View>
+            <View style={styles.itemsContainer}>
+              {this.props.items.slice(1).map(item => this.renderItem(item))}
+            </View>
           </View>
-          <View style={styles.itemsContainer}>
-            {this.props.items.slice(1).map(item => this.renderItem(item))}
-          </View>
-        </View>
+        </ScrollView>
       </View>
     );
   }
@@ -50,7 +51,7 @@ export default class DrawerContentComponents extends Component {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    paddingTop: Constants.statusBarHeight,
+    paddingTop: Dimensions.statusBarHeight,
   },
   headerContainer: {
     minHeight: 64,

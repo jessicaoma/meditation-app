@@ -1,5 +1,5 @@
 import {Dimensions} from 'react-native';
-
+import Constants from 'expo-constants';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -17,6 +17,7 @@ const height = Dimensions.get('window').height;
  * @prop {number} bubbleTitle Font Size 15.5
  * @prop {number} bubbleTitleSpacing Letter SpacingFont 1.1
  * @prop {number} inputText Font Size 16
+ * @prop {number} statusBarHeight Status Bar Height
  */
 
 /** @type {Dimension} */
@@ -36,6 +37,7 @@ const dimensions = {
   bubbleTitle: 15.5,
   bubbleTitleSpacing: 1,
   inputText: 16,
+  statusBarHeight: Constants.statusBarHeight,
 };
 
 export default dimensions;

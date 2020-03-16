@@ -1,4 +1,3 @@
-// @ts-nocheck
 import {AppLoading} from 'expo';
 import {Asset} from 'expo-asset';
 import * as Font from 'expo-font';
@@ -6,7 +5,6 @@ import React, {useState} from 'react';
 import {StatusBar, StyleSheet, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import AppNavigator from './navigation/AppNavigator';
-import {envRemoto} from './utils/types';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -51,22 +49,11 @@ async function loadResourcesAsync() {
       require('./assets/images/emociones/emocion-4.png'),
     ]),
     Font.loadAsync({
-      // This is the font that we are using for our tab bar
       ...Ionicons.font,
-      // We include SpaceMono because we use it in HomeScreen.js. Feel free to
-      // remove this if you are not using it in your app
-      'MyriadPro-Bold': envRemoto
-        ? 'http://okoconnect.com/karim/assets/fonts/MyriadPro-Bold.ttf'
-        : require('./assets/fonts/MyriadPro-Bold.ttf'),
-      'MyriadPro-Semibold': envRemoto
-        ? 'http://okoconnect.com/karim/assets/fonts/MyriadPro-Semibold.ttf'
-        : require('./assets/fonts/MyriadPro-Semibold.ttf'),
-      'MyriadPro-Regular': envRemoto
-        ? 'http://okoconnect.com/karim/assets/fonts/MyriadPro-Regular.ttf'
-        : require('./assets/fonts/MyriadPro-Regular.ttf'),
-      'SFProText-Medium': envRemoto
-        ? 'http://okoconnect.com/karim/assets/fonts/SFProText-Medium.ttf'
-        : require('./assets/fonts/SFProText-Medium.ttf'),
+      'MyriadPro-Bold': require('./assets/fonts/MyriadPro-Bold.ttf'),
+      'MyriadPro-Semibold': require('./assets/fonts/MyriadPro-Semibold.ttf'),
+      'MyriadPro-Regular': require('./assets/fonts/MyriadPro-Regular.ttf'),
+      'SFProText-Medium': require('./assets/fonts/SFProText-Medium.ttf'),
     }),
   ]);
 }

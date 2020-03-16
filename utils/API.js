@@ -27,7 +27,7 @@ class Api {
 
   /** @return {Promise<import("./types").AngelMensaje>} */
   async getAngelMessage() {
-    const query = await fetch(`${BASE_API}angelmessage`);
+    const query = await fetch(`${BASE_API}mensajedelangel`);
     const data = await query.json();
     return data;
   }

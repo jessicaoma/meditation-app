@@ -6,12 +6,12 @@ import {
   View,
   ActivityIndicator,
   SafeAreaView,
+  Dimensions,
 } from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
-import Constants from 'expo-constants';
 import ScalableText from 'react-native-text';
 import SvgUri from '../components/SvgUri';
 
@@ -66,29 +66,28 @@ export default class Categorias extends Component {
   );
   render() {
     return (
-      <>
-        <SafeAreaView style={styles.main}>
-          <View style={styles.statusBar} />
-          <FlatList
-            style={styles.container}
-            data={this.state.categorias}
-            ListHeaderComponent={this.renderListHeader}
-            renderItem={this.renderItem}
-            keyExtractor={this.keyExtractor}
-            ListEmptyComponent={this.renderListEmpty}
-          />
-        </SafeAreaView>
-      </>
+      <SafeAreaView style={styles.safe}>
+        <View style={styles.statusBar} />
+        <FlatList
+          style={styles.container}
+          data={this.state.categorias}
+          ListHeaderComponent={this.renderListHeader}
+          renderItem={this.renderItem}
+          keyExtractor={this.keyExtractor}
+          ListEmptyComponent={this.renderListEmpty}
+        />
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  main: {
+  safe: {
     flex: 1,
+    backgroundColor: 'white',
   },
   statusBar: {
-    height: Constants.statusBarHeight,
+    height: Dims.statusBarHeight,
   },
   container: {
     paddingHorizontal: Dims.regularSpace,

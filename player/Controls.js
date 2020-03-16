@@ -4,8 +4,7 @@ import {Text, TouchableOpacity, StyleSheet, View, Platform} from 'react-native';
 import Slider from 'react-native-slider';
 import {Ionicons} from '@expo/vector-icons';
 import colors from '../constants/Colors';
-import {envRemoto} from '../utils/types';
-
+//TODO agregar comportamientos para auto ocultar
 /**
  * @typedef {Object} Props Properties of the component
  * @property {boolean} isPlaying Indicate that the media is playing
@@ -19,13 +18,7 @@ import {envRemoto} from '../utils/types';
 
 const ICON_PLAY_BUTTON = 'md-play';
 const ICON_PAUSE_BUTTON = 'md-pause';
-const sliderThumb = envRemoto
-  ? {
-      uri: 'http://okoconnect.com/karim/assets/images/sliderimage.png',
-      width: 10,
-      height: 10,
-    }
-  : require('../assets/images/sliderimage.png');
+const sliderThumb = require('../assets/images/sliderimage.png');
 /**
  * Controls elements for the player
  * @param {Props} props sended to the component

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {Component} from 'react';
 import {
   Text,
@@ -13,7 +12,6 @@ import colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
-import {envRemoto} from '../utils/types';
 
 /**
  * @typedef Props
@@ -35,12 +33,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-1.png',
     headerH: 0.1,
     footerH: 0.35,
-    imagen: envRemoto
-      ? {
-          uri:
-            'http://okoconnect.com/karim/assets/images/emociones/emocion-1.png',
-        }
-      : require('../assets/images/emociones/emocion-1.png'),
+    imagen: require('../assets/images/emociones/emocion-1.png'),
   },
   {
     imagenFondo:
@@ -51,12 +44,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-2.png',
     headerH: 0.1,
     footerH: 0.3,
-    imagen: envRemoto
-      ? {
-          uri:
-            'http://okoconnect.com/karim/assets/images/emociones/emocion-2.png',
-        }
-      : require('../assets/images/emociones/emocion-2.png'),
+    imagen: require('../assets/images/emociones/emocion-2.png'),
   },
   {
     imagenFondo:
@@ -67,12 +55,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-3.png',
     headerH: 0.35,
     footerH: 0.35,
-    imagen: envRemoto
-      ? {
-          uri:
-            'http://okoconnect.com/karim/assets/images/emociones/emocion-3.png',
-        }
-      : require('../assets/images/emociones/emocion-3.png'),
+    imagen: require('../assets/images/emociones/emocion-3.png'),
   },
   {
     imagenFondo:
@@ -83,12 +66,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-4.png',
     headerH: 0.45,
     footerH: 0.2,
-    imagen: envRemoto
-      ? {
-          uri:
-            'http://okoconnect.com/karim/assets/images/emociones/emocion-4.png',
-        }
-      : require('../assets/images/emociones/emocion-4.png'),
+    imagen: require('../assets/images/emociones/emocion-4.png'),
   },
 ];
 
@@ -97,7 +75,7 @@ export default class EmocionesScreen extends Component {
   state = {
     emociones: [],
   };
-  async componentDidMount() {
+  componentDidMount = async () => {
     /** @type {import('../utils/types').Emoción[]}*/
     let emociones = await API.getEmociones();
     emociones.forEach((emocion, index) => {
@@ -109,9 +87,8 @@ export default class EmocionesScreen extends Component {
       emocion.headerH = headerH;
       emocion.footerH = footerH;
     });
-    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({emociones});
-  }
+  };
 
   /**
    * @param {import('../utils/types').Emoción} item
@@ -134,7 +111,6 @@ export default class EmocionesScreen extends Component {
       height={(Dims.window.width / numColumns) * 1.5}
       width={(Dims.window.width - 40) / numColumns}
       style={{backgroundColor: colors.meditacion}}
-      //color={'transparent'}
     />
   );
 
@@ -144,27 +120,25 @@ export default class EmocionesScreen extends Component {
 
   render() {
     return (
-      <>
-        <SafeAreaView>
-          <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <View style={styles.container}>
-              <Text style={styles.sectionTitle}>Tus emociones </Text>
-              <FlatList
-                data={this.state.emociones}
-                renderItem={this.renderItem}
-                numColumns={numColumns}
-                ListEmptyComponent={this.renderListEmpty}
-                keyExtractor={item => item.key}
-              />
-              <Text style={styles.suggestion}>
-                ¿Cómo te sientes hoy?.{'\n'}
-                Llevando un registro de tus emociones vas a concerte más a ti
-                misma.
-              </Text>
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-      </>
+      <SafeAreaView style={styles.safe}>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+          <View style={styles.container}>
+            <Text style={styles.sectionTitle}>Tus emociones </Text>
+            <FlatList
+              data={this.state.emociones}
+              renderItem={this.renderItem}
+              numColumns={numColumns}
+              ListEmptyComponent={this.renderListEmpty}
+              keyExtractor={item => item.key}
+            />
+            <Text style={styles.suggestion}>
+              ¿Cómo te sientes hoy?.{'\n'}
+              Llevando un registro de tus emociones vas a concerte más a ti
+              misma.
+            </Text>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
@@ -173,6 +147,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: Dims.regularSpace,
+  },
+  safe: {
+    flex: 1,
+    backgroundColor: 'white',
   },
   sectionTitle: {
     fontSize: Dims.h2,

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
-import {SafeAreaView} from 'react-native';
-
+import {SafeAreaView, StyleSheet} from 'react-native';
+//TODO comportamiento al finalizar video
 /**
  * @typedef {object} Props
  * @prop {import('react-navigation').NavigationScreenProp} [navigation]
@@ -20,23 +20,27 @@ export default class ReflexionScreen extends Component {
     /** @type {import("../utils/types").Reflexión} */
     let reflexion = navigation.getParam('reflexion', {});
     return (
-      <>
-        <SafeAreaView>
-          <ScreenBg
-            source={{uri: reflexion.imagenFondo}}
-            color={reflexion.color}
-            // eslint-disable-next-line react-native/no-inline-styles
+      <SafeAreaView style={styles.safe}>
+        <ScreenBg
+          source={{uri: reflexion.imagenFondo}}
+          color={reflexion.color}
             styleImage={{resizeMode: 'cover'}}>
-            <Player
-              source={{
-                uri: reflexion.media,
-              }}
-              showControls
-              shouldPlay
-            />
-          </ScreenBg>
-        </SafeAreaView>
-      </>
+          <Player
+            source={{
+              uri: reflexion.media,
+            }}
+            showControls
+            shouldPlay
+          />
+        </ScreenBg>
+      </SafeAreaView>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+});

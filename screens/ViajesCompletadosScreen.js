@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 import {
   Text,
   StyleSheet,
-  FlatList,
   ScrollView,
-  SafeAreaView,
   ActivityIndicator,
+  View,
 } from 'react-native';
 import ScreenBg from '../components/screenBg';
 import ItemBubble from '../components/ItemBubble';
@@ -35,47 +34,9 @@ export default class ViajeCompletadosScreen extends Component {
     const viajes = await API.getViajesCompletados(user);
     this.setState({viajes});
   };
-  // viaje = {
-  //   id: 1,
-  //   title: 'Ser Feliz',
-  //   pasos: [
-  //     {
-  //       id: 'via1',
-  //       status: 'viajeTitle',
-  //       title: '¿Qué es ser feliz?',
-  //       color: '#fdd58d',
-  //     },
-  //     {
-  //       id: 'via2',
-  //       title: 'Vive Incondicionalmente',
-  //       status: 'viajeTitle',
-  //       color: '#cbe3e2',
-  //     },
-  //     {
-  //       id: 'via3',
-  //       title: 'Un Viaje de Autoestima',
-  //       color: '#f1dee1',
-  //       status: 'viajeTitle',
-  //     },
-  //     {
-  //       id: 'via4',
-  //       title: 'Un Viaje de Vida Saludable',
-  //       color: '#f1dee1',
-  //       status: 'viajeTitle',
-  //     },
-  //     {
-  //       id: 'via5',
-  //       title: 'Otro Viaje',
-  //       status: 'viajeTitle',
-  //       color: '#a8aed4',
-  //     },
-  //   ],
-  //   color: this.props.navigation.getParam('bg', '#fdd58d'),
-  //   bgImg: 'http://okoconnect.com/karim/images/tuangel-bg.png',
-  // };
+
   /** @param {import("../utils/types").Viaje} viaje*/
   _handleClick = viaje => {
-    //alert('This is a button!');
     this.props.navigation.navigate('ViajeStack', {
       viaje,
     });
@@ -84,20 +45,17 @@ export default class ViajeCompletadosScreen extends Component {
   /** @param {{item : import('../utils/types').Viaje}} item*/
   renderItem = ({item}) => {
     return (
-      <>
-        <SafeAreaView>
-          <ItemBubble
-            color={item.color}
-            fill
-            bold
-            fontSize={18}
-            onPress={() => {
-              this._handleClick(item);
-            }}>
-            {item.titulo}
-          </ItemBubble>
-        </SafeAreaView>
-      </>
+      <ItemBubble
+        key={this.keyExtractor(item)}
+        color={item.color}
+        fill
+        bold
+        fontSize={18}
+        onPress={() => {
+          this._handleClick(item);
+        }}>
+        {item.titulo}
+      </ItemBubble>
     );
   };
   keyExtractor = item => item.key;
@@ -118,13 +76,11 @@ export default class ViajeCompletadosScreen extends Component {
             Has completado los siguientes viajes. Si deseas consultar nuevamente
             el contenido, presiona sobre el viaje de interés.
           </Text>
-          <FlatList
-            data={this.state.viajes}
-            renderItem={this.renderItem}
-            keyExtractor={this.keyExtractor}
-            style={styles.container}
-            ListEmptyComponent={this.renderListEmpty}
-          />
+          <View style={styles.container}>
+            {this.state.viajes.length === 0
+              ? this.renderListEmpty()
+              : this.state.viajes.map(viaje => this.renderItem({item: viaje}))}
+          </View>
         </ScrollView>
       </ScreenBg>
     );

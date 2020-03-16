@@ -10,10 +10,8 @@ import colors from './Colors';
  */
 export default class LogoDiario extends Component {
   render() {
-    const opacity =
-      this.props.tintColor === colors.tabIconDefault ? '0.5' : '1';
     return (
-      <Svg width="24" height="24" viewBox="0 0 24 24" opacity={opacity}>
+      <Svg width="24" height="24" viewBox="0 0 24 24">
         <G
           id="Icons/Perfil/icon_3"
           stroke="none"
