@@ -24,7 +24,7 @@ export default class ReflexionScreen extends Component {
         <ScreenBg
           source={{uri: reflexion.imagenFondo}}
           color={reflexion.color}
-          styleImage={{resizeMode: 'contain'}}>
+            styleImage={{resizeMode: 'cover'}}>
           <Player
             source={{
               uri: reflexion.media,
