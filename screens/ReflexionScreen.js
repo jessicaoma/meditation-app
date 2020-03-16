@@ -26,7 +26,7 @@ export default class ReflexionScreen extends Component {
             source={{uri: reflexion.imagenFondo}}
             color={reflexion.color}
             // eslint-disable-next-line react-native/no-inline-styles
-            styleImage={{resizeMode: 'contain'}}>
+            styleImage={{resizeMode: 'cover'}}>
             <Player
               source={{
                 uri: reflexion.media,
