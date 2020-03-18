@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {SafeAreaView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
+import API, {user} from '../utils/API';
+import {enumStatus} from '../utils/types';
 //TODO comportamiento al finalizar video
 //TODO registrar avance
 /**
@@ -21,15 +23,20 @@ export default class PasoBScreen extends Component {
     const {steps, position} = navigation.state.params;
     return {
       title: steps[position].titulo,
-      headerStyle: {
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
-      },
     };
+  };
+
+  componentDidMount = async () => {
+    const {steps, position} = this.props.navigation.state.params;
+    const paso = steps[position];
+    API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
   };
 
   nextStep = () => {
     const {steps, position} = this.props.navigation.state.params;
     const {tipo} = steps[position + 1];
+    const paso = steps[position];
+    API.putDiarioPaso(paso.key, enumStatus.done, null, user);
     // @ts-ignore
     this.props.navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
       steps,

@@ -19,8 +19,6 @@ import CheckItem from '../components/CheckItem';
 import API, {user} from '../utils/API';
 import ScalableText from 'react-native-text';
 
-//TODO verificar que cada paso obtenga sus datos
-//TODO control dado el estado de los pasos
 /**
  * @typedef {Object} DataItemSeparator
  * @prop {boolean} highlighted
@@ -48,12 +46,15 @@ export default class ViajeScreen extends Component {
     this.viaje = props.navigation.state.params.viaje;
   }
 
-  componentDidMount = async () => {
-    const pasos = await API.getPasosDelViaje(this.viaje.key, user);
-    pasos.forEach(paso => {
-      paso.color = this.viaje.color;
+  componentDidMount = () => {
+    //TODO cambiar este comportamiento con el redux
+    this.props.navigation.addListener('willFocus', async () => {
+      const pasos = await API.getPasosDelViaje(this.viaje.key, user);
+      pasos.forEach(paso => {
+        paso.color = this.viaje.color;
+      });
+      this.setState({pasos, isLoading: false});
     });
-    this.setState({pasos, isLoading: false});
   };
 
   static navigationOptions = ({navigation}) => ({
@@ -62,6 +63,14 @@ export default class ViajeScreen extends Component {
   });
 
   _handleClick = index => {
+    if (
+      this.state.pasos[index].estado === enumStatus.todo &&
+      index > 0 &&
+      this.state.pasos[index - 1].estado !== enumStatus.done
+    ) {
+      //return;
+    }
+
     const {tipo} = this.state.pasos[index];
     // @ts-ignore
     this.props.navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {

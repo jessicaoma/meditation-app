@@ -12,6 +12,8 @@ import {
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import {Ionicons} from '@expo/vector-icons';
+import API, {user} from '../utils/API';
+import {enumStatus} from '../utils/types';
 //TODO registrar avance
 const deviceWidth = Dims.window.width;
 const deviceHeight = '100%';
@@ -36,15 +38,20 @@ export default class PasoDScreen extends Component {
     const {steps, position} = navigation.state.params;
     return {
       title: steps[position].titulo,
-      headerStyle: {
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
-      },
     };
+  };
+
+  componentDidMount = async () => {
+    const {steps, position} = this.props.navigation.state.params;
+    const paso = steps[position];
+    API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
   };
 
   nextStep = () => {
     const {steps, position} = this.props.navigation.state.params;
     const {tipo} = steps[position + 1];
+    const paso = steps[position];
+    API.putDiarioPaso(paso.key, enumStatus.done, null, user);
     // @ts-ignore
     this.props.navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
       steps,

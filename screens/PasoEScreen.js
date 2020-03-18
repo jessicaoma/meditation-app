@@ -13,6 +13,8 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
 import {Ionicons} from '@expo/vector-icons';
+import API, {user} from '../utils/API';
+import {enumStatus} from '../utils/types';
 //TODO registrar avance
 /**
  * Paso Tipo(E): Recomendaciones
@@ -34,9 +36,17 @@ export default class PasoEScreen extends Component {
     };
   };
 
+  componentDidMount = async () => {
+    const {steps, position} = this.props.navigation.state.params;
+    const paso = steps[position];
+    API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
+  };
+
   nextStep = () => {
     const {steps, position} = this.props.navigation.state.params;
     const {tipo} = steps[position + 1];
+    const paso = steps[position];
+    API.putDiarioPaso(paso.key, enumStatus.done, null, user);
     // @ts-ignore
     this.props.navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
       steps,

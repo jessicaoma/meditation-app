@@ -20,6 +20,15 @@ export const millisToMinSeg = millis => {
 };
 
 /**
+ * Convertir milisegundos a hora con 2 decimales
+ * @param {number} millis
+ * */
+export const millisToHours = millis => {
+  let hours = (millis / (1000 * 60 * 60)).toFixed(2);
+  return hours;
+};
+
+/**
  * Convertir una fecha al formato 'yyyy-MM-dd'
  * @param {Date} date
  */

@@ -15,6 +15,8 @@ import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
 import {Ionicons} from '@expo/vector-icons';
 import {Header} from 'react-navigation';
+import API, {user} from '../utils/API';
+import {enumStatus} from '../utils/types';
 //TODO registrar avance
 /**
  * Paso Tipo(F): Diario
@@ -33,15 +35,45 @@ export default class PasoFScreen extends Component {
     const {steps, position} = navigation.state.params;
     return {
       title: steps[position].titulo,
-      headerStyle: {
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
-      },
     };
+  };
+
+  constructor(props) {
+    super(props);
+    const {steps, position} = props.navigation.state.params;
+    const paso = steps[position];
+    this.state = paso.contenidos.reduce((obj, item, index) => {
+      return {
+        ...obj,
+        [`p${index}`]: item.respuesta || '',
+      };
+    }, {});
+  }
+
+  componentDidMount = async () => {
+    const {steps, position} = this.props.navigation.state.params;
+    const paso = steps[position];
+    const respuestas = paso.contenidos.map((pregunta, index) => {
+      return {
+        preguntaId: pregunta.key,
+        texto: this.state[`p${index}`],
+      };
+    });
+    API.putDiarioPaso(paso.key, enumStatus.doing, respuestas, user);
   };
 
   nextStep = () => {
     const {steps, position} = this.props.navigation.state.params;
     const {tipo} = steps[position + 1];
+    const paso = steps[position];
+
+    const respuestas = paso.contenidos.map((pregunta, index) => {
+      return {
+        preguntaId: pregunta.key,
+        texto: this.state[`p${index}`],
+      };
+    });
+    API.putDiarioPaso(paso.key, enumStatus.done, respuestas, user);
     // @ts-ignore
     this.props.navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
       steps,
@@ -52,21 +84,27 @@ export default class PasoFScreen extends Component {
   /**
    * @param {import('../utils/types').Contenido} item
    */
-  renderItem = (item /*, isEnd*/) => (
-    <View key={item.key}>
-      <Text style={styles.subtitle}>{item.pregunta}</Text>
-      <TextInput
-        style={styles.textarea}
-        underlineColorAndroid="transparent"
-        placeholder="Tu respuesta"
-        placeholderTextColor="grey"
-        numberOfLines={5}
-        multiline={true}
-        blurOnSubmit={true}
-        value={item.respuesta}
-      />
-    </View>
-  );
+  renderItem = (item, index) => {
+    return (
+      <View key={item.key}>
+        <Text style={styles.subtitle}>{item.pregunta}</Text>
+        <TextInput
+          style={styles.textarea}
+          underlineColorAndroid="transparent"
+          placeholder="Tu respuesta"
+          placeholderTextColor="grey"
+          numberOfLines={5}
+          multiline={true}
+          value={this.state[`p${index}`]}
+          onChangeText={text => {
+            this.setState({
+              [`p${index}`]: text,
+            });
+          }}
+        />
+      </View>
+    );
+  };
 
   render() {
     const statusBarHeight = Dimensions.statusBarHeight;
@@ -99,10 +137,8 @@ export default class PasoFScreen extends Component {
                     y compartir tus respuestas con tus amigos y seres queridos
                     en las redes sociales.
                   </Text>
-                  {steps[position].contenidos.map((item, index, array) => {
-                    return this.renderItem(
-                      item /*, index + 1 === array.length*/,
-                    );
+                  {steps[position].contenidos.map((item, index) => {
+                    return this.renderItem(item, index);
                   })}
                 </View>
               </View>

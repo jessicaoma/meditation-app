@@ -26,7 +26,7 @@
  * @typedef Paso
  * @prop {string} key
  * @prop {string} titulo
- * @prop {string} categoriaId Categoria padre
+ * @prop {string} viajeId viaje padre
  * @prop {string} color Color caracteristico de la categoria padre
  * @prop {enumStatus} estado
  * @prop {string} [media] Video para Paso.Teoria
