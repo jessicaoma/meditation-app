@@ -96,7 +96,7 @@ export default class Home extends Component {
         color = item.meditacion.color;
         titulo = item.meditacion.titulo;
         onpress = () => {
-          this.props.navigation.navigate('Meditacion', {
+          this.props.navigation.navigate('MeditacionIntro', {
             meditacion: item.meditacion,
           });
         };
