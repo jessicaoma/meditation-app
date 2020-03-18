@@ -133,7 +133,7 @@ export default class EmocionesScreen extends Component {
             />
             <Text style={styles.suggestion}>
               ¿Cómo te sientes hoy?.{'\n'}
-              Llevando un registro de tus emociones vas a concerte más a ti
+              Llevando un registro de tus emociones vas a conocerte más a ti
               misma.
             </Text>
           </View>
