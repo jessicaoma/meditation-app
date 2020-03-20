@@ -12,7 +12,6 @@ import Player from '../player/Player';
 import Dimensions from '../constants/Dimensions';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
-import {NavigationEvents} from 'react-navigation';
 import ScalableText from 'react-native-text';
 
 //TODO control de que viaje visitar dado su estado

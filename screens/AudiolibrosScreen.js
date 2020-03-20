@@ -13,7 +13,7 @@ import Colors from '../constants/Colors';
 import API from '../utils/API';
 
 //Estoy restando los margenes laterales (16 + 16), y eso lo divido entre las columnas.
-const widthItem = (Dimensions.window.width - Dimensions.regularSpace * 2) - 0;
+const widthItem = Dimensions.window.width - Dimensions.regularSpace * 2 - 0;
 
 /**
  * @typedef Props
@@ -53,14 +53,11 @@ export default class AudiolibrosScreen extends Component {
   /** @param {{item :import('../utils/types').Audiolibro}} item*/
   _renderItem = ({item}) => {
     return (
-      <View style={{marginBottom: 10}}
-        // eslint-disable-next-line react-native/no-inline-styles
-        >
+      <View style={{marginBottom: 10}}>
         <BookListItem
           source={{uri: item.imagenLista}}
           width={widthItem}
           height={widthItem * 0.4286}
-          
           onPress={() => {
             this._handleClick(item);
           }}
@@ -112,20 +109,5 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     color: Colors.gray,
     fontFamily: 'MyriadPro-Bold',
-  },
-  shadowBook: {
-    alignSelf: 'stretch',
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 3,
-      height: 5,
-    },
-    shadowOpacity: 0.22,
-    zIndex: 999,
-    overflow: 'hidden',
-    flex: 1,
-    paddingBottom: 20,
-    paddingHorizontal: 5,
   },
 });
