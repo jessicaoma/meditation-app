@@ -18,21 +18,25 @@ import LogoEmocion1 from '../constants/LogoEmocion1';
 import LogoEmocion2 from '../constants/LogoEmocion2';
 import LogoEmocion3 from '../constants/LogoEmocion3';
 import LogoEmocion4 from '../constants/LogoEmocion4';
+import API from '../utils/API';
 
 //TODO llamar api
 export default class MisEmocionesScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      emocionesData: [],
-      keys: ['Alegría', 'Ira', 'Miedo', 'Tristeza'],
+      emocionesData: [0, 0, 0, 0],
+      //a, t, i, m
+      keys: ['Alegría', 'Tristeza', 'Ira', 'Miedo'],
       colors: ['#bfc6e2', '#bfc6e2', '#bfc6e2', '#bfc6e2'],
       yAxis: [{}, {}, {}],
     };
+    this.semana = [0, 0, 0, 0];
+    this.mes = [0, 0, 0, 0];
   }
   onPressSemanal = () => {
     this.setState({
-      emocionesData: [3, 2, 0, 2],
+      emocionesData: this.semana, //[3, 2, 0, 2],
       title: 'Semanal',
       yAxis: [
         {
@@ -54,7 +58,7 @@ export default class MisEmocionesScreen extends Component {
 
   onPressMensual = () => {
     this.setState({
-      emocionesData: [14, 7, 4, 4],
+      emocionesData: this.mes, //[14, 7, 4, 4],
       title: 'Mensual',
       yAxis: [
         {
@@ -79,9 +83,12 @@ export default class MisEmocionesScreen extends Component {
     headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
   });
 
-  componentDidMount() {
+  componentDidMount = async () => {
+    const registros = await API.getRegistroEmociones();
+    this.mes = registros.mes;
+    this.semana = registros.semana;
     this.onPressSemanal();
-  }
+  };
   _handleClick = () => {
     //TODO manejo de viajes recomendados
     //this.props.navigation.navigate('Paso');

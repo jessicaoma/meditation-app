@@ -204,7 +204,7 @@ class Api {
       }),
       headers: {'Content-Type': 'application/json'},
     });
-}
+  }
 
   /**
    * @param {string} itemId Id del viaje
@@ -223,6 +223,35 @@ class Api {
       headers: {'Content-Type': 'application/json'},
     });
   }
+
+  /**
+   * @param {string} emocionId Id de la emocion
+   * @param {string} usuario usuario activo
+   */
+  async postRegistroEmocion(emocionId, usuario = user) {
+    await fetch(`${BASE_API}emociones/registro`, {
+      method: 'POST',
+      body: JSON.stringify({
+        emocionId,
+        fecha: dateToStrYYYYMMDD(new Date()),
+        usuario,
+      }),
+      headers: {'Content-Type': 'application/json'},
+    });
+  }
+  /**
+   * @param {string} usuario usuario activo
+   * @return {Promise<import('./types').MisEmociones>} Registros
+   */
+  async getRegistroEmociones(usuario = user) {
+    const myHeaders = new Headers({from: usuario});
+    const query = await fetch(`${BASE_API}emociones/registro`, {
+      headers: myHeaders,
+    });
+    const data = await query.json();
+    return data;
+  }
+}
 
 export default new Api();
 
