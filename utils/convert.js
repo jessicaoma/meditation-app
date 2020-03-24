@@ -1,5 +1,5 @@
 /** @param {number} number */
-const padWithZero = number => {
+export const padWithZero = number => {
   const string = number.toString();
   if (number < 10) {
     return '0' + string;
@@ -31,12 +31,11 @@ export const millisToHours = millis => {
 /**
  * Convertir una fecha al formato 'yyyy-MM-dd'
  * @param {Date} date
+ * @returns {string}
  */
 export const dateToStrYYYYMMDD = date => {
   let year = date.getFullYear();
   let month = date.getMonth() + 1;
   let day = date.getDate();
-  return `${year}-${month > 9 ? month : '0' + month}-${
-    day > 9 ? day : '0' + day
-  }`;
+  return `${year}-${padWithZero(month)}-${padWithZero(day)}`;
 };

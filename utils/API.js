@@ -251,6 +251,19 @@ class Api {
     const data = await query.json();
     return data;
   }
+
+  /**
+   * @param {string} usuario usuario activo
+   * @return {Promise<import('./types').Diario[]>} Registros
+   */
+  async getBitacora(usuario = user) {
+    const myHeaders = new Headers({from: usuario});
+    const query = await fetch(`${BASE_API}diario`, {
+      headers: myHeaders,
+    });
+    const data = await query.json();
+    return data;
+  }
 }
 
 export default new Api();

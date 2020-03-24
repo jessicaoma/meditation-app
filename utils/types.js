@@ -109,6 +109,23 @@
  * @prop {number} headerH
  * @prop {number} footerH
  * @prop {import('react-native').ImageSourcePropType} imagen
+ *
+ * @typedef {Object} MisEmociones
+ * @prop {number[]} mes
+ * @prop {number[]} semana
+ *
+ * @typedef {Object} Diario
+ * @prop {string} fecha
+ * @prop {Evento[]} eventos
+ *
+ * @typedef {Object} Evento
+ * @prop {enumDiario} tipo
+ * @prop {string} texto
+ * @prop {string} color
+ * @prop {Array<Registro>} preguntas
+ * @typedef {Object} Registro
+ * @prop {string} pregunta
+ * @prop {string} respuesta
  */
 
 /**
@@ -132,13 +149,11 @@ export const enumStatus = {
  */
 export const enumLoNuevo = {
   /** Value 0 */
-  viaje: 0,
+  meditacion: 0,
   /** Value 1 */
-  meditacion: 1,
+  cancion: 1,
   /** Value 2 */
-  cancion: 2,
-  /** Value 3 */
-  audiolibro: 3,
+  audiolibro: 2,
 };
 
 /**
@@ -163,4 +178,20 @@ export const enumPaso = {
   Cierre: 6,
 };
 
-export const envRemoto = true;
+/**
+ * Enum for Daile events type.
+ * @readonly
+ * @enum {number}
+ */
+export const enumDiario = {
+  /** Value 0 */
+  viaje: 0,
+  /** Value 1 */
+  diario: 1,
+  /** Value 2 */
+  audiolibro: 2,
+  /** Value 3 */
+  meditacion: 3,
+};
+
+export const envRemoto = false;
