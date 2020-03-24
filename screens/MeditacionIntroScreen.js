@@ -55,6 +55,7 @@ export default class MeditacionIntroScreen extends Component {
                   styleVideo={styles.video}
                   showControls
                   showPlayFrame
+                  onEnd={this.goPlayerMeditar}
                 />
               </ScreenBg>
               <ScalableText style={styles.texto}>
