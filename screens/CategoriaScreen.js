@@ -44,25 +44,38 @@ export default class Categoria extends Component {
     this.categoria = props.navigation.state.params.categoria;
     this.cantViajes = 0;
   }
-
   componentDidMount = async () => {
     this.props.navigation.addListener('willBlur', () => {
-      if (this.player === null) return;
+      if (this.player === null) {
+        return;
+      }
       if (this.player.state.isPlaying) {
         this.player._onPlayPausePressed();
       }
     });
-    let viajes = await API.getViajesCategoria(this.categoria.key, user);
-    this.setState({viajes, isLoading: false});
+    //TODO cambiar este comportamiento con el redux
+    this.props.navigation.addListener('willFocus', async () => {
+      const viajes = await API.getViajesCategoria(this.categoria.key, user);
+      this.setState({viajes, isLoading: false});
+    });
   };
 
   _goViaje = index => {
     let viaje = this.state.viajes[index];
+    if (
+      this.state.viajes[index].estado === enumStatus.todo &&
+      index > 0 &&
+      this.state.viajes[index - 1].estado !== enumStatus.done
+    ) {
+      return;
+    }
+
     viaje.color = this.categoria.color;
     this.props.navigation.navigate('ViajeStack', {
       viaje,
     });
   };
+  //TODO reiniciar el video al llegar al final
   /** @param {Player} ref*/
   refPlayer = ref => {
     this.player = ref;

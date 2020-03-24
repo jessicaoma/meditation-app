@@ -68,7 +68,7 @@ export default class ViajeScreen extends Component {
       index > 0 &&
       this.state.pasos[index - 1].estado !== enumStatus.done
     ) {
-      //return;
+      return;
     }
 
     const {tipo} = this.state.pasos[index];
