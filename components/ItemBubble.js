@@ -62,65 +62,6 @@ export default class ItemBubble extends Component {
           },
     );
 
-    // if (status === enumStatus.done) {
-    //   styleStatus = StyleSheet.create({
-    //     styleContainer: {
-    //       borderColor: color,
-    //       backgroundColor: color,
-    //     },
-    //     styleText: {
-    //       fontWeight: 'bold',
-    //     },
-    //   });
-    // } else if (status === enumStatus.doing) {
-    //   styleStatus = StyleSheet.create({
-    //     styleContainer: {
-    //       borderColor: color,
-    //       backgroundColor: 'white',
-    //     },
-    //     styleText: {
-    //       fontWeight: 'bold',
-    //     },
-    //   });
-    // } else if (status === 'viajeTitle') {
-    //   styleStatus = StyleSheet.create({
-    //     styleContainer: {
-    //       borderColor: color,
-    //       backgroundColor: color,
-    //     },
-    //     styleText: {
-    //       fontWeight: 'bold',
-    //       fontSize: 18,
-    //     },
-    //   });
-    // } else if (status === 'viajeDiario') {
-    //   styleStatus = StyleSheet.create({
-    //     styleContainer: {
-    //       borderColor: color,
-    //       backgroundColor: color,
-    //     },
-    //     styleText: {
-    //       fontWeight: 'bold',
-    //     },
-    //   });
-    // } else if (status === 'meditar-audiolibro') {
-    //   styleStatus = StyleSheet.create({
-    //     styleContainer: {
-    //       borderColor: '#ffffff',
-    //       backgroundColor: color,
-    //       borderRadius: 10,
-    //       paddingVertical: Dims.regularSpace,
-    //     },
-    //     styleText: {
-    //       //fontWeight: 'regular',
-    //       fontFamily: 'MyriadPro-Regular',
-    //       color: 'white',
-    //       lineHeight: 20,
-    //     },
-    //   });
-    //   console.log(styleStatus);
-    // }
-
     return (
       <TouchableOpacity
         style={[styles.container, styleStatus.styleContainer]}
