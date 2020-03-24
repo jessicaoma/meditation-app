@@ -17,6 +17,11 @@ export default class CancionScreen extends Component {
     return {title: cancion.titulo};
   };
 
+  /** @param {import('expo-av/build/AV').PlaybackStatus} status */
+  onEnd = status => {
+    this.props.navigation.goBack();
+  };
+
   render() {
     const {navigation} = this.props;
     /** @type {import('../utils/types').Canción}*/
@@ -33,6 +38,7 @@ export default class CancionScreen extends Component {
             }}
             showControls
             shouldPlay
+            onEnd={this.onEnd}
           />
         </ScreenBg>
       </SafeAreaView>

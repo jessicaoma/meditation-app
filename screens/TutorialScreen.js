@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import {SafeAreaView} from 'react-native';
-//TODO comportamiento al finalizar video
+
 /**
  * @typedef {object} Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
@@ -15,6 +15,11 @@ export default class TutorialScreen extends Component {
     return {title: video.titulo, headerBackTitle: null};
   };
 
+  /** @param {import('expo-av/build/AV').PlaybackStatus} status */
+  onEnd = status => {
+    this.props.navigation.goBack();
+  };
+
   render() {
     /** @type {import("../utils/types").Video} */
     let video = this.props.navigation.getParam('video', {});
@@ -24,7 +29,13 @@ export default class TutorialScreen extends Component {
           source={{uri: video.imagenFondo}}
           color={video.color}
           styleImage={{resizeMode: 'contain'}}>
-          <Player source={{uri: video.media}} showControls shouldPlay isVideo />
+          <Player
+            source={{uri: video.media}}
+            showControls
+            shouldPlay
+            isVideo
+            onEnd={this.onEnd}
+          />
         </ScreenBg>
       </SafeAreaView>
     );
