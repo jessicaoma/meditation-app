@@ -66,7 +66,7 @@ export default class Home extends Component {
         key: '952bb5e2-726a-475c-8a09-c624f5feb1b1',
         tipo: 3,
         categoria: {
-          key: '618b95a9-f7e0-49de-8ad1-cc6570bf5657',
+          key: 'cde55026-4557-47ed-90a2-c27a7be22c82',
           titulo: 'Ser feliz',
           media:
             'http://okoconnect.com/karim/assets/categorias/categoria-1/video.mp4',
@@ -84,7 +84,7 @@ export default class Home extends Component {
         key: '579625e6-93f3-4c95-ab53-7ff7049ca1c7',
         tipo: 2,
         audiolibro: {
-          key: '94b39542-3c66-4412-a87f-307e8078650a',
+          key: '8dcf4ce0-2d3c-4c2b-9182-98c3624f9f0b',
           titulo: 'Aprendiendo a Meditar',
           imagenLista:
             'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/iconolistado.png',
@@ -104,7 +104,7 @@ export default class Home extends Component {
         key: '952bb5e2-726a-475c-8a09-c624f5feb1b1',
         tipo: 3,
         categoria: {
-          key: '618b95a9-f7e0-49de-8ad1-cc6570bf5657',
+          key: 'cde55026-4557-47ed-90a2-c27a7be22c82',
           titulo: 'Ser feliz',
           media:
             'http://okoconnect.com/karim/assets/categorias/categoria-1/video.mp4',
@@ -122,7 +122,7 @@ export default class Home extends Component {
         key: '9ec4c979-3655-4026-b4e2-957a3df37fc8',
         tipo: 0,
         meditacion: {
-          key: '3d9710e1-996b-41fe-a4e6-7b2c8ebf055e',
+          key: '729d6e80-ceed-47c0-8c88-7c708bfc4217',
           titulo: 'Básica',
           imagenIntro:
             'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/intro.png',
@@ -142,7 +142,7 @@ export default class Home extends Component {
         key: '579625e6-93f3-4c95-ab53-7ff7049ca1c7',
         tipo: 2,
         audiolibro: {
-          key: '94b39542-3c66-4412-a87f-307e8078650a',
+          key: '8dcf4ce0-2d3c-4c2b-9182-98c3624f9f0b',
           titulo: 'Aprendiendo a Meditar',
           imagenLista:
             'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/iconolistado.png',
@@ -314,7 +314,7 @@ export default class Home extends Component {
             {this.state.enprogreso.length > 0 && (
               <>
                 <ScalableText style={styles.sectionTitle}>
-                  Viajes en progreso
+                  En progreso
                 </ScalableText>
                 <FlatList
                   horizontal
