@@ -96,18 +96,18 @@ export default class Home extends Component {
         color = item.meditacion.color;
         titulo = item.meditacion.titulo;
         onpress = () => {
-          this.props.navigation.navigate('Meditacion', {
+          this.props.navigation.navigate('MeditacionIntro', {
             meditacion: item.meditacion,
           });
         };
         break;
-      case enumLoNuevo.viaje:
-        color = item.viaje.color;
-        titulo = item.viaje.titulo;
-        onpress = () => {
-          this.props.navigation.navigate('ViajeStack', {viaje: item.viaje});
-        };
-        break;
+      // case enumLoNuevo.viaje:
+      //   color = item.viaje.color;
+      //   titulo = item.viaje.titulo;
+      //   onpress = () => {
+      //     this.props.navigation.navigate('ViajeStack', {viaje: item.viaje});
+      //   };
+      //   break;
       default:
         color = Colors.primaryDark;
         break;
@@ -216,16 +216,21 @@ export default class Home extends Component {
               keyExtractor={item => item.key}
               ListEmptyComponent={this._renderListEmpty}
             />
-            <ScalableText style={styles.sectionTitle}>
-              Viajes en progreso
-            </ScalableText>
-            <FlatList
-              horizontal
-              data={this.state.enprogreso}
-              renderItem={this._renderItemViajesProgreso}
-              keyExtractor={item => item.key}
-              ListEmptyComponent={this._renderListEmpty}
-            />
+            {this.state.enprogreso.length > 0 && (
+              <>
+                <ScalableText style={styles.sectionTitle}>
+                  Viajes en progreso
+                </ScalableText>
+                <FlatList
+                  horizontal
+                  data={this.state.enprogreso}
+                  renderItem={this._renderItemViajesProgreso}
+                  keyExtractor={item => item.key}
+                  ListEmptyComponent={this._renderListEmpty}
+                />
+              </>
+            )}
+
             <View style={styles.separador} />
             <Buttom
               style={{backgroundColor: Colors.second}}

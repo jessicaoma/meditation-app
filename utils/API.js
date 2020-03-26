@@ -42,7 +42,7 @@ class Api {
 
   /**
    * @param {string} categoriaId
-   * @param {string} user
+   * @param {string} user usuario activo
    * @return {Promise<import("./types").Viaje[]>} */
   async getViajesCategoria(categoriaId, user) {
     const myHeaders = new Headers({from: user});
@@ -54,7 +54,7 @@ class Api {
   }
 
   /**
-   * @param {string} user
+   * @param {string} user usuario activo
    * @return {Promise<import("./types").Viaje[]>} */
   async getViajesEnProgreso(user) {
     const myHeaders = new Headers({from: user});
@@ -86,7 +86,7 @@ class Api {
   }
 
   /**
-   * @param {string} user
+   * @param {string} user usuario activo
    * @return {Promise<import("./types").Viaje[]>} */
   async getViajesCompletados(user) {
     const myHeaders = new Headers({from: user});
@@ -116,22 +116,23 @@ class Api {
   /** Consulta las meditaciones
    * @param {string} itemId Id de la meditacion
    * @param {number} progreso duracion de la meditacion
+   * @param {string} usuario usuario activo
    */
-  async postDiarioMeditacion(itemId, progreso) {
+  async postDiarioMeditacion(itemId, progreso, usuario = user) {
     await fetch(`${BASE_API}diario/meditacion`, {
       method: 'POST',
       body: JSON.stringify({
-        itemId: itemId,
-        date: dateToStrYYYYMMDD(new Date()),
-        progreso: progreso,
-        usuario: user,
+        itemId,
+        fecha: dateToStrYYYYMMDD(new Date()),
+        progreso,
+        usuario,
       }),
       headers: {'Content-Type': 'application/json'},
     });
   }
 
   /**
-   * @param {string} user
+   * @param {string} user usuario activo
    * @return {Promise<import("./types").MeditacionesCompletadas>} */
   async getMeditacionesCompletadas(user) {
     const myHeaders = new Headers({from: user});
@@ -144,7 +145,7 @@ class Api {
 
   /**
    * @param {string} viajeId
-   * @param {string} user
+   * @param {string} user usuario activo
    * @return {Promise<import("./types").Viaje[]>} */
   async getPasosDelViaje(viajeId, user) {
     const myHeaders = new Headers({from: user});
@@ -158,16 +159,17 @@ class Api {
   /** Consulta las meditaciones
    * @param {string} itemId Id de la meditacion
    * @param {number} progreso duracion de la meditacion
+   * @param {string} usuario usuario activo
    * @param {import('./types').enumStatus} progreso duracion de la meditacion
    */
-  async putDiarioAudiolibro(itemId, progreso, estado) {
+  async putDiarioAudiolibro(itemId, progreso, estado, usuario = user) {
     await fetch(`${BASE_API}diario/audiolibro`, {
       method: 'PUT',
       body: JSON.stringify({
-        itemId: itemId,
-        date: dateToStrYYYYMMDD(new Date()),
-        progreso: progreso,
-        usuario: user,
+        itemId,
+        fecha: dateToStrYYYYMMDD(new Date()),
+        progreso,
+        usuario,
         estado,
       }),
       headers: {'Content-Type': 'application/json'},
@@ -180,6 +182,85 @@ class Api {
    */
   async getVideo(titulo) {
     const query = await fetch(`${BASE_API}videos/${titulo}`);
+    const data = await query.json();
+    return data;
+  }
+
+  /**
+   * @param {string} itemId Id del paso
+   * @param {import('./types').enumStatus} estado Estado del paso
+   * @param {{preguntaId: string, texto: string }[]} respuestas Respuestas dadas en el PasoF
+   * @param {string} usuario usuario activo
+   */
+  async putDiarioPaso(itemId, estado, respuestas, usuario = user) {
+    await fetch(`${BASE_API}diario/paso`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        itemId,
+        fecha: dateToStrYYYYMMDD(new Date()),
+        estado,
+        respuestas,
+        usuario,
+      }),
+      headers: {'Content-Type': 'application/json'},
+    });
+  }
+
+  /**
+   * @param {string} itemId Id del viaje
+   * @param {import('./types').enumStatus} estado Estado del paso
+   * @param {string} usuario usuario activo
+   */
+  async putDiarioViaje(itemId, estado, usuario = user) {
+    await fetch(`${BASE_API}diario/viaje`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        itemId,
+        fecha: dateToStrYYYYMMDD(new Date()),
+        estado,
+        usuario,
+      }),
+      headers: {'Content-Type': 'application/json'},
+    });
+  }
+
+  /**
+   * @param {string} emocionId Id de la emocion
+   * @param {string} usuario usuario activo
+   */
+  async postRegistroEmocion(emocionId, usuario = user) {
+    await fetch(`${BASE_API}emociones/registro`, {
+      method: 'POST',
+      body: JSON.stringify({
+        emocionId,
+        fecha: dateToStrYYYYMMDD(new Date()),
+        usuario,
+      }),
+      headers: {'Content-Type': 'application/json'},
+    });
+  }
+  /**
+   * @param {string} usuario usuario activo
+   * @return {Promise<import('./types').MisEmociones>} Registros
+   */
+  async getRegistroEmociones(usuario = user) {
+    const myHeaders = new Headers({from: usuario});
+    const query = await fetch(`${BASE_API}emociones/registro`, {
+      headers: myHeaders,
+    });
+    const data = await query.json();
+    return data;
+  }
+
+  /**
+   * @param {string} usuario usuario activo
+   * @return {Promise<import('./types').Diario[]>} Registros
+   */
+  async getBitacora(usuario = user) {
+    const myHeaders = new Headers({from: usuario});
+    const query = await fetch(`${BASE_API}diario`, {
+      headers: myHeaders,
+    });
     const data = await query.json();
     return data;
   }

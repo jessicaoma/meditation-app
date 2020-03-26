@@ -11,7 +11,7 @@ import {
 import colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Dims from '../constants/Dimensions';
-import API from '../utils/API';
+import API, {user} from '../utils/API';
 
 /**
  * @typedef Props
@@ -94,6 +94,7 @@ export default class EmocionesScreen extends Component {
    * @param {import('../utils/types').Emoción} item
    */
   _handleClick = item => {
+    API.postRegistroEmocion(item.key, user);
     this.props.navigation.navigate('Emocion', {
       emocion: item,
     });
@@ -133,7 +134,7 @@ export default class EmocionesScreen extends Component {
             />
             <Text style={styles.suggestion}>
               ¿Cómo te sientes hoy?.{'\n'}
-              Llevando un registro de tus emociones vas a concerte más a ti
+              Llevando un registro de tus emociones vas a conocerte más a ti
               misma.
             </Text>
           </View>

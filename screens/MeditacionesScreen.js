@@ -47,7 +47,7 @@ export default class MeditacionesScreen extends Component {
     });
     this.player._loadNewPlaybackInstance();
   };
-
+  //TODO reiniciar el video al finalizar
   /** @param {Player} ref*/
   refPlayer = ref => {
     this.player = ref;

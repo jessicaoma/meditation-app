@@ -6,6 +6,7 @@ import LogoReloj from '../constants/LogoReloj';
 import ScalableText from 'react-native-text';
 import colors from '../constants/Colors';
 import API, {user} from '../utils/API';
+import {millisToHours} from '../utils/convert';
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
@@ -50,7 +51,7 @@ export default class MisMeditacionesScreen extends Component {
 
             <View style={styles.inforow}>
               <ScalableText style={styles.bigTitle}>
-                {this.state.progreso}
+                {millisToHours(this.state.progreso)}
               </ScalableText>
               <ScalableText style={styles.purpleTitle}>HORAS</ScalableText>
             </View>

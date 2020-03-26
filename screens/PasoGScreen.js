@@ -12,6 +12,8 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
 import {Ionicons} from '@expo/vector-icons';
+import { enumStatus } from '../utils/types';
+import API, { user } from '../utils/API';
 //TODO registrar avance
 //TODO consultar viaje desde el redux
 //TODO consultar sigueinte viaje desde redux
@@ -33,6 +35,13 @@ export default class PasoGScreen extends Component {
     return {
       title: steps[position].titulo,
     };
+  };
+
+  componentDidMount = async () => {
+    const {steps, position} = this.props.navigation.state.params;
+    const paso = steps[position];
+    API.putDiarioPaso(paso.key, enumStatus.done, null, user);
+    API.putDiarioViaje(paso.viajeId, enumStatus.done, user);
   };
 
   returnJourney = () => {

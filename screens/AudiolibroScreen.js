@@ -18,7 +18,6 @@ export default class AudiolibroScreen extends Component {
   static navigationOptions = ({navigation}) => {
     /** @type {import('../utils/types').Audiolibro} */
     let audiolibro = navigation.getParam('audiolibro', {titulo: 'Audiolibro'});
-    console.log(audiolibro.progreso);
     return {title: audiolibro.titulo};
   };
 
