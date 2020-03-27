@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, FlatList, SafeAreaView} from 'react-native';
+import {Text, StyleSheet, View, FlatList, SafeAreaView, TouchableOpacity} from 'react-native';
 import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
+import SvgUri from '../components/SvgUri';
 
 /**
  * @typedef {Object} Card
@@ -16,35 +17,37 @@ import API from '../utils/API';
 
 //TODO registrar seleccion
 const numColumns = 2;
+const height=((Dims.window.width - 40) / numColumns) * 1.5;
+const width=(Dims.window.width - 40) / numColumns;
 
 /**@type {Card[]} */
 const data = [
   {
     key: 'cartaA',
     faces: [
-      require('../assets/images/angel/angel1.png'),
-      require('../assets/images/angel/angelreve1-vacio.png'),
+      'http://okoconnect.com/karim/assets/angeles/angel1.svg',
+      'http://okoconnect.com/karim/assets/angeles/carta1.svg',
     ],
   },
   {
     key: 'cartaB',
     faces: [
-      require('../assets/images/angel/angel2.png'),
-      require('../assets/images/angel/angelreve2-vacio.png'),
+      'http://okoconnect.com/karim/assets/angeles/angel2.svg',
+      'http://okoconnect.com/karim/assets/angeles/carta2.svg',
     ],
   },
   {
     key: 'cartaC',
     faces: [
-      require('../assets/images/angel/angel3.png'),
-      require('../assets/images/angel/angelreve3-vacio.png'),
+      'http://okoconnect.com/karim/assets/angeles/angel3.svg',
+      'http://okoconnect.com/karim/assets/angeles/carta3.svg',
     ],
   },
   {
     key: 'cartaD',
     faces: [
-      require('../assets/images/angel/angel4.png'),
-      require('../assets/images/angel/angelreve4-vacio.png'),
+      'http://okoconnect.com/karim/assets/angeles/angel4.svg',
+      'http://okoconnect.com/karim/assets/angeles/carta4.svg',
     ],
   },
 ];
@@ -77,14 +80,11 @@ export default class AngelCartasScreen extends Component {
    */
   renderItem = ({item}) => {
     return (
-      <HalfCover
-        source={item.faces[0]}
-        onPress={() => {
-          this._handleClick(item);
-        }}
-        height={((Dims.window.width - 40) / numColumns) * 1.5}
-        width={(Dims.window.width - 40) / numColumns}
-      />
+      <TouchableOpacity onPress={() => {this._handleClick(item);}}>
+        <View style={styles.containercard}>
+          <SvgUri width={width} height={height} source={{uri: item.faces[0]}} />
+        </View>
+      </TouchableOpacity>
     );
   };
 
@@ -135,5 +135,9 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     textAlign: 'center',
     color: '#665e61',
+  },
+  containercard: {
+    marginBottom: 3,
+    borderRadius: 20,
   },
 });

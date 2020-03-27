@@ -3,13 +3,14 @@ import {
   Animated,
   View,
   StyleSheet,
-  ScrollView,
   Text,
-  ImageBackground,
   SafeAreaView,
+  TouchableOpacity
 } from 'react-native';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
+import SvgUri from '../components/SvgUri';
+import CardFlip from 'react-native-card-flip';
 
 /**
  * @typedef {Object} ParamsNavigation
@@ -38,50 +39,8 @@ export default class AngelScreen extends Component {
       FIXED_BAR_WIDTH / numItems - (numItems - 1) * Dims.smallSpace;
     const imageArray = carta.faces.map((item, index) => {
       return (
-        <ImageBackground
-          key={`cardimage${index}`}
-          source={item}
-          style={[styles.sliderImage]}>
-          {index === 0 ? (
-            //aca ira el titulo (angel.titulo)
-            <View />
-          ) : (
-            <View style={styles.topBox}>
-              <Text style={styles.headline}>
-                <Text style={styles.negrita}>{angel.titulo}</Text> {mensajeSub}{' '}
-                <Text style={styles.negrita}>{afirmaSup}</Text>
-              </Text>
-            </View>
-          )}
-        </ImageBackground>
-      );
-    });
-    const barArray = carta.faces.map((item, index) => {
-      const scrollBarVal = this.animVal.interpolate({
-        inputRange: [deviceWidth * (index - 1), deviceWidth * (index + 1)],
-        outputRange: [-itemWidth, itemWidth],
-        extrapolate: 'clamp',
-      });
-      return (
-        <View
-          key={`bar${index}`}
-          style={[
-            styles.track,
-            {
-              width: itemWidth,
-              marginLeft: index === 0 ? 0 : Dims.smallSpace,
-            },
-          ]}>
-          <Animated.View
-            style={[
-              styles.bar,
-              {
-                width: itemWidth,
-                transform: [{translateX: scrollBarVal}],
-              },
-            ]}
-          />
-        </View>
+        <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} ><SvgUri width={deviceWidth} height={deviceHeight} source={{uri: item}} /></TouchableOpacity>
+       
       );
     });
 
@@ -89,19 +48,11 @@ export default class AngelScreen extends Component {
       <SafeAreaView style={styles.safe}>
         <View style={styles.statusBar} />
         <View style={[styles.container]}>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            scrollEventThrottle={10}
-            pagingEnabled
-            onScroll={Animated.event([
-              {nativeEvent: {contentOffset: {x: this.animVal}}},
-            ])}
-            style={styles.slider}>
+          <CardFlip style={styles.cardContainer} ref={(card) => this.card = card} >
             {imageArray}
-          </ScrollView>
-          <View style={styles.barContainer}>{barArray}</View>
+          </CardFlip>
         </View>
+        <Text style={styles.suggestion}>Tap para descubrir</Text>
       </SafeAreaView>
     );
   }
@@ -119,53 +70,11 @@ const styles = StyleSheet.create({
   statusBar: {
     height: Dims.statusBarHeight,
   },
-  slider: {
-    marginTop: 20,
-  },
-  sliderImage: {
-    width: deviceWidth,
-    height: deviceHeight,
-    //resizeMode: 'contain',
-  },
-  barContainer: {
-    position: 'absolute',
-    zIndex: 2,
-    top: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    left: '50%',
-  },
-  track: {
-    backgroundColor: '#ccc',
-    overflow: 'hidden',
-    height: 5,
-    borderRadius: 5,
-  },
-  bar: {
-    backgroundColor: Colors.gray,
-    height: 5,
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    borderRadius: 5,
-  },
-  topBox: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headline: {
+  suggestion: {
     fontFamily: 'MyriadPro-Regular',
-    fontSize: 18,
-    lineHeight: 33,
+    fontSize: 16,
+    lineHeight: 28,
     textAlign: 'center',
-    textAlignVertical: 'center',
-    color: Colors.gray,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 60,
-    height: '100%',
+    color: '#665e61',
   },
-  negrita: {fontWeight: 'bold'},
 });
