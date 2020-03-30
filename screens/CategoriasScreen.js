@@ -6,7 +6,6 @@ import {
   View,
   ActivityIndicator,
   SafeAreaView,
-  Dimensions,
 } from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
@@ -14,13 +13,14 @@ import Dims from '../constants/Dimensions';
 import API from '../utils/API';
 import ScalableText from 'react-native-text';
 import SvgUri from '../components/SvgUri';
+import {connect} from 'react-redux';
 
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
  * @extends {Component<Props>}
  */
-export default class Categorias extends Component {
+class Categorias extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -40,8 +40,16 @@ export default class Categorias extends Component {
 
   /** @param {import('../utils/types').Categoria} item */
   _handleClick = item => {
-    this.props.navigation.navigate('Categoria', {
+    this.props.navigation.navigate(
+      'Categoria' /*, {
       categoria: item,
+    }*/,
+    );
+    this.props.dispatch({
+      type: 'SET_CATEGORIA',
+      payload: {
+        categoria: item,
+      },
     });
   };
   /** @param {import('../utils/types').Categoria} item */
@@ -126,3 +134,5 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
 });
+
+export default connect(null)(Categorias);

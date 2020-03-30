@@ -13,6 +13,7 @@ import Dimensions from '../constants/Dimensions';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import ScalableText from 'react-native-text';
+import {connect} from 'react-redux';
 
 //TODO control de que viaje visitar dado su estado
 //TODO compartir color de la categoria
@@ -26,7 +27,7 @@ import ScalableText from 'react-native-text';
  *
  * @extends {Component<Props>}
  */
-export default class Categoria extends Component {
+class Categoria extends Component {
   state = {
     /** @type {import('../utils/types').Viaje[]} */
     viajes: [],
@@ -43,6 +44,7 @@ export default class Categoria extends Component {
     /** @type {import('../utils/types').Categoria} */
     this.categoria = props.navigation.state.params.categoria;
     this.cantViajes = 0;
+    console.log(props.categoria);
   }
   componentDidMount = async () => {
     this.props.navigation.addListener('willBlur', () => {
@@ -189,6 +191,12 @@ export default class Categoria extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    categoria: state.categoria,
+  };
+}
+
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: Dimensions.regularSpace,
@@ -225,3 +233,5 @@ const styles = StyleSheet.create({
     fontSize: Dimensions.paragraph,
   },
 });
+
+export default connect(mapStateToProps)(Categoria)

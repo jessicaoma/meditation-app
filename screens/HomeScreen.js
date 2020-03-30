@@ -274,9 +274,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: Dimensions.regularSpace,
     paddingTop: Dimensions.regularSpace,
   },
-  cover: {
-    paddingTop: Dimensions.regularSpace,
-  },
   sectionTitle: {
     fontSize: Dimensions.paragraph,
     letterSpacing: 1.11,
