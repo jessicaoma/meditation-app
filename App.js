@@ -6,6 +6,7 @@ import {StatusBar, StyleSheet, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import AppNavigator from './navigation/AppNavigator';
 
+
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 
@@ -54,6 +55,7 @@ async function loadResourcesAsync() {
       'MyriadPro-Semibold': require('./assets/fonts/MyriadPro-Semibold.ttf'),
       'MyriadPro-Regular': require('./assets/fonts/MyriadPro-Regular.ttf'),
       'SFProText-Medium': require('./assets/fonts/SFProText-Medium.ttf'),
+      'Kiona': require('./assets/fonts/Kiona-Regular.ttf'),
     }),
   ]);
 }

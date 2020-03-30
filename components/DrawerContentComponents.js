@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
 import {NavigationActions} from 'react-navigation';
-import {Text, View, StyleSheet, ScrollView} from 'react-native';
+import {Text, View, StyleSheet, ScrollView, TouchableOpacity, FlatList} from 'react-native';
 import Dimensions from '../constants/Dimensions';
+import Flecha from '../constants/LogoArrowRight';
 import TabBarIcon from './TabBarIcon';
+import SvgUri from '../components/SvgUri';
+import ScalableText from 'react-native-text';
+
+
+const deviceWidth = Dimensions.window.width - Dimensions.regularSpace - Dimensions.regularSpace;
+const headerHeight = deviceWidth - Dimensions.regularSpace;
 
 /**
  * Drawer Content Render
@@ -21,81 +28,122 @@ export default class DrawerContentComponents extends Component {
     return (
       <View style={[styles.itemStyle]} key={item.key}>
         <TabBarIcon name={item.key} />
-        <Text
+        <ScalableText
           style={[styles.labelStyle]}
           onPress={this.navigateToScreen(item.key)}>
           {options.title}
-        </Text>
+        </ScalableText>
+        <Flecha />
       </View>
     );
   };
 
+  _handelPremium = () => {
+    this.props.navigation.navigate('Premium');
+  };
+
   render() {
     return (
-      <View>
-        <ScrollView>
-          <View style={styles.container}>
+      <ScrollView style={styles.scrollview}>
+        <View style={styles.container}>
+          
+          <View style={styles.header}>
+            <SvgUri width={deviceWidth} height={headerHeight} source={{uri: 'http://okoconnect.com/karim/assets/perfil/header-perfil.svg'}} />
             <View style={styles.headerContainer}>
-              <Text style={styles.headerText}>Janett Ramirez</Text>
-            </View>
-            <View style={styles.itemsContainer}>
-              {this.props.items.slice(1).map(item => this.renderItem(item))}
+                <ScalableText style={styles.headerText}>Evelin Giraldo</ScalableText>
             </View>
           </View>
-        </ScrollView>
-      </View>
+
+          <View style={styles.itemsContainer}>
+            {this.props.items.slice(1).map(item => this.renderItem(item))}
+          </View>
+
+          <View style={styles.footer}>
+            <TouchableOpacity onPress={this._handelPremium()}>
+              <SvgUri width={deviceWidth} height={deviceWidth/3.8} source={{uri: 'http://okoconnect.com/karim/assets/perfil/footer-perfil.svg'}} />
+              <ScalableText style={styles.footerText}>SUSCRíbete</ScalableText>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  scrollview: {
+    paddingLeft: 20,
+  },
   container: {
-    alignItems: 'center',
-    paddingTop: Dimensions.statusBarHeight,
+    minHeight: Dimensions.window.height - (Dimensions.regularSpace * 2) - 10,
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    backgroundColor: 'white',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   headerContainer: {
-    minHeight: 64,
+    minHeight: deviceWidth,
+    paddingTop: deviceWidth / 4,
+    paddingLeft: deviceWidth / 8,
     width: '100%',
-    alignItems: 'center',
-    paddingVertical: 10,
-    justifyContent: 'center',
-    marginTop: 10,
-    borderBottomColor: 'rgba(115, 115, 115, 0.5)',
-    borderStartColor: 'white',
-    borderTopColor: 'white',
-    borderEndColor: 'white',
-    borderWidth: 1,
-    alignSelf: 'center',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    position: 'absolute',
+    flexWrap: 'wrap'
   },
   headerText: {
-    fontFamily: 'SFProText-Medium',
-    fontSize: Dimensions.window.width * 0.06,
-    color: '#494c6b',
+    fontFamily: 'Kiona',
+    fontSize: 28,
+    color: '#ffffff',
+    width: '70%',
+    textAlign: 'left',
+    textTransform: 'uppercase',
   },
   itemsContainer: {
-    padding: 20,
     width: '100%',
+    marginBottom: 30,
   },
   itemStyle: {
-    marginTop: 2,
     flexDirection: 'row',
-    alignItems: 'flex-start',
     width: '100%',
+    borderBottomColor: '#d6d6d6',
+    borderBottomWidth: 1,
+    paddingHorizontal: 20,
+    alignItems: 'center',
   },
   labelStyle: {
-    fontSize: Dimensions.window.width * 0.038,
+    fontSize: 18,
+    lineHeight: 18,
     marginLeft: 20,
     textAlign: 'left',
     fontFamily: 'MyriadPro-Regular',
-    color: '#665e61',
-    height: 50,
+    color: '#85787b',
     flex: 1,
-    alignItems: 'flex-start',
-    paddingVertical: 5,
+    paddingTop: 24,
+    paddingBottom: 20,
   },
-  icon: {
-    width: 24,
-    height: 24,
-    resizeMode: 'contain',
+  footer: {
+    resizeMode: 'cover',
   },
+  footerText: {
+    fontFamily: 'Kiona',
+    fontSize: 25,
+    color: '#ffffff',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    position: 'absolute',
+    right: 0,
+    left: 0,
+    bottom: 20,
+    flex: 1,
+  },
+  
 });
