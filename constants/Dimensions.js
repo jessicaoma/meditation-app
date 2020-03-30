@@ -1,7 +1,7 @@
 import {Dimensions} from 'react-native';
 import Constants from 'expo-constants';
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+const width = Dimensions.get('screen').width;
+const height = Dimensions.get('screen').height;
 
 /**
  * @typedef {Object} Dimension

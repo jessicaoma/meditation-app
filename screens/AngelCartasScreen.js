@@ -103,7 +103,7 @@ export default class AngelCartasScreen extends Component {
       <SafeAreaView style={styles.mainContainer}>
         <View style={styles.statusBar} />
         <View style={styles.container}>
-          <Text style={styles.sectionTitle}>Tu Ángel del día </Text>
+          <Text style={styles.sectionTitle}>Mensajes</Text>
           <FlatList
             data={data}
             renderItem={this.renderItem}

@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   bar: {
     backgroundColor: Colors.gray,
     height: 5,
-    position: 'absolute',
+    
     left: 0,
     top: 0,
     borderRadius: 5,

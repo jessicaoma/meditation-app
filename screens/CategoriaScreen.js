@@ -75,18 +75,20 @@ class Categoria extends Component {
     }
 
     viaje.color = this.categoria.color;*/
+    /** @type {import('../utils/types').Paso[]} */
     const pasos = [
       {
         key: '5e6bd20e-1c4f-48ac-8f62-9a56144dde08',
         titulo: 'Bienvenida',
         color: '#fdd58d',
-        tipo: 0,
+        tipo: 7,
         contenidos: [
           {
             key: '59c041a7-03a1-4429-93f8-6b106dc515e3',
             imagen:
-              'http://okoconnect.com/karim/assets/categorias/categoria-1/comienzaviaje.png',
-            texto: 'Bienvenido al módulo\n¿Qué es ser feliz?',
+              'http://okoconnect.com/karim/assets/categorias/categoria-1/intro-1.png',
+            texto: 'Es una experiencia',
+            titulo: 'LA FELICIDAD',
           },
         ],
       },
@@ -94,52 +96,55 @@ class Categoria extends Component {
         key: '5e6bd20e-1c4f-48ac-8f62-9a56144dde08',
         titulo: 'Bienvenida',
         color: '#fdd58d',
-        tipo: 0,
+        tipo: 7,
         contenidos: [
           {
             key: '254f3b45-b862-441a-be16-4bd1edd8c32b',
             imagen:
-              'http://okoconnect.com/karim/assets/categorias/categoria-1/comienzaviaje.png',
-            texto: 'Aquí va otro texto para la introduccion',
+              'http://okoconnect.com/karim/assets/categorias/categoria-1/intro-2.png',
+            texto:
+              'Una sensación, un sentimiento, una emoción, un estado de la mente y un estado del ser.',
+          },
+        ],
+      },
+      {
+        key: '5e6bd20e-1c4f-48ac-8f62-9a56144dde08',
+        titulo: 'Bienvenida',
+        color: '#fdd58d',
+        tipo: 7,
+        contenidos: [
+          {
+            key: '254f3b45-b862-441a-be16-4bd1edd8c32b',
+            imagen:
+              'http://okoconnect.com/karim/assets/categorias/categoria-1/intro-3.png',
+            texto:
+              'La felicidad es la experiencia espiritual de vivir cada minuto con amor, gracia y gratitud.',
           },
         ],
       },
       {
         key: 'c3d84de5-f779-40c7-8a01-9f92a57386fa',
-        titulo: 'Audio',
+        titulo: '¿QUÉ ES LA FELICIDAD?',
         color: '#fdd58d',
         tipo: 1,
         media: 'http://okoconnect.com/karim/viajes/autoestima/1.mp3',
         imagenFondo:
-          'http://okoconnect.com/karim/assets/categorias/categoria-1/audio0.png',
+          'http://okoconnect.com/karim/assets/categorias/categoria-1/audio-0.png',
         contenidos: [],
       },
       {
         key: 'c59b7468-3bb1-485f-baa1-231491de8f8c',
         titulo: 'Ejercicios',
         color: '#fdd58d',
-        tipo: 4,
+        tipo: 8,
         imagenFondo:
-          'http://okoconnect.com/karim/assets/categorias/categoria-1/pasoscategoria.png',
+          'http://okoconnect.com/karim/assets/categorias/categoria-1/ejercicio-0.png',
         contenidos: [
           {
-            key: '2bcad5ec-abeb-4a74-bb60-bfbe670ddf14',
-            imagen:
-              'http://okoconnect.com/karim/assets/images/iconMeditar4.png',
-            titulo:
-              'En una hoja dibuja dos columnas, en la primera escribe 15 éxisto de hábitos diarios.',
-          },
-          {
-            key: '64c32dd1-6b03-4cef-aa7e-e22f8b3ef30d',
-            imagen:
-              'http://okoconnect.com/karim/assets/images/iconMeditar2.png',
-            titulo:
-              'En la segunda columna de tu hoja, escribe cómo era tu comportamiento antes del día de hoy.',
-          },
-          {
-            key: '40ec56db-1ab9-4944-96c2-94a045f983f8',
-            imagen: 'http://okoconnect.com/karim/assets/images/iconNube.png',
-            titulo: 'Usa un lenguaje optimista, sé compresivo contigo mismo.',
+            key: '1',
+            titulo: 'Reto Personal',
+            texto:
+              'Te invito a hacer unos ejercicios para conectarte con tu ser espiritual a través del silencio y la observación detenida de tus pensamientos, sensaciones y emociones.',
           },
         ],
       },
@@ -147,16 +152,15 @@ class Categoria extends Component {
         key: 'dc8bf5ee-65fb-4115-9fb6-9a05584bba40',
         titulo: 'Recomendaciones',
         color: '#fdd58d',
-        tipo: 4,
+        tipo: 9,
         imagenFondo:
-          'http://okoconnect.com/karim/assets/categorias/categoria-1/pasoscategoria.png',
+          'http://okoconnect.com/karim/assets/categorias/categoria-1/recomendaciones-0.png',
         contenidos: [
           {
             key: '2bcad5ec-abeb-4a74-bb60-bfbe670ddf14',
-            imagen:
-              'http://okoconnect.com/karim/assets/images/iconMeditar4.png',
-            titulo:
-              'En una hoja dibuja dos columnas, en la primera escribe 15 éxisto de hábitos diarios.',
+            titulo: 'Acepta',
+            texto:
+              'La vida te presenta desafíos y experiencias desagradables que son difíciles de soportar. Ante eso puedes decidir: aceptar y aprender o tratar de cambiar esas circunstancias vitales. Si está a tu alcance cambiarlas, hazlo. Afronta aquello que te molesta. Si no puedes cambiarlo, no resistas, no te opongas. Hay cosas que se escapan de tu poder de acción. Entiende que cada prueba es una oportunidad para entrenar tu paciencia y tu capacidad de amar, y para crecer espiritualmente.',
           },
           {
             key: '64c32dd1-6b03-4cef-aa7e-e22f8b3ef30d',
@@ -176,13 +180,48 @@ class Categoria extends Component {
         key: '3c2de602-bcf5-4028-9ea1-82bd14e9a2f1',
         titulo: 'Cierre',
         color: '#fdd58d',
-        tipo: 6,
+        tipo: 10,
         imagenFondo:
-          'http://okoconnect.com/karim/assets/categorias/categoria-1/cierre.png',
-        contenidos: [],
+          'http://okoconnect.com/karim/assets/categorias/categoria-1/cierre-1.png',
+        contenidos: [
+          {
+            titulo: '¡HOLA!',
+            texto:
+              'Te felicito por haber terminado este primer viaje hacia la felicidad. Espero que tengas claro que si buscas razones para estar triste lo estarás, pero cada vez que buscamos algo porque estar feliz el universo te lo regresa.',
+          },
+        ],
+      },
+      {
+        key: '3c2de602-bcf5-4028-9ea1-82bd14e9a2f1',
+        titulo: 'Cierre',
+        color: '#fdd58d',
+        tipo: 10,
+        imagenFondo:
+          'http://okoconnect.com/karim/assets/categorias/categoria-1/cierre-2.png',
+        contenidos: [
+          {
+            texto:
+              'Siempre ten presente que tus expresiones continuas de gratitud y amor son las que te traerán alegría, prosperidad, éxito, satisfacción, abundancia y más amor a tu vida.',
+          },
+        ],
+      },
+      {
+        key: '3c2de602-bcf5-4028-9ea1-82bd14e9a2f1',
+        titulo: 'Cierre',
+        color: '#fdd58d',
+        tipo: 10,
+        imagenFondo:
+          'http://okoconnect.com/karim/assets/categorias/categoria-1/cierre-3.png',
+        contenidos: [
+          {
+            texto:
+              'No olvides que si con todo lo que tienes no eres feliz, con todo lo que te falta tampoco lo serás.\n\nCon amor y gratitud\nKarim Temple',
+          },
+        ],
       },
     ];
-    this.props.navigation.navigate('PasoA', {
+    let tipo = pasos[0].tipo;
+    this.props.navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
       steps: pasos,
       position: 0,
     });
