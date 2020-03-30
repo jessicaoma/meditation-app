@@ -11,6 +11,7 @@ import ViajesCompletadosScreen from '../screens/ViajesCompletadosScreen';
 import MisMeditacionesScreen from '../screens/MisMeditacionesScreen';
 import PremiumScreen from '../screens/PremiumScreen';
 import DrawerContentComponents from '../components/DrawerContentComponents';
+import Dims from '../constants/Dimensions';
 
 const PerfilNavigation = createDrawerNavigator(
   {
@@ -56,7 +57,7 @@ const PerfilNavigation = createDrawerNavigator(
         },
       ),
       navigationOptions: {
-        title: 'Viajes Completados',
+        title: 'Cursos completados',
       },
     },
     MiDiario: {
@@ -98,22 +99,19 @@ const PerfilNavigation = createDrawerNavigator(
         },
       ),
       navigationOptions: {
-        title: 'Mis Meditaciones',
-      },
-    },
-    Premium: {
-      screen: PremiumScreen,
-      navigationOptions: {
-        title: 'Convierte en Premium',
+        title: 'Mis meditaciones',
       },
     },
   },
   {
     drawerPosition: 'right',
-    drawerType: 'slide',
+    drawerType: 'slider',
+    drawerWidth: Dims.window.width - 50,
     contentComponent: DrawerContentComponents,
     edgeWidth: 0,
     unmountInactiveRoutes: true,
+    overlayColor: 'rgba(206, 209, 230, 0.56)',
+    drawerBackgroundColor: 'transparent',
   },
 );
 
