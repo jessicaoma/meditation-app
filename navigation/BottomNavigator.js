@@ -4,7 +4,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import AudiolibrosScreen from '../screens/AudiolibrosScreen';
 import MeditacionesScreen from '../screens/MeditacionesScreen';
-import CategoriasNavigator from './CategoriasNavigator';
+import CategoriasScreen from '../screens/CategoriasScreen';
 import Colors from '../constants/Colors';
 import AngelNavigator from './AngelNavigator';
 
@@ -22,9 +22,9 @@ const BottomNavigator = createBottomTabNavigator(
       },
     },
     Categorias: {
-      screen: CategoriasNavigator,
+      screen: CategoriasScreen,
       navigationOptions: {
-        title: 'Viajes',
+        title: 'Cursos',
         tabBarIcon: ({tintColor}) => (
           <TabBarIcon name={'viajes'} tintColor={tintColor} />
         ),
@@ -33,7 +33,7 @@ const BottomNavigator = createBottomTabNavigator(
     Meditar: {
       screen: MeditacionesScreen,
       navigationOptions: {
-        title: 'Meditar',
+        title: 'Meditaciones',
         tabBarIcon: ({tintColor}) => (
           <TabBarIcon name={'meditar'} tintColor={tintColor} />
         ),
@@ -51,7 +51,7 @@ const BottomNavigator = createBottomTabNavigator(
     AngelStack: {
       screen: AngelNavigator,
       navigationOptions: {
-        title: 'Tu ángel',
+        title: 'Mensajes',
         tabBarIcon: ({tintColor}) => (
           <TabBarIcon name={'angel'} tintColor={tintColor} />
         ),

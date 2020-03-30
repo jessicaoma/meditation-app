@@ -12,8 +12,8 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
 import {Ionicons} from '@expo/vector-icons';
-import { enumStatus } from '../utils/types';
-import API, { user } from '../utils/API';
+import {enumStatus} from '../utils/types';
+import API, {user} from '../utils/API';
 //TODO registrar avance
 //TODO consultar viaje desde el redux
 //TODO consultar sigueinte viaje desde redux
@@ -52,23 +52,18 @@ export default class PasoGScreen extends Component {
     const {steps, position} = this.props.navigation.state.params;
     return (
       <SafeAreaView style={{flex: 1}}>
-        <TouchableOpacity style={styles.close} onPress={this.returnJourney}>
-          <Ionicons name={'md-close'} size={30} color={Colors.gray} />
-        </TouchableOpacity>
         <ImageBackground
           style={[styles.container]}
           source={{
             uri: steps[position].imagenFondo,
           }}>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={styles.scrollView}>
+          <View style={styles.scrollView}>
             <View style={styles.container}>
               <View style={styles.containerHalfBottom}>
                 <Text style={styles.headline}>Felicidades!</Text>
                 <Text style={styles.paragraph}>
                   {steps[position].contenidos[0]?.texto ??
-                    'Haz terminado tu viaje "¿Qué es ser feliz?"'}
+                    'Terminaste tu viaje ¿Qué es ser feliz?\n¿Estás Lista para seguir aprendiendo?'}
                 </Text>
                 <TouchableOpacity
                   style={{
@@ -77,7 +72,6 @@ export default class PasoGScreen extends Component {
                     alignItems: 'center',
                     marginBottom: 10,
                   }}>
-                  <Text style={styles.downloadtext}>Descarga</Text>
                   <Ionicons
                     name={'md-download'}
                     size={35}
@@ -91,7 +85,7 @@ export default class PasoGScreen extends Component {
                 Iniciar Viaje "Viaja Ligero"
               </Text>
             </TouchableOpacity>
-          </ScrollView>
+          </View>
         </ImageBackground>
       </SafeAreaView>
     );

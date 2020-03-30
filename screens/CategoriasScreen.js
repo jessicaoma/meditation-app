@@ -55,7 +55,7 @@ class Categorias extends Component {
   /** @param {import('../utils/types').Categoria} item */
   keyExtractor = item => item.key;
 
-  renderListHeader = () => <Text style={styles.sectionTitle}>Categorías</Text>;
+  renderListHeader = () => <Text style={styles.sectionTitle}>Cursos</Text>;
 
   renderListEmpty = _ => (
     <ActivityIndicator size="large" color={Colors.primaryDark} />

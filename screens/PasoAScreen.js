@@ -44,7 +44,7 @@ export default class PasoAScreen extends Component {
   componentDidMount = async () => {
     const {steps, position} = this.props.navigation.state.params;
     const paso = steps[position];
-    API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
+    //API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
     API.putDiarioViaje(paso.viajeId, enumStatus.doing, user);
   };
 
@@ -52,7 +52,7 @@ export default class PasoAScreen extends Component {
     const {steps, position} = this.props.navigation.state.params;
     const {tipo} = steps[position + 1];
     const paso = steps[position];
-    API.putDiarioPaso(paso.key, enumStatus.done, null, user);
+    //API.putDiarioPaso(paso.key, enumStatus.done, null, user);
     // @ts-ignore
     this.props.navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
       steps,
@@ -66,28 +66,9 @@ export default class PasoAScreen extends Component {
     let barArray = [];
     const numItems = steps[position].contenidos.length;
     const itemWidth = 5;
-    steps[position].contenidos.forEach((item, i) => {
+    /*steps[position].contenidos.forEach((item, i) => {
       const thisImage = (
-        <ImageBackground
-          key={`image${i}`}
-          source={{uri: item.imagen}}
-          style={[styles.sliderImage]}>
-          {i === numItems - 1 ? (
-            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
-              <View style={styles.containerHalfBottom}>
-                <Text style={styles.paragraphBottom}>{item.texto}</Text>
-              </View>
-            </TouchableOpacity>
-          ) : i === 0 ? (
-            <View style={styles.containerCenter}>
-              <Text style={styles.headline}>{item.texto}</Text>
-            </View>
-          ) : (
-            <View style={styles.containerHalfBottom}>
-              <Text style={styles.paragraphBottom}>{item.texto}</Text>
-            </View>
-          )}
-        </ImageBackground>
+        
       );
       imageArray.push(thisImage);
 
@@ -119,34 +100,26 @@ export default class PasoAScreen extends Component {
         </View>
       );
       barArray.push(thisBar);
-    });
-
+    });*/
+    const contenido = steps[position].contenidos[0];
     return (
       <SafeAreaView style={{flex: 1}}>
-        <TouchableOpacity style={styles.close} onPress={this.nextStep}>
-          <Ionicons name={'md-close'} size={30} color={Colors.gray} />
-        </TouchableOpacity>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={10}
-          pagingEnabled
-          onScroll={Animated.event([
-            {nativeEvent: {contentOffset: {x: this.animVal}}},
-          ])}
-          style={[styles.slider, {backgroundColor: steps[position].color}]}>
-          {imageArray}
-        </ScrollView>
-        <View style={styles.barContainer}>{barArray}</View>
+        <ImageBackground
+          source={{uri: contenido.imagen}}
+          style={[styles.sliderImage]}>
+          <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
+            <View style={styles.containerCenter}>
+              <Text style={styles.headline}>{contenido.texto}</Text>
+              <Text style={styles.paragraphBottom}>Presiona para continuar</Text>
+            </View>
+          </TouchableOpacity>
+        </ImageBackground>
       </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  slider: {
-    margin: 0,
-  },
   sliderImage: {
     width: deviceWidth,
     height: deviceHeight,
@@ -158,6 +131,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
+  },
+  mid:{
+
   },
   containerHalfBottom: {
     flex: 1,
@@ -210,11 +186,5 @@ const styles = StyleSheet.create({
     letterSpacing: 2.2,
     marginTop: -40,
     paddingHorizontal: Dims.regularSpace,
-  },
-  close: {
-    position: 'absolute',
-    right: 20,
-    top: 20,
-    zIndex: 100,
   },
 });

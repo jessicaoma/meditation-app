@@ -1,4 +1,5 @@
 import {createStackNavigator} from 'react-navigation';
+import CategoriaScreen from '../screens/CategoriaScreen';
 import ViajeScreen from '../screens/ViajeScreen';
 import PasoAScreen from '../screens/PasoAScreen';
 import PasoBScreen from '../screens/PasoBScreen';
@@ -10,6 +11,7 @@ import PasoGScreen from '../screens/PasoGScreen';
 
 const ViajeNavigator = createStackNavigator(
   {
+    Categoria: CategoriaScreen,
     Viaje: ViajeScreen,
     PasoA: PasoAScreen,
     PasoB: PasoBScreen,
@@ -20,7 +22,7 @@ const ViajeNavigator = createStackNavigator(
     PasoG: PasoGScreen,
   },
   {
-    initialRouteName: 'Viaje',
+    initialRouteName: 'Categoria',
     defaultNavigationOptions: {
       headerBackTitle: null,
       headerTitleStyle: {

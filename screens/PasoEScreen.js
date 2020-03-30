@@ -70,9 +70,6 @@ export default class PasoEScreen extends Component {
           source={{
             uri: steps[position].imagenFondo,
           }}>
-          <TouchableOpacity style={styles.close} onPress={this.nextStep}>
-            <Ionicons name={'md-close'} size={30} color={Colors.gray} />
-          </TouchableOpacity>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>

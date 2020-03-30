@@ -60,12 +60,105 @@ export default class Home extends Component {
   };
 
   componentDidMount = async () => {
-    const enprogreso = await API.getViajesEnProgreso(user);
-    const lonuevo = await API.getLoNuevo();
+    //const enprogreso = await API.getViajesEnProgreso(user);
+    const enprogreso = [
+      {
+        key: '952bb5e2-726a-475c-8a09-c624f5feb1b1',
+        tipo: 3,
+        categoria: {
+          key: '618b95a9-f7e0-49de-8ad1-cc6570bf5657',
+          titulo: 'Ser feliz',
+          media:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/video.mp4',
+          imagenFondo:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/fondocategoria.png',
+          color: '#fdd58d',
+          imagenLista:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/iconobubble.svg',
+          imagenPrevia:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/portada.jpg',
+          isFree: true,
+        },
+      },
+      {
+        key: '579625e6-93f3-4c95-ab53-7ff7049ca1c7',
+        tipo: 2,
+        audiolibro: {
+          key: '94b39542-3c66-4412-a87f-307e8078650a',
+          titulo: 'Aprendiendo a Meditar',
+          imagenLista:
+            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/iconolistado.png',
+          imagenFondo:
+            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/imagenaudio.png',
+          color: '#50628e',
+          media:
+            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/audio.mp3',
+          progreso: 10000,
+          isFree: true,
+        },
+      },
+    ];
+    //const lonuevo = await API.getLoNuevo();
+    const lonuevo = [
+      {
+        key: '952bb5e2-726a-475c-8a09-c624f5feb1b1',
+        tipo: 3,
+        categoria: {
+          key: '618b95a9-f7e0-49de-8ad1-cc6570bf5657',
+          titulo: 'Ser feliz',
+          media:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/video.mp4',
+          imagenFondo:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/fondocategoria.png',
+          color: '#fdd58d',
+          imagenLista:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/iconobubble.svg',
+          imagenPrevia:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/portada.jpg',
+          isFree: true,
+        },
+      },
+      {
+        key: '9ec4c979-3655-4026-b4e2-957a3df37fc8',
+        tipo: 0,
+        meditacion: {
+          key: '3d9710e1-996b-41fe-a4e6-7b2c8ebf055e',
+          titulo: 'Básica',
+          imagenIntro:
+            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/intro.png',
+          imagenFondo:
+            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/audio.png',
+          color: '#7883a4',
+          imagenLista:
+            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/iconobubble.svg',
+          intro:
+            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/intro.mp4',
+          media:
+            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/audio.mp3',
+          isFree: true,
+        },
+      },
+      {
+        key: '579625e6-93f3-4c95-ab53-7ff7049ca1c7',
+        tipo: 2,
+        audiolibro: {
+          key: '94b39542-3c66-4412-a87f-307e8078650a',
+          titulo: 'Aprendiendo a Meditar',
+          imagenLista:
+            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/iconolistado.png',
+          imagenFondo:
+            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/imagenaudio.png',
+          color: '#50628e',
+          media:
+            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/audio.mp3',
+          progreso: 0,
+          isFree: true,
+        },
+      },
+    ];
     const reflexion = await API.getReflexionDelDia();
-    const bienvenida = await API.getVideo('Bienvenida');
     const tutorial = await API.getVideo('Tutorial');
-    this.setState({enprogreso, lonuevo, reflexion, bienvenida, tutorial});
+    this.setState({enprogreso, lonuevo, reflexion, tutorial});
   };
 
   /** @param {{item: import("../utils/types").LoNuevo}} item*/
@@ -101,13 +194,15 @@ export default class Home extends Component {
           });
         };
         break;
-      // case enumLoNuevo.viaje:
-      //   color = item.viaje.color;
-      //   titulo = item.viaje.titulo;
-      //   onpress = () => {
-      //     this.props.navigation.navigate('ViajeStack', {viaje: item.viaje});
-      //   };
-      //   break;
+      case enumLoNuevo.categoria:
+        color = item.categoria.color;
+        titulo = item.categoria.titulo;
+        onpress = () => {
+          this.props.navigation.navigate('ViajeStack', {
+            categoria: item.categoria,
+          });
+        };
+        break;
       default:
         color = Colors.primaryDark;
         break;
@@ -147,10 +242,8 @@ export default class Home extends Component {
     this.props.navigation.navigate('EmocionesStack');
   };
 
-  goBienvenida = () => {
-    this.props.navigation.navigate('Bienvenida', {
-      video: this.state.bienvenida,
-    });
+  goPremium = () => {
+    this.props.navigation.navigate('Suscribete');
   };
 
   goTutorial = () => {
@@ -191,7 +284,7 @@ export default class Home extends Component {
                 }}
                 style={styles.buttonBG}>
                 <ScalableText style={styles.title_boxes}>
-                  ¿cómo me siento?
+                  ¿Cómo te sientes hoy?
                 </ScalableText>
               </ImageBackground>
             </Buttom>
@@ -205,10 +298,12 @@ export default class Home extends Component {
                     'http://okoconnect.com/karim/assets/images/home/bg-musica.png',
                 }}
                 style={styles.buttonBG}>
-                <ScalableText style={styles.title_boxes}>MÚSICA</ScalableText>
+                <ScalableText style={styles.title_boxes}>
+                  Música para relajarte
+                </ScalableText>
               </ImageBackground>
             </Buttom>
-            <ScalableText style={styles.sectionTitle}>Lo nuevo</ScalableText>
+            <ScalableText style={styles.sectionTitle}>Destacados</ScalableText>
             <FlatList
               horizontal
               data={this.state.lonuevo}
@@ -224,7 +319,8 @@ export default class Home extends Component {
                 <FlatList
                   horizontal
                   data={this.state.enprogreso}
-                  renderItem={this._renderItemViajesProgreso}
+                  //renderItem={this._renderItemViajesProgreso}
+                  renderItem={this._renderItemLonuevo}
                   keyExtractor={item => item.key}
                   ListEmptyComponent={this._renderListEmpty}
                 />
@@ -234,7 +330,7 @@ export default class Home extends Component {
             <View style={styles.separador} />
             <Buttom
               style={{backgroundColor: Colors.second}}
-              onPress={this.goBienvenida}>
+              onPress={this.goPremium}>
               <ImageBackground
                 resizeMode="contain"
                 source={{
@@ -243,7 +339,7 @@ export default class Home extends Component {
                 }}
                 style={styles.buttonBG}>
                 <ScalableText style={styles.title_boxes}>
-                  BIENVENIDA
+                  Suscríbete
                 </ScalableText>
               </ImageBackground>
             </Buttom>

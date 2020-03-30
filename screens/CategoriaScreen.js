@@ -13,6 +13,7 @@ import Dimensions from '../constants/Dimensions';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import ScalableText from 'react-native-text';
+import {HeaderBackButton} from 'react-navigation';
 import {connect} from 'react-redux';
 
 //TODO control de que viaje visitar dado su estado
@@ -37,6 +38,7 @@ class Categoria extends Component {
   static navigationOptions = ({navigation}) => {
     return {
       title: navigation.getParam('categoria', {title: 'Categoria'}).titulo,
+      headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
     };
   };
   constructor(props) {
@@ -63,18 +65,126 @@ class Categoria extends Component {
   };
 
   _goViaje = index => {
-    let viaje = this.state.viajes[index];
+    /*let viaje = this.state.viajes[index];
     if (
-      this.state.viajes[index].estado === enumStatus.todo &&
+      viaje.estado === enumStatus.todo &&
       index > 0 &&
       this.state.viajes[index - 1].estado !== enumStatus.done
     ) {
       return;
     }
 
-    viaje.color = this.categoria.color;
-    this.props.navigation.navigate('ViajeStack', {
-      viaje,
+    viaje.color = this.categoria.color;*/
+    const pasos = [
+      {
+        key: '5e6bd20e-1c4f-48ac-8f62-9a56144dde08',
+        titulo: 'Bienvenida',
+        color: '#fdd58d',
+        tipo: 0,
+        contenidos: [
+          {
+            key: '59c041a7-03a1-4429-93f8-6b106dc515e3',
+            imagen:
+              'http://okoconnect.com/karim/assets/categorias/categoria-1/comienzaviaje.png',
+            texto: 'Bienvenido al módulo\n¿Qué es ser feliz?',
+          },
+        ],
+      },
+      {
+        key: '5e6bd20e-1c4f-48ac-8f62-9a56144dde08',
+        titulo: 'Bienvenida',
+        color: '#fdd58d',
+        tipo: 0,
+        contenidos: [
+          {
+            key: '254f3b45-b862-441a-be16-4bd1edd8c32b',
+            imagen:
+              'http://okoconnect.com/karim/assets/categorias/categoria-1/comienzaviaje.png',
+            texto: 'Aquí va otro texto para la introduccion',
+          },
+        ],
+      },
+      {
+        key: 'c3d84de5-f779-40c7-8a01-9f92a57386fa',
+        titulo: 'Audio',
+        color: '#fdd58d',
+        tipo: 1,
+        media: 'http://okoconnect.com/karim/viajes/autoestima/1.mp3',
+        imagenFondo:
+          'http://okoconnect.com/karim/assets/categorias/categoria-1/audio0.png',
+        contenidos: [],
+      },
+      {
+        key: 'c59b7468-3bb1-485f-baa1-231491de8f8c',
+        titulo: 'Ejercicios',
+        color: '#fdd58d',
+        tipo: 4,
+        imagenFondo:
+          'http://okoconnect.com/karim/assets/categorias/categoria-1/pasoscategoria.png',
+        contenidos: [
+          {
+            key: '2bcad5ec-abeb-4a74-bb60-bfbe670ddf14',
+            imagen:
+              'http://okoconnect.com/karim/assets/images/iconMeditar4.png',
+            titulo:
+              'En una hoja dibuja dos columnas, en la primera escribe 15 éxisto de hábitos diarios.',
+          },
+          {
+            key: '64c32dd1-6b03-4cef-aa7e-e22f8b3ef30d',
+            imagen:
+              'http://okoconnect.com/karim/assets/images/iconMeditar2.png',
+            titulo:
+              'En la segunda columna de tu hoja, escribe cómo era tu comportamiento antes del día de hoy.',
+          },
+          {
+            key: '40ec56db-1ab9-4944-96c2-94a045f983f8',
+            imagen: 'http://okoconnect.com/karim/assets/images/iconNube.png',
+            titulo: 'Usa un lenguaje optimista, sé compresivo contigo mismo.',
+          },
+        ],
+      },
+      {
+        key: 'dc8bf5ee-65fb-4115-9fb6-9a05584bba40',
+        titulo: 'Recomendaciones',
+        color: '#fdd58d',
+        tipo: 4,
+        imagenFondo:
+          'http://okoconnect.com/karim/assets/categorias/categoria-1/pasoscategoria.png',
+        contenidos: [
+          {
+            key: '2bcad5ec-abeb-4a74-bb60-bfbe670ddf14',
+            imagen:
+              'http://okoconnect.com/karim/assets/images/iconMeditar4.png',
+            titulo:
+              'En una hoja dibuja dos columnas, en la primera escribe 15 éxisto de hábitos diarios.',
+          },
+          {
+            key: '64c32dd1-6b03-4cef-aa7e-e22f8b3ef30d',
+            imagen:
+              'http://okoconnect.com/karim/assets/images/iconMeditar2.png',
+            titulo:
+              'En la segunda columna de tu hoja, escribe cómo era tu comportamiento antes del día de hoy.',
+          },
+          {
+            key: '40ec56db-1ab9-4944-96c2-94a045f983f8',
+            imagen: 'http://okoconnect.com/karim/assets/images/iconNube.png',
+            titulo: 'Usa un lenguaje optimista, sé compresivo contigo mismo.',
+          },
+        ],
+      },
+      {
+        key: '3c2de602-bcf5-4028-9ea1-82bd14e9a2f1',
+        titulo: 'Cierre',
+        color: '#fdd58d',
+        tipo: 6,
+        imagenFondo:
+          'http://okoconnect.com/karim/assets/categorias/categoria-1/cierre.png',
+        contenidos: [],
+      },
+    ];
+    this.props.navigation.navigate('PasoA', {
+      steps: pasos,
+      position: 0,
     });
   };
   //TODO reiniciar el video al llegar al final
@@ -104,12 +214,11 @@ class Categoria extends Component {
             styleVideo={styles.video}
           />
         </ScreenBg>
-        {this.state.viajes.length > 0 && this.state.viajes.length < 3 && (
+        {!this.state.isLoading && (
           <View>
             <ScalableText style={styles.textoViajes}>
-              Amet commodo nulla facilisi nullam vehicula. Lectus proin nibh
-              nisl condimentum. Duis ultricies lacus sed turpis tincidunt id.
-              Enim nunc faucibus a pellentesque sit amet.{' '}
+              En esta categoría vas a recorrer {this.state.viajes.length}{' '}
+              secciones con una duración total de 10 horas con 22 min.
             </ScalableText>
           </View>
         )}
@@ -175,16 +284,18 @@ class Categoria extends Component {
   render() {
     this.categoria = this.props.navigation.state.params.categoria;
     return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.safe}>
         <ScreenBg source={{uri: this.categoria.imagenFondo}} color={'#fff'}>
-          <FlatList
-            ListHeaderComponent={this.renderListHeader}
-            data={this.state.viajes}
-            renderItem={this.renderItem}
-            keyExtractor={this.keyExtractor}
-            style={styles.container}
-            ListEmptyComponent={this.renderListEmpty}
-          />
+          <View style={styles.container}>
+            <FlatList
+              ListHeaderComponent={this.renderListHeader}
+              data={this.state.viajes}
+              renderItem={this.renderItem}
+              keyExtractor={this.keyExtractor}
+              ListEmptyComponent={this.renderListEmpty}
+              style={styles.containerList}
+            />
+          </View>
         </ScreenBg>
       </SafeAreaView>
     );
@@ -198,10 +309,14 @@ function mapStateToProps(state) {
 }
 
 const styles = StyleSheet.create({
+  safe: {flex: 1, backgroundColor: 'white'},
   container: {
+    width: '100%',
+    height: '100%',
+  },
+  containerList: {
     paddingHorizontal: Dimensions.regularSpace,
     paddingTop: Dimensions.regularSpace,
-    height: '100%',
   },
   imageBG: {
     resizeMode: 'cover',
