@@ -110,7 +110,7 @@ const PerfilNavigation = createDrawerNavigator(
     contentComponent: DrawerContentComponents,
     edgeWidth: 0,
     unmountInactiveRoutes: true,
-    overlayColor: 'transparent',
+    overlayColor: 'rgba(206, 209, 230, 0.56)',
     drawerBackgroundColor: 'transparent',
   },
 );

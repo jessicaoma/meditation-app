@@ -72,7 +72,6 @@ export default class DrawerContentComponents extends Component {
 
 const styles = StyleSheet.create({
   scrollview: {
-    paddingLeft: 20,
   },
   container: {
     minHeight: Dimensions.window.height - (Dimensions.regularSpace * 2) - 10,
