@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, FlatList, SafeAreaView, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  FlatList,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
 import Colors from '../constants/Colors';
 import HalfCover from '../components/HalfCover';
 import Dims from '../constants/Dimensions';
@@ -17,8 +24,8 @@ import SvgUri from '../components/SvgUri';
 
 //TODO registrar seleccion
 const numColumns = 2;
-const height=((Dims.window.width - 40) / numColumns) * 1.5;
-const width=(Dims.window.width - 40) / numColumns;
+const height = ((Dims.window.width - 40) / numColumns) * 1.5;
+const width = (Dims.window.width - 40) / numColumns;
 
 /**@type {Card[]} */
 const data = [
@@ -80,7 +87,10 @@ export default class AngelCartasScreen extends Component {
    */
   renderItem = ({item}) => {
     return (
-      <TouchableOpacity onPress={() => {this._handleClick(item);}}>
+      <TouchableOpacity
+        onPress={() => {
+          this._handleClick(item);
+        }}>
         <View style={styles.containercard}>
           <SvgUri width={width} height={height} source={{uri: item.faces[0]}} />
         </View>

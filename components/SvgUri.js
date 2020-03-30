@@ -336,7 +336,7 @@ class SvgUri extends Component {
   inspectNode(node) {
     // Only process accepted elements
     if (!ACCEPTED_SVG_ELEMENTS.includes(node.nodeName)) {
-      return <View />;
+      return <View key={'nosvg' + Math.floor(Math.random() * 20)} />;
     }
 
     // Process the xml node

@@ -1,12 +1,6 @@
 import React, {Component} from 'react';
 import Svg, {G, Path} from 'react-native-svg';
 
-/**
- * @typedef Props
- * @prop {string} tintColor Color to used
- *
- * @extends {Component<Props>}
- */
 export default class LogoApp extends Component {
   render() {
     return (

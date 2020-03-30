@@ -2,18 +2,10 @@ import React, {Component} from 'react';
 import Svg, {G, Path} from 'react-native-svg';
 import colors from './Colors';
 
-/**
- * @typedef Props
- * @prop {string} [tintColor] Color to used
- *
- * @extends {Component<Props>}
- */
 export default class LogoPremio extends Component {
   render() {
-    const opacity =
-      this.props.tintColor === colors.tabIconDefault ? '0.5' : '1';
     return (
-      <Svg viewBox="0 0 52.5 64" width="52.5" height="64" opacity={opacity}>
+      <Svg viewBox="0 0 52.5 64" width="52.5" height="64">
         <G id="Layer_2" data-name="Layer 2">
           <G id="Layer_1-2" data-name="Layer 1">
             <Path

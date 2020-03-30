@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
 import Svg, {G, Path} from 'react-native-svg';
 
-/**
- * @typedef {Object} Props
- *
- * @extends {Component<Props>}
- */
 export default class LogoGoogle extends Component {
   render() {
     return (

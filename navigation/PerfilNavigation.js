@@ -105,7 +105,7 @@ const PerfilNavigation = createDrawerNavigator(
   },
   {
     drawerPosition: 'right',
-    drawerType: 'slider',
+    drawerType: 'slide',
     drawerWidth: Dims.window.width - 50,
     contentComponent: DrawerContentComponents,
     edgeWidth: 0,

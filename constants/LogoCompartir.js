@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
 import Svg, {G, Path, Polygon} from 'react-native-svg';
 
-/**
- * @typedef {Object} Props
- *
- * @extends {Component<Props>}
- */
 export default class LogoCompartir extends Component {
   render() {
     return (
