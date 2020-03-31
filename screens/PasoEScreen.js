@@ -57,7 +57,7 @@ export default class PasoEScreen extends Component {
   renderItem = item => (
     <View style={styles.list} key={item.key}>
       <Image source={{uri: item.imagen}} style={styles.iconList} />
-      <Text style={styles.textList}>{item.titulo}</Text>
+      <Text style={styles.headline}>{item.titulo}</Text>
     </View>
   );
 
@@ -129,8 +129,8 @@ const styles = StyleSheet.create({
     height: 24,
     width: 24,
   },
-  textList: {
-    fontFamily: 'MyriadPro-Regular',
+  headline: {
+    fontFamily: 'Kiona',
     color: Colors.gray,
     fontSize: Dims.paragraph,
     lineHeight: 25,

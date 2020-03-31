@@ -29,5 +29,6 @@ const colors = {
   white: 'rgb(252, 253, 255)',
   meditacion: '#9898e2',
   textoViaje: '#85787b',
+  darkPurple: '#7482a6',
 };
 export default colors;

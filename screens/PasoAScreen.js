@@ -12,6 +12,7 @@ import Colors from '../constants/Colors';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
+import Next from '../constants/LogoButtonNext';
 import ScalableText from 'react-native-text';
 import {HeaderBackButton} from 'react-navigation';
 import {connect} from 'react-redux';
@@ -19,6 +20,7 @@ import {connect} from 'react-redux';
 const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
+const width = dimensions.window.width;
 
 /**
  * Paso Tipo(A): Highlight
@@ -104,8 +106,8 @@ class PasoAScreen extends Component {
                 <ScalableText style={styles.text3}>
                   {contenido.texto}
                 </ScalableText>
-                <View>
-                  <ScalableText>Botton</ScalableText>
+                <View style={styles.containerButton}>
+                  <Next />
                 </View>
               </View>
             )}
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   headline: {
-    fontFamily: 'MyriadPro-Regular',
+    fontFamily: 'Kiona',
     fontSize: dimensions.h1,
     lineHeight: 48,
     textAlign: 'center',
@@ -168,9 +170,9 @@ const styles = StyleSheet.create({
     paddingTop: screenHeight * 0.33,
   },
   text2: {
-    fontFamily: 'MyriadPro-Semibold',
+    fontFamily: 'MyriadPro-Regular',
     fontSize: 18,
-    lineHeight: 26,
+    lineHeight: 24,
     textAlign: 'center',
     color: Colors.textoViaje,
     justifyContent: 'flex-end',
@@ -181,17 +183,17 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'absolute',
     bottom: 0,
-    paddingBottom: screenHeight * 0.2,
+    paddingBottom: screenHeight * 0.15,
   },
   text3: {
-    fontFamily: 'MyriadPro-Semibold',
+    fontFamily: 'MyriadPro-Regular',
     fontSize: 18,
-    lineHeight: 26,
+    lineHeight: 24,
     textAlign: 'right',
     color: Colors.textoViaje,
     justifyContent: 'flex-end',
     marginRight: dimensions.bigSpace,
-    paddingLeft: dimensions.hugeSpace * 5,
+    paddingLeft: dimensions.hugeSpace * 3,
   },
   containerHalfBottom: {
     flex: 1,
@@ -199,6 +201,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     paddingTop: dimensions.window.height / 2,
+  },
+  containerButton: {
+    marginTop: 30,
+    display: 'flex',
+    flex: 1,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingHorizontal: dimensions.regularSpace,
   },
 });
 

@@ -13,6 +13,7 @@ import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
+import Next from '../constants/LogoButtonNext';
 import {Header} from 'react-navigation';
 import {connect} from 'react-redux';
 
@@ -114,7 +115,7 @@ class PasoCScreen extends Component {
           </View>
           <View style={styles.footer}>
             <TouchableOpacity onPress={this.nextStep}>
-              <ScalableText>Botton</ScalableText>
+              <Next />
             </TouchableOpacity>
           </View>
         </ImageBackground>
@@ -146,18 +147,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: dimensions.hugeSpace + dimensions.smallSpace,
   },
   headline: {
-    fontFamily: 'MyriadPro-Regular',
-    fontSize: 30,
+    fontFamily: 'Kiona',
+    fontSize: 28,
     lineHeight: 48,
     textAlign: 'left',
     color: Colors.textoViaje,
     letterSpacing: 2.2,
     textTransform: 'uppercase',
+    marginBottom: 20,
   },
   text2: {
-    fontFamily: 'MyriadPro-Semibold',
+    fontFamily: 'MyriadPro-Regular',
     fontSize: 18,
-    lineHeight: 33,
+    lineHeight: 24,
     textAlign: 'left',
     color: Colors.textoViaje,
     justifyContent: 'flex-end',
@@ -167,8 +169,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     height: screenHeight * 0.3,
-    borderWidth: 1,
-    borderColor: '#00f',
+    display: 'flex',
+    flex: 1,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingHorizontal: dimensions.regularSpace,
   },
 });
 

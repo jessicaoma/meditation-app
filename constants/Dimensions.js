@@ -28,7 +28,7 @@ const dimensions = {
   regularSpace: 16,
   bigSpace: 24,
   hugeSpace: 32,
-  h1: 36,
+  h1: 34,
   h2: 20,
   paragraph: 18,
   bubbleTitle: 15.5,

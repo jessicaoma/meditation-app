@@ -118,7 +118,9 @@ class PasoDScreen extends Component {
           </View>
           <View style={styles.footer}>
             <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
-              <ScalableText>Botton</ScalableText>
+              <View style={styles.button}>
+                <ScalableText style={styles.buttonLabel}>Continuar</ScalableText>
+              </View>
             </TouchableOpacity>
           </View>
         </ImageBackground>
@@ -157,12 +159,12 @@ const styles = StyleSheet.create({
     marginTop: screenHeight * 0.1,
   },
   headline: {
-    fontFamily: 'MyriadPro-Regular',
+    fontFamily: 'Kiona',
     fontSize: dimensions.h1,
     lineHeight: 48,
     textAlign: 'center',
     color: Colors.textoViaje,
-    letterSpacing: 2.2,
+    letterSpacing: 1.2,
     textTransform: 'uppercase',
   },
 
@@ -171,14 +173,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
-    paddingTop: screenHeight * 0.1,
+    paddingTop: screenHeight * 0.07,
     //paddingHorizontal: dimensions.hugeSpace * 2,
   },
   text2: {
-    fontFamily: 'MyriadPro-Semibold',
-    fontSize: 18,
+    fontFamily: 'MyriadPro-Regular',
+    fontSize: 19,
     lineHeight: 26,
-    textAlign: 'left',
+    textAlign: 'center',
     color: Colors.textoViaje,
     justifyContent: 'flex-end',
     alignItems: 'center',
@@ -186,10 +188,33 @@ const styles = StyleSheet.create({
   footer: {
     position: 'absolute',
     bottom: 0,
-    height: screenHeight * 0.4,
-    borderWidth: 1,
-    borderColor: '#00f',
+    height: screenHeight * 0.16,
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
   },
+  button: {
+    marginTop: 20,
+    backgroundColor: Colors.darkPurple,
+    borderRadius: 40,
+    paddingHorizontal: dimensions.window.width * 0.15,
+    paddingBottom: dimensions.window.width * 0.035,
+    paddingTop: dimensions.window.width * 0.045,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+  },
+  buttonLabel: {
+    color: 'white',
+    fontFamily: 'MyriadPro-Regular',
+    fontSize: 20,
+  }
 });
 
 export default connect(mapStateToProps)(PasoDScreen);

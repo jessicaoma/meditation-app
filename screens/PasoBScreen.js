@@ -12,6 +12,7 @@ import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
+import LogoPlayVideo from '../constants/LogoPlayVideo';
 import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
 import {HeaderBackButton} from 'react-navigation';
@@ -88,8 +89,13 @@ class PasoBScreen extends Component {
             </ScalableText>
           </View>
           <View style={this.state.show ? styles.container2 : styles.hidden}>
-            <TouchableOpacity onPress={this.otro}>
-              <ScalableText>Escuchar el Audio</ScalableText>
+            <TouchableOpacity onPress={this.otro} style={styles.buttonContainer}>
+
+              <LogoPlayVideo/>
+              <View style={styles.button}>
+                <ScalableText style={styles.buttonLabel}>Escuchar el audio</ScalableText>
+              </View>
+
             </TouchableOpacity>
           </View>
           <Player
@@ -147,9 +153,9 @@ const styles = StyleSheet.create({
   container2: {
     bottom: 0,
     marginBottom: 128,
+    display: 'flex',
+    flexDirection: 'column',
     position: 'absolute',
-    borderWidth: 1,
-    borderColor: '#f0f',
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
@@ -157,12 +163,12 @@ const styles = StyleSheet.create({
     zIndex: 50,
   },
   headline: {
-    fontFamily: 'MyriadPro-Regular',
+    fontFamily: 'Kiona',
     fontSize: 26,
-    lineHeight: 48,
+    lineHeight: 32,
     textAlign: 'center',
     color: Colors.textoViaje,
-    letterSpacing: 2.2,
+    letterSpacing: 1.2,
     marginBottom: 30,
     paddingHorizontal: dimensions.regularSpace,
   },
@@ -172,6 +178,31 @@ const styles = StyleSheet.create({
   show: {
     display: 'flex',
   },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+  },
+  button: {
+    marginTop: 20,
+    backgroundColor: Colors.darkPurple,
+    borderRadius: 40,
+    paddingHorizontal: dimensions.window.width * 0.15,
+    paddingBottom: dimensions.window.width * 0.035,
+    paddingTop: dimensions.window.width * 0.045,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+  },
+  buttonLabel: {
+    color: 'white',
+    fontFamily: 'MyriadPro-Regular',
+    fontSize: 20,
+  }
 });
 
 export default connect(mapStateToProps)(PasoBScreen);
