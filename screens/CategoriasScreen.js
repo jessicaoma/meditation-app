@@ -18,6 +18,7 @@ import {connect} from 'react-redux';
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
 class Categorias extends Component {
@@ -40,11 +41,9 @@ class Categorias extends Component {
 
   /** @param {import('../utils/types').Categoria} item */
   _handleClick = item => {
-    this.props.navigation.navigate(
-      'Categoria' /*, {
-      categoria: item,
-    }*/,
-    );
+    this.props.navigation.navigate('Categoria', {
+      categoria: item.titulo,
+    });
     this.props.dispatch({
       type: 'SET_CATEGORIA',
       payload: {

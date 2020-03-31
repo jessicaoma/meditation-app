@@ -8,13 +8,14 @@ import {
   SafeAreaView,
   ImageBackground,
 } from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {connect} from 'react-redux';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import Buttom from '../components/Buttom';
 import Logo from '../components/Logo';
 import Cover from '../components/Cover';
 import TabBarIcon from '../components/TabBarIcon';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import ScalableText from 'react-native-text';
 import API, {user} from '../utils/API';
 import ScreenBg from '../components/screenBg';
@@ -25,9 +26,10 @@ import {enumLoNuevo} from '../utils/types';
  * Home Screen
  * @typedef {object} Props
  * @prop {import('react-navigation').NavigationScreenProp} [navigation]
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  * */
-export default class Home extends Component {
+class Home extends Component {
   static navigationOptions = ({navigation}) => ({
     headerStyle: {height: 68},
     headerLeft: (
@@ -198,8 +200,14 @@ export default class Home extends Component {
         color = item.categoria.color;
         titulo = item.categoria.titulo;
         onpress = () => {
+          this.props.dispatch({
+            type: 'SET_CATEGORIA',
+            payload: {
+              categoria: item.categoria,
+            },
+          });
           this.props.navigation.navigate('ViajeStack', {
-            categoria: item.categoria,
+            categoria: item.categoria.titulo,
           });
         };
         break;
@@ -427,3 +435,5 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
 });
+
+export default connect(null)(Home);

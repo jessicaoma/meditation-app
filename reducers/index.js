@@ -18,6 +18,12 @@ export const reducer = (state = initialState, action) => {
         categoria: payload.categoria,
       };
     }
+    case 'SET_VIAJE': {
+      return {
+        ...state,
+        viaje: payload.viaje,
+      };
+    }
   }
 
   return state;

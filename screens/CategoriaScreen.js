@@ -21,11 +21,12 @@ import {connect} from 'react-redux';
 //TODO comportamiento al finalizar el video
 /**
  * @typedef {Object} ParamsNavigation
- * @prop {import('../utils/types').Categoria} categoria
+ * @prop {string} categoria
  *
  * @typedef Props
+ * @prop {import('../utils/types').Categoria} categoria
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
- *
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
 class Categoria extends Component {
@@ -35,18 +36,18 @@ class Categoria extends Component {
     isLoading: true,
   };
 
+  /** @param {{navigation : import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>}} props*/
   static navigationOptions = ({navigation}) => {
     return {
-      title: navigation.getParam('categoria', {title: 'Categoria'}).titulo,
+      title: navigation.getParam('categoria', 'Categoria'),
       headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
     };
   };
   constructor(props) {
     super(props);
     /** @type {import('../utils/types').Categoria} */
-    this.categoria = props.navigation.state.params.categoria;
+    this.categoria = props.categoria;
     this.cantViajes = 0;
-    console.log(props.categoria);
   }
   componentDidMount = async () => {
     this.props.navigation.addListener('willBlur', () => {
@@ -65,7 +66,7 @@ class Categoria extends Component {
   };
 
   _goViaje = index => {
-    /*let viaje = this.state.viajes[index];
+    let viaje = this.state.viajes[index];
     if (
       viaje.estado === enumStatus.todo &&
       index > 0 &&
@@ -74,14 +75,14 @@ class Categoria extends Component {
       return;
     }
 
-    viaje.color = this.categoria.color;*/
+    //viaje.color = this.categoria.color;
     /** @type {import('../utils/types').Paso[]} */
     const pasos = [
       {
         key: '5e6bd20e-1c4f-48ac-8f62-9a56144dde08',
         titulo: 'Bienvenida',
         color: '#fdd58d',
-        tipo: 7,
+        tipo: 0,
         contenidos: [
           {
             key: '59c041a7-03a1-4429-93f8-6b106dc515e3',
@@ -96,7 +97,7 @@ class Categoria extends Component {
         key: '5e6bd20e-1c4f-48ac-8f62-9a56144dde08',
         titulo: 'Bienvenida',
         color: '#fdd58d',
-        tipo: 7,
+        tipo: 0,
         contenidos: [
           {
             key: '254f3b45-b862-441a-be16-4bd1edd8c32b',
@@ -111,7 +112,7 @@ class Categoria extends Component {
         key: '5e6bd20e-1c4f-48ac-8f62-9a56144dde08',
         titulo: 'Bienvenida',
         color: '#fdd58d',
-        tipo: 7,
+        tipo: 0,
         contenidos: [
           {
             key: '254f3b45-b862-441a-be16-4bd1edd8c32b',
@@ -127,32 +128,16 @@ class Categoria extends Component {
         titulo: '¿QUÉ ES LA FELICIDAD?',
         color: '#fdd58d',
         tipo: 1,
-        media: 'http://okoconnect.com/karim/viajes/autoestima/1.mp3',
+        media: 'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/audio.mp3',
         imagenFondo:
           'http://okoconnect.com/karim/assets/categorias/categoria-1/audio-0.png',
         contenidos: [],
       },
       {
-        key: 'c59b7468-3bb1-485f-baa1-231491de8f8c',
-        titulo: 'Ejercicios',
-        color: '#fdd58d',
-        tipo: 8,
-        imagenFondo:
-          'http://okoconnect.com/karim/assets/categorias/categoria-1/ejercicio-0.png',
-        contenidos: [
-          {
-            key: '1',
-            titulo: 'Reto Personal',
-            texto:
-              'Te invito a hacer unos ejercicios para conectarte con tu ser espiritual a través del silencio y la observación detenida de tus pensamientos, sensaciones y emociones.',
-          },
-        ],
-      },
-      {
         key: 'dc8bf5ee-65fb-4115-9fb6-9a05584bba40',
         titulo: 'Recomendaciones',
         color: '#fdd58d',
-        tipo: 9,
+        tipo: 2,
         imagenFondo:
           'http://okoconnect.com/karim/assets/categorias/categoria-1/recomendaciones-0.png',
         contenidos: [
@@ -162,17 +147,21 @@ class Categoria extends Component {
             texto:
               'La vida te presenta desafíos y experiencias desagradables que son difíciles de soportar. Ante eso puedes decidir: aceptar y aprender o tratar de cambiar esas circunstancias vitales. Si está a tu alcance cambiarlas, hazlo. Afronta aquello que te molesta. Si no puedes cambiarlo, no resistas, no te opongas. Hay cosas que se escapan de tu poder de acción. Entiende que cada prueba es una oportunidad para entrenar tu paciencia y tu capacidad de amar, y para crecer espiritualmente.',
           },
+        ],
+      },
+      {
+        key: 'c59b7468-3bb1-485f-baa1-231491de8f8c',
+        titulo: 'Ejercicios',
+        color: '#fdd58d',
+        tipo: 3,
+        imagenFondo:
+          'http://okoconnect.com/karim/assets/categorias/categoria-1/ejercicio-0.png',
+        contenidos: [
           {
-            key: '64c32dd1-6b03-4cef-aa7e-e22f8b3ef30d',
-            imagen:
-              'http://okoconnect.com/karim/assets/images/iconMeditar2.png',
-            titulo:
-              'En la segunda columna de tu hoja, escribe cómo era tu comportamiento antes del día de hoy.',
-          },
-          {
-            key: '40ec56db-1ab9-4944-96c2-94a045f983f8',
-            imagen: 'http://okoconnect.com/karim/assets/images/iconNube.png',
-            titulo: 'Usa un lenguaje optimista, sé compresivo contigo mismo.',
+            key: '1',
+            titulo: 'Reto Personal',
+            texto:
+              'Te invito a hacer unos ejercicios para conectarte con tu ser espiritual a través del silencio y la observación detenida de tus pensamientos, sensaciones y emociones.',
           },
         ],
       },
@@ -220,10 +209,18 @@ class Categoria extends Component {
         ],
       },
     ];
+
+    viaje.pasos = pasos;
+    this.props.dispatch({
+      type: 'SET_VIAJE',
+      payload: {
+        viaje,
+      },
+    });
     let tipo = pasos[0].tipo;
     this.props.navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
-      steps: pasos,
       position: 0,
+      titulo: pasos[0].titulo,
     });
   };
   //TODO reiniciar el video al llegar al final
@@ -235,6 +232,21 @@ class Categoria extends Component {
   renderListHeader = _ => {
     return (
       <>
+        {!this.state.isLoading && (
+          <View>
+            <ScalableText style={styles.textoViajes}>
+              En esta categoría vas a recorrer {this.state.viajes.length + ' '}
+              secciones con una duración total de 10 horas con 22 min.
+            </ScalableText>
+          </View>
+        )}
+      </>
+    );
+  };
+
+  renderHeader = _ => {
+    return (
+      <View style={styles.containerHeader}>
         <ScreenBg
           source={{
             uri: this.categoria.imagenPrevia,
@@ -251,17 +263,10 @@ class Categoria extends Component {
             showControls
             showPlayFrame
             styleVideo={styles.video}
+            
           />
         </ScreenBg>
-        {!this.state.isLoading && (
-          <View>
-            <ScalableText style={styles.textoViajes}>
-              En esta categoría vas a recorrer {this.state.viajes.length}{' '}
-              secciones con una duración total de 10 horas con 22 min.
-            </ScalableText>
-          </View>
-        )}
-      </>
+      </View>
     );
   };
 
@@ -310,7 +315,7 @@ class Categoria extends Component {
       <ActivityIndicator size="large" color={this.categoria.color} />
     ) : (
       <View>
-        <ScalableText style={styles.textoViajes}>
+        <ScalableText style={styles.textoVacio}>
           Amet commodo nulla facilisi nullam vehicula. Lectus proin nibh nisl
           condimentum. Duis ultricies lacus sed turpis tincidunt id. Enim nunc
           faucibus a pellentesque sit amet.{' '}
@@ -321,11 +326,11 @@ class Categoria extends Component {
   keyExtractor = item => item.key;
 
   render() {
-    this.categoria = this.props.navigation.state.params.categoria;
     return (
       <SafeAreaView style={styles.safe}>
         <ScreenBg source={{uri: this.categoria.imagenFondo}} color={'#fff'}>
           <View style={styles.container}>
+            {this.renderHeader()}
             <FlatList
               ListHeaderComponent={this.renderListHeader}
               data={this.state.viajes}
@@ -353,9 +358,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  containerHeader: {
+    padding: Dimensions.regularSpace,
+  },
   containerList: {
     paddingHorizontal: Dimensions.regularSpace,
-    paddingTop: Dimensions.regularSpace,
+    //paddingTop: Dimensions.regularSpace,
   },
   imageBG: {
     resizeMode: 'cover',
@@ -363,11 +371,11 @@ const styles = StyleSheet.create({
   },
   containBG: {
     borderRadius: 25,
-    marginBottom: Dimensions.bigSpace,
+    //marginBottom: Dimensions.bigSpace,
   },
   cover: {
     height: 210,
-    marginBottom: 10,
+    //marginBottom: 10,
     elevation: 5,
     shadowColor: '#000',
     shadowOffset: {
@@ -381,6 +389,14 @@ const styles = StyleSheet.create({
   },
   textoViajes: {
     padding: 40,
+    paddingTop: 20,
+    color: '#665e61',
+    lineHeight: 22,
+    textAlign: 'center',
+    fontSize: Dimensions.paragraph,
+  },
+  textoVacio: {
+    padding: 40,
     color: '#665e61',
     lineHeight: 22,
     textAlign: 'center',
@@ -388,4 +404,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(Categoria)
+export default connect(mapStateToProps)(Categoria);

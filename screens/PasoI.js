@@ -1,46 +1,45 @@
 import React, {Component} from 'react';
 import {
-  Animated,
   View,
   StyleSheet,
   ScrollView,
-  Text,
   ImageBackground,
   SafeAreaView,
   TouchableOpacity,
   Platform,
 } from 'react-native';
 import Colors from '../constants/Colors';
-import {Ionicons} from '@expo/vector-icons';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import {Header} from 'react-navigation';
-//TODO registrar avance
-const screenWidth = dimensions.window.width;
-const screenHeight = dimensions.window.height - dimensions.statusBarHeight;
+import {connect} from 'react-redux';
+
+//const screenWidth = dimensions.window.width;
+const screenHeight =
+  dimensions.screen.height -
+  Header.HEIGHT -
+  (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
 /**
- * Paso Tipo(A): Highlight
+ * Paso Tipo(D): Ejercicio
  * @typedef {Object} ParamsNavigation
- * @prop {import('../utils/types').Paso[]} steps
  * @prop {number} position
+ * @prop {string} titulo
  *
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
+ * @prop {import('redux').Dispatch} dispatch
+ * @prop {import('../utils/types').Viaje} viaje
  *
  * @extends {Component<Props>}
  */
-export default class PasoAScreen extends Component {
-  animVal = new Animated.Value(0);
-
+class PasoDScreen extends Component {
+  /** @param {{navigation: import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>}} param*/
   static navigationOptions = ({navigation}) => {
-    /** @type {ParamsNavigation} */
-    const {steps, position} = navigation.state.params;
-
     return {
-      title: steps[position].titulo,
+      title: navigation.state.params.titulo,
       headerTintColor: '#fff',
       headerTitleStyle: {
         color: 'white',
@@ -56,7 +55,7 @@ export default class PasoAScreen extends Component {
                 'http://okoconnect.com/karim/assets/categorias/categoria-1/header.png',
             }}
             style={{
-              width: screenWidth,
+              width: dimensions.screen.width,
               height:
                 Header.HEIGHT +
                 (Platform.OS === 'android' ? dimensions.statusBarHeight : 0),
@@ -71,64 +70,84 @@ export default class PasoAScreen extends Component {
     };
   };
 
+  /** @param {Props} props */
+  constructor(props) {
+    super(props);
+    const {viaje} = props;
+    this.pasoIndex = props.navigation.state.params.position;
+    this.paso = viaje.pasos[this.pasoIndex];
+  }
+
   componentDidMount = async () => {
-    const {steps, position} = this.props.navigation.state.params;
-    const paso = steps[position];
-    //API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
-    //API.putDiarioViaje(paso.viajeId, enumStatus.doing, user);
+    // const {steps, position} = this.props.navigation.state.params;
+    // const paso = steps[position];
+    // API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
   };
 
   nextStep = () => {
-    const {steps, position} = this.props.navigation.state.params;
-    const {tipo} = steps[position + 1];
-    const paso = steps[position];
+    const {viaje} = this.props;
+    const {tipo} = viaje.pasos[this.pasoIndex + 1];
     //API.putDiarioPaso(paso.key, enumStatus.done, null, user);
     // @ts-ignore
-    this.props.navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
-      steps,
-      position: position + 1,
+    this.props.navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
+      position: this.pasoIndex + 1,
+      titulo: viaje.pasos[this.pasoIndex + 1].titulo,
     });
   };
 
   render() {
-    const {steps, position} = this.props.navigation.state.params;
-    const paso = steps[position];
-    const contenido = steps[position].contenidos[0];
+    const contenido = this.paso.contenidos[0];
     return (
       <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
         <ImageBackground
-          source={{uri: paso.imagenFondo}}
+          source={{uri: this.paso.imagenFondo}}
           style={[styles.sliderImage]}>
-          <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
-            <View style={styles.container1}>
-              <ScalableText style={styles.headline}>
-                {contenido.titulo}
-              </ScalableText>
-            </View>
-            <View style={styles.container2}>
-              <ScalableText style={styles.text2}>
-                {contenido.texto}
-              </ScalableText>
-            </View>
-          </TouchableOpacity>
+          <View style={styles.container}>
+            <ScrollView style={styles.scroll}>
+              <View style={styles.container1}>
+                <ScalableText style={styles.headline}>
+                  {contenido.titulo}
+                </ScalableText>
+              </View>
+              <View style={styles.container2}>
+                <ScalableText style={styles.text2}>
+                  {contenido.texto}
+                </ScalableText>
+              </View>
+            </ScrollView>
+          </View>
+          <View style={styles.footer}>
+            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
+              <ScalableText>Botton</ScalableText>
+            </TouchableOpacity>
+          </View>
         </ImageBackground>
       </SafeAreaView>
     );
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    viaje: state.viaje,
+  };
+}
+
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
   },
-  border: {
-    borderColor: 'red',
-    borderWidth: 1,
-  },
   sliderImage: {
-    width: screenWidth,
+    width: dimensions.window.width,
     height: screenHeight,
-    resizeMode: 'contain',
+    //resizeMode: 'contain',
+  },
+  container: {
+    height: screenHeight * 0.6,
+  },
+  //Jess, no le pongas padding o margin vertical al scroll
+  scroll: {
+    paddingHorizontal: dimensions.hugeSpace + dimensions.smallSpace,
   },
   container1: {
     //flex: 1,
@@ -142,7 +161,7 @@ const styles = StyleSheet.create({
     fontSize: dimensions.h1,
     lineHeight: 48,
     textAlign: 'center',
-    color: '#85787b', //Colors.primaryDark,
+    color: Colors.textoViaje,
     letterSpacing: 2.2,
     textTransform: 'uppercase',
   },
@@ -153,23 +172,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     paddingTop: screenHeight * 0.1,
-    paddingHorizontal: dimensions.hugeSpace * 2,
+    //paddingHorizontal: dimensions.hugeSpace * 2,
   },
   text2: {
     fontFamily: 'MyriadPro-Semibold',
     fontSize: 18,
     lineHeight: 26,
-    textAlign: 'center',
-    color: '#85787b', //Colors.primaryDark,
+    textAlign: 'left',
+    color: Colors.textoViaje,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
-
-  containerHalfBottom: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-    paddingTop: dimensions.window.height / 2,
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    height: screenHeight * 0.4,
+    borderWidth: 1,
+    borderColor: '#00f',
   },
 });
+
+export default connect(mapStateToProps)(PasoDScreen);

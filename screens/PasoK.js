@@ -8,6 +8,7 @@ import {
   ImageBackground,
   SafeAreaView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import {Ionicons} from '@expo/vector-icons';
@@ -15,80 +16,102 @@ import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
-//TODO registrar avance
+import {HeaderBackButton} from 'react-navigation';
+import {connect} from 'react-redux';
+
 const screenWidth = dimensions.window.width;
-const screenHeight = dimensions.window.height - dimensions.statusBarHeight;
+const screenHeight =
+  dimensions.screen.height -
+  (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
 /**
- * Paso Tipo(A): Highlight
+ * Paso Tipo(E): Cierre
  * @typedef {Object} ParamsNavigation
- * @prop {import('../utils/types').Paso[]} steps
  * @prop {number} position
+ * @prop {string} titulo
  *
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
+ * @prop {import('redux').Dispatch} dispatch
+ * @prop {import('../utils/types').Viaje} viaje
  *
  * @extends {Component<Props>}
  */
-export default class PasoAScreen extends Component {
-  animVal = new Animated.Value(0);
-
-  static navigationOptions = ({navigation}) => {
-    /** @type {ParamsNavigation} */
-    const {steps, position} = navigation.state.params;
-    return {
-      title: steps[position].titulo,
-      header: null,
-    };
+class PasoEScreen extends Component {
+  static navigationOptions = {
+    header: null,
   };
 
+  /** @param {Props} props */
+  constructor(props) {
+    super(props);
+    const {viaje} = props;
+    this.pasoIndex = props.navigation.state.params.position;
+    this.paso = viaje.pasos[this.pasoIndex];
+  }
+
   componentDidMount = async () => {
-    const {steps, position} = this.props.navigation.state.params;
-    const paso = steps[position];
+    // const {steps, position} = this.props.navigation.state.params;
+    // const paso = steps[position];
     //API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
     //API.putDiarioViaje(paso.viajeId, enumStatus.doing, user);
   };
 
   nextStep = () => {
-    const {steps, position} = this.props.navigation.state.params;
-    const paso = steps[position];
+    const {viaje} = this.props;
     //API.putDiarioPaso(paso.key, enumStatus.done, null, user);
     // @ts-ignore
-    if (position === steps.length - 1) {
-      this.props.navigation.goBack();
+    if (this.pasoIndex === viaje.pasos.length - 1) {
+      this.props.navigation.pop(viaje.pasos.length);
     } else {
-      const {tipo} = steps[position + 1];
-      this.props.navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
-        steps,
-        position: position + 1,
+      const {tipo} = viaje.pasos[this.pasoIndex + 1];
+      this.props.navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
+        titulo: viaje.pasos[this.pasoIndex + 1].titulo,
+        position: this.pasoIndex + 1,
       });
     }
   };
 
   render() {
-    const {steps, position} = this.props.navigation.state.params;
-    const paso = steps[position];
-    const contenido = steps[position].contenidos[0];
+    const contenido = this.paso.contenidos[0];
     return (
-      <SafeAreaView
-        style={[styles.safe]}>
+      <SafeAreaView style={styles.safe}>
         <ImageBackground
-          source={{uri: paso.imagenFondo}}
+          source={{uri: this.paso.imagenFondo}}
           style={[styles.sliderImage]}>
-          <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
-            <View style={styles.container3}>
+          <View style={styles.headerBack}>
+            <HeaderBackButton
+              tintColor="white"
+              pressColorAndroid="transparent"
+              onPress={() => this.props.navigation.goBack()}
+              backTitleVisible={false}
+            />
+          </View>
+          <View style={styles.container3}>
+            <ScrollView>
               <ScalableText style={styles.headline}>
                 {contenido.titulo}
               </ScalableText>
               <ScalableText style={styles.paragraphBottom}>
                 {contenido.texto}
               </ScalableText>
+            </ScrollView>
+            <View style={styles.boton}>
+              <TouchableOpacity onPress={this.nextStep}>
+                <ScalableText>Botton</ScalableText>
+              </TouchableOpacity>
             </View>
-          </TouchableOpacity>
+          </View>
         </ImageBackground>
       </SafeAreaView>
     );
   }
+}
+
+function mapStateToProps(state) {
+  return {
+    viaje: state.viaje,
+  };
 }
 
 const styles = StyleSheet.create({
@@ -97,14 +120,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingTop: dimensions.statusBarHeight,
   },
-  border: {
-    borderColor: 'red',
-    borderWidth: 1,
-  },
-  close: {
+  headerBack: {
     position: 'absolute',
-    left: 20,
-    top: 20,
+    top: 0,
     zIndex: 100,
   },
   sliderImage: {
@@ -118,7 +136,7 @@ const styles = StyleSheet.create({
     fontSize: dimensions.h1,
     lineHeight: 48,
     textAlign: 'center',
-    color: '#85787b', //Colors.primaryDark,
+    color: Colors.textoViaje,
     letterSpacing: 2.2,
     marginBottom: dimensions.regularSpace,
   },
@@ -127,19 +145,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 26,
     textAlign: 'left',
-    color: '#85787b', //Colors.primaryDark,
-    //justifyContent: 'flex-end',
-    //alignItems: 'center',
+    color: Colors.textoViaje,
     paddingHorizontal: dimensions.bigSpace * 2,
   },
-
   container3: {
     flex: 1,
-    //justifyContent: 'center',
-    //alignItems: 'center',
-    //alignContent: 'center',
     position: 'absolute',
     bottom: 0,
-    paddingBottom: screenHeight * 0.22,
+    height: screenHeight * 0.5,
+    borderColor: 'red',
+    borderWidth: 1,
+  },
+  boton: {
+    borderWidth: 1,
+    borderColor: '#00f',
   },
 });
+
+export default connect(mapStateToProps)(PasoEScreen);

@@ -102,8 +102,15 @@ const PerfilNavigation = createDrawerNavigator(
         title: 'Mis meditaciones',
       },
     },
+    Premium: {
+      screen: PremiumScreen,
+      navigationOptions: {
+        title: 'Convierte en Premium',
+      },
+    },
   },
   {
+    initialRouteName: 'Main',
     drawerPosition: 'right',
     drawerType: 'slide',
     drawerWidth: Dims.window.width - 50,
