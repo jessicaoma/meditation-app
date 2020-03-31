@@ -17,12 +17,14 @@ import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import {HeaderBackButton} from 'react-navigation';
+import Next from '../constants/LogoButtonNext';
 import {connect} from 'react-redux';
 
 const screenWidth = dimensions.window.width;
 const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
+const bottomHeight = dimensions.window.height / 5.7;
 
 /**
  * Paso Tipo(E): Cierre
@@ -96,11 +98,13 @@ class PasoEScreen extends Component {
                 {contenido.texto}
               </ScalableText>
             </ScrollView>
-            <View style={styles.boton}>
-              <TouchableOpacity onPress={this.nextStep}>
-                <ScalableText>Botton</ScalableText>
-              </TouchableOpacity>
-            </View>
+          </View>
+          <View style={styles.footer}>
+            <TouchableOpacity onPress={this.nextStep}>
+              <View style={styles.containerButton}>
+                <Next />
+              </View>
+            </TouchableOpacity>
           </View>
         </ImageBackground>
       </SafeAreaView>
@@ -132,18 +136,18 @@ const styles = StyleSheet.create({
   },
 
   headline: {
-    fontFamily: 'MyriadPro-Regular',
-    fontSize: dimensions.h1,
-    lineHeight: 48,
+    fontFamily: 'Kiona',
+    fontSize: 32,
+    lineHeight: 38,
     textAlign: 'center',
     color: Colors.textoViaje,
-    letterSpacing: 2.2,
+    letterSpacing: 1.2,
     marginBottom: dimensions.regularSpace,
   },
   paragraphBottom: {
-    fontFamily: 'MyriadPro-Semibold',
+    fontFamily: 'MyriadPro-Regular',
     fontSize: 18,
-    lineHeight: 26,
+    lineHeight: 20,
     textAlign: 'left',
     color: Colors.textoViaje,
     paddingHorizontal: dimensions.bigSpace * 2,
@@ -151,14 +155,24 @@ const styles = StyleSheet.create({
   container3: {
     flex: 1,
     position: 'absolute',
-    bottom: 0,
-    height: screenHeight * 0.5,
-    borderColor: 'red',
-    borderWidth: 1,
+    bottom: bottomHeight,
+    height: screenHeight * 0.32,
   },
-  boton: {
-    borderWidth: 1,
-    borderColor: '#00f',
+  containerButton: {
+    display: 'flex',
+    flex: 1,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingHorizontal: dimensions.regularSpace,
+  },
+  footer: {
+    position: 'absolute',
+    display: 'flex',
+    flex: 1,
+    alignSelf: 'center',
+    bottom: 0,
+    height: bottomHeight,
   },
 });
 

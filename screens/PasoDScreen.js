@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   headline: {
     fontFamily: 'Kiona',
-    fontSize: dimensions.h1,
+    fontSize: 32,
     lineHeight: 48,
     textAlign: 'center',
     color: Colors.textoViaje,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
-    paddingTop: screenHeight * 0.07,
+    paddingTop: screenHeight * 0.05,
     //paddingHorizontal: dimensions.hugeSpace * 2,
   },
   text2: {

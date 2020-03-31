@@ -12,7 +12,6 @@ import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
-import LogoPlayVideo from '../constants/LogoPlayVideo';
 import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
 import {HeaderBackButton} from 'react-navigation';
@@ -91,7 +90,6 @@ class PasoBScreen extends Component {
           <View style={this.state.show ? styles.container2 : styles.hidden}>
             <TouchableOpacity onPress={this.otro} style={styles.buttonContainer}>
 
-              <LogoPlayVideo/>
               <View style={styles.button}>
                 <ScalableText style={styles.buttonLabel}>Escuchar el audio</ScalableText>
               </View>

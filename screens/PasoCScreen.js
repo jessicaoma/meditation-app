@@ -56,6 +56,7 @@ class PasoCScreen extends Component {
                 'http://okoconnect.com/karim/assets/categorias/categoria-1/header.png',
             }}
             style={{
+              zIndex: 99,
               width: dimensions.screen.width,
               height:
                 Header.HEIGHT +
