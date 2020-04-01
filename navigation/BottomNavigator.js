@@ -33,7 +33,7 @@ const BottomNavigator = createBottomTabNavigator(
     Meditar: {
       screen: MeditacionesScreen,
       navigationOptions: {
-        title: 'Meditaciones',
+        title: 'Medita',
         tabBarIcon: ({tintColor}) => (
           <TabBarIcon name={'meditar'} tintColor={tintColor} />
         ),
