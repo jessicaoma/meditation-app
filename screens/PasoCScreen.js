@@ -17,10 +17,8 @@ import Next from '../constants/LogoButtonNext';
 import {Header} from 'react-navigation';
 import {connect} from 'react-redux';
 
-//const screenWidth = dimensions.window.width;
 const screenHeight =
   dimensions.screen.height -
-  Header.HEIGHT -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
 /**
@@ -114,7 +112,8 @@ class PasoCScreen extends Component {
               </ScalableText>
             </ScrollView>
           </View>
-          <View style={styles.footer}>
+          <View style={styles.footer} />
+          <View style={styles.containerButton}>
             <TouchableOpacity onPress={this.nextStep}>
               <Next />
             </TouchableOpacity>
@@ -137,15 +136,16 @@ const styles = StyleSheet.create({
   },
   sliderImage: {
     width: dimensions.window.width,
-    height: screenHeight,
+    height: '100%',
     //resizeMode: 'contain',
   },
   container1: {
-    height: screenHeight * 0.7,
+    height: '70%',
   },
   //Jess, no le pongas padding o margin vertical al scroll
   scroll: {
-    paddingHorizontal: dimensions.hugeSpace + dimensions.smallSpace,
+    //paddingHorizontal: dimensions.hugeSpace + dimensions.smallSpace,
+    paddingHorizontal: dimensions.bigSpace,
   },
   headline: {
     fontFamily: 'Kiona',
@@ -169,14 +169,28 @@ const styles = StyleSheet.create({
   footer: {
     position: 'absolute',
     bottom: 0,
-    height: screenHeight * 0.3,
-    display: 'flex',
+    height: '30%',
+    //display: 'flex',
     flex: 1,
     width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    paddingHorizontal: dimensions.regularSpace,
+    //flexDirection: 'row',
+    //justifyContent: 'flex-end',
+    //alignItems: 'center',
+    //paddingHorizontal: dimensions.regularSpace,
+  },
+  containerButton: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    marginBottom: screenHeight * 0.1,
+    //display: 'flex',
+    //flex: 1,
+    //width: '100%',
+    //flexDirection: 'row',
+    //justifyContent: 'flex-end',
+    //paddingHorizontal: dimensions.regularSpace,
+    marginRight: dimensions.bigSpace,
+    zIndex: 100,
   },
 });
 

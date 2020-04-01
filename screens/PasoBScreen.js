@@ -4,9 +4,10 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  ImageBackground,
   Platform,
 } from 'react-native';
-import ScreenBg from '../components/screenBg';
+
 import Player from '../player/Player';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
@@ -72,28 +73,28 @@ class PasoBScreen extends Component {
   };
 
   otro = () => {
-    this.player._startPlayer();
+    //this.player._startPlayer();
+    this.nextStep();
   };
 
   render() {
     return (
       <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
-        <ScreenBg
+        <ImageBackground
           source={{uri: this.paso.imagenFondo}}
-          color="white"
-          styleImage={{resizeMode: 'cover'}}>
+          style={styles.sliderImage}>
           <View style={styles.container1}>
             <ScalableText style={styles.headline}>
               {this.paso.titulo}
             </ScalableText>
           </View>
           <View style={this.state.show ? styles.container2 : styles.hidden}>
-            <TouchableOpacity onPress={this.otro} style={styles.buttonContainer}>
-
+            <TouchableOpacity onPress={this.otro}>
               <View style={styles.button}>
-                <ScalableText style={styles.buttonLabel}>Escuchar el audio</ScalableText>
+                <ScalableText style={styles.buttonLabel}>
+                  Escuchar el audio
+                </ScalableText>
               </View>
-
             </TouchableOpacity>
           </View>
           <Player
@@ -115,7 +116,7 @@ class PasoBScreen extends Component {
               backTitleVisible={false}
             />
           </View>
-        </ScreenBg>
+        </ImageBackground>
       </SafeAreaView>
     );
   }
@@ -132,6 +133,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: dimensions.statusBarHeight,
   },
+  sliderImage: {
+    width: dimensions.screen.width,
+    height: '100%',
+  },
   headerBack: {
     position: 'absolute',
     top: 0,
@@ -139,7 +144,7 @@ const styles = StyleSheet.create({
   },
   container1: {
     width: dimensions.screen.width,
-    height: screenHeight,
+    height: '100%',
     top: 0,
     position: 'absolute',
     flex: 1,
@@ -147,18 +152,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     alignSelf: 'center',
-  },
-  container2: {
-    bottom: 0,
-    marginBottom: 128,
-    display: 'flex',
-    flexDirection: 'column',
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-    alignSelf: 'center',
-    zIndex: 50,
   },
   headline: {
     fontFamily: 'Kiona',
@@ -170,37 +163,47 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     paddingHorizontal: dimensions.regularSpace,
   },
+  container2: {
+    position: 'absolute',
+    bottom: 0,
+    marginBottom: screenHeight * 0.1,
+    //display: 'flex',
+    //flexDirection: 'column',
+    //justifyContent: 'center',
+    //alignItems: 'center',
+    //alignContent: 'center',
+    alignSelf: 'center',
+    zIndex: 100,
+  },
   hidden: {
     display: 'none',
   },
-  show: {
-    display: 'flex',
-  },
-  buttonContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-    alignSelf: 'center',
-  },
+  // buttonContainer: {
+  //   display: 'flex',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   alignContent: 'center',
+  //   alignSelf: 'center',
+  // },
   button: {
-    marginTop: 20,
+    //marginTop: 20,
     backgroundColor: Colors.darkPurple,
     borderRadius: 40,
     paddingHorizontal: dimensions.window.width * 0.15,
-    paddingBottom: dimensions.window.width * 0.035,
-    paddingTop: dimensions.window.width * 0.045,
-    display: 'flex',
+    //paddingBottom: dimensions.window.width * 0.035,
+    //paddingTop: dimensions.window.width * 0.045,
+    height: dimensions.window.width * 0.14,
+    //display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
+    //alignItems: 'center',
     alignContent: 'center',
-    alignSelf: 'center',
+    //alignSelf: 'center',
   },
   buttonLabel: {
     color: 'white',
     fontFamily: 'MyriadPro-Regular',
     fontSize: 20,
-  }
+  },
 });
 
 export default connect(mapStateToProps)(PasoBScreen);

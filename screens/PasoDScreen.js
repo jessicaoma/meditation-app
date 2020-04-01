@@ -21,6 +21,9 @@ const screenHeight =
   dimensions.screen.height -
   Header.HEIGHT -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
+  const screenHeight2 =
+  dimensions.screen.height -
+  (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
 /**
  * Paso Tipo(D): Ejercicio
@@ -98,7 +101,7 @@ class PasoDScreen extends Component {
   render() {
     const contenido = this.paso.contenidos[0];
     return (
-      <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
+      <SafeAreaView style={styles.safe}>
         <ImageBackground
           source={{uri: this.paso.imagenFondo}}
           style={[styles.sliderImage]}>
@@ -117,9 +120,11 @@ class PasoDScreen extends Component {
             </ScrollView>
           </View>
           <View style={styles.footer}>
-            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
+            <TouchableOpacity onPress={this.nextStep}>
               <View style={styles.button}>
-                <ScalableText style={styles.buttonLabel}>Continuar</ScalableText>
+                <ScalableText style={styles.buttonLabel}>
+                  Continuar
+                </ScalableText>
               </View>
             </TouchableOpacity>
           </View>
@@ -138,24 +143,26 @@ function mapStateToProps(state) {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
+    backgroundColor: 'white',
   },
   sliderImage: {
     width: dimensions.window.width,
-    height: screenHeight,
+    height: '100%',
     //resizeMode: 'contain',
   },
   container: {
-    height: screenHeight * 0.6,
+    height: '60%',
   },
-  //Jess, no le pongas padding o margin vertical al scroll
   scroll: {
-    paddingHorizontal: dimensions.hugeSpace + dimensions.smallSpace,
+    //paddingHorizontal: dimensions.hugeSpace + dimensions.smallSpace,
+    paddingHorizontal: dimensions.bigSpace,
   },
   container1: {
     //flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
+    //justifyContent: 'center',
+    //alignItems: 'center',
+    //alignContent: 'center',
+    width: '100%',
     marginTop: screenHeight * 0.1,
   },
   headline: {
@@ -167,20 +174,20 @@ const styles = StyleSheet.create({
     letterSpacing: 1.2,
     textTransform: 'uppercase',
   },
-
   container2: {
     //flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
+    //justifyContent: 'center',
+    //alignItems: 'center',
+    //alignContent: 'center',
     paddingTop: screenHeight * 0.05,
     //paddingHorizontal: dimensions.hugeSpace * 2,
+    width: '100%',
   },
   text2: {
     fontFamily: 'MyriadPro-Regular',
     fontSize: 19,
     lineHeight: 26,
-    textAlign: 'center',
+    textAlign: 'left',
     color: Colors.textoViaje,
     justifyContent: 'flex-end',
     alignItems: 'center',
@@ -188,33 +195,37 @@ const styles = StyleSheet.create({
   footer: {
     position: 'absolute',
     bottom: 0,
-    height: screenHeight * 0.16,
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
+    //height: '17%',
+    //marginBottom: '10%',
+    // display: 'flex',
+    // flex: 1,
+    // flexDirection: 'column',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // alignContent: 'center',
     alignSelf: 'center',
+    zIndex: 100,
+    marginBottom: screenHeight2 * 0.1,
   },
   button: {
-    marginTop: 20,
+    height: dimensions.window.width * 0.14,
+    //marginTop: 20,
     backgroundColor: Colors.darkPurple,
     borderRadius: 40,
     paddingHorizontal: dimensions.window.width * 0.15,
-    paddingBottom: dimensions.window.width * 0.035,
-    paddingTop: dimensions.window.width * 0.045,
-    display: 'flex',
+    //paddingBottom: dimensions.window.width * 0.035,
+    //paddingTop: dimensions.window.width * 0.045,
+    // display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
     alignContent: 'center',
-    alignSelf: 'center',
+    // alignSelf: 'center',
   },
   buttonLabel: {
     color: 'white',
     fontFamily: 'MyriadPro-Regular',
     fontSize: 20,
-  }
+  },
 });
 
 export default connect(mapStateToProps)(PasoDScreen);

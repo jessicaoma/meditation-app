@@ -20,7 +20,6 @@ import {connect} from 'react-redux';
 const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
-const width = dimensions.window.width;
 
 /**
  * Paso Tipo(A): Highlight
@@ -83,8 +82,8 @@ class PasoAScreen extends Component {
               backTitleVisible={false}
             />
           </View>
-          <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
-            {this.pasoIndex === 0 && (
+          {this.pasoIndex === 0 && (
+            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.container1}>
                 <ScalableText style={styles.headline}>
                   {contenido.titulo}
@@ -93,25 +92,31 @@ class PasoAScreen extends Component {
                   {contenido.texto}
                 </ScalableText>
               </View>
-            )}
-            {this.pasoIndex === 1 && (
+            </TouchableOpacity>
+          )}
+          {this.pasoIndex === 1 && (
+            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.container2}>
                 <ScalableText style={styles.text2}>
                   {contenido.texto}
                 </ScalableText>
               </View>
-            )}
-            {this.pasoIndex === 2 && (
+            </TouchableOpacity>
+          )}
+          {this.pasoIndex === 2 && (
+            <>
               <View style={styles.container3}>
                 <ScalableText style={styles.text3}>
                   {contenido.texto}
                 </ScalableText>
-                <View style={styles.containerButton}>
-                  <Next />
-                </View>
               </View>
-            )}
-          </TouchableOpacity>
+              <View style={styles.containerButton}>
+                <TouchableOpacity onPress={this.nextStep}>
+                  <Next />
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
         </ImageBackground>
       </SafeAreaView>
     );
@@ -136,7 +141,7 @@ const styles = StyleSheet.create({
   },
   sliderImage: {
     width: dimensions.screen.width,
-    height: screenHeight,
+    height: '100%',
     //resizeMode: 'contain',
   },
   container1: {
@@ -183,7 +188,8 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'absolute',
     bottom: 0,
-    paddingBottom: screenHeight * 0.15,
+    height: '50%',
+    justifyContent: 'center',
   },
   text3: {
     fontFamily: 'MyriadPro-Regular',
@@ -191,25 +197,23 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: 'right',
     color: Colors.textoViaje,
-    justifyContent: 'flex-end',
-    marginRight: dimensions.bigSpace,
+    //justifyContent: 'flex-end',
+    paddingRight: dimensions.bigSpace,
     paddingLeft: dimensions.hugeSpace * 3,
   },
-  containerHalfBottom: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-    paddingTop: dimensions.window.height / 2,
-  },
   containerButton: {
-    marginTop: 30,
-    display: 'flex',
-    flex: 1,
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    paddingHorizontal: dimensions.regularSpace,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    marginBottom: screenHeight * 0.1,
+    //display: 'flex',
+    //flex: 1,
+    //width: '100%',
+    //flexDirection: 'row',
+    //justifyContent: 'flex-end',
+    //paddingHorizontal: dimensions.regularSpace,
+    marginRight: dimensions.bigSpace,
+    zIndex: 100,
   },
 });
 

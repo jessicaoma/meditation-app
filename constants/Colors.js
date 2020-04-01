@@ -12,6 +12,7 @@
  * @property {string} white Color that represent White
  * @property {string} meditacion Color used to meditation screens
  * @property {string} textoViaje Color used in all text of Viaje
+ * @property {string} darkPurple
  */
 
 /**
