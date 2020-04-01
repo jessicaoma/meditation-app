@@ -25,7 +25,7 @@ const MainNavigator = createStackNavigator(
     EmocionesStack: {
       screen: EmocionesNavigator,
       navigationOptions: {
-        title: '¿Cómo me siento?',
+        title: '¿Cómo te sientes hoy?',
         headerTitleStyle: {
           color: '#030303',
           fontFamily: 'MyriadPro-Semibold',
