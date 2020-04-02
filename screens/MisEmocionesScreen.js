@@ -171,12 +171,11 @@ export default class MisEmocionesScreen extends Component {
             <View>
               <Text style={styles.bigTitle}>¡Sigue así!</Text>
               <Text style={styles.bigParagraph}>
-                Esta semana has estado feliz 5 días. Sentir gratitud es tu mejor
-                recompensa.
+                La tristeza y la ira suelen ser dos caras de una misma moneda, entramos en una para evitar la otra. 
               </Text>
               <Text style={styles.bigParagraph}>
-                Te recomiendo iniciar este viaje que te ayudará a sentirte cada
-                día mejor
+                No queremos estar tristes y nos anestesiamos alimentando la ira, enfadándonos con el mundo. Mayormente la linea que une a ambas es la frustración. Pregúntate qué te tiene frustrado
+Para que aprendas a gestionar efectivamente lo que sientes te recomiendo que te dirijas al curso “Emociones”.
               </Text>
               <ItemBubble
                 color={'#fdd58d'}
@@ -257,7 +256,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     color: Colors.gray,
     fontFamily: 'MyriadPro-Regular',
-    textAlign: 'center',
+    textAlign: 'left',
     paddingHorizontal: Dims.regularSpace,
   },
   image: {
