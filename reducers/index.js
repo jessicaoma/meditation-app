@@ -71,8 +71,7 @@ const initialState = {
         titulo: '¿QUÉ ES LA FELICIDAD?',
         color: '#fdd58d',
         tipo: 1,
-        media:
-          'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/audio.mp3',
+        media: 'http://okoconnect.com/karim/cursos/ser-feliz/modulo-1.mp3 ',
         imagenFondo:
           'http://okoconnect.com/karim/assets/categorias/categoria-1/audio-0.png',
         contenidos: [],

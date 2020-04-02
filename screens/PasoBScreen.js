@@ -73,8 +73,8 @@ class PasoBScreen extends Component {
   };
 
   otro = () => {
-    //this.player._startPlayer();
-    this.nextStep();
+    this.player._startPlayer();
+    //this.nextStep();
   };
 
   render() {
