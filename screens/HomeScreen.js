@@ -22,6 +22,8 @@ import ScreenBg from '../components/screenBg';
 import colors from '../constants/Colors';
 import {enumLoNuevo} from '../utils/types';
 
+
+let colorLetra = '#fff';
 /**
  * Home Screen
  * @typedef {object} Props
@@ -174,6 +176,7 @@ class Home extends Component {
         color = item.audiolibro.color;
         titulo = item.audiolibro.titulo;
         tipo = 'Audiolibro';
+
         onpress = () => {
           this.props.navigation.navigate('Audiolibro', {
             audiolibro: item.audiolibro,
@@ -184,6 +187,7 @@ class Home extends Component {
         color = item.cancion.color;
         titulo = item.cancion.titulo;
         tipo = 'Música';
+
         onpress = () => {
           this.props.navigation.navigate('Cancion', {
             cancion: item.cancion,
@@ -194,6 +198,7 @@ class Home extends Component {
         color = item.meditacion.color;
         titulo = item.meditacion.titulo;
         tipo = 'Meditación';
+
         onpress = () => {
           this.props.navigation.navigate('MeditacionIntro', {
             meditacion: item.meditacion,
@@ -204,6 +209,7 @@ class Home extends Component {
         color = item.categoria.color;
         titulo = item.categoria.titulo;
         tipo = 'Curso';
+
         onpress = () => {
           this.props.dispatch({
             type: 'SET_CATEGORIA',
@@ -220,10 +226,25 @@ class Home extends Component {
         color = Colors.primaryDark;
         break;
     }
+    
+    var c = color.substring(1);    
+    var rgb = parseInt(c, 16);   // convertir rrggbb a decimal
+    var r = (rgb >> 16) & 0xff;  // extract rojo
+    var g = (rgb >>  8) & 0xff;  // extract verde
+    var b = (rgb >>  0) & 0xff;  // extract azul
+
+    var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+
+    if (luma > 150) //255 es lo mas claro.
+       colorLetra = Colors.textoViaje;
+    else 
+      colorLetra = '#fff';
+    
+
     return (
       <Buttom style={[{backgroundColor: color}, styles.box2]} onPress={onpress}>
-        <ScalableText style={styles.title_tipo}>{tipo}</ScalableText>
-        <ScalableText style={styles.title_boxes3}>{titulo}</ScalableText>
+        <ScalableText style={[{color: colorLetra}, styles.title_tipo]} >{tipo}</ScalableText>
+        <ScalableText style={[{color: colorLetra}, styles.title_boxes3]}>{titulo}</ScalableText>
       </Buttom>
     );
   };
@@ -413,8 +434,7 @@ const styles = StyleSheet.create({
     marginTop: Dimensions.smallSpace,
   },
   title_tipo: {
-    color: '#fff',
-    fontSize: 11,
+    fontSize: 12.5,
     fontFamily: 'Kiona',
     textTransform: 'uppercase',
   },
@@ -442,12 +462,11 @@ const styles = StyleSheet.create({
     paddingRight: 35,
   },
   title_boxes3: {
-    color: '#fff',
     fontSize: 13,
     letterSpacing: Dimensions.bubbleTitleSpacing,
     lineHeight: 15,
     textTransform: 'uppercase',
-    fontFamily: 'MyriadPro-Regular',
+    fontFamily: 'MyriadPro-Semibold',
     paddingTop: 3,
     textAlign: 'left',
   },
