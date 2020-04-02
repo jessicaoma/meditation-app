@@ -414,7 +414,7 @@ const styles = StyleSheet.create({
   },
   title_tipo: {
     color: '#fff',
-    fontSize: 12,
+    fontSize: 11,
     fontFamily: 'Kiona',
     textTransform: 'uppercase',
   },
@@ -443,7 +443,7 @@ const styles = StyleSheet.create({
   },
   title_boxes3: {
     color: '#fff',
-    fontSize: 14,
+    fontSize: 13,
     letterSpacing: Dimensions.bubbleTitleSpacing,
     lineHeight: 15,
     textTransform: 'uppercase',
