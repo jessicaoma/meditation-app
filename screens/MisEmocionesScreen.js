@@ -169,7 +169,6 @@ export default class MisEmocionesScreen extends Component {
             </View>
 
             <View>
-              <Text style={styles.bigTitle}>¡Sigue así!</Text>
               <Text style={styles.bigParagraph}>
                 La tristeza y la ira suelen ser dos caras de una misma moneda, entramos en una para evitar la otra. 
               </Text>
