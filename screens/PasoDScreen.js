@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Platform,
+  DeviceInfo,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import API, {user} from '../utils/API';
