@@ -23,7 +23,7 @@ import API, {user} from '../utils/API';
  * */
 export default class ViajeCompletadosScreen extends Component {
   static navigationOptions = ({navigation}) => ({
-    title: 'Viajes Completados',
+    title: 'Cursos Completados',
     headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
   });
   state = {
@@ -73,8 +73,8 @@ export default class ViajeCompletadosScreen extends Component {
           style={styles.scrollView}>
           <Text style={styles.bigTitle}>¡Vas muy bien!</Text>
           <Text style={styles.bigParagraph}>
-            Has completado los siguientes viajes. Si deseas consultar nuevamente
-            el contenido, presiona sobre el viaje de interés.
+            Has completado los siguientes cursos. Si deseas consultar nuevamente
+            el contenido, presiona sobre el curso de interés.
           </Text>
           <View style={styles.container}>
             {this.state.viajes.length === 0
