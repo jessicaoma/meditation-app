@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Platform,
+  DeviceInfo,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import API, {user} from '../utils/API';
@@ -57,14 +58,15 @@ class PasoCScreen extends Component {
               zIndex: 99,
               width: dimensions.screen.width,
               height:
-                Header.HEIGHT +
-                (Platform.OS === 'android' ? dimensions.statusBarHeight : 0),
+                Header.HEIGHT  +
+                (Platform.OS === 'android' ? dimensions.statusBarHeight : (DeviceInfo.isIPhoneX_deprecated ? dimensions.statusBarHeight - 20 :  0 )),
             }}
             imageStyle={{
               resizeMode: 'stretch',
             }}>
             <Header {...props} />
           </ImageBackground>
+
         );
       },
     };
@@ -97,6 +99,7 @@ class PasoCScreen extends Component {
 
   render() {
     const contenido = this.paso.contenidos[0];
+    console.log(DeviceInfo);
     return (
       <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
         <ImageBackground
@@ -133,6 +136,7 @@ function mapStateToProps(state) {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
+    paddingTop: dimensions.statusBarHeight,
   },
   sliderImage: {
     width: dimensions.window.width,

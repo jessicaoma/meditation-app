@@ -61,7 +61,7 @@ class PasoDScreen extends Component {
               width: dimensions.screen.width,
               height:
                 Header.HEIGHT +
-                (Platform.OS === 'android' ? dimensions.statusBarHeight : 0),
+                (Platform.OS === 'android' ? dimensions.statusBarHeight : (DeviceInfo.isIPhoneX_deprecated ? dimensions.statusBarHeight - 20 :  0 )),
             }}
             imageStyle={{
               resizeMode: 'stretch',
