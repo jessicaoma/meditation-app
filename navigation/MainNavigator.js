@@ -7,7 +7,7 @@ import EmocionesNavigator from './EmocionesNavigator';
 import ViajeNavigator from './ViajeNavigator';
 import PerfilNavigation from './PerfilNavigation';
 import TutorialScreen from '../screens/TutorialScreen';
-import BienvenidaScreen from '../screens/BienvenidaScreen';
+import PremiumScreen from '../screens/PremiumScreen';
 import CancionesScreen from '../screens/CancionesScreen';
 import CancionScreen from '../screens/CancionScreen';
 
@@ -25,7 +25,7 @@ const MainNavigator = createStackNavigator(
     EmocionesStack: {
       screen: EmocionesNavigator,
       navigationOptions: {
-        title: '¿Cómo me siento?',
+        title: '¿Cómo te sientes hoy?',
         headerTitleStyle: {
           color: '#030303',
           fontFamily: 'MyriadPro-Semibold',
@@ -45,8 +45,8 @@ const MainNavigator = createStackNavigator(
       },
     },
     Cancion: CancionScreen,
+    Suscribete: PremiumScreen,
     Tutorial: TutorialScreen,
-    Bienvenida: BienvenidaScreen,
   },
   {
     defaultNavigationOptions: {

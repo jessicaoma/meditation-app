@@ -11,6 +11,8 @@
  * @property {string} tabIconSelected Color of a tab icon when is selected
  * @property {string} white Color that represent White
  * @property {string} meditacion Color used to meditation screens
+ * @property {string} textoViaje Color used in all text of Viaje
+ * @property {string} darkPurple
  */
 
 /**
@@ -27,5 +29,7 @@ const colors = {
   tabIconSelected: '#494C6B',
   white: 'rgb(252, 253, 255)',
   meditacion: '#9898e2',
+  textoViaje: '#85787b',
+  darkPurple: '#7482a6',
 };
 export default colors;

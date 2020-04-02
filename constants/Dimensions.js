@@ -1,11 +1,10 @@
 import {Dimensions} from 'react-native';
 import Constants from 'expo-constants';
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
 
 /**
  * @typedef {Object} Dimension
- * @prop {{width:number, height:number}} window Dimensions of device
+ * @prop {{width:number, height:number}} window Dimensions of device window
+ * @prop {{width:number, height:number}} screen Dimensions of device screen
  * @prop {boolean} isSmallDevice True if device less that 375
  * @prop {number} smallSpace Space of 8 dp
  * @prop {number} regularSpace Space of 16 dp
@@ -22,16 +21,14 @@ const height = Dimensions.get('window').height;
 
 /** @type {Dimension} */
 const dimensions = {
-  window: {
-    width,
-    height,
-  },
-  isSmallDevice: width < 375,
+  window: Dimensions.get('window'),
+  screen: Dimensions.get('screen'),
+  isSmallDevice: Dimensions.get('window').width < 375,
   smallSpace: 8,
   regularSpace: 16,
   bigSpace: 24,
   hugeSpace: 32,
-  h1: 36,
+  h1: 34,
   h2: 20,
   paragraph: 18,
   bubbleTitle: 15.5,

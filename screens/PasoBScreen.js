@@ -1,67 +1,209 @@
 import React, {Component} from 'react';
-import {SafeAreaView} from 'react-native';
-import ScreenBg from '../components/screenBg';
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  ImageBackground,
+  Platform,
+} from 'react-native';
+
 import Player from '../player/Player';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
-//TODO comportamiento al finalizar video
-//TODO registrar avance
+import dimensions from '../constants/Dimensions';
+import Colors from '../constants/Colors';
+import ScalableText from 'react-native-text';
+import {connect} from 'react-redux';
+import {HeaderBackButton} from 'react-navigation';
+
+const screenHeight =
+  dimensions.screen.height -
+  (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
+
 /**
  * Paso Tipo(B): Teoría
  * @typedef {Object} ParamsNavigation
- * @prop {import('../utils/types').Paso[]} steps
  * @prop {number} position
+ * @prop {string} titulo
  *
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
+ * @prop {import('redux').Dispatch} dispatch
+ * @prop {import('../utils/types').Viaje} viaje
  *
  * @extends {Component<Props>}
  */
-export default class PasoBScreen extends Component {
-  static navigationOptions = ({navigation}) => {
-    /** @type {ParamsNavigation} */
-    const {steps, position} = navigation.state.params;
-    return {
-      title: steps[position].titulo,
-    };
+class PasoBScreen extends Component {
+  static navigationOptions = {
+    header: null,
   };
 
+  /** @param {Props} props */
+  constructor(props) {
+    super(props);
+    const {viaje} = props;
+    this.pasoIndex = props.navigation.state.params.position;
+    this.paso = viaje.pasos[this.pasoIndex];
+    this.state = {
+      show: true,
+    };
+  }
+
   componentDidMount = async () => {
-    const {steps, position} = this.props.navigation.state.params;
-    const paso = steps[position];
-    API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
+    // const {steps, position} = this.props.navigation.state.params;
+    // const paso = steps[position];
+    // API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
   };
 
   nextStep = () => {
-    const {steps, position} = this.props.navigation.state.params;
-    const {tipo} = steps[position + 1];
-    const paso = steps[position];
-    API.putDiarioPaso(paso.key, enumStatus.done, null, user);
+    const {viaje} = this.props;
+    const {tipo} = viaje.pasos[this.pasoIndex + 1];
+    //API.putDiarioPaso(paso.key, enumStatus.done, null, user);
     // @ts-ignore
-    this.props.navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
-      steps,
-      position: position + 1,
+    this.props.navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
+      position: this.pasoIndex + 1,
+      titulo: viaje.pasos[this.pasoIndex + 1].titulo,
     });
   };
 
+  /** @param {Player} ref*/
+  refPlayer = ref => {
+    this.player = ref;
+  };
+
+  otro = () => {
+    this.player._startPlayer();
+    //this.nextStep();
+  };
+
   render() {
-    const {steps, position} = this.props.navigation.state.params;
     return (
-      <SafeAreaView style={{flex: 1}}>
-        <ScreenBg
-          source={{uri: steps[position].imagenFondo}}
-          color={steps[position].color}
-          styleImage={{resizeMode: 'cover'}}>
+      <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
+        <ImageBackground
+          source={{uri: this.paso.imagenFondo}}
+          style={styles.sliderImage}>
+          <View style={styles.container1}>
+            <ScalableText style={styles.headline}>
+              {this.paso.titulo}
+            </ScalableText>
+          </View>
+          <View style={this.state.show ? styles.container2 : styles.hidden}>
+            <TouchableOpacity onPress={this.otro}>
+              <View style={styles.button}>
+                <ScalableText style={styles.buttonLabel}>
+                  Escuchar el audio
+                </ScalableText>
+              </View>
+            </TouchableOpacity>
+          </View>
           <Player
+            ref={this.refPlayer}
             source={{
-              uri: steps[position].media,
+              uri: this.paso.media,
             }}
-            showPlayFrame
             showControls
             onEnd={this.nextStep}
+            onPlayPause={() => {
+              this.setState({show: false});
+            }}
           />
-        </ScreenBg>
+          <View style={styles.headerBack}>
+            <HeaderBackButton
+              tintColor="#000"
+              pressColorAndroid="transparent"
+              onPress={() => this.props.navigation.goBack()}
+              backTitleVisible={false}
+            />
+          </View>
+        </ImageBackground>
       </SafeAreaView>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    viaje: state.viaje,
+  };
+}
+
+const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    paddingTop: dimensions.statusBarHeight,
+  },
+  sliderImage: {
+    width: dimensions.screen.width,
+    height: '100%',
+  },
+  headerBack: {
+    position: 'absolute',
+    top: 0,
+    zIndex: 100,
+  },
+  container1: {
+    width: dimensions.screen.width,
+    height: '100%',
+    top: 0,
+    position: 'absolute',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+  },
+  headline: {
+    fontFamily: 'Kiona',
+    fontSize: 26,
+    lineHeight: 32,
+    textAlign: 'center',
+    color: Colors.textoViaje,
+    letterSpacing: 1.2,
+    marginBottom: 30,
+    paddingHorizontal: dimensions.regularSpace,
+  },
+  container2: {
+    position: 'absolute',
+    bottom: 0,
+    marginBottom: screenHeight * 0.1,
+    //display: 'flex',
+    //flexDirection: 'column',
+    //justifyContent: 'center',
+    //alignItems: 'center',
+    //alignContent: 'center',
+    alignSelf: 'center',
+    zIndex: 100,
+  },
+  hidden: {
+    display: 'none',
+  },
+  // buttonContainer: {
+  //   display: 'flex',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   alignContent: 'center',
+  //   alignSelf: 'center',
+  // },
+  button: {
+    //marginTop: 20,
+    backgroundColor: Colors.darkPurple,
+    borderRadius: 40,
+    paddingHorizontal: dimensions.window.width * 0.15,
+    //paddingBottom: dimensions.window.width * 0.035,
+    //paddingTop: dimensions.window.width * 0.045,
+    height: dimensions.window.width * 0.14,
+    //display: 'flex',
+    justifyContent: 'center',
+    //alignItems: 'center',
+    alignContent: 'center',
+    //alignSelf: 'center',
+  },
+  buttonLabel: {
+    color: 'white',
+    fontFamily: 'MyriadPro-Regular',
+    fontSize: 20,
+  },
+});
+
+export default connect(mapStateToProps)(PasoBScreen);

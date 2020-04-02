@@ -1,220 +1,220 @@
 import React, {Component} from 'react';
 import {
-  Animated,
+  //Animated,
   View,
   StyleSheet,
-  ScrollView,
-  Text,
   ImageBackground,
   SafeAreaView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
-import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
-import {Ionicons} from '@expo/vector-icons';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
-//TODO registrar avance
-const deviceWidth = Dims.window.width;
-const deviceHeight = '100%';
-const BAR_SPACE = 9;
+import dimensions from '../constants/Dimensions';
+import Next from '../constants/LogoButtonNext';
+import ScalableText from 'react-native-text';
+import {HeaderBackButton} from 'react-navigation';
+import {connect} from 'react-redux';
+
+const screenHeight =
+  dimensions.screen.height -
+  (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
 /**
  * Paso Tipo(A): Highlight
  * @typedef {Object} ParamsNavigation
- * @prop {import('../utils/types').Paso[]} steps
  * @prop {number} position
+ * @prop {string} titulo
  *
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
+ * @prop {import('redux').Dispatch} dispatch
+ * @prop {import('../utils/types').Viaje} viaje
  *
  * @extends {Component<Props>}
  */
-export default class PasoAScreen extends Component {
-  animVal = new Animated.Value(0);
+class PasoAScreen extends Component {
+  //animVal = new Animated.Value(0);
 
-  static navigationOptions = ({navigation}) => {
-    /** @type {ParamsNavigation} */
-    const {steps, position} = navigation.state.params;
-    return {
-      title: steps[position].titulo,
-    };
+  static navigationOptions = {
+    header: null,
   };
 
+  /** @param {Props} props */
+  constructor(props) {
+    super(props);
+    const {viaje} = props;
+    this.pasoIndex = props.navigation.state.params.position;
+    this.paso = viaje.pasos[this.pasoIndex];
+  }
+
   componentDidMount = async () => {
-    const {steps, position} = this.props.navigation.state.params;
-    const paso = steps[position];
-    API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
-    API.putDiarioViaje(paso.viajeId, enumStatus.doing, user);
+    // const {steps, position} = this.props.navigation.state.params;
+    // const paso = steps[position];
+    //API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
+    //API.putDiarioViaje(paso.viajeId, enumStatus.doing, user);
   };
 
   nextStep = () => {
-    const {steps, position} = this.props.navigation.state.params;
-    const {tipo} = steps[position + 1];
-    const paso = steps[position];
-    API.putDiarioPaso(paso.key, enumStatus.done, null, user);
+    const {viaje} = this.props;
+    const {tipo} = viaje.pasos[this.pasoIndex + 1];
+    //API.putDiarioPaso(paso.key, enumStatus.done, null, user);
     // @ts-ignore
-    this.props.navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
-      steps,
-      position: position + 1,
+    this.props.navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
+      position: this.pasoIndex + 1,
+      titulo: viaje.pasos[this.pasoIndex + 1].titulo,
     });
   };
 
   render() {
-    const {steps, position} = this.props.navigation.state.params;
-    let imageArray = [];
-    let barArray = [];
-    const numItems = steps[position].contenidos.length;
-    const itemWidth = 5;
-    steps[position].contenidos.forEach((item, i) => {
-      const thisImage = (
+    const contenido = this.paso.contenidos[0];
+    return (
+      <SafeAreaView style={[styles.safe, {backgroundColor: this.paso.color}]}>
         <ImageBackground
-          key={`image${i}`}
-          source={{uri: item.imagen}}
+          source={{uri: contenido.imagen}}
           style={[styles.sliderImage]}>
-          {i === numItems - 1 ? (
+          <View style={styles.headerBack}>
+            <HeaderBackButton
+              tintColor="white"
+              pressColorAndroid="transparent"
+              onPress={() => this.props.navigation.goBack()}
+              backTitleVisible={false}
+            />
+          </View>
+          {this.pasoIndex === 0 && (
             <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
-              <View style={styles.containerHalfBottom}>
-                <Text style={styles.paragraphBottom}>{item.texto}</Text>
+              <View style={styles.container1}>
+                <ScalableText style={styles.headline}>
+                  {contenido.titulo}
+                </ScalableText>
+                <ScalableText style={styles.paragraphBottom}>
+                  {contenido.texto}
+                </ScalableText>
               </View>
             </TouchableOpacity>
-          ) : i === 0 ? (
-            <View style={styles.containerCenter}>
-              <Text style={styles.headline}>{item.texto}</Text>
-            </View>
-          ) : (
-            <View style={styles.containerHalfBottom}>
-              <Text style={styles.paragraphBottom}>{item.texto}</Text>
-            </View>
+          )}
+          {this.pasoIndex === 1 && (
+            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
+              <View style={styles.container2}>
+                <ScalableText style={styles.text2}>
+                  {contenido.texto}
+                </ScalableText>
+              </View>
+            </TouchableOpacity>
+          )}
+          {this.pasoIndex === 2 && (
+            <>
+              <View style={styles.container3}>
+                <ScalableText style={styles.text3}>
+                  {contenido.texto}
+                </ScalableText>
+              </View>
+              <View style={styles.containerButton}>
+                <TouchableOpacity onPress={this.nextStep}>
+                  <Next />
+                </TouchableOpacity>
+              </View>
+            </>
           )}
         </ImageBackground>
-      );
-      imageArray.push(thisImage);
-
-      const scrollBarVal = this.animVal.interpolate({
-        inputRange: [deviceWidth * (i - 1), deviceWidth * (i + 1)],
-        outputRange: [-itemWidth, itemWidth],
-        extrapolate: 'clamp',
-      });
-
-      const thisBar = (
-        <View
-          key={`bar${i}`}
-          style={[
-            styles.track,
-            {
-              width: itemWidth,
-              marginLeft: i === 0 ? 0 : BAR_SPACE,
-            },
-          ]}>
-          <Animated.View
-            style={[
-              styles.bar,
-              {
-                width: itemWidth,
-                transform: [{translateX: scrollBarVal}],
-              },
-            ]}
-          />
-        </View>
-      );
-      barArray.push(thisBar);
-    });
-
-    return (
-      <SafeAreaView style={{flex: 1}}>
-        <TouchableOpacity style={styles.close} onPress={this.nextStep}>
-          <Ionicons name={'md-close'} size={30} color={Colors.gray} />
-        </TouchableOpacity>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={10}
-          pagingEnabled
-          onScroll={Animated.event([
-            {nativeEvent: {contentOffset: {x: this.animVal}}},
-          ])}
-          style={[styles.slider, {backgroundColor: steps[position].color}]}>
-          {imageArray}
-        </ScrollView>
-        <View style={styles.barContainer}>{barArray}</View>
       </SafeAreaView>
     );
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    viaje: state.viaje,
+  };
+}
+
 const styles = StyleSheet.create({
-  slider: {
-    margin: 0,
+  safe: {
+    flex: 1,
+    paddingTop: dimensions.statusBarHeight,
+  },
+  headerBack: {
+    position: 'absolute',
+    top: 0,
+    zIndex: 100,
   },
   sliderImage: {
-    width: deviceWidth,
-    height: deviceHeight,
-    position: 'relative',
+    width: dimensions.screen.width,
+    height: '100%',
     //resizeMode: 'contain',
   },
-  containerCenter: {
+  container1: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
-  },
-  containerHalfBottom: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-    paddingTop: Dims.window.height / 2,
-  },
-  barContainer: {
-    position: 'absolute',
-    zIndex: 20,
-    top: 30,
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-  },
-  track: {
-    backgroundColor: '#ccc',
-    overflow: 'hidden',
-    height: 5,
-    borderRadius: 5,
-  },
-  bar: {
-    backgroundColor: Colors.gray,
-    height: 5,
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    borderRadius: 5,
-  },
-  paragraphBottom: {
-    fontFamily: 'MyriadPro-Regular',
-    fontSize: 18,
-    lineHeight: 33,
-    textAlign: 'center',
-    color: Colors.gray,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    paddingHorizontal: Dims.regularSpace,
   },
   headline: {
-    fontFamily: 'MyriadPro-Bold',
-    fontSize: Dims.h1,
+    fontFamily: 'Kiona',
+    fontSize: dimensions.h1,
     lineHeight: 48,
     textAlign: 'center',
-    color: Colors.gray,
+    color: Colors.textoViaje,
     letterSpacing: 2.2,
     marginTop: -40,
-    paddingHorizontal: Dims.regularSpace,
+    paddingHorizontal: dimensions.regularSpace,
   },
-  close: {
+  paragraphBottom: {
+    fontFamily: 'MyriadPro-Semibold',
+    fontSize: 18,
+    lineHeight: 26,
+    textAlign: 'center',
+    color: Colors.textoViaje,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingHorizontal: dimensions.regularSpace,
+  },
+  container2: {
+    flex: 1,
+    paddingTop: screenHeight * 0.33,
+  },
+  text2: {
+    fontFamily: 'MyriadPro-Regular',
+    fontSize: 18,
+    lineHeight: 24,
+    textAlign: 'center',
+    color: Colors.textoViaje,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingHorizontal: dimensions.hugeSpace * 2,
+  },
+  container3: {
+    flex: 1,
     position: 'absolute',
-    right: 20,
-    top: 20,
+    bottom: 0,
+    height: '50%',
+    justifyContent: 'center',
+  },
+  text3: {
+    fontFamily: 'MyriadPro-Regular',
+    fontSize: 18,
+    lineHeight: 24,
+    textAlign: 'right',
+    color: Colors.textoViaje,
+    //justifyContent: 'flex-end',
+    paddingRight: dimensions.bigSpace,
+    paddingLeft: dimensions.hugeSpace * 3,
+  },
+  containerButton: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    marginBottom: screenHeight * 0.1,
+    //display: 'flex',
+    //flex: 1,
+    //width: '100%',
+    //flexDirection: 'row',
+    //justifyContent: 'flex-end',
+    //paddingHorizontal: dimensions.regularSpace,
+    marginRight: dimensions.bigSpace,
     zIndex: 100,
   },
 });
+
+export default connect(mapStateToProps)(PasoAScreen);

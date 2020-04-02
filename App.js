@@ -5,7 +5,8 @@ import React, {useState} from 'react';
 import {StatusBar, StyleSheet, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import AppNavigator from './navigation/AppNavigator';
-
+import {Provider} from 'react-redux';
+import store from './store';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -22,9 +23,11 @@ export default function App(props) {
     return (
       <>
         <StatusBar barStyle="dark-content" />
-        <View style={styles.container}>
-          <AppNavigator />
-        </View>
+        <Provider store={store}>
+          <View style={styles.container}>
+            <AppNavigator />
+          </View>
+        </Provider>
       </>
     );
   }

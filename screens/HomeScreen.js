@@ -8,13 +8,14 @@ import {
   SafeAreaView,
   ImageBackground,
 } from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {connect} from 'react-redux';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import Buttom from '../components/Buttom';
 import Logo from '../components/Logo';
 import Cover from '../components/Cover';
 import TabBarIcon from '../components/TabBarIcon';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import ScalableText from 'react-native-text';
 import API, {user} from '../utils/API';
 import ScreenBg from '../components/screenBg';
@@ -25,9 +26,10 @@ import {enumLoNuevo} from '../utils/types';
  * Home Screen
  * @typedef {object} Props
  * @prop {import('react-navigation').NavigationScreenProp} [navigation]
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  * */
-export default class Home extends Component {
+class Home extends Component {
   static navigationOptions = ({navigation}) => ({
     headerStyle: {height: 68},
     headerLeft: (
@@ -60,12 +62,105 @@ export default class Home extends Component {
   };
 
   componentDidMount = async () => {
-    const enprogreso = await API.getViajesEnProgreso(user);
-    const lonuevo = await API.getLoNuevo();
+    //const enprogreso = await API.getViajesEnProgreso(user);
+    const enprogreso = [
+      {
+        key: '952bb5e2-726a-475c-8a09-c624f5feb1b1',
+        tipo: 3,
+        categoria: {
+          key: 'cde55026-4557-47ed-90a2-c27a7be22c82',
+          titulo: 'Ser feliz',
+          media:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/video.mp4',
+          imagenFondo:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/fondocategoria.png',
+          color: '#fdd58d',
+          imagenLista:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/iconobubble.svg',
+          imagenPrevia:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/portada.jpg',
+          isFree: true,
+        },
+      },
+      {
+        key: '579625e6-93f3-4c95-ab53-7ff7049ca1c7',
+        tipo: 2,
+        audiolibro: {
+          key: '8dcf4ce0-2d3c-4c2b-9182-98c3624f9f0b',
+          titulo: 'Aprendiendo a Meditar',
+          imagenLista:
+            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/iconolistado.png',
+          imagenFondo:
+            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/imagenaudio.png',
+          color: '#50628e',
+          media:
+            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/audio.mp3',
+          progreso: 10000,
+          isFree: true,
+        },
+      },
+    ];
+    //const lonuevo = await API.getLoNuevo();
+    const lonuevo = [
+      {
+        key: '952bb5e2-726a-475c-8a09-c624f5feb1b1',
+        tipo: 3,
+        categoria: {
+          key: 'cde55026-4557-47ed-90a2-c27a7be22c82',
+          titulo: 'Ser feliz',
+          media:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/video.mp4',
+          imagenFondo:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/fondocategoria.png',
+          color: '#fdd58d',
+          imagenLista:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/iconobubble.svg',
+          imagenPrevia:
+            'http://okoconnect.com/karim/assets/categorias/categoria-1/portada.jpg',
+          isFree: true,
+        },
+      },
+      {
+        key: '9ec4c979-3655-4026-b4e2-957a3df37fc8',
+        tipo: 0,
+        meditacion: {
+          key: '729d6e80-ceed-47c0-8c88-7c708bfc4217',
+          titulo: 'Básica',
+          imagenIntro:
+            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/intro.png',
+          imagenFondo:
+            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/audio.png',
+          color: '#7883a4',
+          imagenLista:
+            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/iconobubble.svg',
+          intro:
+            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/intro.mp4',
+          media:
+            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/audio.mp3',
+          isFree: true,
+        },
+      },
+      {
+        key: '579625e6-93f3-4c95-ab53-7ff7049ca1c7',
+        tipo: 2,
+        audiolibro: {
+          key: '8dcf4ce0-2d3c-4c2b-9182-98c3624f9f0b',
+          titulo: 'Aprendiendo a Meditar',
+          imagenLista:
+            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/iconolistado.png',
+          imagenFondo:
+            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/imagenaudio.png',
+          color: '#50628e',
+          media:
+            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/audio.mp3',
+          progreso: 0,
+          isFree: true,
+        },
+      },
+    ];
     const reflexion = await API.getReflexionDelDia();
-    const bienvenida = await API.getVideo('Bienvenida');
     const tutorial = await API.getVideo('Tutorial');
-    this.setState({enprogreso, lonuevo, reflexion, bienvenida, tutorial});
+    this.setState({enprogreso, lonuevo, reflexion, tutorial});
   };
 
   /** @param {{item: import("../utils/types").LoNuevo}} item*/
@@ -101,13 +196,21 @@ export default class Home extends Component {
           });
         };
         break;
-      // case enumLoNuevo.viaje:
-      //   color = item.viaje.color;
-      //   titulo = item.viaje.titulo;
-      //   onpress = () => {
-      //     this.props.navigation.navigate('ViajeStack', {viaje: item.viaje});
-      //   };
-      //   break;
+      case enumLoNuevo.categoria:
+        color = item.categoria.color;
+        titulo = item.categoria.titulo;
+        onpress = () => {
+          this.props.dispatch({
+            type: 'SET_CATEGORIA',
+            payload: {
+              categoria: item.categoria,
+            },
+          });
+          this.props.navigation.navigate('ViajeStack', {
+            categoria: item.categoria.titulo,
+          });
+        };
+        break;
       default:
         color = Colors.primaryDark;
         break;
@@ -147,10 +250,8 @@ export default class Home extends Component {
     this.props.navigation.navigate('EmocionesStack');
   };
 
-  goBienvenida = () => {
-    this.props.navigation.navigate('Bienvenida', {
-      video: this.state.bienvenida,
-    });
+  goPremium = () => {
+    this.props.navigation.navigate('Suscribete');
   };
 
   goTutorial = () => {
@@ -191,7 +292,7 @@ export default class Home extends Component {
                 }}
                 style={styles.buttonBG}>
                 <ScalableText style={styles.title_boxes}>
-                  ¿cómo me siento?
+                  ¿Cómo te sientes hoy?
                 </ScalableText>
               </ImageBackground>
             </Buttom>
@@ -205,10 +306,12 @@ export default class Home extends Component {
                     'http://okoconnect.com/karim/assets/images/home/bg-musica.png',
                 }}
                 style={styles.buttonBG}>
-                <ScalableText style={styles.title_boxes}>MÚSICA</ScalableText>
+                <ScalableText style={styles.title_boxes}>
+                  Música para relajarte
+                </ScalableText>
               </ImageBackground>
             </Buttom>
-            <ScalableText style={styles.sectionTitle}>Lo nuevo</ScalableText>
+            <ScalableText style={styles.sectionTitle}>Destacados</ScalableText>
             <FlatList
               horizontal
               data={this.state.lonuevo}
@@ -219,12 +322,13 @@ export default class Home extends Component {
             {this.state.enprogreso.length > 0 && (
               <>
                 <ScalableText style={styles.sectionTitle}>
-                  Viajes en progreso
+                  En progreso
                 </ScalableText>
                 <FlatList
                   horizontal
                   data={this.state.enprogreso}
-                  renderItem={this._renderItemViajesProgreso}
+                  //renderItem={this._renderItemViajesProgreso}
+                  renderItem={this._renderItemLonuevo}
                   keyExtractor={item => item.key}
                   ListEmptyComponent={this._renderListEmpty}
                 />
@@ -234,7 +338,7 @@ export default class Home extends Component {
             <View style={styles.separador} />
             <Buttom
               style={{backgroundColor: Colors.second}}
-              onPress={this.goBienvenida}>
+              onPress={this.goPremium}>
               <ImageBackground
                 resizeMode="contain"
                 source={{
@@ -243,7 +347,7 @@ export default class Home extends Component {
                 }}
                 style={styles.buttonBG}>
                 <ScalableText style={styles.title_boxes}>
-                  BIENVENIDA
+                  Suscríbete
                 </ScalableText>
               </ImageBackground>
             </Buttom>
@@ -272,9 +376,6 @@ const styles = StyleSheet.create({
   container: {flex: 1},
   scrollView: {
     paddingHorizontal: Dimensions.regularSpace,
-    paddingTop: Dimensions.regularSpace,
-  },
-  cover: {
     paddingTop: Dimensions.regularSpace,
   },
   sectionTitle: {
@@ -334,3 +435,5 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
 });
+
+export default connect(null)(Home);

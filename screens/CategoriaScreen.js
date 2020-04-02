@@ -13,35 +13,37 @@ import Dimensions from '../constants/Dimensions';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import ScalableText from 'react-native-text';
+import {HeaderBackButton} from 'react-navigation';
+import {connect} from 'react-redux';
 
-//TODO control de que viaje visitar dado su estado
-//TODO compartir color de la categoria
-//TODO comportamiento al finalizar el video
 /**
  * @typedef {Object} ParamsNavigation
- * @prop {import('../utils/types').Categoria} categoria
+ * @prop {string} categoria
  *
  * @typedef Props
+ * @prop {import('../utils/types').Categoria} categoria
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
- *
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
-export default class Categoria extends Component {
+class Categoria extends Component {
   state = {
     /** @type {import('../utils/types').Viaje[]} */
     viajes: [],
     isLoading: true,
   };
 
+  /** @param {{navigation : import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>}} props*/
   static navigationOptions = ({navigation}) => {
     return {
-      title: navigation.getParam('categoria', {title: 'Categoria'}).titulo,
+      title: navigation.getParam('categoria', 'Categoria'),
+      headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
     };
   };
   constructor(props) {
     super(props);
     /** @type {import('../utils/types').Categoria} */
-    this.categoria = props.navigation.state.params.categoria;
+    this.categoria = props.categoria;
     this.cantViajes = 0;
   }
   componentDidMount = async () => {
@@ -56,23 +58,33 @@ export default class Categoria extends Component {
     //TODO cambiar este comportamiento con el redux
     this.props.navigation.addListener('willFocus', async () => {
       const viajes = await API.getViajesCategoria(this.categoria.key, user);
+      //const viajes = [this.props.viaje];
       this.setState({viajes, isLoading: false});
     });
   };
 
   _goViaje = index => {
-    let viaje = this.state.viajes[index];
+    //TODO
+    //let viaje = this.state.viajes[index];
+    let viaje = this.props.viaje;
     if (
-      this.state.viajes[index].estado === enumStatus.todo &&
+      viaje.estado === enumStatus.todo &&
       index > 0 &&
       this.state.viajes[index - 1].estado !== enumStatus.done
     ) {
       return;
     }
-
-    viaje.color = this.categoria.color;
-    this.props.navigation.navigate('ViajeStack', {
-      viaje,
+    //TODO
+    /*this.props.dispatch({
+      type: 'SET_VIAJE',
+      payload: {
+        viaje,
+      },
+    });*/
+    let tipo = viaje.pasos[0].tipo;
+    this.props.navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
+      position: 0,
+      titulo: viaje.pasos[0].titulo,
     });
   };
   //TODO reiniciar el video al llegar al final
@@ -84,6 +96,21 @@ export default class Categoria extends Component {
   renderListHeader = _ => {
     return (
       <>
+        {!this.state.isLoading && (
+          <View>
+            <ScalableText style={styles.textoViajes}>
+              En esta categoría vas a recorrer {this.state.viajes.length + ' '}
+              secciones con una duración total de 10 horas con 22 min.
+            </ScalableText>
+          </View>
+        )}
+      </>
+    );
+  };
+
+  renderHeader = _ => {
+    return (
+      <View style={styles.containerHeader}>
         <ScreenBg
           source={{
             uri: this.categoria.imagenPrevia,
@@ -102,16 +129,7 @@ export default class Categoria extends Component {
             styleVideo={styles.video}
           />
         </ScreenBg>
-        {this.state.viajes.length > 0 && this.state.viajes.length < 3 && (
-          <View>
-            <ScalableText style={styles.textoViajes}>
-              Amet commodo nulla facilisi nullam vehicula. Lectus proin nibh
-              nisl condimentum. Duis ultricies lacus sed turpis tincidunt id.
-              Enim nunc faucibus a pellentesque sit amet.{' '}
-            </ScalableText>
-          </View>
-        )}
-      </>
+      </View>
     );
   };
 
@@ -160,7 +178,7 @@ export default class Categoria extends Component {
       <ActivityIndicator size="large" color={this.categoria.color} />
     ) : (
       <View>
-        <ScalableText style={styles.textoViajes}>
+        <ScalableText style={styles.textoVacio}>
           Amet commodo nulla facilisi nullam vehicula. Lectus proin nibh nisl
           condimentum. Duis ultricies lacus sed turpis tincidunt id. Enim nunc
           faucibus a pellentesque sit amet.{' '}
@@ -171,29 +189,46 @@ export default class Categoria extends Component {
   keyExtractor = item => item.key;
 
   render() {
-    this.categoria = this.props.navigation.state.params.categoria;
     return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.safe}>
         <ScreenBg source={{uri: this.categoria.imagenFondo}} color={'#fff'}>
-          <FlatList
-            ListHeaderComponent={this.renderListHeader}
-            data={this.state.viajes}
-            renderItem={this.renderItem}
-            keyExtractor={this.keyExtractor}
-            style={styles.container}
-            ListEmptyComponent={this.renderListEmpty}
-          />
+          <View style={styles.container}>
+            {this.renderHeader()}
+            <FlatList
+              ListHeaderComponent={this.renderListHeader}
+              data={this.state.viajes}
+              renderItem={this.renderItem}
+              keyExtractor={this.keyExtractor}
+              ListEmptyComponent={this.renderListEmpty}
+              style={styles.containerList}
+            />
+          </View>
         </ScreenBg>
       </SafeAreaView>
     );
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    categoria: state.categoria,
+    //TODO
+    viaje: state.viaje,
+  };
+}
+
 const styles = StyleSheet.create({
+  safe: {flex: 1, backgroundColor: 'white'},
   container: {
-    paddingHorizontal: Dimensions.regularSpace,
-    paddingTop: Dimensions.regularSpace,
+    width: '100%',
     height: '100%',
+  },
+  containerHeader: {
+    padding: Dimensions.regularSpace,
+  },
+  containerList: {
+    paddingHorizontal: Dimensions.regularSpace,
+    //paddingTop: Dimensions.regularSpace,
   },
   imageBG: {
     resizeMode: 'cover',
@@ -201,11 +236,11 @@ const styles = StyleSheet.create({
   },
   containBG: {
     borderRadius: 25,
-    marginBottom: Dimensions.bigSpace,
+    //marginBottom: Dimensions.bigSpace,
   },
   cover: {
     height: 210,
-    marginBottom: 10,
+    //marginBottom: 10,
     elevation: 5,
     shadowColor: '#000',
     shadowOffset: {
@@ -219,9 +254,19 @@ const styles = StyleSheet.create({
   },
   textoViajes: {
     padding: 40,
+    paddingTop: 20,
+    color: '#665e61',
+    lineHeight: 22,
+    textAlign: 'center',
+    fontSize: Dimensions.paragraph,
+  },
+  textoVacio: {
+    padding: 40,
     color: '#665e61',
     lineHeight: 22,
     textAlign: 'center',
     fontSize: Dimensions.paragraph,
   },
 });
+
+export default connect(mapStateToProps)(Categoria);

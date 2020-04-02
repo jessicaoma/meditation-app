@@ -1,23 +1,10 @@
 import React, {Component} from 'react';
 import Svg, {G, Path, Polygon, Rect} from 'react-native-svg';
-import colors from './Colors';
 
-/**
- * @typedef Props
- * @prop {string} [tintColor] Color to used
- *
- * @extends {Component<Props>}
- */
 export default class LogoReloj extends Component {
   render() {
-    const opacity =
-      this.props.tintColor === colors.tabIconDefault ? '0.5' : '1';
     return (
-      <Svg
-        viewBox="0 0 55.1 62.84"
-        width="55.1"
-        height="62.84"
-        opacity={opacity}>
+      <Svg viewBox="0 0 55.1 62.84" width="55.1" height="62.84">
         <G id="Layer_2" data-name="Layer 2">
           <G id="Layer_1-2" data-name="Layer 1">
             <Path

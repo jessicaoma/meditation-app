@@ -82,7 +82,7 @@
  * @prop {Audiolibro} audiolibro Audiolibro asociada
  * @prop {Canción} cancion Canción asociada
  * @prop {Meditación} meditacion Meditación asociada
- * @prop {Viaje} viaje Viaje asociado
+ * @prop {Categoria} categoria categoria asociado
  *
  * @typedef {Object} Reflexión
  * @prop {string} titulo
@@ -154,6 +154,8 @@ export const enumLoNuevo = {
   cancion: 1,
   /** Value 2 */
   audiolibro: 2,
+  /** Value 2 */
+  categoria: 3,
 };
 
 /**

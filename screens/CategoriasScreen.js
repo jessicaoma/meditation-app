@@ -6,7 +6,6 @@ import {
   View,
   ActivityIndicator,
   SafeAreaView,
-  Dimensions,
 } from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
@@ -14,13 +13,15 @@ import Dims from '../constants/Dimensions';
 import API from '../utils/API';
 import ScalableText from 'react-native-text';
 import SvgUri from '../components/SvgUri';
+import {connect} from 'react-redux';
 
 /**
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
-export default class Categorias extends Component {
+class Categorias extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -41,13 +42,19 @@ export default class Categorias extends Component {
   /** @param {import('../utils/types').Categoria} item */
   _handleClick = item => {
     this.props.navigation.navigate('Categoria', {
-      categoria: item,
+      categoria: item.titulo,
+    });
+    this.props.dispatch({
+      type: 'SET_CATEGORIA',
+      payload: {
+        categoria: item,
+      },
     });
   };
   /** @param {import('../utils/types').Categoria} item */
   keyExtractor = item => item.key;
 
-  renderListHeader = () => <Text style={styles.sectionTitle}>Categorías</Text>;
+  renderListHeader = () => <Text style={styles.sectionTitle}>Cursos</Text>;
 
   renderListEmpty = _ => (
     <ActivityIndicator size="large" color={Colors.primaryDark} />
@@ -126,3 +133,5 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
 });
+
+export default connect(null)(Categorias);

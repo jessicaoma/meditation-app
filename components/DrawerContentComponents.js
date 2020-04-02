@@ -1,14 +1,21 @@
 import React, {Component} from 'react';
 import {NavigationActions} from 'react-navigation';
-import {Text, View, StyleSheet, ScrollView, TouchableOpacity, FlatList} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 import Dimensions from '../constants/Dimensions';
 import Flecha from '../constants/LogoArrowRight';
 import TabBarIcon from './TabBarIcon';
 import SvgUri from '../components/SvgUri';
 import ScalableText from 'react-native-text';
 
-
-const deviceWidth = Dimensions.window.width - Dimensions.regularSpace - Dimensions.regularSpace;
+const deviceWidth =
+  Dimensions.window.width - Dimensions.regularSpace - Dimensions.regularSpace;
 const headerHeight = deviceWidth - Dimensions.regularSpace;
 
 /**
@@ -46,21 +53,38 @@ export default class DrawerContentComponents extends Component {
     return (
       <ScrollView style={styles.scrollview}>
         <View style={styles.container}>
-          
-          <View style={styles.header}>
-            <SvgUri width={deviceWidth} height={headerHeight} source={{uri: 'http://okoconnect.com/karim/assets/perfil/header-perfil.svg'}} />
+          <View>
+            <SvgUri
+              width={deviceWidth}
+              height={headerHeight}
+              source={{
+                uri:
+                  'http://okoconnect.com/karim/assets/perfil/header-perfil.svg',
+              }}
+            />
             <View style={styles.headerContainer}>
-                <ScalableText style={styles.headerText}>Evelin Giraldo</ScalableText>
+              <ScalableText style={styles.headerText}>
+                Evelin Giraldo
+              </ScalableText>
             </View>
           </View>
 
           <View style={styles.itemsContainer}>
-            {this.props.items.slice(1).map(item => this.renderItem(item))}
+            {this.props.items
+              .slice(1, this.props.items.length - 1)
+              .map(item => this.renderItem(item))}
           </View>
 
           <View style={styles.footer}>
-            <TouchableOpacity onPress={this._handelPremium()}>
-              <SvgUri width={deviceWidth} height={deviceWidth/3.8} source={{uri: 'http://okoconnect.com/karim/assets/perfil/footer-perfil.svg'}} />
+            <TouchableOpacity onPress={this._handelPremium}>
+              <SvgUri
+                width={deviceWidth}
+                height={deviceWidth / 3.8}
+                source={{
+                  uri:
+                    'http://okoconnect.com/karim/assets/perfil/footer-perfil.svg',
+                }}
+              />
               <ScalableText style={styles.footerText}>SUSCRíbete</ScalableText>
             </TouchableOpacity>
           </View>
@@ -71,14 +95,13 @@ export default class DrawerContentComponents extends Component {
 }
 
 const styles = StyleSheet.create({
-  scrollview: {
-  },
+  scrollview: {},
   container: {
-    minHeight: Dimensions.window.height - (Dimensions.regularSpace * 2) - 10,
+    minHeight: Dimensions.window.height - Dimensions.regularSpace * 2 - 10,
     justifyContent: 'space-between',
     flexDirection: 'column',
     backgroundColor: 'white',
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -96,7 +119,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     position: 'absolute',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   headerText: {
     fontFamily: 'Kiona',
@@ -130,7 +153,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   footer: {
-    resizeMode: 'cover',
+    //resizeMode: 'cover',
   },
   footerText: {
     fontFamily: 'Kiona',
@@ -144,5 +167,4 @@ const styles = StyleSheet.create({
     bottom: 20,
     flex: 1,
   },
-  
 });
