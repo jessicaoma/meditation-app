@@ -168,10 +168,12 @@ class Home extends Component {
     let color = '';
     let titulo = '';
     let onpress = null;
+    let tipo = '';
     switch (item.tipo) {
       case enumLoNuevo.audiolibro:
         color = item.audiolibro.color;
         titulo = item.audiolibro.titulo;
+        tipo = 'Audiolibro';
         onpress = () => {
           this.props.navigation.navigate('Audiolibro', {
             audiolibro: item.audiolibro,
@@ -181,6 +183,7 @@ class Home extends Component {
       case enumLoNuevo.cancion:
         color = item.cancion.color;
         titulo = item.cancion.titulo;
+        tipo = 'Música';
         onpress = () => {
           this.props.navigation.navigate('Cancion', {
             cancion: item.cancion,
@@ -190,6 +193,7 @@ class Home extends Component {
       case enumLoNuevo.meditacion:
         color = item.meditacion.color;
         titulo = item.meditacion.titulo;
+        tipo = 'Meditación';
         onpress = () => {
           this.props.navigation.navigate('MeditacionIntro', {
             meditacion: item.meditacion,
@@ -199,6 +203,7 @@ class Home extends Component {
       case enumLoNuevo.categoria:
         color = item.categoria.color;
         titulo = item.categoria.titulo;
+        tipo = 'Curso';
         onpress = () => {
           this.props.dispatch({
             type: 'SET_CATEGORIA',
@@ -217,7 +222,8 @@ class Home extends Component {
     }
     return (
       <Buttom style={[{backgroundColor: color}, styles.box2]} onPress={onpress}>
-        <ScalableText style={styles.title_boxes}>{titulo}</ScalableText>
+        <ScalableText style={styles.title_tipo}>{tipo}</ScalableText>
+        <ScalableText style={styles.title_boxes3}>{titulo}</ScalableText>
       </Buttom>
     );
   };
@@ -406,6 +412,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     marginTop: Dimensions.smallSpace,
   },
+  title_tipo: {
+    color: '#fff',
+    fontSize: 12,
+    fontFamily: 'Kiona',
+    textTransform: 'uppercase',
+  },
   title_boxes: {
     color: '#fff',
     fontSize: Dimensions.bubbleTitle,
@@ -429,10 +441,25 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingRight: 35,
   },
+  title_boxes3: {
+    color: '#fff',
+    fontSize: 14,
+    letterSpacing: Dimensions.bubbleTitleSpacing,
+    lineHeight: 15,
+    textTransform: 'uppercase',
+    fontFamily: 'MyriadPro-Regular',
+    paddingTop: 3,
+    textAlign: 'left',
+  },
   box2: {
     minWidth: 198,
     maxWidth: 198,
     marginRight: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
+    alignItems: 'flex-start',
   },
 });
 
