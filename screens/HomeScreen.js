@@ -455,6 +455,7 @@ const styles = StyleSheet.create({
     minWidth: 198,
     maxWidth: 198,
     marginRight: 20,
+    marginLeft: 10,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
