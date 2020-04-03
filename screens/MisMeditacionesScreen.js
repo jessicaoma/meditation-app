@@ -39,7 +39,7 @@ export default class MisMeditacionesScreen extends Component {
         <View style={styles.container}>
           <View style={styles.container}>
             <View>
-              <ScalableText style={styles.purpleTitle}>Mi record</ScalableText>
+              <ScalableText style={styles.purpleTitle}>Mi registro</ScalableText>
             </View>
 
             <View style={styles.inforowtitle}>

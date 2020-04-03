@@ -86,7 +86,7 @@ const PerfilNavigation = createDrawerNavigator(
         {MisMeditacionesScreen},
         {
           defaultNavigationOptions: ({navigation}) => ({
-            title: 'Mi registro',
+            title: 'Mi meditaciones',
             headerBackTitle: null,
             headerLeft: (
               <HeaderBackButton onPress={() => navigation.goBack(null)} />
@@ -99,7 +99,7 @@ const PerfilNavigation = createDrawerNavigator(
         },
       ),
       navigationOptions: {
-        title: 'Mi registro',
+        title: 'Mis meditaciones',
       },
     },
     Premium: {
