@@ -64,9 +64,7 @@ class Categoria extends Component {
   };
 
   _goViaje = index => {
-    //TODO
-    //let viaje = this.state.viajes[index];
-    let viaje = this.props.viaje;
+    let viaje = this.state.viajes[index];
     if (
       viaje.estado === enumStatus.todo &&
       index > 0 &&
@@ -74,13 +72,12 @@ class Categoria extends Component {
     ) {
       return;
     }
-    //TODO
-    /*this.props.dispatch({
+    this.props.dispatch({
       type: 'SET_VIAJE',
       payload: {
         viaje,
       },
-    });*/
+    });
     let tipo = viaje.pasos[0].tipo;
     this.props.navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
       position: 0,
@@ -143,7 +140,8 @@ class Categoria extends Component {
             onPress={() => {
               this._goViaje(index);
             }}
-            bold>
+            bold
+            styleText={{textTransform: 'uppercase'}}>
             {item.titulo}
           </ItemBubble>
         );
@@ -155,7 +153,8 @@ class Categoria extends Component {
               this._goViaje(index);
             }}
             fill
-            bold>
+            bold
+            styleText={{textTransform: 'uppercase'}}>
             {item.titulo}
           </ItemBubble>
         );
@@ -166,7 +165,8 @@ class Categoria extends Component {
             onPress={() => {
               this._goViaje(index);
             }}
-            disable>
+            disable
+            styleText={{textTransform: 'uppercase'}}>
             {item.titulo}
           </ItemBubble>
         );
@@ -212,8 +212,6 @@ class Categoria extends Component {
 function mapStateToProps(state) {
   return {
     categoria: state.categoria,
-    //TODO
-    viaje: state.viaje,
   };
 }
 

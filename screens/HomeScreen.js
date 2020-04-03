@@ -22,7 +22,6 @@ import ScreenBg from '../components/screenBg';
 import colors from '../constants/Colors';
 import {enumLoNuevo} from '../utils/types';
 
-
 let colorLetra = '#fff';
 /**
  * Home Screen
@@ -70,7 +69,7 @@ class Home extends Component {
         key: '952bb5e2-726a-475c-8a09-c624f5feb1b1',
         tipo: 3,
         categoria: {
-          key: 'cde55026-4557-47ed-90a2-c27a7be22c82',
+          key: 'bedf149e-6b2a-46a9-9a82-01d2926f66d1',
           titulo: 'Ser feliz',
           media:
             'http://okoconnect.com/karim/assets/categorias/categoria-1/video.mp4',
@@ -88,7 +87,7 @@ class Home extends Component {
         key: '579625e6-93f3-4c95-ab53-7ff7049ca1c7',
         tipo: 2,
         audiolibro: {
-          key: '8dcf4ce0-2d3c-4c2b-9182-98c3624f9f0b',
+          key: 'd422c4c4-5bd2-47c0-98e9-bbf620b0b85a',
           titulo: 'Aprendiendo a Meditar',
           imagenLista:
             'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/iconolistado.png',
@@ -108,7 +107,7 @@ class Home extends Component {
         key: '952bb5e2-726a-475c-8a09-c624f5feb1b1',
         tipo: 3,
         categoria: {
-          key: 'cde55026-4557-47ed-90a2-c27a7be22c82',
+          key: 'bedf149e-6b2a-46a9-9a82-01d2926f66d1',
           titulo: 'Ser feliz',
           media:
             'http://okoconnect.com/karim/assets/categorias/categoria-1/video.mp4',
@@ -126,7 +125,7 @@ class Home extends Component {
         key: '9ec4c979-3655-4026-b4e2-957a3df37fc8',
         tipo: 0,
         meditacion: {
-          key: '729d6e80-ceed-47c0-8c88-7c708bfc4217',
+          key: 'f81685e6-87c3-465d-a7d3-58e051e9dbb1',
           titulo: 'Básica',
           imagenIntro:
             'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/intro.png',
@@ -146,7 +145,7 @@ class Home extends Component {
         key: '579625e6-93f3-4c95-ab53-7ff7049ca1c7',
         tipo: 2,
         audiolibro: {
-          key: '8dcf4ce0-2d3c-4c2b-9182-98c3624f9f0b',
+          key: 'd422c4c4-5bd2-47c0-98e9-bbf620b0b85a',
           titulo: 'Aprendiendo a Meditar',
           imagenLista:
             'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/iconolistado.png',
@@ -226,25 +225,28 @@ class Home extends Component {
         color = Colors.primaryDark;
         break;
     }
-    
-    var c = color.substring(1);    
-    var rgb = parseInt(c, 16);   // convertir rrggbb a decimal
-    var r = (rgb >> 16) & 0xff;  // extract rojo
-    var g = (rgb >>  8) & 0xff;  // extract verde
-    var b = (rgb >>  0) & 0xff;  // extract azul
+
+    var c = color.substring(1);
+    var rgb = parseInt(c, 16); // convertir rrggbb a decimal
+    var r = (rgb >> 16) & 0xff; // extract rojo
+    var g = (rgb >> 8) & 0xff; // extract verde
+    var b = (rgb >> 0) & 0xff; // extract azul
 
     var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
 
-    if (luma > 150) //255 es lo mas claro.
-       colorLetra = Colors.textoViaje;
-    else 
-      colorLetra = '#fff';
-    
+    if (luma > 150)
+      //255 es lo mas claro.
+      colorLetra = Colors.textoViaje;
+    else colorLetra = '#fff';
 
     return (
       <Buttom style={[{backgroundColor: color}, styles.box2]} onPress={onpress}>
-        <ScalableText style={[{color: colorLetra}, styles.title_tipo]} >{tipo}</ScalableText>
-        <ScalableText style={[{color: colorLetra}, styles.title_boxes3]}>{titulo}</ScalableText>
+        <ScalableText style={[{color: colorLetra}, styles.title_tipo]}>
+          {tipo}
+        </ScalableText>
+        <ScalableText style={[{color: colorLetra}, styles.title_boxes3]}>
+          {titulo}
+        </ScalableText>
       </Buttom>
     );
   };

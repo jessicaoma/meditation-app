@@ -16,6 +16,7 @@ import ScalableText from 'react-native-text';
  * @prop {boolean} [likeButton] Indicates use a look similar to Button
  * @prop {boolean} [notMargin] Indicates that remove all margin
  * @prop {string} children Text to show
+ * @prop {import('react-native').TextStyle} styleText Style to apply on the Text
  * @extends {Component<Props>}
  */
 export default class ItemBubble extends Component {
@@ -66,7 +67,8 @@ export default class ItemBubble extends Component {
       <TouchableOpacity
         style={[styles.container, styleStatus.styleContainer]}
         onPress={onPress}>
-        <ScalableText style={[styles.text, styleStatus.styleText]}>
+        <ScalableText
+          style={[styles.text, styleStatus.styleText, this.props.styleText]}>
           {' '}
           {this.props.children}{' '}
         </ScalableText>

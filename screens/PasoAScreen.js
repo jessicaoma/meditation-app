@@ -31,6 +31,7 @@ const screenHeight =
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
  * @prop {import('redux').Dispatch} dispatch
  * @prop {import('../utils/types').Viaje} viaje
+ * @prop {import('../utils/types').Categoria} categoria
  *
  * @extends {Component<Props>}
  */
@@ -53,7 +54,9 @@ class PasoAScreen extends Component {
     // const {steps, position} = this.props.navigation.state.params;
     // const paso = steps[position];
     //API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
-    //API.putDiarioViaje(paso.viajeId, enumStatus.doing, user);
+    if (this.pasoIndex === 0) {
+      API.putDiarioViaje(this.props.viaje.key, enumStatus.doing, user);
+    }
   };
 
   nextStep = () => {
@@ -70,9 +73,10 @@ class PasoAScreen extends Component {
   render() {
     const contenido = this.paso.contenidos[0];
     return (
-      <SafeAreaView style={[styles.safe, {backgroundColor: this.paso.color}]}>
+      <SafeAreaView
+        style={[styles.safe, {backgroundColor: this.props.categoria.color}]}>
         <ImageBackground
-          source={{uri: contenido.imagen}}
+          source={{uri: this.paso.imagenFondo}}
           style={[styles.sliderImage]}>
           <View style={styles.headerBack}>
             <HeaderBackButton
@@ -126,6 +130,7 @@ class PasoAScreen extends Component {
 function mapStateToProps(state) {
   return {
     viaje: state.viaje,
+    categoria: state.categoria,
   };
 }
 
@@ -142,7 +147,6 @@ const styles = StyleSheet.create({
   sliderImage: {
     width: dimensions.screen.width,
     height: '100%',
-    //resizeMode: 'contain',
   },
   container1: {
     flex: 1,
@@ -159,6 +163,7 @@ const styles = StyleSheet.create({
     letterSpacing: 2.2,
     marginTop: -40,
     paddingHorizontal: dimensions.regularSpace,
+    textTransform: 'uppercase',
   },
   paragraphBottom: {
     fontFamily: 'MyriadPro-Semibold',
@@ -197,7 +202,6 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: 'right',
     color: Colors.textoViaje,
-    //justifyContent: 'flex-end',
     paddingRight: dimensions.bigSpace,
     paddingLeft: dimensions.hugeSpace * 3,
   },
@@ -206,12 +210,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
     marginBottom: screenHeight * 0.1,
-    //display: 'flex',
-    //flex: 1,
-    //width: '100%',
-    //flexDirection: 'row',
-    //justifyContent: 'flex-end',
-    //paddingHorizontal: dimensions.regularSpace,
     marginRight: dimensions.bigSpace,
     zIndex: 100,
   },

@@ -32,6 +32,7 @@ const screenHeight =
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
  * @prop {import('redux').Dispatch} dispatch
  * @prop {import('../utils/types').Viaje} viaje
+ * @prop {import('../utils/types').Categoria} categoria
  *
  * @extends {Component<Props>}
  */
@@ -58,15 +59,18 @@ class PasoCScreen extends Component {
               zIndex: 99,
               width: dimensions.screen.width,
               height:
-                Header.HEIGHT  +
-                (Platform.OS === 'android' ? dimensions.statusBarHeight : (DeviceInfo.isIPhoneX_deprecated ? dimensions.statusBarHeight - 20 :  0 )),
+                Header.HEIGHT +
+                (Platform.OS === 'android'
+                  ? dimensions.statusBarHeight
+                  : DeviceInfo.isIPhoneX_deprecated
+                  ? dimensions.statusBarHeight - 20
+                  : 0),
             }}
             imageStyle={{
               resizeMode: 'stretch',
             }}>
             <Header {...props} />
           </ImageBackground>
-
         );
       },
     };
@@ -98,8 +102,6 @@ class PasoCScreen extends Component {
   };
 
   render() {
-    const contenido = this.paso.contenidos[0];
-    console.log(DeviceInfo);
     return (
       <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
         <ImageBackground
@@ -107,12 +109,16 @@ class PasoCScreen extends Component {
           style={[styles.sliderImage]}>
           <View style={styles.container1}>
             <ScrollView style={styles.scroll}>
-              <ScalableText style={styles.headline}>
-                {contenido.titulo}
-              </ScalableText>
-              <ScalableText style={styles.text2}>
-                {contenido.texto}
-              </ScalableText>
+              {this.paso.contenidos.map(contenido => (
+                <View>
+                  <ScalableText style={styles.headline}>
+                    {contenido.titulo}
+                  </ScalableText>
+                  <ScalableText style={styles.text2}>
+                    {contenido.texto}
+                  </ScalableText>
+                </View>
+              ))}
             </ScrollView>
           </View>
           <View style={styles.footer} />
@@ -130,6 +136,7 @@ class PasoCScreen extends Component {
 function mapStateToProps(state) {
   return {
     viaje: state.viaje,
+    categoria: state.categoria,
   };
 }
 

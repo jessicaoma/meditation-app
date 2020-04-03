@@ -31,6 +31,7 @@ const screenHeight =
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
  * @prop {import('redux').Dispatch} dispatch
  * @prop {import('../utils/types').Viaje} viaje
+ * @prop {import('../utils/types').Categoria} categoria
  *
  * @extends {Component<Props>}
  */
@@ -78,6 +79,7 @@ class PasoBScreen extends Component {
   };
 
   render() {
+    const contenido = this.paso.contenidos[0];
     return (
       <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
         <ImageBackground
@@ -100,7 +102,7 @@ class PasoBScreen extends Component {
           <Player
             ref={this.refPlayer}
             source={{
-              uri: this.paso.media,
+              uri: contenido.media,
             }}
             showControls
             onEnd={this.nextStep}
@@ -125,6 +127,7 @@ class PasoBScreen extends Component {
 function mapStateToProps(state) {
   return {
     viaje: state.viaje,
+    categoria: state.categoria,
   };
 }
 
@@ -162,6 +165,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1.2,
     marginBottom: 30,
     paddingHorizontal: dimensions.regularSpace,
+    textTransform: 'uppercase',
   },
   container2: {
     position: 'absolute',

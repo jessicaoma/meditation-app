@@ -30,14 +30,12 @@ class Categorias extends Component {
     categorias: [],
   };
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     const data = await API.getCategorias();
-
-    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
       categorias: data,
     });
-  }
+  };
 
   /** @param {import('../utils/types').Categoria} item */
   _handleClick = item => {

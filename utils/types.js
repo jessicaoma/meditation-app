@@ -18,7 +18,7 @@
  * @prop {string} titulo Título
  * @prop {string} categoriaId Categoria padre
  * @prop {string} imagenFondo Fondo del viaje
- * @prop {string} color Color caracteristico de la categoria padre
+ * @prop {string} [color] Color caracteristico de la categoria padre
  * @prop {enumStatus} estado Estatus del viaje
  * @prop {boolean} isFree Es gratuito o no
  * @prop {Paso[]} [pasos] Lista de pasos en el viajes
@@ -26,21 +26,21 @@
  * @typedef Paso
  * @prop {string} key
  * @prop {string} titulo
- * @prop {string} viajeId viaje padre
- * @prop {string} color Color caracteristico de la categoria padre
- * @prop {enumStatus} estado
- * @prop {string} [media] Video para Paso.Teoria
+ * @prop {string} [viajeId] viaje padre
+ * @prop {string} [color] Color caracteristico de la categoria padre
+ * @prop {enumStatus} [estado]
  * @prop {string} imagenFondo Imagen de fondo (Teoria, Reflexiones, Ejercicio, Diario, Cierre)
  * @prop {Contenido[]} contenidos Contenido del paso (slide, preguntas y respuestas, o recomendaciones)
  * @prop {enumPaso} tipo
  *
  * @typedef Contenido
  * @prop {string} key
- * @prop {string} imagen
- * @prop {string} texto
- * @prop {string} titulo
- * @prop {string} pregunta
- * @prop {string} respuesta
+ * @prop {string} [imagen]
+ * @prop {string} [texto]
+ * @prop {string} [titulo]
+ * @prop {string} [pregunta]
+ * @prop {string} [respuesta]
+ * @prop {string} [media] Video para Paso.Teoria
  *
  * @typedef {Object} Meditación
  * @prop {string} key Identificador
@@ -169,15 +169,15 @@ export const enumPaso = {
   /** Value 1 */
   Teoria: 1,
   /** Value 2 */
-  Reflexiones: 2,
+  // Reflexiones: 2,
   /** Value 3 */
   Ejercicio: 3,
-  /** Value 4 */
-  Recomendaciones: 4,
+  /** Value 2 */
+  Recomendaciones: 2,
   /** Value 5 */
-  Diario: 5,
-  /** Value 6 */
-  Cierre: 6,
+  //Diario: 5,
+  /** Value 4 */
+  Cierre: 4,
 };
 
 /**
@@ -189,11 +189,11 @@ export const enumDiario = {
   /** Value 0 */
   viaje: 0,
   /** Value 1 */
-  diario: 1,
+  //diario: 1,
+  /** Value 1 */
+  audiolibro: 1,
   /** Value 2 */
-  audiolibro: 2,
-  /** Value 3 */
-  meditacion: 3,
+  meditacion: 2,
 };
 
 export const envRemoto = true;

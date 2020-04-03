@@ -22,7 +22,7 @@ const screenHeight =
   dimensions.screen.height -
   Header.HEIGHT -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
-  const screenHeight2 =
+const screenHeight2 =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
@@ -36,6 +36,7 @@ const screenHeight =
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
  * @prop {import('redux').Dispatch} dispatch
  * @prop {import('../utils/types').Viaje} viaje
+ * @prop {import('../utils/types').Categoria} categoria
  *
  * @extends {Component<Props>}
  */
@@ -62,7 +63,11 @@ class PasoDScreen extends Component {
               width: dimensions.screen.width,
               height:
                 Header.HEIGHT +
-                (Platform.OS === 'android' ? dimensions.statusBarHeight : (DeviceInfo.isIPhoneX_deprecated ? dimensions.statusBarHeight - 20 :  0 )),
+                (Platform.OS === 'android'
+                  ? dimensions.statusBarHeight
+                  : DeviceInfo.isIPhoneX_deprecated
+                  ? dimensions.statusBarHeight - 20
+                  : 0),
             }}
             imageStyle={{
               resizeMode: 'stretch',
@@ -100,7 +105,6 @@ class PasoDScreen extends Component {
   };
 
   render() {
-    const contenido = this.paso.contenidos[0];
     return (
       <SafeAreaView style={styles.safe}>
         <ImageBackground
@@ -108,16 +112,20 @@ class PasoDScreen extends Component {
           style={[styles.sliderImage]}>
           <View style={styles.container}>
             <ScrollView style={styles.scroll}>
-              <View style={styles.container1}>
-                <ScalableText style={styles.headline}>
-                  {contenido.titulo}
-                </ScalableText>
-              </View>
-              <View style={styles.container2}>
-                <ScalableText style={styles.text2}>
-                  {contenido.texto}
-                </ScalableText>
-              </View>
+              {this.paso.contenidos.map(contenido => (
+                <>
+                  <View style={styles.container1}>
+                    <ScalableText style={styles.headline}>
+                      {contenido.titulo}
+                    </ScalableText>
+                  </View>
+                  <View style={styles.container2}>
+                    <ScalableText style={styles.text2}>
+                      {contenido.texto}
+                    </ScalableText>
+                  </View>
+                </>
+              ))}
             </ScrollView>
           </View>
           <View style={styles.footer}>
@@ -138,6 +146,7 @@ class PasoDScreen extends Component {
 function mapStateToProps(state) {
   return {
     viaje: state.viaje,
+    categoria: state.categoria,
   };
 }
 
