@@ -161,12 +161,13 @@ const styles = StyleSheet.create({
   headline: {
     fontFamily: 'Kiona',
     fontSize: 28,
-    lineHeight: 48,
+    lineHeight: 30,
     textAlign: 'left',
     color: Colors.textoViaje,
     letterSpacing: 2.2,
     textTransform: 'uppercase',
     marginBottom: 20,
+    marginTop: 15,
   },
   text2: {
     fontFamily: 'MyriadPro-Regular',

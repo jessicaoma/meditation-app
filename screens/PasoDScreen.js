@@ -175,14 +175,16 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: screenHeight * 0.1,
   },
-  headline: {
+    headline: {
     fontFamily: 'Kiona',
     fontSize: 32,
-    lineHeight: 48,
+    lineHeight: 34,
     textAlign: 'center',
     color: Colors.textoViaje,
     letterSpacing: 1.2,
     textTransform: 'uppercase',
+    marginBottom: 20,
+    marginTop: 15,
   },
   container2: {
     //flex: 1,

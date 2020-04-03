@@ -146,14 +146,15 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'contain',
   },
-  headline: {
+    headline: {
     fontFamily: 'Kiona',
     fontSize: 32,
-    lineHeight: 38,
+    lineHeight: 34,
     textAlign: 'center',
     color: Colors.textoViaje,
     letterSpacing: 1.2,
     marginBottom: dimensions.regularSpace,
+    marginTop: 10,
   },
   paragraphBottom: {
     fontFamily: 'MyriadPro-Regular',
