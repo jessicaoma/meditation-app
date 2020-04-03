@@ -25,9 +25,9 @@ class Api {
     return data;
   }
 
-  /** @return {Promise<import("./types").AngelMensaje>} */
+  /** @return {Promise<import("./types").CartaDelAngel[]>} */
   async getAngelMessage() {
-    const query = await fetch(`${BASE_API}mensajedelangel`);
+    const query = await fetch(`${BASE_API}angels/mensaje`);
     const data = await query.json();
     return data;
   }

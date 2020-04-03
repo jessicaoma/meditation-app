@@ -1,7 +1,7 @@
 /**
- * @typedef {Object} AngelMensaje
- * @prop {string} titulo Nombre del ángel
- * @prop {string} mensaje Mensaje del angel
+ * @typedef {Object} CartaDelAngel
+ * @prop {import('react-native').ImageSourcePropType} frontal front side of the card
+ * @prop {import('react-native').ImageSourcePropType} reverso back side of the card
  *
  * @typedef {Object} Categoria
  * @prop {string} key Identificador

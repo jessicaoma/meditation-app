@@ -14,8 +14,7 @@ import CardFlip from '../components/CardFlip';
 
 /**
  * @typedef {Object} ParamsNavigation
- * @prop {import('./AngelCartasScreen').Card} carta
- * @prop {import('../utils/types').AngelMensaje} angel
+ * @prop {import('../utils/types').CartaDelAngel} carta
  *
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
@@ -23,7 +22,7 @@ import CardFlip from '../components/CardFlip';
 
 const deviceWidth = Dims.window.width - Dims.regularSpace - Dims.regularSpace;
 const deviceHeight = deviceWidth * 1.5 + Dims.regularSpace;
-const FIXED_BAR_WIDTH = 40;
+//const FIXED_BAR_WIDTH = 40;
 
 /** @extends {Component<Props>} */
 export default class AngelScreen extends Component {
@@ -37,23 +36,33 @@ export default class AngelScreen extends Component {
     // const numItems = carta.faces.length;
     // const itemWidth =
     //   FIXED_BAR_WIDTH / numItems - (numItems - 1) * Dims.smallSpace;
-    const imageArray = carta.faces.map((item, index) => {
-      return (
-        <TouchableOpacity onPress={() => this.card.flip()}>
-          <SvgUri
-            width={deviceWidth}
-            height={deviceHeight}
-            source={{uri: item}}
-          />
-        </TouchableOpacity>
-      );
-    });
-
+    // const imageArray = carta.faces.map((item, index) => {
+    //   return (
+    //   );
+    // });
     return (
       <SafeAreaView style={styles.safe}>
         <View style={styles.statusBar} />
         <View style={[styles.container]}>
-          <CardFlip ref={card => (this.card = card)}>{imageArray}</CardFlip>
+          <CardFlip
+            ref={card => {
+              this.card = card;
+            }}>
+            <TouchableOpacity onPress={() => this.card.flip()}>
+              <SvgUri
+                width={deviceWidth}
+                height={deviceHeight}
+                source={{uri: carta.reverso}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.card.flip()}>
+              <SvgUri
+                width={deviceWidth}
+                height={deviceHeight}
+                source={{uri: carta.frontal}}
+              />
+            </TouchableOpacity>
+          </CardFlip>
         </View>
         <Text style={styles.suggestion}>Tap para descubrir</Text>
       </SafeAreaView>

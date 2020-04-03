@@ -8,15 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Colors from '../constants/Colors';
-import HalfCover from '../components/HalfCover';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
 import SvgUri from '../components/SvgUri';
 
 /**
- * @typedef {Object} Card
- * @prop {string} key Key used to identiface
- * @prop {import('react-native').ImageSourcePropType[]} faces Array of images, in the index 0 is on the back side of the card, and index 1 is on the front side of the card
  *
  * @typedef Props
  * @prop {import('react-navigation').NavigationScreenProp} navigation
@@ -27,63 +23,35 @@ const numColumns = 2;
 const height = ((Dims.window.width - 40) / numColumns) * 1.5;
 const width = (Dims.window.width - 40) / numColumns;
 
-/**@type {Card[]} */
-const data = [
-  {
-    key: 'cartaA',
-    faces: [
-      'http://okoconnect.com/karim/assets/angeles/angel1.svg',
-      'http://okoconnect.com/karim/assets/angeles/carta1.svg',
-    ],
-  },
-  {
-    key: 'cartaB',
-    faces: [
-      'http://okoconnect.com/karim/assets/angeles/angel2.svg',
-      'http://okoconnect.com/karim/assets/angeles/carta2.svg',
-    ],
-  },
-  {
-    key: 'cartaC',
-    faces: [
-      'http://okoconnect.com/karim/assets/angeles/angel3.svg',
-      'http://okoconnect.com/karim/assets/angeles/carta3.svg',
-    ],
-  },
-  {
-    key: 'cartaD',
-    faces: [
-      'http://okoconnect.com/karim/assets/angeles/angel4.svg',
-      'http://okoconnect.com/karim/assets/angeles/carta4.svg',
-    ],
-  },
-];
-
 /** @extends {Component<Props>} */
 export default class AngelCartasScreen extends Component {
   constructor(props) {
     super(props);
     this.angelMessage = undefined;
+    this.state = {
+      /**@type {import('../utils/types').CartaDelAngel[]} */
+      cartas: [],
+    };
   }
 
-  async componentDidMount() {
-    this.angelMessage = await API.getAngelMessage();
-  }
-
-  /**
-   * @param {Card} item
-   */
-  _handleClick = item => {
-    if (this.angelMessage !== undefined) {
-      this.props.navigation.navigate('Angel', {
-        carta: item,
-        angel: this.angelMessage,
-      });
-    }
+  componentDidMount = async () => {
+    let cartas = await API.getAngelMessage();
+    this.setState({
+      cartas,
+    });
   };
 
   /**
-   * @param {import('react-native').ListRenderItemInfo<Card>} item
+   * @param {import('../utils/types').CartaDelAngel} item
+   */
+  _handleClick = item => {
+    this.props.navigation.navigate('Angel', {
+      carta: item,
+    });
+  };
+
+  /**
+   * @param {import('react-native').ListRenderItemInfo<import('../utils/types').CartaDelAngel>} item
    */
   renderItem = ({item}) => {
     return (
@@ -92,7 +60,7 @@ export default class AngelCartasScreen extends Component {
           this._handleClick(item);
         }}>
         <View style={styles.containercard}>
-          <SvgUri width={width} height={height} source={{uri: item.faces[0]}} />
+          <SvgUri width={width} height={height} source={{uri: item.reverso}} />
         </View>
       </TouchableOpacity>
     );
@@ -105,7 +73,7 @@ export default class AngelCartasScreen extends Component {
         <View style={styles.container}>
           <Text style={styles.sectionTitle}>Mensajes</Text>
           <FlatList
-            data={data}
+            data={this.state.cartas}
             renderItem={this.renderItem}
             numColumns={numColumns}
           />
