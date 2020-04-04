@@ -35,6 +35,10 @@ const dimensions = {
   bubbleTitleSpacing: 1,
   inputText: 16,
   statusBarHeight: Constants.statusBarHeight,
+  viajeHeadlineSize: 22,
+  viajeHeadlineLineHeight: 24,
+  viajeParrafoSize: 18,
+  viajeParrafoLineHeight: 22,
 };
 
 export default dimensions;

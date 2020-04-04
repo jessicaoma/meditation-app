@@ -141,7 +141,7 @@ class Categoria extends Component {
               this._goViaje(index);
             }}
             bold
-            styleText={{textTransform: 'uppercase'}}>
+            styleText={{textTransform: 'initial'}}>
             {item.titulo}
           </ItemBubble>
         );
@@ -154,7 +154,7 @@ class Categoria extends Component {
             }}
             fill
             bold
-            styleText={{textTransform: 'uppercase'}}>
+            styleText={{textTransform: 'initial'}}>
             {item.titulo}
           </ItemBubble>
         );
@@ -166,7 +166,7 @@ class Categoria extends Component {
               this._goViaje(index);
             }}
             disable
-            styleText={{textTransform: 'uppercase'}}>
+            styleText={{textTransform: 'initial'}}>
             {item.titulo}
           </ItemBubble>
         );
@@ -235,6 +235,9 @@ const styles = StyleSheet.create({
   containBG: {
     borderRadius: 25,
     //marginBottom: Dimensions.bigSpace,
+  },
+  titulo: {
+
   },
   cover: {
     height: 210,

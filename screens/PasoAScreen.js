@@ -89,7 +89,7 @@ class PasoAScreen extends Component {
           {this.pasoIndex === 0 && (
             <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.container1}>
-                <ScalableText style={styles.headline}>
+                <ScalableText style={styles.text2}>
                   {contenido.titulo}
                 </ScalableText>
                 <ScalableText style={styles.paragraphBottom}>
@@ -155,9 +155,9 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   headline: {
-    fontFamily: 'Kiona',
-    fontSize: dimensions.h1,
-    lineHeight: 48,
+    fontFamily: 'MyriadPro-Regular',
+    fontSize: dimensions.h2,
+    lineHeight: 36,
     textAlign: 'center',
     color: Colors.textoViaje,
     letterSpacing: 2.2,
