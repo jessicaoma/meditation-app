@@ -140,8 +140,7 @@ class Categoria extends Component {
             onPress={() => {
               this._goViaje(index);
             }}
-            bold
-            styleText={{textTransform: 'initial'}}>
+            bold>
             {item.titulo}
           </ItemBubble>
         );
@@ -153,8 +152,7 @@ class Categoria extends Component {
               this._goViaje(index);
             }}
             fill
-            bold
-            styleText={{textTransform: 'initial'}}>
+            bold>
             {item.titulo}
           </ItemBubble>
         );
@@ -165,8 +163,7 @@ class Categoria extends Component {
             onPress={() => {
               this._goViaje(index);
             }}
-            disable
-            styleText={{textTransform: 'initial'}}>
+            disable>
             {item.titulo}
           </ItemBubble>
         );
