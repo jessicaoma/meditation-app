@@ -21,7 +21,6 @@ import {connect} from 'react-redux';
 const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
-const bottomHeight = dimensions.window.height / 5.7;
 
 /**
  * Paso Tipo(E): Cierre
@@ -92,9 +91,12 @@ class PasoEScreen extends Component {
           </View>
           <View style={styles.body}>
             <ScrollView>
-              <ScalableText style={styles.headline}>
-                {contenido.titulo || ''}
-              </ScalableText>
+              {contenido.titulo !== undefined && (
+                <ScalableText style={styles.headline}>
+                  {contenido.titulo || ''}
+                </ScalableText>
+              )}
+              
               <ScalableText style={styles.paragraphBottom}>
                 {contenido.texto}
               </ScalableText>
@@ -146,20 +148,19 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'contain',
   },
-    headline: {
+  headline: {
     fontFamily: 'Kiona',
-    fontSize: 32,
-    lineHeight: 34,
+    fontSize: dimensions.viajeHeadlineSize,
+    lineHeight: dimensions.viajeHeadlineLineHeight,
     textAlign: 'center',
     color: Colors.textoViaje,
     letterSpacing: 1.2,
     marginBottom: dimensions.regularSpace,
-    marginTop: 10,
   },
   paragraphBottom: {
     fontFamily: 'MyriadPro-Regular',
-    fontSize: 18,
-    lineHeight: 20,
+    fontSize: dimensions.viajeParrafoSize,
+    lineHeight: dimensions.viajeParrafoLineHeight,
     textAlign: 'left',
     color: Colors.textoViaje,
     paddingHorizontal: dimensions.bigSpace * 2,
@@ -167,21 +168,24 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     position: 'absolute',
-    bottom: bottomHeight,
-    height: '32%',
+    bottom: 0,
+    height: '45%',
+    display: 'flex',
+    flex: 1,
+    alignItems: 'flex-start'
   },
   buttonNext: {
     position: 'absolute',
     bottom: 0,
     right: 0,
-    marginBottom: screenHeight * 0.1,
+    marginBottom: screenHeight * 0.05,
     marginRight: dimensions.bigSpace,
     zIndex: 100,
   },
-  footer: {
+  footer: { //Ultima pantalla 
     position: 'absolute',
     bottom: 0,
-    marginBottom: screenHeight * 0.1,
+    marginBottom: screenHeight * 0.05,
     alignSelf: 'center',
   },
   buttonSiguiente: {
