@@ -64,7 +64,7 @@ export default class AngelScreen extends Component {
             </TouchableOpacity>
           </CardFlip>
         </View>
-        <ScalableText style={styles.suggestion}>Tap para descubrir</ScalableText>
+        <ScalableText style={styles.suggestion}>Toca para descubrir</ScalableText>
       </SafeAreaView>
     );
   }
@@ -78,6 +78,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: Dims.regularSpace,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   statusBar: {
     height: Dims.statusBarHeight,
