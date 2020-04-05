@@ -57,7 +57,7 @@ const PerfilNavigation = createDrawerNavigator(
         },
       ),
       navigationOptions: {
-        title: 'Cursos completados',
+        title: 'Cursos Completados',
       },
     },
     MiDiario: {
@@ -86,7 +86,7 @@ const PerfilNavigation = createDrawerNavigator(
         {MisMeditacionesScreen},
         {
           defaultNavigationOptions: ({navigation}) => ({
-            title: 'Mi meditaciones',
+            title: 'Mi Meditaciones',
             headerBackTitle: null,
             headerLeft: (
               <HeaderBackButton onPress={() => navigation.goBack(null)} />
@@ -99,7 +99,7 @@ const PerfilNavigation = createDrawerNavigator(
         },
       ),
       navigationOptions: {
-        title: 'Mis meditaciones',
+        title: 'Mis Meditaciones',
       },
     },
     Premium: {
