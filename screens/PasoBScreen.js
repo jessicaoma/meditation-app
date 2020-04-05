@@ -40,6 +40,7 @@ class PasoBScreen extends Component {
     header: null,
   };
 
+
   /** @param {Props} props */
   constructor(props) {
     super(props);
@@ -112,7 +113,7 @@ class PasoBScreen extends Component {
           />
           <View style={styles.headerBack}>
             <HeaderBackButton
-              tintColor="#000"
+              tintColor="#bdc4e1"
               pressColorAndroid="transparent"
               onPress={() => this.props.navigation.goBack()}
               backTitleVisible={false}
