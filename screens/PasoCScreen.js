@@ -143,7 +143,6 @@ function mapStateToProps(state) {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    paddingTop: dimensions.statusBarHeight,
   },
   sliderImage: {
     width: dimensions.window.width,
