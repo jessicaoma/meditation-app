@@ -15,6 +15,7 @@ import {enumStatus} from '../utils/types';
 import ScalableText from 'react-native-text';
 import {HeaderBackButton} from 'react-navigation';
 import {connect} from 'react-redux';
+import colors from '../constants/Colors';
 
 /**
  * @typedef {Object} ParamsNavigation
@@ -83,6 +84,7 @@ class Categoria extends Component {
       position: 0,
       titulo: viaje.pasos[0].titulo,
     });
+
   };
   //TODO reiniciar el video al llegar al final
   /** @param {Player} ref*/
@@ -91,6 +93,7 @@ class Categoria extends Component {
   };
 
   renderListHeader = _ => {
+
     return (
       <>
         {!this.state.isLoading && (
@@ -140,6 +143,7 @@ class Categoria extends Component {
             onPress={() => {
               this._goViaje(index);
             }}
+            style={{textTransform: 'none'}}
             bold>
             {item.titulo}
           </ItemBubble>
@@ -253,7 +257,7 @@ const styles = StyleSheet.create({
   textoViajes: {
     padding: 40,
     paddingTop: 20,
-    color: '#665e61',
+    color: colors.textoViaje,
     lineHeight: 22,
     textAlign: 'center',
     fontSize: Dimensions.paragraph,
