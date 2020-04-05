@@ -44,7 +44,7 @@ const PerfilNavigation = createDrawerNavigator(
         {ViajesCompletadosScreen},
         {
           defaultNavigationOptions: ({navigation}) => ({
-            title: 'Viajes Completados',
+            title: 'Módulos Completados',
             headerBackTitle: null,
             headerLeft: (
               <HeaderBackButton onPress={() => navigation.goBack(null)} />
@@ -57,7 +57,7 @@ const PerfilNavigation = createDrawerNavigator(
         },
       ),
       navigationOptions: {
-        title: 'Cursos Completados',
+        title: 'Módulos Finalizados',
       },
     },
     MiDiario: {
