@@ -60,27 +60,7 @@ const PerfilNavigation = createDrawerNavigator(
         title: 'Módulos Finalizados',
       },
     },
-    MiDiario: {
-      screen: createStackNavigator(
-        {MiDiarioScreen},
-        {
-          defaultNavigationOptions: ({navigation}) => ({
-            title: 'Mi Diario',
-            headerBackTitle: null,
-            headerLeft: (
-              <HeaderBackButton onPress={() => navigation.goBack(null)} />
-            ),
-            headerTitleStyle: {
-              color: '#030303',
-              fontFamily: 'MyriadPro-Semibold',
-            },
-          }),
-        },
-      ),
-      navigationOptions: {
-        title: 'Mi Diario',
-      },
-    },
+    
     MisMeditaciones: {
       screen: createStackNavigator(
         {MisMeditacionesScreen},
