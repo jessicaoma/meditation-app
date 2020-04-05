@@ -150,7 +150,6 @@ export default class EmocionesScreen extends Component {
       <SafeAreaView style={styles.safe}>
         <ScrollView contentInsetAdjustmentBehavior="automatic">
           <View style={styles.container}>
-            <ScalableText style={styles.sectionTitle}>Tus emociones </ScalableText>
             <FlatList
               data={this.state.emociones}
               renderItem={this.renderItem}
@@ -173,7 +172,7 @@ export default class EmocionesScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: Dims.regularSpace,
+    padding: Dims.regularSpace,
   },
   safe: {
     flex: 1,
