@@ -11,7 +11,7 @@ import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import SvgUri from '../components/SvgUri';
 import CardFlip from '../components/CardFlip';
-
+import ScalableText from 'react-native-text';
 /**
  * @typedef {Object} ParamsNavigation
  * @prop {import('../utils/types').CartaDelAngel} carta
@@ -64,7 +64,7 @@ export default class AngelScreen extends Component {
             </TouchableOpacity>
           </CardFlip>
         </View>
-        <Text style={styles.suggestion}>Tap para descubrir</Text>
+        <ScalableText style={styles.suggestion}>Tap para descubrir</ScalableText>
       </SafeAreaView>
     );
   }

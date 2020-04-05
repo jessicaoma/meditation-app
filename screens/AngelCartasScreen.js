@@ -11,6 +11,7 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
 import SvgUri from '../components/SvgUri';
+import ScalableText from 'react-native-text';
 
 /**
  *
@@ -71,14 +72,14 @@ export default class AngelCartasScreen extends Component {
       <SafeAreaView style={styles.mainContainer}>
         <View style={styles.statusBar} />
         <View style={styles.container}>
-          <Text style={styles.sectionTitle}>Mensajes</Text>
+          <Text style={styles.sectionTitle}>Mensaje de tus ángeles</Text>
           <FlatList
             data={this.state.cartas}
             renderItem={this.renderItem}
             numColumns={numColumns}
           />
 
-          <Text style={styles.suggestion}>Elige una carta para descubrir</Text>
+          <ScalableText style={styles.suggestion}>Elige una carta para ver el mensaje de tu ángel</ScalableText>
         </View>
       </SafeAreaView>
     );
@@ -110,10 +111,15 @@ const styles = StyleSheet.create({
   },
   suggestion: {
     fontFamily: 'MyriadPro-Regular',
-    fontSize: 16,
-    lineHeight: 28,
+    fontSize: 15,
+    lineHeight: 20,
     textAlign: 'center',
     color: '#665e61',
+    padding: 5,
+    position: 'absolute',
+    bottom: 0,
+    left: 10,
+    right: 10,
   },
   containercard: {
     marginBottom: 3,
