@@ -56,7 +56,7 @@ export default class MisEmocionesScreen extends Component {
     });
   };
 
-  onPressMensual = () => {
+  /*onPressMensual = () => {
     this.setState({
       emocionesData: this.mes, //[14, 7, 4, 4],
       title: 'Mensual',
@@ -76,7 +76,7 @@ export default class MisEmocionesScreen extends Component {
       ],
       dias: 30,
     });
-  };
+  };*/
 
   static navigationOptions = ({navigation}) => ({
     title: 'Mis Emociones',
@@ -113,12 +113,8 @@ export default class MisEmocionesScreen extends Component {
               style={[styles.buttonReport]}>
               <Text style={styles.buttonLabel}>Tu semana</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={this.onPressMensual}
-              style={[styles.buttonReport]}>
-              <Text style={styles.buttonLabel}>Tu mes</Text>
-            </TouchableOpacity>
           </View>
+          
           <View style={styles.container}>
             <Text style={styles.bigParagraph}>
               Tu reporte {this.state.title}
