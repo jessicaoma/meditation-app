@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     marginBottom: 10,
     marginTop: 25,
-    letterSpacing: 0,
+    letterSpacing: -0.5,
   },
   text2: {
     fontFamily: 'MyriadPro-Regular',

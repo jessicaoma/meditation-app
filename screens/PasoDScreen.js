@@ -162,38 +162,29 @@ const styles = StyleSheet.create({
   },
   container: {
     height: '60%',
+    paddingTop: dimensions.bigSpace
   },
   scroll: {
     //paddingHorizontal: dimensions.hugeSpace + dimensions.smallSpace,
     paddingHorizontal: dimensions.bigSpace,
   },
   container1: {
-    //flex: 1,
-    //justifyContent: 'center',
-    //alignItems: 'center',
-    //alignContent: 'center',
     width: '100%',
-    marginTop: screenHeight * 0.1,
+    marginTop: dimensions.smallSpace,
   },
-    headline: {
+  headline: {
     fontFamily: 'Kiona',
     fontSize: dimensions.viajeHeadlineSize,
     lineHeight: dimensions.viajeHeadlineLineHeight,
     textAlign: 'center',
     color: Colors.textoViaje,
-    letterSpacing: 0,
-    textTransform: 'uppercase',
+    letterSpacing: -0.5,
     marginBottom: 10,
-    marginTop: 25,
   },
   container2: {
-    //flex: 1,
-    //justifyContent: 'center',
-    //alignItems: 'center',
-    //alignContent: 'center',
-    paddingTop: screenHeight * 0.05,
-    //paddingHorizontal: dimensions.hugeSpace * 2,
+    paddingTop: screenHeight * 0.03,
     width: '100%',
+
   },
   text2: {
     fontFamily: 'MyriadPro-Regular',

@@ -169,10 +169,10 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'absolute',
     bottom: 0,
-    height: '45%',
+    height: '46%',
     display: 'flex',
     flex: 1,
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
   },
   buttonNext: {
     position: 'absolute',
