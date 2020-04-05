@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   container3: {
     flex: 1,
     position: 'absolute',
-    bottom: 0,
+    bottom: 15,
     height: '50%',
     justifyContent: 'center',
   },
