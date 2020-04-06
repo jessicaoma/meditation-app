@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Regular',
     fontSize: dimensions.viajeParrafoSize,
     lineHeight: dimensions.viajeParrafoLineHeight,
-    textAlign: 'center',
+    textAlign: 'left',
     color: Colors.textoViaje,
     alignItems: 'center',
   },

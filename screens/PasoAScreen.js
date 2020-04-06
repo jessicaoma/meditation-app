@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   paragraphBottom: {
-    fontFamily: 'MyriadPro-Semibold',
+    fontFamily: 'MyriadPro-Regular',
     fontSize: dimensions.viajeParrafoSize,
     lineHeight: 24,
     textAlign: 'center',
