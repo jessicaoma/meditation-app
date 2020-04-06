@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   ScrollView,
+  Image,
   ImageBackground,
   SafeAreaView,
   TouchableOpacity,
@@ -104,30 +105,30 @@ class PasoCScreen extends Component {
   render() {
     return (
       <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
-        <ImageBackground
-          source={{uri: this.paso.imagenFondo}}
-          style={[styles.sliderImage]}>
           <View style={styles.container1}>
             <ScrollView style={styles.scroll}>
-              {this.paso.contenidos.map(contenido => (
-                <View>
-                  <ScalableText style={styles.headline}>
-                    {contenido.titulo}
-                  </ScalableText>
-                  <ScalableText style={styles.text2}>
-                    {contenido.texto}
-                  </ScalableText>
-                </View>
-              ))}
+              <View style={{paddingBottom: dimensions.window.width * 0.562}}>
+                {this.paso.contenidos.map(contenido => (
+                  <View>
+                    <ScalableText style={styles.headline}>
+                      {contenido.titulo}
+                    </ScalableText>
+                    <ScalableText style={styles.text2}>
+                      {contenido.texto}
+                    </ScalableText>
+                  </View>
+                ))}
+              </View>
             </ScrollView>
           </View>
+          <Image source={{uri: this.paso.imagenFondo}} style={styles.imagefooter} width={dimensions.window.width} height={dimensions.window.width * 0.562}/>
           <View style={styles.footer} />
           <View style={styles.containerButton}>
             <TouchableOpacity onPress={this.nextStep}>
               <Next />
             </TouchableOpacity>
           </View>
-        </ImageBackground>
+          
       </SafeAreaView>
     );
   }
@@ -144,13 +145,19 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
   },
-  sliderImage: {
+  imagefooter: {
     width: dimensions.window.width,
-    height: '100%',
-    //resizeMode: 'contain',
+    height: dimensions.window.width * 0.562,
+    position: 'absolute',
+    zIndex: 2,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    resizeMode: 'cover',
   },
   container1: {
-    height: '70%',
+    height: '100%',
+
   },
   //Jess, no le pongas padding o margin vertical al scroll
   scroll: {
@@ -184,6 +191,7 @@ const styles = StyleSheet.create({
     //display: 'flex',
     flex: 1,
     width: '100%',
+    zIndex: 3,
   },
   containerButton: {
     position: 'absolute',

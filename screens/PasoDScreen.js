@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   ScrollView,
+  Image,
   ImageBackground,
   SafeAreaView,
   TouchableOpacity,
@@ -107,9 +108,6 @@ class PasoDScreen extends Component {
   render() {
     return (
       <SafeAreaView style={styles.safe}>
-        <ImageBackground
-          source={{uri: this.paso.imagenFondo}}
-          style={[styles.sliderImage]}>
           <View style={styles.container}>
             <ScrollView style={styles.scroll}>
               {this.paso.contenidos.map(contenido => (
@@ -128,6 +126,7 @@ class PasoDScreen extends Component {
               ))}
             </ScrollView>
           </View>
+          <Image source={{uri: this.paso.imagenFondo}} style={styles.imagefooter}/>
           <View style={styles.footer}>
             <TouchableOpacity onPress={this.nextStep}>
               <View style={styles.button}>
@@ -137,7 +136,6 @@ class PasoDScreen extends Component {
               </View>
             </TouchableOpacity>
           </View>
-        </ImageBackground>
       </SafeAreaView>
     );
   }
@@ -155,14 +153,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  sliderImage: {
+  imagefooter: {
     width: dimensions.window.width,
-    height: '100%',
-    //resizeMode: 'contain',
+    height: dimensions.window.width * 0.6666,
+    position: 'absolute',
+    zIndex: 2,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    resizeMode: 'cover',
+    backgroundColor: 'blue'
   },
   container: {
-    height: '60%',
-    paddingTop: dimensions.bigSpace
+    height: '100%',
   },
   scroll: {
     //paddingHorizontal: dimensions.hugeSpace + dimensions.smallSpace,
@@ -170,7 +173,6 @@ const styles = StyleSheet.create({
   },
   container1: {
     width: '100%',
-    marginTop: dimensions.smallSpace,
   },
   headline: {
     fontFamily: 'Kiona',
@@ -180,11 +182,13 @@ const styles = StyleSheet.create({
     color: Colors.textoViaje,
     letterSpacing: -0.5,
     marginBottom: 10,
+    marginTop: 25,
+    paddingHorizontal: 20,
   },
   container2: {
     paddingTop: screenHeight * 0.03,
     width: '100%',
-
+    paddingBottom: dimensions.window.width * 0.6666,
   },
   text2: {
     fontFamily: 'MyriadPro-Regular',

@@ -13,6 +13,7 @@ import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
 import Logo from '../components/Logo';
 import Dims from '../constants/Dimensions';
+import ScalableText from 'react-native-text';
 //TODO hacer todo el manejo
 /**
  * @typedef Props
@@ -43,7 +44,7 @@ export default class LoginScreen extends Component {
           <View style={styles.content}>
             <View style={styles.header}>
               <Logo isAlternative />
-              <Text style={styles.welcomeTitle}>BIENVENIDO</Text>
+              <ScalableText style={styles.welcomeTitle}>BIENVENIDO</ScalableText>
             </View>
             <View style={styles.container}>
               <View style={styles.full}>
@@ -61,7 +62,7 @@ export default class LoginScreen extends Component {
                 <TouchableOpacity
                   onPress={this.handleLogin}
                   style={[styles.button]}>
-                  <Text style={styles.buttonLabel}>Iniciar Sesión</Text>
+                  <ScalableText style={styles.buttonLabel}>Iniciar Sesión</ScalableText>
                 </TouchableOpacity>
                 <TouchableHighlight>
                   <Text style={styles.forgetText}>
@@ -74,7 +75,7 @@ export default class LoginScreen extends Component {
               <TouchableOpacity
                 onPress={this.handleCrearCuenta}
                 style={[styles.button]}>
-                <Text style={styles.buttonLabel}>Crear una cuenta</Text>
+                <ScalableText style={styles.buttonLabel}>Crear una cuenta</ScalableText>
               </TouchableOpacity>
             </View>
           </View>
