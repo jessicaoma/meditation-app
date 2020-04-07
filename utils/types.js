@@ -196,4 +196,4 @@ export const enumDiario = {
   meditacion: 2,
 };
 
-export const envRemoto = false;
+export const envRemoto = true;

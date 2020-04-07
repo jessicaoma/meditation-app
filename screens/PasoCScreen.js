@@ -49,7 +49,7 @@ class PasoCScreen extends Component {
       headerStyle: {
         backgroundColor: 'transparent',
       },
-      header: props => {
+      header: (props) => {
         return (
           <ImageBackground
             source={{
@@ -105,30 +105,34 @@ class PasoCScreen extends Component {
   render() {
     return (
       <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
-          <View style={styles.container1}>
-            <ScrollView style={styles.scroll}>
-              <View style={{paddingBottom: dimensions.window.width * 0.562}}>
-                {this.paso.contenidos.map(contenido => (
-                  <View>
-                    <ScalableText style={styles.headline}>
-                      {contenido.titulo}
-                    </ScalableText>
-                    <ScalableText style={styles.text2}>
-                      {contenido.texto}
-                    </ScalableText>
-                  </View>
-                ))}
-              </View>
-            </ScrollView>
-          </View>
-          <Image source={{uri: this.paso.imagenFondo}} style={styles.imagefooter} width={dimensions.window.width} height={dimensions.window.width * 0.562}/>
-          <View style={styles.footer} />
-          <View style={styles.containerButton}>
-            <TouchableOpacity onPress={this.nextStep}>
-              <Next />
-            </TouchableOpacity>
-          </View>
-          
+        <View style={styles.container1}>
+          <ScrollView style={styles.scroll}>
+            <View style={{paddingBottom: dimensions.window.width * 0.562}}>
+              {this.paso.contenidos.map(contenido => (
+                <View>
+                  <ScalableText style={styles.headline}>
+                    {contenido?.titulo ?? ''}
+                  </ScalableText>
+                  <ScalableText style={styles.text2}>
+                    {contenido.texto}
+                  </ScalableText>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+        <Image
+          source={{uri: this.paso.imagenFondo}}
+          style={styles.imagefooter}
+          width={dimensions.window.width}
+          height={dimensions.window.width * 0.562}
+        />
+        <View style={styles.footer} />
+        <View style={styles.containerButton}>
+          <TouchableOpacity onPress={this.nextStep}>
+            <Next />
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     );
   }
@@ -157,7 +161,6 @@ const styles = StyleSheet.create({
   },
   container1: {
     height: '100%',
-
   },
   //Jess, no le pongas padding o margin vertical al scroll
   scroll: {

@@ -90,7 +90,7 @@ class PasoAScreen extends Component {
             <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.container1}>
                 <ScalableText style={styles.text2}>
-                  {contenido.titulo}
+                  {contenido?.titulo ?? ''}
                 </ScalableText>
                 <ScalableText style={styles.paragraphBottom}>
                   {contenido.texto}

@@ -108,34 +108,35 @@ class PasoDScreen extends Component {
   render() {
     return (
       <SafeAreaView style={styles.safe}>
-          <View style={styles.container}>
-            <ScrollView style={styles.scroll}>
-              {this.paso.contenidos.map(contenido => (
-                <>
-                  <View style={styles.container1}>
-                    <ScalableText style={styles.headline}>
-                      {contenido.titulo}
-                    </ScalableText>
-                  </View>
-                  <View style={styles.container2}>
-                    <ScalableText style={styles.text2}>
-                      {contenido.texto}
-                    </ScalableText>
-                  </View>
-                </>
-              ))}
-            </ScrollView>
-          </View>
-          <Image source={{uri: this.paso.imagenFondo}} style={styles.imagefooter}/>
-          <View style={styles.footer}>
-            <TouchableOpacity onPress={this.nextStep}>
-              <View style={styles.button}>
-                <ScalableText style={styles.buttonLabel}>
-                  Continuar
-                </ScalableText>
-              </View>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.container}>
+          <ScrollView style={styles.scroll}>
+            {this.paso.contenidos.map(contenido => (
+              <>
+                <View style={styles.container1}>
+                  <ScalableText style={styles.headline}>
+                    {contenido.titulo}
+                  </ScalableText>
+                </View>
+                <View style={styles.container2}>
+                  <ScalableText style={styles.text2}>
+                    {contenido.texto}
+                  </ScalableText>
+                </View>
+              </>
+            ))}
+          </ScrollView>
+        </View>
+        <Image
+          source={{uri: this.paso.imagenFondo}}
+          style={styles.imagefooter}
+        />
+        <View style={styles.footer}>
+          <TouchableOpacity onPress={this.nextStep}>
+            <View style={styles.button}>
+              <ScalableText style={styles.buttonLabel}>Continuar</ScalableText>
+            </View>
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     );
   }
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     resizeMode: 'cover',
-    backgroundColor: 'blue'
+    backgroundColor: 'transparent'
   },
   container: {
     height: '100%',
