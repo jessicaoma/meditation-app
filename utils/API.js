@@ -68,7 +68,7 @@ class Api {
   /** @return {Promise<import("./types").LoNuevo[]>} */
   async getLoNuevo() {
     //const myHeaders = new Headers({from: user});
-    const query = await fetch(`${BASE_API}lonuevo`, {
+    const query = await fetch(`${BASE_API}destacados`, {
       //headers: myHeaders,
     });
     const data = await query.json();

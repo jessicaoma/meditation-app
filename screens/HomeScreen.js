@@ -67,7 +67,7 @@ class Home extends Component {
     const enprogreso = [
       {
         key: '952bb5e2-726a-475c-8a09-c624f5feb1b1',
-        tipo: 3,
+        tipo: 0,
         categoria: {
           key: 'bedf149e-6b2a-46a9-9a82-01d2926f66d1',
           titulo: 'Ser feliz',
@@ -85,7 +85,7 @@ class Home extends Component {
       },
       {
         key: '579625e6-93f3-4c95-ab53-7ff7049ca1c7',
-        tipo: 2,
+        tipo: 3,
         audiolibro: {
           key: 'd422c4c4-5bd2-47c0-98e9-bbf620b0b85a',
           titulo: 'Aprendiendo a Meditar',
@@ -101,64 +101,7 @@ class Home extends Component {
         },
       },
     ];
-    //const lonuevo = await API.getLoNuevo();
-    const lonuevo = [
-      {
-        key: '952bb5e2-726a-475c-8a09-c624f5feb1b1',
-        tipo: 3,
-        categoria: {
-          key: 'bedf149e-6b2a-46a9-9a82-01d2926f66d1',
-          titulo: 'Ser feliz',
-          media:
-            'http://okoconnect.com/karim/assets/categorias/categoria-1/video.mp4',
-          imagenFondo:
-            'http://okoconnect.com/karim/assets/categorias/categoria-1/fondocategoria.png',
-          color: '#fdd58d',
-          imagenLista:
-            'http://okoconnect.com/karim/assets/categorias/categoria-1/iconobubble.svg',
-          imagenPrevia:
-            'http://okoconnect.com/karim/assets/categorias/categoria-1/portada.jpg',
-          isFree: true,
-        },
-      },
-      {
-        key: '9ec4c979-3655-4026-b4e2-957a3df37fc8',
-        tipo: 0,
-        meditacion: {
-          key: 'f81685e6-87c3-465d-a7d3-58e051e9dbb1',
-          titulo: 'Básica',
-          imagenIntro:
-            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/intro.png',
-          imagenFondo:
-            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/audio.png',
-          color: '#7883a4',
-          imagenLista:
-            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/iconobubble.svg',
-          intro:
-            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/intro.mp4',
-          media:
-            'http://okoconnect.com/karim/assets/meditaciones/meditacion-1/audio.mp3',
-          isFree: true,
-        },
-      },
-      {
-        key: '579625e6-93f3-4c95-ab53-7ff7049ca1c7',
-        tipo: 2,
-        audiolibro: {
-          key: 'd422c4c4-5bd2-47c0-98e9-bbf620b0b85a',
-          titulo: 'Aprendiendo a Meditar',
-          imagenLista:
-            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/iconolistado.png',
-          imagenFondo:
-            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/imagenaudio.png',
-          color: '#50628e',
-          media:
-            'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/audio.mp3',
-          progreso: 0,
-          isFree: true,
-        },
-      },
-    ];
+    const lonuevo = await API.getLoNuevo();
     const reflexion = await API.getReflexionDelDia();
     const tutorial = await API.getVideo('Tutorial');
     this.setState({enprogreso, lonuevo, reflexion, tutorial});
