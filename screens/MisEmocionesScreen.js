@@ -166,19 +166,12 @@ export default class MisEmocionesScreen extends Component {
 
             <View>
               <Text style={styles.bigParagraph}>
-                La tristeza y la ira suelen ser dos caras de una misma moneda, entramos en una para evitar la otra. 
+                Acepta los momentos de tristeza. La tristeza no se puede negar ni evitar, forma parte de la aventura de vivir. Depende de ti aprender a afrontarla y  sacar partido de ella.
               </Text>
               <Text style={styles.bigParagraph}>
-                No queremos estar tristes y nos anestesiamos alimentando la ira, enfadándonos con el mundo. Mayormente la linea que une a ambas es la frustración. Pregúntate qué te tiene frustrado
-Para que aprendas a gestionar efectivamente lo que sientes te recomiendo que te dirijas al curso “Emociones”.
+                Para que puedas mantener un equilibrio emocional y entender lo que sientes te recomiendo que visites el curso “Mindfulness”. Si ya lo hiciste, te recomiendo que hagas la meditación para la gratitud, recuerda que trabajar en nuestra gratitud es la mejor forma de ser felices.
               </Text>
-              <ItemBubble
-                color={'#fdd58d'}
-                fill
-                bold
-                onPress={this._handleClick}>
-                Ser Feliz
-              </ItemBubble>
+              
             </View>
           </View>
         </ScrollView>
@@ -245,9 +238,9 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   bigParagraph: {
-    fontSize: 18,
+    fontSize: 16,
     letterSpacing: 1.11,
-    lineHeight: 28,
+    lineHeight: Dimensions.viajeParrafoLineHeight,
     marginBottom: 5,
     color: Colors.gray,
     fontFamily: 'MyriadPro-Regular',

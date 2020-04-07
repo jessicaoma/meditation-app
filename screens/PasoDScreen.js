@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Kiona',
     fontSize: dimensions.viajeHeadlineSize,
     lineHeight: dimensions.viajeHeadlineLineHeight,
-    textAlign: 'center',
+    textAlign: 'left',
     color: Colors.textoViaje,
     letterSpacing: -0.5,
     marginBottom: 10,

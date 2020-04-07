@@ -16,6 +16,8 @@ import Next from '../constants/LogoButtonNext';
 import ScalableText from 'react-native-text';
 import {HeaderBackButton} from 'react-navigation';
 import {connect} from 'react-redux';
+import {Ionicons} from '@expo/vector-icons';
+import ViajeScreen from '../screens/ViajeScreen';
 
 const screenHeight =
   dimensions.screen.height -
@@ -48,6 +50,7 @@ class PasoAScreen extends Component {
     const {viaje} = props;
     this.pasoIndex = props.navigation.state.params.position;
     this.paso = viaje.pasos[this.pasoIndex];
+    this.viaje = viaje;
   }
 
   componentDidMount = async () => {
@@ -57,6 +60,11 @@ class PasoAScreen extends Component {
     if (this.pasoIndex === 0) {
       API.putDiarioViaje(this.props.viaje.key, enumStatus.doing, user);
     }
+  };
+
+  _handleClose = () => {
+    const {viaje} = this.props;
+    this.props.navigation.pop(viaje.pasos.length);
   };
 
   nextStep = () => {
@@ -78,6 +86,10 @@ class PasoAScreen extends Component {
         <ImageBackground
           source={{uri: this.paso.imagenFondo}}
           style={[styles.sliderImage]}>
+          <TouchableOpacity style={styles.close} onPress={() => { this._handleClose()}}>
+            <Ionicons name={'md-close'} size={25} color={'#fff'} />
+          </TouchableOpacity>
+
           <View style={styles.headerBack}>
             <HeaderBackButton
               tintColor="white"
@@ -154,26 +166,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
   },
-  headline: {
-    fontFamily: 'MyriadPro-Regular',
-    fontSize: dimensions.h2,
-    lineHeight: 36,
-    textAlign: 'center',
-    color: Colors.textoViaje,
-    letterSpacing: 2.2,
-    marginTop: -40,
-    paddingHorizontal: dimensions.regularSpace,
-    textTransform: 'uppercase',
-  },
   paragraphBottom: {
     fontFamily: 'MyriadPro-Regular',
     fontSize: dimensions.viajeParrafoSize,
     lineHeight: 24,
     textAlign: 'center',
     color: Colors.textoViaje,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    paddingHorizontal: dimensions.regularSpace,
+    position: 'absolute',
+    top: '39%',
+    paddingHorizontal: dimensions.bigSpace * 2.5,
   },
   container2: {
     flex: 1,
@@ -211,6 +212,12 @@ const styles = StyleSheet.create({
     right: 0,
     marginBottom: screenHeight * 0.05,
     marginRight: dimensions.bigSpace,
+    zIndex: 100,
+  },
+  close: {
+    position: 'absolute',
+    right: 20,
+    top: 10,
     zIndex: 100,
   },
 });
