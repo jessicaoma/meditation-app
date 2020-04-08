@@ -212,9 +212,10 @@ const styles = StyleSheet.create({
   },
   close: {
     position: 'absolute',
-    right: 20,
-    top: 10,
+    right: 0,
+    top: 0,
     zIndex: 100,
+    padding: 10,
   },
 });
 

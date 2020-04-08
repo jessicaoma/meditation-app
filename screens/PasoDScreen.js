@@ -17,6 +17,7 @@ import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import {Header} from 'react-navigation';
 import {connect} from 'react-redux';
+import {Ionicons} from '@expo/vector-icons';
 
 //const screenWidth = dimensions.window.width;
 const screenHeight =
@@ -74,6 +75,9 @@ class PasoDScreen extends Component {
               resizeMode: 'stretch',
             }}>
             <Header {...props} />
+            <TouchableOpacity style={styles.close} onPress={() => {props.navigation.popToTop();}}>
+              <Ionicons name={'md-close'} size={25} color={'#fff'} />
+            </TouchableOpacity>
           </ImageBackground>
         );
       },
@@ -110,6 +114,7 @@ class PasoDScreen extends Component {
       <SafeAreaView style={styles.safe}>
         <View style={styles.container}>
           <ScrollView style={styles.scroll}>
+            <View style={{paddingBottom: dimensions.window.width * 0.6666,}}>
             {this.paso.contenidos.map(contenido => (
               <>
                 <View style={styles.container1}>
@@ -124,10 +129,12 @@ class PasoDScreen extends Component {
                 </View>
               </>
             ))}
+            </View>
           </ScrollView>
         </View>
         <Image
           source={{uri: this.paso.imagenFondo}}
+          //source={{uri: 'http://okoconnect.com/karim/assets/categorias/categoria-1/ejercicio-0.png'}}
           style={styles.imagefooter}
         />
         <View style={styles.footer}>
@@ -184,12 +191,10 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
     marginBottom: 10,
     marginTop: 25,
-    paddingHorizontal: 20,
   },
   container2: {
     paddingTop: screenHeight * 0.03,
     width: '100%',
-    paddingBottom: dimensions.window.width * 0.6666,
   },
   text2: {
     fontFamily: 'MyriadPro-Regular',
@@ -222,6 +227,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'MyriadPro-Regular',
     fontSize: 20,
+  },
+  close: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    padding: 10,
+    zIndex: 100,
   },
 });
 

@@ -18,6 +18,7 @@ import ScalableText from 'react-native-text';
 import Next from '../constants/LogoButtonNext';
 import {Header} from 'react-navigation';
 import {connect} from 'react-redux';
+import {Ionicons} from '@expo/vector-icons';
 
 const screenHeight =
   dimensions.screen.height -
@@ -38,8 +39,17 @@ const screenHeight =
  * @extends {Component<Props>}
  */
 class PasoCScreen extends Component {
+  /** @param {Props} props */
+  constructor(props) {
+    super(props);
+    const {viaje} = props;
+    this.pasoIndex = props.navigation.state.params.position;
+    this.paso = viaje.pasos[this.pasoIndex];
+  }
+
   /** @param {{navigation: import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>}} param*/
   static navigationOptions = ({navigation}) => {
+
     return {
       title: navigation.state.params.titulo,
       headerTintColor: '#fff',
@@ -71,25 +81,26 @@ class PasoCScreen extends Component {
               resizeMode: 'stretch',
             }}>
             <Header {...props} />
+            <TouchableOpacity style={styles.close} onPress={() => {props.navigation.popToTop();}}>
+              <Ionicons name={'md-close'} size={25} color={'#fff'} />
+            </TouchableOpacity>
           </ImageBackground>
         );
       },
     };
   };
 
-  /** @param {Props} props */
-  constructor(props) {
-    super(props);
-    const {viaje} = props;
-    this.pasoIndex = props.navigation.state.params.position;
-    this.paso = viaje.pasos[this.pasoIndex];
-  }
+  
 
   componentDidMount = async () => {
     // const {steps, position} = this.props.navigation.state.params;
     // const paso = steps[position];
     // API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
   };
+  
+  _handleClose = () => {
+      const {viaje} = this.props;this.props.navigation.pop(viaje.pasos.length);
+    };
 
   nextStep = () => {
     const {viaje} = this.props;
@@ -107,6 +118,7 @@ class PasoCScreen extends Component {
       <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
         <View style={styles.container1}>
           <ScrollView style={styles.scroll}>
+
             <View style={{paddingBottom: dimensions.window.width * 0.562}}>
               {this.paso.contenidos.map(contenido => (
                 <View>
@@ -123,6 +135,7 @@ class PasoCScreen extends Component {
         </View>
         <Image
           source={{uri: this.paso.imagenFondo}}
+          //source={{uri: 'http://okoconnect.com/karim/assets/categorias/categoria-1/recomendaciones-0.png'}}
           style={styles.imagefooter}
           width={dimensions.window.width}
           height={dimensions.window.width * 0.562}
@@ -202,6 +215,13 @@ const styles = StyleSheet.create({
     right: 0,
     marginBottom: screenHeight * 0.05,
     marginRight: dimensions.bigSpace,
+    zIndex: 100,
+  },
+  close: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    padding: 10,
     zIndex: 100,
   },
 });
