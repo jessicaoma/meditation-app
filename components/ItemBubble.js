@@ -37,13 +37,11 @@ export default class ItemBubble extends Component {
             styleContainer: {
               borderColor: '#ffffff',
               backgroundColor: color,
-              paddingVertical: Dims.regularSpace,
               marginBottom: notMargin ? 0 : Dims.smallSpace,
             },
             styleText: {
               fontFamily: 'MyriadPro-Regular',
               color: 'white',
-              lineHeight: 20,
               fontSize: fontSize ? fontSize : Dims.window.width * 0.038,
               fontWeight: bold ? 'bold' : 'normal',
             },

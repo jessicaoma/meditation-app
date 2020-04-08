@@ -179,6 +179,7 @@ export default class MisEmocionesScreen extends Component {
               </Text>
               <Text style={styles.bigParagraph}>
                 Para que puedas mantener un equilibrio emocional y entender lo que sientes te recomiendo que visites el curso “Mindfulness”. Si ya lo hiciste, te recomiendo que hagas la meditación para la gratitud, recuerda que trabajar en nuestra gratitud es la mejor forma de ser felices.
+                {'\n'}
               </Text>
             </View>
             <View style={styles.buttonContainer}>
