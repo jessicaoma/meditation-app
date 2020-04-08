@@ -37,7 +37,6 @@ export default class ItemBubble extends Component {
             styleContainer: {
               borderColor: '#ffffff',
               backgroundColor: color,
-              borderRadius: 10,
               paddingVertical: Dims.regularSpace,
               marginBottom: notMargin ? 0 : Dims.smallSpace,
             },

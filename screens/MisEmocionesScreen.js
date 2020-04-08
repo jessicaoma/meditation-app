@@ -19,6 +19,8 @@ import LogoEmocion2 from '../constants/LogoEmocion2';
 import LogoEmocion3 from '../constants/LogoEmocion3';
 import LogoEmocion4 from '../constants/LogoEmocion4';
 import API from '../utils/API';
+import CategoriasScreen from '../screens/CategoriasScreen';
+import MeditacionesScreen from '../screens/MeditacionesScreen';
 
 //TODO llamar api
 export default class MisEmocionesScreen extends Component {
@@ -81,6 +83,8 @@ export default class MisEmocionesScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Mis Emociones',
     headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
+    Categorias: { screen: CategoriasScreen},
+    Meditar: { screen: MeditacionesScreen},
   });
 
   componentDidMount = async () => {
@@ -89,9 +93,14 @@ export default class MisEmocionesScreen extends Component {
     this.semana = registros.semana;
     this.onPressSemanal();
   };
-  _handleClick = () => {
-    //TODO manejo de viajes recomendados
-    //this.props.navigation.navigate('Paso');
+
+  _handleClickCursos = () => {
+    this.props.navigation.navigate('Categorias');
+  };
+
+  _handleClickMeditaciones = () => {
+    console.log('medi');
+    this.props.navigation.navigate('Meditar');
   };
 
   keyExtractor = item => item.id;
@@ -171,7 +180,23 @@ export default class MisEmocionesScreen extends Component {
               <Text style={styles.bigParagraph}>
                 Para que puedas mantener un equilibrio emocional y entender lo que sientes te recomiendo que visites el curso “Mindfulness”. Si ya lo hiciste, te recomiendo que hagas la meditación para la gratitud, recuerda que trabajar en nuestra gratitud es la mejor forma de ser felices.
               </Text>
-              
+            </View>
+            <View style={styles.buttonContainer}>
+              <ItemBubble
+                color={'#fdd58d'}
+                fill
+                bold
+                onPress={this._handleClickCursos}>
+                Ir a cursos
+              </ItemBubble>
+              <ItemBubble
+                color={Colors.primaryDark}
+                fill
+                bold
+                likeButton
+                onPress={this._handleClickMeditaciones}>
+                Ir a meditaciones
+              </ItemBubble>
             </View>
           </View>
         </ScrollView>
