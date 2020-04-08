@@ -27,6 +27,7 @@ const screenHeight =
 const screenHeight2 =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
+const bottomPositionX = (Platform.OS === 'android' ? 15 : 4);
 
 /**
  * Paso Tipo(D): Ejercicio
@@ -231,9 +232,10 @@ const styles = StyleSheet.create({
   close: {
     position: 'absolute',
     right: 0,
-    bottom: 0,
-    padding: 10,
+    bottom: bottomPositionX,
+    paddingHorizontal: 20,
     zIndex: 100,
+    lineHeight: 0,
   },
 });
 

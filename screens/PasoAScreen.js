@@ -219,7 +219,8 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     zIndex: 100,
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
   },
 });
 

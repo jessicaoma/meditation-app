@@ -24,6 +24,8 @@ const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
+const bottomPositionX = (Platform.OS === 'android' ? 15 : 4);
+
 /**
  * Paso Tipo(C): Recomendaciones
  * @typedef {Object} ParamsNavigation
@@ -175,9 +177,7 @@ const styles = StyleSheet.create({
   container1: {
     height: '100%',
   },
-  //Jess, no le pongas padding o margin vertical al scroll
   scroll: {
-    //paddingHorizontal: dimensions.hugeSpace + dimensions.smallSpace,
     paddingHorizontal: dimensions.bigSpace,
   },
   headline: {
@@ -220,9 +220,10 @@ const styles = StyleSheet.create({
   close: {
     position: 'absolute',
     right: 0,
-    bottom: 0,
-    padding: 10,
+    bottom: bottomPositionX,
+    paddingHorizontal: 20,
     zIndex: 100,
+    lineHeight: 0,
   },
 });
 
