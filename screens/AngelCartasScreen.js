@@ -79,7 +79,6 @@ export default class AngelCartasScreen extends Component {
       <SafeAreaView style={styles.mainContainer}>
         <View style={styles.statusBar} />
         <View style={styles.container}>
-          <Text style={styles.sectionTitle}>Mensaje de tus ángeles</Text>
           <FlatList
             data={this.state.cartas}
             renderItem={this.renderItem}

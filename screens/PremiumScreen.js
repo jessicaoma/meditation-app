@@ -118,6 +118,37 @@ export default class PremiumScreen extends Component {
         title: 'Cartas con mensajes de los ángeles. ',
       },
     ],
+    premium4: [
+      {
+        id: 1,
+        title: 'Reflexiones diarias.',
+      },
+      {
+        id: 2,
+        title: 'Registro de emociones y oraciones.',
+      },
+      {
+        id: 3,
+        title:
+          'Música de relajación. ',
+      },
+      {
+        id: 4,
+        title: 'Cursos de desarrollo personal. Con recomendaciones y ejercicios.',
+      },
+      {
+        id: 5,
+        title: 'Meditaciones.',
+      },
+      {
+        id: 6,
+        title: 'Un audiolibro de Karim Temple. (Libro: APRENDIENDO A MEDITAR)',
+      },
+      {
+        id: 7,
+        title: 'Cartas con mensajes de los ángeles. ',
+      },
+    ],
     /** @type {Prices[]} */
     prices: [
       {
@@ -125,7 +156,14 @@ export default class PremiumScreen extends Component {
         title: 'Plan Anual',
         cost: '$49.99 / Anuales',
         description:
-          'Paga anualmente el monto de $0.00. Se renueva automáticamente cada año.',
+          'Paga anualmente el monto de $49.99. Se renueva automáticamente cada año.',
+      },
+      {
+        id: 2,
+        title: 'Plan Mensual',
+        cost: '$7.99 / Anuales',
+        description:
+          'Paga mensualmente el monto de $7.99. Se renueva automáticamente cada mes.',
       },
     ],
   };
@@ -199,8 +237,16 @@ export default class PremiumScreen extends Component {
             </View>
             <Text style={[styles.bigParagraph]}>
               {' '}{'\n'}
-              Suscripción ANUAL. VALOR: $49.99 {'\n'}
+              Suscripción ANUAL. {'\n'}
               Con el plan anual, accede a todo el contenido Ilimitado de la plataforma: 
+            </Text>
+            <View style={styles.container}>
+              {this.features.premium3.map(item => this.renderPremiumItem(item))}
+            </View>
+             <Text style={[styles.bigParagraph]}>
+              {' '}{'\n'}
+              Suscripción MENSUAL. {'\n'}
+              Con el plan mensual, accede Ilimitadamente al siguiente de la plataforma:
             </Text>
             <View style={styles.container}>
               {this.features.premium3.map(item => this.renderPremiumItem(item))}
@@ -208,24 +254,7 @@ export default class PremiumScreen extends Component {
             <View style={styles.container}>
               {this.features.prices.map(item => this.renderPriceBubble(item))}
             </View>
-            <View style={{paddingHorizontal: Dimensions.regularSpace}}>
-              <View style={styles.priceBubble}>
-                <Text style={styles.titlePriceBubble}>Plan Corporativo</Text>
-                <Text style={styles.descPriceBubble}>
-                  Para planes corporativos o empresariales.
-                </Text>
-                <TextInput
-                  style={[styles.inputText]}
-                  placeholder={'Correo electrónico'}
-                  secureTextEntry={false}
-                />
-                <TouchableOpacity
-                  onPress={this._handleClose}
-                  style={[styles.button]}>
-                  <Text style={styles.buttonLabel}>ENVIAR</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+           
           </View>
         </ScrollView>
         <View style={[styles.containerBottomButton]}>
