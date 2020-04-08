@@ -49,37 +49,81 @@ export default class PremiumScreen extends Component {
       {
         id: 3,
         title:
-          'Viajes de desarrollo personal, con ejercicios y registro de reflexiones en diario de avance.',
+          'Una música de relajación.',
       },
       {
         id: 4,
-        title: 'Meditaciones',
+        title: 'Un módulo del curso (Ser Feliz) de desarrollo personal. Con recomendaciones y ejercicios.',
       },
       {
         id: 5,
-        title: 'Audio libros de Karim Temple.',
+        title: 'Una meditación. Meditación Básica.',
       },
       {
         id: 6,
-        title: 'Mensajes de los ángeles.',
+        title: 'Un extracto de un audiolibro de Karim Temple. (Aprendiendo a Meditar)',
       },
       {
         id: 7,
-        title: 'Oraciones.',
+        title: 'Cartas con mensajes de los ángeles. .',
+      },
+    ],
+    premium2: [
+      {
+        id: 1,
+        title: 'Reflexiones diarias. ',
+      },
+      {
+        id: 2,
+        title: 'Registro de emociones y oraciones.',
+      },
+      {
+        id: 3,
+        title:
+          'Videos de los cursos. ',
+      },
+      {
+        id: 4,
+        title: 'Video del tutorial. ',
+      },
+    ],
+    premium3: [
+      {
+        id: 1,
+        title: 'Reflexiones diarias.',
+      },
+      {
+        id: 2,
+        title: 'Registro de emociones y oraciones.',
+      },
+      {
+        id: 3,
+        title:
+          'Música de relajación. ',
+      },
+      {
+        id: 4,
+        title: 'Cursos de desarrollo personal. Con recomendaciones y ejercicios. ',
+      },
+      {
+        id: 5,
+        title: 'Meditaciones.',
+      },
+      {
+        id: 6,
+        title: 'Tres Audiolibros de Karim Temple. ',
+      },
+      {
+        id: 7,
+        title: 'Cartas con mensajes de los ángeles. ',
       },
     ],
     /** @type {Prices[]} */
     prices: [
       {
         id: 1,
-        title: 'Plan Mensual',
-        cost: '$0.00 / Mensuales',
-        description: 'Se renueva automáticamente cada mes.',
-      },
-      {
-        id: 2,
         title: 'Plan Anual',
-        cost: '$0.00 / Anuales',
+        cost: '$49.99 / Anuales',
         description:
           'Paga anualmente el monto de $0.00. Se renueva automáticamente cada año.',
       },
@@ -146,6 +190,21 @@ export default class PremiumScreen extends Component {
             <View style={styles.container}>
               {this.features.premium.map(item => this.renderPremiumItem(item))}
             </View>
+            <Text style={[styles.bigParagraph]}>
+              {' '}{'\n'}
+              Pasado los 7 días de prueba el usuario tendrá acceso a:
+            </Text>
+            <View style={styles.container}>
+              {this.features.premium2.map(item => this.renderPremiumItem(item))}
+            </View>
+            <Text style={[styles.bigParagraph]}>
+              {' '}{'\n'}
+              Suscripción ANUAL. VALOR: $49.99 {'\n'}
+              Con el plan anual, accede a todo el contenido Ilimitado de la plataforma: 
+            </Text>
+            <View style={styles.container}>
+              {this.features.premium3.map(item => this.renderPremiumItem(item))}
+            </View>
             <View style={styles.container}>
               {this.features.prices.map(item => this.renderPriceBubble(item))}
             </View>
@@ -185,12 +244,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   statusBar: {
-    height: Dimensions.statusBarHeight,
+    //height: Dimensions.statusBarHeight,
   },
   scrollView: {
-    paddingBottom: 50,
     flex: 1,
     width: '100%',
+    height: Dimensions.window.height,
   },
   container: {
     paddingTop: Dimensions.regularSpace,
