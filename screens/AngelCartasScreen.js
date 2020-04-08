@@ -67,6 +67,13 @@ export default class AngelCartasScreen extends Component {
     );
   };
 
+  renderFooter = () => {
+    return (
+      <ScalableText style={styles.suggestion}>Elige una carta para ver el mensaje de tu ángel</ScalableText>
+    );
+  };
+
+
   render() {
     return (
       <SafeAreaView style={styles.mainContainer}>
@@ -76,10 +83,10 @@ export default class AngelCartasScreen extends Component {
           <FlatList
             data={this.state.cartas}
             renderItem={this.renderItem}
+            ListFooterComponent={this.renderFooter}
             numColumns={numColumns}
           />
-
-          <ScalableText style={styles.suggestion}>Elige una carta para ver el mensaje de tu ángel</ScalableText>
+          
         </View>
       </SafeAreaView>
     );
@@ -116,10 +123,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#665e61',
     padding: 5,
-    position: 'absolute',
-    bottom: 0,
-    left: 10,
-    right: 10,
+    zIndex: 3
   },
   containercard: {
     marginBottom: 3,

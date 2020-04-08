@@ -6,6 +6,7 @@ import {
   Text,
   SafeAreaView,
   TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
@@ -43,28 +44,30 @@ export default class AngelScreen extends Component {
     return (
       <SafeAreaView style={styles.safe}>
         <View style={styles.statusBar} />
-        <View style={[styles.container]}>
-          <CardFlip
-            ref={card => {
-              this.card = card;
-            }}>
-            <TouchableOpacity onPress={() => this.card.flip()}>
-              <SvgUri
-                width={deviceWidth}
-                height={deviceHeight}
-                source={{uri: carta.reverso}}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.card.flip()}>
-              <SvgUri
-                width={deviceWidth}
-                height={deviceHeight}
-                source={{uri: carta.frontal}}
-              />
-            </TouchableOpacity>
-          </CardFlip>
-        </View>
-        <ScalableText style={styles.suggestion}>Toca para descubrir</ScalableText>
+        <ScrollView>
+          <View style={[styles.container]}>
+            <CardFlip
+              ref={card => {
+                this.card = card;
+              }}>
+              <TouchableOpacity onPress={() => this.card.flip()}>
+                <SvgUri
+                  width={deviceWidth}
+                  height={deviceHeight}
+                  source={{uri: carta.reverso}}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.card.flip()}>
+                <SvgUri
+                  width={deviceWidth}
+                  height={deviceHeight}
+                  source={{uri: carta.frontal}}
+                />
+              </TouchableOpacity>
+            </CardFlip>
+            <ScalableText style={styles.suggestion}>Toca para descubrir</ScalableText>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }
