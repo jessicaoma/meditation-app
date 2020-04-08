@@ -132,9 +132,8 @@ export default class EmocionesScreen extends Component {
               keyExtractor={item => item.key}
             />
             <Text style={styles.suggestion}>
-              ¿Cómo te sientes hoy?.{'\n'}
-              Llevando un registro de tus emociones vas a conocerte más a ti
-              misma.
+              ¿Cómo te sientes hoy?{'\n'}{'\n'}
+              Llevando un registro de tus emociones podrás conocerte mejor.
             </Text>
           </View>
         </ScrollView>
@@ -152,17 +151,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  sectionTitle: {
-    fontSize: Dims.h2,
-    letterSpacing: 1.11,
-    lineHeight: 36,
-    marginTop: Dims.regularSpace,
-    marginRight: 0,
-    marginBottom: 3,
-    marginLeft: 0,
-    color: colors.gray,
-    fontFamily: 'MyriadPro-Bold',
-  },
   suggestion: {
     fontFamily: 'MyriadPro-Regular',
     fontSize: 16,
@@ -170,6 +158,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#665e61',
     paddingVertical: 10,
+    paddingHorizontal: 20,
     letterSpacing: 1,
   },
 });

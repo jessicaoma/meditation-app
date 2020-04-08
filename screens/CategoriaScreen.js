@@ -143,8 +143,7 @@ class Categoria extends Component {
             onPress={() => {
               this._goViaje(index);
             }}
-            style={{textTransform: 'none'}}
-            bold>
+            style={{textTransform: 'none'}}>
             {item.titulo}
           </ItemBubble>
         );
