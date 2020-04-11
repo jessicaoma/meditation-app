@@ -6,6 +6,8 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Platform,
+  DeviceInfo,
   FlatList,
 } from 'react-native';
 import Dimensions from '../constants/Dimensions';
@@ -18,11 +20,18 @@ const deviceWidth =
   Dimensions.window.width - Dimensions.regularSpace - Dimensions.regularSpace;
 const headerHeight = deviceWidth - Dimensions.regularSpace;
 
+const ContainerHeight = Dimensions.screen.height - Dimensions.statusBarHeight - 
+              (Platform.OS === 'android'
+                  ? + 30
+                    : DeviceInfo.isIPhoneX_deprecated ? Dimensions.statusBarHeight
+                    : 0);
+
 /**
  * Drawer Content Render
  * @extends {Component<import('react-navigation').DrawerItemsProps & {descriptors: {[key: string]: import('react-navigation').NavigationDescriptor}}>}
  */
 export default class DrawerContentComponents extends Component {
+
   navigateToScreen = route => () => {
     const navigateAction = NavigationActions.navigate({
       routeName: route,
@@ -61,6 +70,7 @@ export default class DrawerContentComponents extends Component {
                 uri:
                   'http://okoconnect.com/karim/assets/perfil/header-perfil.svg',
               }}
+              style={{marginTop: -40}}
             />
             <View style={styles.headerContainer}>
               <ScalableText style={styles.headerText}>
@@ -95,9 +105,12 @@ export default class DrawerContentComponents extends Component {
 }
 
 const styles = StyleSheet.create({
-  scrollview: {},
+  scrollview: {
+    flex: 1,
+    height: '100%',
+  },
   container: {
-    minHeight: Dimensions.window.height - Dimensions.regularSpace * 2 - 10,
+    minHeight: ContainerHeight,
     justifyContent: 'space-between',
     flexDirection: 'column',
     backgroundColor: 'white',
@@ -131,7 +144,6 @@ const styles = StyleSheet.create({
   },
   itemsContainer: {
     width: '100%',
-    marginBottom: 30,
   },
   itemStyle: {
     flexDirection: 'row',

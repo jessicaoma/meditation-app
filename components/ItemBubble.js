@@ -37,14 +37,11 @@ export default class ItemBubble extends Component {
             styleContainer: {
               borderColor: '#ffffff',
               backgroundColor: color,
-              borderRadius: 10,
-              paddingVertical: Dims.regularSpace,
               marginBottom: notMargin ? 0 : Dims.smallSpace,
             },
             styleText: {
               fontFamily: 'MyriadPro-Regular',
               color: 'white',
-              lineHeight: 20,
               fontSize: fontSize ? fontSize : Dims.window.width * 0.038,
               fontWeight: bold ? 'bold' : 'normal',
             },
@@ -56,7 +53,7 @@ export default class ItemBubble extends Component {
               marginBottom: notMargin ? 0 : Dims.smallSpace,
             },
             styleText: {
-              fontFamily: 'MyriadPro-Semibold',
+              fontFamily: 'MyriadPro-Regular',
               fontSize: fontSize ? fontSize : Dims.window.width * 0.038,
               fontWeight: bold ? 'bold' : 'normal',
             },
@@ -98,7 +95,6 @@ const styles = StyleSheet.create({
     color: Colors.gray,
     paddingHorizontal: 6,
     paddingTop: 4,
-    textTransform: 'capitalize',
     flexWrap: 'wrap',
     flex: 1,
   },

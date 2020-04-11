@@ -16,6 +16,7 @@ import Colors from '../constants/Colors';
 import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
 import {HeaderBackButton} from 'react-navigation';
+import {Ionicons} from '@expo/vector-icons';
 
 const screenHeight =
   dimensions.screen.height -
@@ -58,6 +59,11 @@ class PasoBScreen extends Component {
     // API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
   };
 
+  _handleClose = () => {
+    const {viaje} = this.props;
+    this.props.navigation.pop(viaje.pasos.length);
+  };
+
   nextStep = () => {
     const {viaje} = this.props;
     const {tipo} = viaje.pasos[this.pasoIndex + 1];
@@ -86,6 +92,9 @@ class PasoBScreen extends Component {
         <ImageBackground
           source={{uri: this.paso.imagenFondo}}
           style={styles.sliderImage}>
+          <TouchableOpacity style={styles.close} onPress={() => { this._handleClose()}}>
+            <Ionicons name={'md-close'} size={25} color={'#bdc4e1'} />
+          </TouchableOpacity>
           <View style={styles.container1}>
             <ScalableText style={styles.headline}>
               {this.paso.titulo}
@@ -191,6 +200,12 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'MyriadPro-Regular',
     fontSize: 20,
+  },
+  close: {
+    position: 'absolute',
+    right: 20,
+    top: 10,
+    zIndex: 100,
   },
 });
 

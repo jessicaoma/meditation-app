@@ -16,6 +16,8 @@ import Next from '../constants/LogoButtonNext';
 import ScalableText from 'react-native-text';
 import {HeaderBackButton} from 'react-navigation';
 import {connect} from 'react-redux';
+import {Ionicons} from '@expo/vector-icons';
+import ViajeScreen from '../screens/ViajeScreen';
 
 const screenHeight =
   dimensions.screen.height -
@@ -48,6 +50,7 @@ class PasoAScreen extends Component {
     const {viaje} = props;
     this.pasoIndex = props.navigation.state.params.position;
     this.paso = viaje.pasos[this.pasoIndex];
+    this.viaje = viaje;
   }
 
   componentDidMount = async () => {
@@ -57,6 +60,11 @@ class PasoAScreen extends Component {
     if (this.pasoIndex === 0) {
       API.putDiarioViaje(this.props.viaje.key, enumStatus.doing, user);
     }
+  };
+
+  _handleClose = () => {
+    const {viaje} = this.props;
+    this.props.navigation.pop(viaje.pasos.length);
   };
 
   nextStep = () => {
@@ -78,6 +86,10 @@ class PasoAScreen extends Component {
         <ImageBackground
           source={{uri: this.paso.imagenFondo}}
           style={[styles.sliderImage]}>
+          <TouchableOpacity style={styles.close} onPress={() => { this._handleClose()}}>
+            <Ionicons name={'md-close'} size={25} color={'#fff'} />
+          </TouchableOpacity>
+
           <View style={styles.headerBack}>
             <HeaderBackButton
               tintColor="white"
@@ -90,7 +102,7 @@ class PasoAScreen extends Component {
             <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.container1}>
                 <ScalableText style={styles.text2}>
-                  {contenido.titulo}
+                  {contenido?.titulo ?? ''}
                 </ScalableText>
                 <ScalableText style={styles.paragraphBottom}>
                   {contenido.texto}
@@ -154,26 +166,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
   },
-  headline: {
-    fontFamily: 'MyriadPro-Regular',
-    fontSize: dimensions.h2,
-    lineHeight: 36,
-    textAlign: 'center',
-    color: Colors.textoViaje,
-    letterSpacing: 2.2,
-    marginTop: -40,
-    paddingHorizontal: dimensions.regularSpace,
-    textTransform: 'uppercase',
-  },
   paragraphBottom: {
-    fontFamily: 'MyriadPro-Semibold',
+    fontFamily: 'MyriadPro-Regular',
     fontSize: dimensions.viajeParrafoSize,
     lineHeight: 24,
     textAlign: 'center',
     color: Colors.textoViaje,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    paddingHorizontal: dimensions.regularSpace,
+    position: 'absolute',
+    top: '39%',
+    paddingHorizontal: dimensions.bigSpace * 2.5,
   },
   container2: {
     flex: 1,
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
   container3: {
     flex: 1,
     position: 'absolute',
-    bottom: 0,
+    bottom: 15,
     height: '50%',
     justifyContent: 'center',
   },
@@ -212,6 +213,14 @@ const styles = StyleSheet.create({
     marginBottom: screenHeight * 0.05,
     marginRight: dimensions.bigSpace,
     zIndex: 100,
+  },
+  close: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex: 100,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
   },
 });
 

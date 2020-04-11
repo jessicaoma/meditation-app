@@ -149,13 +149,13 @@ export const enumStatus = {
  */
 export const enumLoNuevo = {
   /** Value 0 */
-  meditacion: 0,
+  categoria: 0,
   /** Value 1 */
-  cancion: 1,
+  meditacion: 1,
   /** Value 2 */
-  audiolibro: 2,
+  cancion: 2,
   /** Value 2 */
-  categoria: 3,
+  audiolibro: 3,
 };
 
 /**

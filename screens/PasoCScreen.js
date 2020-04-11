@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   ScrollView,
+  Image,
   ImageBackground,
   SafeAreaView,
   TouchableOpacity,
@@ -17,10 +18,13 @@ import ScalableText from 'react-native-text';
 import Next from '../constants/LogoButtonNext';
 import {Header} from 'react-navigation';
 import {connect} from 'react-redux';
+import {Ionicons} from '@expo/vector-icons';
 
 const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
+
+const bottomPositionX = (Platform.OS === 'android' ? 15 : 4);
 
 /**
  * Paso Tipo(C): Recomendaciones
@@ -37,8 +41,17 @@ const screenHeight =
  * @extends {Component<Props>}
  */
 class PasoCScreen extends Component {
+  /** @param {Props} props */
+  constructor(props) {
+    super(props);
+    const {viaje} = props;
+    this.pasoIndex = props.navigation.state.params.position;
+    this.paso = viaje.pasos[this.pasoIndex];
+  }
+
   /** @param {{navigation: import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>}} param*/
   static navigationOptions = ({navigation}) => {
+
     return {
       title: navigation.state.params.titulo,
       headerTintColor: '#fff',
@@ -48,7 +61,7 @@ class PasoCScreen extends Component {
       headerStyle: {
         backgroundColor: 'transparent',
       },
-      header: props => {
+      header: (props) => {
         return (
           <ImageBackground
             source={{
@@ -70,25 +83,26 @@ class PasoCScreen extends Component {
               resizeMode: 'stretch',
             }}>
             <Header {...props} />
+            <TouchableOpacity style={styles.close} onPress={() => {props.navigation.popToTop();}}>
+              <Ionicons name={'md-close'} size={25} color={'#fff'} />
+            </TouchableOpacity>
           </ImageBackground>
         );
       },
     };
   };
 
-  /** @param {Props} props */
-  constructor(props) {
-    super(props);
-    const {viaje} = props;
-    this.pasoIndex = props.navigation.state.params.position;
-    this.paso = viaje.pasos[this.pasoIndex];
-  }
+  
 
   componentDidMount = async () => {
     // const {steps, position} = this.props.navigation.state.params;
     // const paso = steps[position];
     // API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
   };
+  
+  _handleClose = () => {
+      const {viaje} = this.props;this.props.navigation.pop(viaje.pasos.length);
+    };
 
   nextStep = () => {
     const {viaje} = this.props;
@@ -104,30 +118,36 @@ class PasoCScreen extends Component {
   render() {
     return (
       <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
-        <ImageBackground
-          source={{uri: this.paso.imagenFondo}}
-          style={[styles.sliderImage]}>
-          <View style={styles.container1}>
-            <ScrollView style={styles.scroll}>
+        <View style={styles.container1}>
+          <ScrollView style={styles.scroll}>
+
+            <View style={{paddingBottom: dimensions.window.width * 0.562}}>
               {this.paso.contenidos.map(contenido => (
                 <View>
                   <ScalableText style={styles.headline}>
-                    {contenido.titulo}
+                    {contenido?.titulo ?? ''}
                   </ScalableText>
                   <ScalableText style={styles.text2}>
                     {contenido.texto}
                   </ScalableText>
                 </View>
               ))}
-            </ScrollView>
-          </View>
-          <View style={styles.footer} />
-          <View style={styles.containerButton}>
-            <TouchableOpacity onPress={this.nextStep}>
-              <Next />
-            </TouchableOpacity>
-          </View>
-        </ImageBackground>
+            </View>
+          </ScrollView>
+        </View>
+        <Image
+          source={{uri: this.paso.imagenFondo}}
+          //source={{uri: 'http://okoconnect.com/karim/assets/categorias/categoria-1/recomendaciones-0.png'}}
+          style={styles.imagefooter}
+          width={dimensions.window.width}
+          height={dimensions.window.width * 0.562}
+        />
+        <View style={styles.footer} />
+        <View style={styles.containerButton}>
+          <TouchableOpacity onPress={this.nextStep}>
+            <Next />
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     );
   }
@@ -144,17 +164,20 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
   },
-  sliderImage: {
+  imagefooter: {
     width: dimensions.window.width,
-    height: '100%',
-    //resizeMode: 'contain',
+    height: dimensions.window.width * 0.562,
+    position: 'absolute',
+    zIndex: 2,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    resizeMode: 'cover',
   },
   container1: {
-    height: '70%',
+    height: '100%',
   },
-  //Jess, no le pongas padding o margin vertical al scroll
   scroll: {
-    //paddingHorizontal: dimensions.hugeSpace + dimensions.smallSpace,
     paddingHorizontal: dimensions.bigSpace,
   },
   headline: {
@@ -184,6 +207,7 @@ const styles = StyleSheet.create({
     //display: 'flex',
     flex: 1,
     width: '100%',
+    zIndex: 3,
   },
   containerButton: {
     position: 'absolute',
@@ -192,6 +216,14 @@ const styles = StyleSheet.create({
     marginBottom: screenHeight * 0.05,
     marginRight: dimensions.bigSpace,
     zIndex: 100,
+  },
+  close: {
+    position: 'absolute',
+    right: 0,
+    bottom: bottomPositionX,
+    paddingHorizontal: 20,
+    zIndex: 100,
+    lineHeight: 0,
   },
 });
 

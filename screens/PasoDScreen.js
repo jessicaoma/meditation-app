@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   ScrollView,
+  Image,
   ImageBackground,
   SafeAreaView,
   TouchableOpacity,
@@ -16,6 +17,7 @@ import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import {Header} from 'react-navigation';
 import {connect} from 'react-redux';
+import {Ionicons} from '@expo/vector-icons';
 
 //const screenWidth = dimensions.window.width;
 const screenHeight =
@@ -25,6 +27,7 @@ const screenHeight =
 const screenHeight2 =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
+const bottomPositionX = (Platform.OS === 'android' ? 15 : 4);
 
 /**
  * Paso Tipo(D): Ejercicio
@@ -73,6 +76,9 @@ class PasoDScreen extends Component {
               resizeMode: 'stretch',
             }}>
             <Header {...props} />
+            <TouchableOpacity style={styles.close} onPress={() => {props.navigation.popToTop();}}>
+              <Ionicons name={'md-close'} size={25} color={'#fff'} />
+            </TouchableOpacity>
           </ImageBackground>
         );
       },
@@ -107,37 +113,38 @@ class PasoDScreen extends Component {
   render() {
     return (
       <SafeAreaView style={styles.safe}>
-        <ImageBackground
+        <View style={styles.container}>
+          <ScrollView style={styles.scroll}>
+            <View style={{paddingBottom: dimensions.window.width * 0.6666,}}>
+            {this.paso.contenidos.map(contenido => (
+              <>
+                <View style={styles.container1}>
+                  <ScalableText style={styles.headline}>
+                    {contenido.titulo}
+                  </ScalableText>
+                </View>
+                <View style={styles.container2}>
+                  <ScalableText style={styles.text2}>
+                    {contenido.texto}
+                  </ScalableText>
+                </View>
+              </>
+            ))}
+            </View>
+          </ScrollView>
+        </View>
+        <Image
           source={{uri: this.paso.imagenFondo}}
-          style={[styles.sliderImage]}>
-          <View style={styles.container}>
-            <ScrollView style={styles.scroll}>
-              {this.paso.contenidos.map(contenido => (
-                <>
-                  <View style={styles.container1}>
-                    <ScalableText style={styles.headline}>
-                      {contenido.titulo}
-                    </ScalableText>
-                  </View>
-                  <View style={styles.container2}>
-                    <ScalableText style={styles.text2}>
-                      {contenido.texto}
-                    </ScalableText>
-                  </View>
-                </>
-              ))}
-            </ScrollView>
-          </View>
-          <View style={styles.footer}>
-            <TouchableOpacity onPress={this.nextStep}>
-              <View style={styles.button}>
-                <ScalableText style={styles.buttonLabel}>
-                  Continuar
-                </ScalableText>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </ImageBackground>
+          //source={{uri: 'http://okoconnect.com/karim/assets/categorias/categoria-1/ejercicio-0.png'}}
+          style={styles.imagefooter}
+        />
+        <View style={styles.footer}>
+          <TouchableOpacity onPress={this.nextStep}>
+            <View style={styles.button}>
+              <ScalableText style={styles.buttonLabel}>Continuar</ScalableText>
+            </View>
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     );
   }
@@ -155,14 +162,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  sliderImage: {
+  imagefooter: {
     width: dimensions.window.width,
-    height: '100%',
-    //resizeMode: 'contain',
+    height: dimensions.window.width * 0.6666,
+    position: 'absolute',
+    zIndex: 2,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    resizeMode: 'cover',
+    backgroundColor: 'transparent'
   },
   container: {
-    height: '60%',
-    paddingTop: dimensions.bigSpace
+    height: '100%',
   },
   scroll: {
     //paddingHorizontal: dimensions.hugeSpace + dimensions.smallSpace,
@@ -170,27 +182,26 @@ const styles = StyleSheet.create({
   },
   container1: {
     width: '100%',
-    marginTop: dimensions.smallSpace,
   },
   headline: {
     fontFamily: 'Kiona',
     fontSize: dimensions.viajeHeadlineSize,
     lineHeight: dimensions.viajeHeadlineLineHeight,
-    textAlign: 'center',
+    textAlign: 'left',
     color: Colors.textoViaje,
     letterSpacing: -0.5,
     marginBottom: 10,
+    marginTop: 25,
   },
   container2: {
     paddingTop: screenHeight * 0.03,
     width: '100%',
-
   },
   text2: {
     fontFamily: 'MyriadPro-Regular',
     fontSize: dimensions.viajeParrafoSize,
     lineHeight: dimensions.viajeParrafoLineHeight,
-    textAlign: 'center',
+    textAlign: 'left',
     color: Colors.textoViaje,
     alignItems: 'center',
   },
@@ -217,6 +228,14 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'MyriadPro-Regular',
     fontSize: 20,
+  },
+  close: {
+    position: 'absolute',
+    right: 0,
+    bottom: bottomPositionX,
+    paddingHorizontal: 20,
+    zIndex: 100,
+    lineHeight: 0,
   },
 });
 
