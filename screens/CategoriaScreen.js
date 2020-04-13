@@ -13,17 +13,15 @@ import Dimensions from '../constants/Dimensions';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import ScalableText from 'react-native-text';
-import {HeaderBackButton} from 'react-navigation';
+import {HeaderBackButton} from '@react-navigation/stack';
 import {connect} from 'react-redux';
 import colors from '../constants/Colors';
 
 /**
- * @typedef {Object} ParamsNavigation
- * @prop {string} categoria
- *
  * @typedef Props
  * @prop {import('../utils/types').Categoria} categoria
- * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Categoria'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Categoria'>} route
  * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
@@ -34,11 +32,13 @@ class Categoria extends Component {
     isLoading: true,
   };
 
-  /** @param {{navigation : import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>}} props*/
-  static navigationOptions = ({navigation}) => {
+  /** @param {Props} props */
+  static navigationOptions = ({route, navigation}) => {
     return {
-      title: navigation.getParam('categoria', 'Categoria'),
-      headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
+      title: route.params?.titulo ?? 'Categoria',
+      headerLeft: () => (
+        <HeaderBackButton onPress={() => navigation.goBack()} />
+      ),
     };
   };
   constructor(props) {
@@ -48,7 +48,7 @@ class Categoria extends Component {
     this.cantViajes = 0;
   }
   componentDidMount = async () => {
-    this.props.navigation.addListener('willBlur', () => {
+    this.props.navigation.addListener('blur', () => {
       if (this.player === null) {
         return;
       }
@@ -57,7 +57,7 @@ class Categoria extends Component {
       }
     });
     //TODO cambiar este comportamiento con el redux
-    this.props.navigation.addListener('willFocus', async () => {
+    this.props.navigation.addListener('focus', async () => {
       const viajes = await API.getViajesCategoria(this.categoria.key, user);
       //const viajes = [this.props.viaje];
       this.setState({viajes, isLoading: false});
@@ -80,11 +80,11 @@ class Categoria extends Component {
       },
     });
     let tipo = viaje.pasos[0].tipo;
+    //TODO calcular en que paso se quedo, o ir al paso 0.
     this.props.navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
       position: 0,
       titulo: viaje.pasos[0].titulo,
     });
-
   };
   //TODO reiniciar el video al llegar al final
   /** @param {Player} ref*/
@@ -93,7 +93,6 @@ class Categoria extends Component {
   };
 
   renderListHeader = _ => {
-
     return (
       <>
         {!this.state.isLoading && (
@@ -143,7 +142,7 @@ class Categoria extends Component {
             onPress={() => {
               this._goViaje(index);
             }}
-            style={{textTransform: 'none'}}>
+            styleText={{textTransform: 'none'}}>
             {item.titulo}
           </ItemBubble>
         );
@@ -236,9 +235,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     //marginBottom: Dimensions.bigSpace,
   },
-  titulo: {
-
-  },
+  titulo: {},
   cover: {
     height: 210,
     //marginBottom: 10,

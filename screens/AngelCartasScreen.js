@@ -10,21 +10,21 @@ import {
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
-import SvgUri from '../components/SvgUri';
+import {SvgUri} from 'react-native-svg';
 import ScalableText from 'react-native-text';
-
-/**
- *
- * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
- */
 
 //TODO registrar seleccion
 const numColumns = 2;
 const height = ((Dims.window.width - 40) / numColumns) * 1.5;
 const width = (Dims.window.width - 40) / numColumns;
 
-/** @extends {Component<Props>} */
+/**
+ * @typedef Props
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Cartas'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Cartas'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
+ * @extends {Component<Props>}
+ */
 export default class AngelCartasScreen extends Component {
   constructor(props) {
     super(props);
@@ -61,7 +61,7 @@ export default class AngelCartasScreen extends Component {
           this._handleClick(item);
         }}>
         <View style={styles.containercard}>
-          <SvgUri width={width} height={height} source={{uri: item.reverso}} />
+          <SvgUri width={width} height={height} uri={item.reverso} />
         </View>
       </TouchableOpacity>
     );
@@ -69,10 +69,11 @@ export default class AngelCartasScreen extends Component {
 
   renderFooter = () => {
     return (
-      <ScalableText style={styles.suggestion}>Elige una carta para ver el mensaje de tu ángel</ScalableText>
+      <ScalableText style={styles.suggestion}>
+        Elige una carta para ver el mensaje de tu ángel
+      </ScalableText>
     );
   };
-
 
   render() {
     return (
@@ -85,8 +86,8 @@ export default class AngelCartasScreen extends Component {
             renderItem={this.renderItem}
             ListFooterComponent={this.renderFooter}
             numColumns={numColumns}
+            keyExtractor={(item, index) => index.toString()}
           />
-          
         </View>
       </SafeAreaView>
     );
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#665e61',
     padding: 5,
-    zIndex: 3
+    zIndex: 3,
   },
   containercard: {
     marginBottom: 3,

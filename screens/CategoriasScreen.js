@@ -12,19 +12,17 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
 import ScalableText from 'react-native-text';
-import SvgUri from '../components/SvgUri';
+import {SvgUri} from 'react-native-svg';
 import {connect} from 'react-redux';
 
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Categorias'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Categorias'>} route
  * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
 class Categorias extends Component {
-  static navigationOptions = {
-    header: null,
-  };
   /** @type {{categorias:import('../utils/types').Categoria[]}} */
   state = {
     categorias: [],
@@ -39,8 +37,8 @@ class Categorias extends Component {
 
   /** @param {import('../utils/types').Categoria} item */
   _handleClick = item => {
-    this.props.navigation.navigate('Categoria', {
-      categoria: item.titulo,
+    this.props.navigation.navigate('ViajeStack', {
+      titulo: item.titulo,
     });
     this.props.dispatch({
       type: 'SET_CATEGORIA',
@@ -66,7 +64,7 @@ class Categorias extends Component {
         this._handleClick(item);
       }}>
       <ScalableText style={styles.title_boxes}>{item.titulo}</ScalableText>
-      <SvgUri style={styles.image} source={{uri: item.imagenLista}} />
+      <SvgUri style={styles.image} uri={item.imagenLista} />
     </Buttom>
   );
   render() {

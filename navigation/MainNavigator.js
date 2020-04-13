@@ -1,4 +1,5 @@
-import {createStackNavigator} from 'react-navigation';
+import {createStackNavigator} from '@react-navigation/stack';
+import * as React from 'react';
 import MeditacionScreen from '../screens/MeditacionScreen';
 import MeditacionIntroScreen from '../screens/MeditacionIntroScreen';
 import AudiolibroScreen from '../screens/AudiolibroScreen';
@@ -11,52 +12,81 @@ import PremiumScreen from '../screens/PremiumScreen';
 import CancionesScreen from '../screens/CancionesScreen';
 import CancionScreen from '../screens/CancionScreen';
 
-const MainNavigator = createStackNavigator(
-  {
-    PerfilDrawer: {screen: PerfilNavigation, navigationOptions: {header: null}},
-    Meditacion: {
-      screen: MeditacionScreen,
-    },
-    MeditacionIntro: {
-      screen: MeditacionIntroScreen,
-    },
-    Audiolibro: {screen: AudiolibroScreen},
-    Reflexion: ReflexionScreen,
-    EmocionesStack: {
-      screen: EmocionesNavigator,
-      navigationOptions: {
-        title: '¿Cómo te sientes hoy?',
+const Stack = createStackNavigator();
+
+export default function MainNavigator() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerBackTitle: null,
         headerTitleStyle: {
           color: '#030303',
           fontFamily: 'MyriadPro-Semibold',
         },
-      },
-    },
-    ViajeStack: {
-      screen: ViajeNavigator,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    Canciones: {
-      screen: CancionesScreen,
-      navigationOptions: {
-        title: 'Música',
-      },
-    },
-    Cancion: CancionScreen,
-    Suscribete: PremiumScreen,
-    Tutorial: TutorialScreen,
-  },
-  {
-    defaultNavigationOptions: {
-      headerBackTitle: null,
-      headerTitleStyle: {
-        color: '#030303',
-        fontFamily: 'MyriadPro-Semibold',
-      },
-    },
-  },
-);
-
-export default MainNavigator;
+      }}>
+      <Stack.Screen
+        name="PerfilDrawer"
+        component={PerfilNavigation}
+        options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="Meditacion"
+        component={MeditacionScreen}
+        options={MeditacionScreen.navigationOptions}
+      />
+      <Stack.Screen
+        name="MeditacionIntro"
+        component={MeditacionIntroScreen}
+        options={MeditacionIntroScreen.navigationOptions}
+      />
+      <Stack.Screen
+        name="Audiolibro"
+        component={AudiolibroScreen}
+        options={AudiolibroScreen.navigationOptions}
+      />
+      <Stack.Screen
+        name="Reflexion"
+        component={ReflexionScreen}
+        options={ReflexionScreen.navigationOptions}
+      />
+      <Stack.Screen
+        name="Canciones"
+        component={CancionesScreen}
+        options={CancionesScreen.navigationOptions}
+      />
+      <Stack.Screen
+        name="Cancion"
+        component={CancionScreen}
+        options={CancionScreen.navigationOptions}
+      />
+      <Stack.Screen
+        name="Suscribete"
+        component={PremiumScreen}
+        options={PremiumScreen.navigationOptions}
+      />
+      <Stack.Screen
+        name="Tutorial"
+        component={TutorialScreen}
+        options={TutorialScreen.navigationOptions}
+      />
+      <Stack.Screen
+        name="EmocionesStack"
+        component={EmocionesNavigator}
+        options={{
+          title: '¿Cómo te sientes hoy?',
+          headerTitleStyle: {
+            color: '#030303',
+            fontFamily: 'MyriadPro-Semibold',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="ViajeStack"
+        component={ViajeNavigator}
+        options={{
+          header: () => null,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}

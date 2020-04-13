@@ -14,31 +14,28 @@ import LogoDescargar from '../constants/LogoDescargar';
 import dimensions from '../constants/Dimensions';
 import ScreenBg from '../components/screenBg';
 import ScalableText from 'react-native-text';
-import MisEmocionesScreen from '../screens/MisEmocionesScreen';
+//import MisEmocionesScreen from '../screens/MisEmocionesScreen';
 
 //const deviceWidth = Dims.window.width;
 //const deviceHeight = '100%';
-const BAR_SPACE = 9;
+//const BAR_SPACE = 9;
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Emocion'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Emocion'>} route
  * @extends {Component<Props>}
  */
 export default class Emocion extends Component {
   animVal = new Animated.Value(0);
 
-  static navigationOptions = ({navigation}) => ({
-    MisEmociones: MisEmocionesScreen,
-  });
-
   _handelClick = () => {
-    console.log('click');
-    this.props.navigation.navigate('MisEmociones');
+    this.props.navigation.navigate('PerfilDrawer', {screen: 'MisEmociones'});
   };
 
   render() {
     /** @type {import('../utils/types').Emoción} */
-    const emocion = this.props.navigation.getParam('emocion', {});
+    // @ts-ignore
+    const emocion = this.props.route.params?.emocion ?? {};
     const info = [
       {
         key: 'slide1',
@@ -53,30 +50,26 @@ export default class Emocion extends Component {
     ];
 
     let imageArray = [];
-    let barArray = [];
-    const itemWidth = 5;
+    //let barArray = [];
+    //const itemWidth = 5;
     info.forEach((item, i) => {
       const thisImage = (
-        <View key={`item${i}`}>          
-        {i === 0 ? (
-          <>
-            <ScalableText style={styles.bigTitle}>
-              {item.title}
-            </ScalableText>
-            <ScalableText style={styles.paragraph}>
-              {item.text}
-            </ScalableText>
-          </>
+        <View key={`item${i}`}>
+          {i === 0 ? (
+            <>
+              <ScalableText style={styles.bigTitle}>{item.title}</ScalableText>
+              <ScalableText style={styles.paragraph}>{item.text}</ScalableText>
+            </>
           ) : (
             <>
-              <ScalableText style={styles.bigTitle}>
-                {item.title}
-              </ScalableText>
-              <ScalableText style={styles.paragraph}>
-                {item.text}
-              </ScalableText>
-              <TouchableOpacity style={styles.button} onPress={this._handelClick}>
-                  <ScalableText style={styles.buttonLabel}>Ir a mis emociones</ScalableText>
+              <ScalableText style={styles.bigTitle}>{item.title}</ScalableText>
+              <ScalableText style={styles.paragraph}>{item.text}</ScalableText>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={this._handelClick}>
+                <ScalableText style={styles.buttonLabel}>
+                  Ir a mis emociones
+                </ScalableText>
               </TouchableOpacity>
               <View
                 style={{
@@ -99,37 +92,32 @@ export default class Emocion extends Component {
       imageArray.push(thisImage);
     });
 
-
-
     return (
       <SafeAreaView style={{flex: 1}}>
         <ScreenBg
           source={{uri: emocion.imagenFondo}}
           styleImage={{resizeMode: 'cover', height: dimensions.window.height}}>
           <ScrollView>
-          <View style={{minHeight: dimensions.window.height}}>
-            <Image
-              style={{
-                width: dimensions.window.width,
-                height: dimensions.window.height * emocion.headerH,
-              }}
-              source={{uri: emocion.header}}
-            />
-            <View style={styles.container}>
-              <ScrollView
-                style={styles.slider}>
-                {imageArray}
-              </ScrollView>
+            <View style={{minHeight: dimensions.window.height}}>
+              <Image
+                style={{
+                  width: dimensions.window.width,
+                  height: dimensions.window.height * emocion.headerH,
+                }}
+                source={{uri: emocion.header}}
+              />
+              <View style={styles.container}>
+                <ScrollView style={styles.slider}>{imageArray}</ScrollView>
+              </View>
+              <Image
+                style={{
+                  width: dimensions.window.width,
+                  height: dimensions.window.height * emocion.footerH,
+                  minHeight: dimensions.window.height * emocion.footerH,
+                }}
+                source={{uri: emocion.footer}}
+              />
             </View>
-          <Image
-            style={{
-              width: dimensions.window.width,
-              height: dimensions.window.height * emocion.footerH,
-              minHeight: dimensions.window.height * emocion.footerH,
-            }}
-            source={{uri: emocion.footer}}
-          />
-          </View>
           </ScrollView>
         </ScreenBg>
       </SafeAreaView>

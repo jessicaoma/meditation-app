@@ -14,10 +14,9 @@ import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import Next from '../constants/LogoButtonNext';
 import ScalableText from 'react-native-text';
-import {HeaderBackButton} from 'react-navigation';
+import {HeaderBackButton} from '@react-navigation/stack';
 import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
-import ViajeScreen from '../screens/ViajeScreen';
 
 const screenHeight =
   dimensions.screen.height -
@@ -25,30 +24,24 @@ const screenHeight =
 
 /**
  * Paso Tipo(A): Highlight
- * @typedef {Object} ParamsNavigation
- * @prop {number} position
- * @prop {string} titulo
- *
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
- * @prop {import('redux').Dispatch} dispatch
- * @prop {import('../utils/types').Viaje} viaje
  * @prop {import('../utils/types').Categoria} categoria
- *
+ * @prop {import('../utils/types').Viaje} viaje
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'PasoA'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'PasoA'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
 class PasoAScreen extends Component {
-  //animVal = new Animated.Value(0);
-
   static navigationOptions = {
-    header: null,
+    header: () => null,
   };
 
   /** @param {Props} props */
   constructor(props) {
     super(props);
     const {viaje} = props;
-    this.pasoIndex = props.navigation.state.params.position;
+    this.pasoIndex = props.route.params.position;
     this.paso = viaje.pasos[this.pasoIndex];
     this.viaje = viaje;
   }
@@ -63,8 +56,7 @@ class PasoAScreen extends Component {
   };
 
   _handleClose = () => {
-    const {viaje} = this.props;
-    this.props.navigation.pop(viaje.pasos.length);
+    this.props.navigation.pop(this.pasoIndex + 1);
   };
 
   nextStep = () => {
@@ -86,7 +78,11 @@ class PasoAScreen extends Component {
         <ImageBackground
           source={{uri: this.paso.imagenFondo}}
           style={[styles.sliderImage]}>
-          <TouchableOpacity style={styles.close} onPress={() => { this._handleClose()}}>
+          <TouchableOpacity
+            style={styles.close}
+            onPress={() => {
+              this._handleClose();
+            }}>
             <Ionicons name={'md-close'} size={25} color={'#fff'} />
           </TouchableOpacity>
 
@@ -95,7 +91,7 @@ class PasoAScreen extends Component {
               tintColor="white"
               pressColorAndroid="transparent"
               onPress={() => this.props.navigation.goBack()}
-              backTitleVisible={false}
+              labelVisible={false}
             />
           </View>
           {this.pasoIndex === 0 && (

@@ -14,11 +14,12 @@ import API from '../utils/API';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import ScalableText from 'react-native-text';
-import SvgUri from '../components/SvgUri';
-//TODO comportamiento al finalizar video
+import {SvgUri} from 'react-native-svg';
+
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Meditaciones'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Meditaciones'>} route
  * @extends {Component<Props>}
  */
 export default class MeditacionesScreen extends Component {
@@ -33,7 +34,7 @@ export default class MeditacionesScreen extends Component {
     };
   }
   componentDidMount = async () => {
-    this.props.navigation.addListener('willBlur', () => {
+    this.props.navigation.addListener('blur', () => {
       if (this.player === null) return;
       if (this.player.state.isPlaying) {
         this.player._onPlayPausePressed();
@@ -72,7 +73,7 @@ export default class MeditacionesScreen extends Component {
           this._handleClick(item);
         }}>
         <ScalableText style={styles.title_boxes}>{item.titulo}</ScalableText>
-        <SvgUri style={styles.image} source={{uri: item.imagenLista}} />
+        <SvgUri style={styles.image} uri={item.imagenLista} />
       </Buttom>
     );
   };

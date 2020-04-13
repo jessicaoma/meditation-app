@@ -8,7 +8,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Platform,
-  DeviceInfo,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import API, {user} from '../utils/API';
@@ -16,7 +15,7 @@ import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import Next from '../constants/LogoButtonNext';
-import {Header} from 'react-navigation';
+import {Header} from '@react-navigation/stack';
 import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
 
@@ -24,36 +23,21 @@ const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
-const bottomPositionX = (Platform.OS === 'android' ? 15 : 4);
-
 /**
  * Paso Tipo(C): Recomendaciones
- * @typedef {Object} ParamsNavigation
- * @prop {number} position
- * @prop {string} titulo
- *
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
- * @prop {import('redux').Dispatch} dispatch
- * @prop {import('../utils/types').Viaje} viaje
  * @prop {import('../utils/types').Categoria} categoria
- *
+ * @prop {import('../utils/types').Viaje} viaje
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'PasoC'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'PasoC'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
 class PasoCScreen extends Component {
   /** @param {Props} props */
-  constructor(props) {
-    super(props);
-    const {viaje} = props;
-    this.pasoIndex = props.navigation.state.params.position;
-    this.paso = viaje.pasos[this.pasoIndex];
-  }
-
-  /** @param {{navigation: import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>}} param*/
-  static navigationOptions = ({navigation}) => {
-
+  static navigationOptions = ({navigation, route}) => {
     return {
-      title: navigation.state.params.titulo,
+      title: route.params.titulo,
       headerTintColor: '#fff',
       headerTitleStyle: {
         color: 'white',
@@ -61,48 +45,51 @@ class PasoCScreen extends Component {
       headerStyle: {
         backgroundColor: 'transparent',
       },
-      header: (props) => {
+      header: props => {
         return (
           <ImageBackground
-            source={{
-              uri:
-                'http://okoconnect.com/karim/assets/categorias/categoria-1/header.png',
-            }}
             style={{
-              zIndex: 99,
-              width: dimensions.screen.width,
-              height:
-                Header.HEIGHT +
-                (Platform.OS === 'android'
-                  ? dimensions.statusBarHeight
-                  : DeviceInfo.isIPhoneX_deprecated
-                  ? dimensions.statusBarHeight - 20
-                  : 0),
+              backgroundColor: '#b9a0bf',
             }}
             imageStyle={{
               resizeMode: 'stretch',
-            }}>
-            <Header {...props} />
-            <TouchableOpacity style={styles.close} onPress={() => {props.navigation.popToTop();}}>
-              <Ionicons name={'md-close'} size={25} color={'#fff'} />
-            </TouchableOpacity>
+            }}
+            source={require('../assets/images/header-image.png')}>
+            <Header {...props} style={{backgroundColor: 'transparent'}} />
           </ImageBackground>
         );
       },
+      headerRight: props => (
+        <TouchableOpacity
+          style={styles.close}
+          onPress={() => {
+            props.navigation.pop(props.route.params.position + 1);
+          }}>
+          <Ionicons name={'md-close'} size={25} color={'#fff'} />
+        </TouchableOpacity>
+      ),
     };
   };
 
-  
+  /** @param {Props} props */
+  constructor(props) {
+    super(props);
+    const {viaje} = props;
+    this.pasoIndex = props.route.params.position;
+    this.paso = viaje.pasos[this.pasoIndex];
+  }
 
   componentDidMount = async () => {
     // const {steps, position} = this.props.navigation.state.params;
     // const paso = steps[position];
     // API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
   };
-  
+
   _handleClose = () => {
-      const {viaje} = this.props;this.props.navigation.pop(viaje.pasos.length);
-    };
+    const {viaje} = this.props;
+    // @ts-ignore
+    this.props.navigation.pop(this.pasoIndex + 1);
+  };
 
   nextStep = () => {
     const {viaje} = this.props;
@@ -120,10 +107,9 @@ class PasoCScreen extends Component {
       <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
         <View style={styles.container1}>
           <ScrollView style={styles.scroll}>
-
             <View style={{paddingBottom: dimensions.window.width * 0.562}}>
               {this.paso.contenidos.map(contenido => (
-                <View>
+                <View key={contenido.key}>
                   <ScalableText style={styles.headline}>
                     {contenido?.titulo ?? ''}
                   </ScalableText>
@@ -137,7 +123,6 @@ class PasoCScreen extends Component {
         </View>
         <Image
           source={{uri: this.paso.imagenFondo}}
-          //source={{uri: 'http://okoconnect.com/karim/assets/categorias/categoria-1/recomendaciones-0.png'}}
           style={styles.imagefooter}
           width={dimensions.window.width}
           height={dimensions.window.width * 0.562}
@@ -204,7 +189,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     height: '30%',
-    //display: 'flex',
     flex: 1,
     width: '100%',
     zIndex: 3,
@@ -220,7 +204,6 @@ const styles = StyleSheet.create({
   close: {
     position: 'absolute',
     right: 0,
-    bottom: bottomPositionX,
     paddingHorizontal: 20,
     zIndex: 100,
     lineHeight: 0,

@@ -7,7 +7,6 @@ import {
   ImageBackground,
   Platform,
 } from 'react-native';
-
 import Player from '../player/Player';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
@@ -15,7 +14,7 @@ import dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
-import {HeaderBackButton} from 'react-navigation';
+import {HeaderBackButton} from '@react-navigation/stack';
 import {Ionicons} from '@expo/vector-icons';
 
 const screenHeight =
@@ -24,29 +23,24 @@ const screenHeight =
 
 /**
  * Paso Tipo(B): Teoría
- * @typedef {Object} ParamsNavigation
- * @prop {number} position
- * @prop {string} titulo
- *
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
- * @prop {import('redux').Dispatch} dispatch
- * @prop {import('../utils/types').Viaje} viaje
  * @prop {import('../utils/types').Categoria} categoria
- *
+ * @prop {import('../utils/types').Viaje} viaje
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'PasoB'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'PasoB'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
 class PasoBScreen extends Component {
   static navigationOptions = {
-    header: null,
+    header: () => null,
   };
-
 
   /** @param {Props} props */
   constructor(props) {
     super(props);
     const {viaje} = props;
-    this.pasoIndex = props.navigation.state.params.position;
+    this.pasoIndex = props.route.params.position;
     this.paso = viaje.pasos[this.pasoIndex];
     this.state = {
       show: true,
@@ -60,8 +54,7 @@ class PasoBScreen extends Component {
   };
 
   _handleClose = () => {
-    const {viaje} = this.props;
-    this.props.navigation.pop(viaje.pasos.length);
+    this.props.navigation.pop(this.pasoIndex + 1);
   };
 
   nextStep = () => {
@@ -80,7 +73,8 @@ class PasoBScreen extends Component {
     this.player = ref;
   };
 
-  otro = () => {
+  mostrarControles = () => {
+    //TODO hacer que al pulsar se muestren los controles
     this.player._startPlayer();
     //this.nextStep();
   };
@@ -92,7 +86,11 @@ class PasoBScreen extends Component {
         <ImageBackground
           source={{uri: this.paso.imagenFondo}}
           style={styles.sliderImage}>
-          <TouchableOpacity style={styles.close} onPress={() => { this._handleClose()}}>
+          <TouchableOpacity
+            style={styles.close}
+            onPress={() => {
+              this._handleClose();
+            }}>
             <Ionicons name={'md-close'} size={25} color={'#bdc4e1'} />
           </TouchableOpacity>
           <View style={styles.container1}>
@@ -101,7 +99,7 @@ class PasoBScreen extends Component {
             </ScalableText>
           </View>
           <View style={this.state.show ? styles.container2 : styles.hidden}>
-            <TouchableOpacity onPress={this.otro}>
+            <TouchableOpacity onPress={this.mostrarControles}>
               <View style={styles.button}>
                 <ScalableText style={styles.buttonLabel}>
                   Escuchar el audio
@@ -125,7 +123,7 @@ class PasoBScreen extends Component {
               tintColor="#bdc4e1"
               pressColorAndroid="transparent"
               onPress={() => this.props.navigation.goBack()}
-              backTitleVisible={false}
+              labelVisible={false}
             />
           </View>
         </ImageBackground>
@@ -190,8 +188,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkPurple,
     borderRadius: 40,
     paddingHorizontal: dimensions.window.width * 0.15,
-    //paddingBottom: dimensions.window.width * 0.035,
-    //paddingTop: dimensions.window.width * 0.045,
     height: dimensions.window.width * 0.14,
     justifyContent: 'center',
     alignContent: 'center',

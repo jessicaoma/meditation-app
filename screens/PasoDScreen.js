@@ -8,46 +8,36 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Platform,
-  DeviceInfo,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
-import {Header} from 'react-navigation';
+import {Header} from '@react-navigation/stack';
 import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
 
 //const screenWidth = dimensions.window.width;
 const screenHeight =
   dimensions.screen.height -
-  Header.HEIGHT -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
-const screenHeight2 =
-  dimensions.screen.height -
-  (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
-const bottomPositionX = (Platform.OS === 'android' ? 15 : 4);
 
 /**
  * Paso Tipo(D): Ejercicio
- * @typedef {Object} ParamsNavigation
- * @prop {number} position
- * @prop {string} titulo
- *
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
- * @prop {import('redux').Dispatch} dispatch
- * @prop {import('../utils/types').Viaje} viaje
  * @prop {import('../utils/types').Categoria} categoria
- *
+ * @prop {import('../utils/types').Viaje} viaje
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'PasoD'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'PasoD'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
 class PasoDScreen extends Component {
-  /** @param {{navigation: import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>}} param*/
-  static navigationOptions = ({navigation}) => {
+  /** @param {Props} param*/
+  static navigationOptions = ({route}) => {
     return {
-      title: navigation.state.params.titulo,
+      title: route.params.titulo,
       headerTintColor: '#fff',
       headerTitleStyle: {
         color: 'white',
@@ -58,30 +48,26 @@ class PasoDScreen extends Component {
       header: props => {
         return (
           <ImageBackground
-            source={{
-              uri:
-                'http://okoconnect.com/karim/assets/categorias/categoria-1/header.png',
-            }}
             style={{
-              width: dimensions.screen.width,
-              height:
-                Header.HEIGHT +
-                (Platform.OS === 'android'
-                  ? dimensions.statusBarHeight
-                  : DeviceInfo.isIPhoneX_deprecated
-                  ? dimensions.statusBarHeight - 20
-                  : 0),
+              backgroundColor: '#b9a0bf',
             }}
             imageStyle={{
               resizeMode: 'stretch',
-            }}>
+            }}
+            source={require('../assets/images/header-image.png')}>
             <Header {...props} />
-            <TouchableOpacity style={styles.close} onPress={() => {props.navigation.popToTop();}}>
-              <Ionicons name={'md-close'} size={25} color={'#fff'} />
-            </TouchableOpacity>
           </ImageBackground>
         );
       },
+      headerRight: props => (
+        <TouchableOpacity
+          style={styles.close}
+          onPress={() => {
+            props.navigation.pop(props.route.params.position + 1);
+          }}>
+          <Ionicons name={'md-close'} size={25} color={'#fff'} />
+        </TouchableOpacity>
+      ),
     };
   };
 
@@ -89,7 +75,7 @@ class PasoDScreen extends Component {
   constructor(props) {
     super(props);
     const {viaje} = props;
-    this.pasoIndex = props.navigation.state.params.position;
+    this.pasoIndex = props.route.params.position;
     this.paso = viaje.pasos[this.pasoIndex];
   }
 
@@ -115,21 +101,21 @@ class PasoDScreen extends Component {
       <SafeAreaView style={styles.safe}>
         <View style={styles.container}>
           <ScrollView style={styles.scroll}>
-            <View style={{paddingBottom: dimensions.window.width * 0.6666,}}>
-            {this.paso.contenidos.map(contenido => (
-              <>
-                <View style={styles.container1}>
-                  <ScalableText style={styles.headline}>
-                    {contenido.titulo}
-                  </ScalableText>
+            <View style={{paddingBottom: dimensions.window.width * 0.6666}}>
+              {this.paso.contenidos.map(contenido => (
+                <View key={contenido.key}>
+                  <View style={styles.container1}>
+                    <ScalableText style={styles.headline}>
+                      {contenido.titulo}
+                    </ScalableText>
+                  </View>
+                  <View style={styles.container2}>
+                    <ScalableText style={styles.text2}>
+                      {contenido.texto}
+                    </ScalableText>
+                  </View>
                 </View>
-                <View style={styles.container2}>
-                  <ScalableText style={styles.text2}>
-                    {contenido.texto}
-                  </ScalableText>
-                </View>
-              </>
-            ))}
+              ))}
             </View>
           </ScrollView>
         </View>
@@ -171,13 +157,12 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     resizeMode: 'cover',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   container: {
     height: '100%',
   },
   scroll: {
-    //paddingHorizontal: dimensions.hugeSpace + dimensions.smallSpace,
     paddingHorizontal: dimensions.bigSpace,
   },
   container1: {
@@ -210,19 +195,15 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignSelf: 'center',
     zIndex: 100,
-    marginBottom: screenHeight2 * 0.05,
+    marginBottom: screenHeight * 0.05,
   },
   button: {
     height: dimensions.window.width * 0.14,
-    //marginTop: 20,
     backgroundColor: Colors.darkPurple,
     borderRadius: 40,
     paddingHorizontal: dimensions.window.width * 0.15,
-    // display: 'flex',
     justifyContent: 'center',
-    // alignItems: 'center',
     alignContent: 'center',
-    // alignSelf: 'center',
   },
   buttonLabel: {
     color: 'white',
@@ -232,7 +213,6 @@ const styles = StyleSheet.create({
   close: {
     position: 'absolute',
     right: 0,
-    bottom: bottomPositionX,
     paddingHorizontal: 20,
     zIndex: 100,
     lineHeight: 0,

@@ -4,7 +4,7 @@ import {envRemoto} from './types';
 
 const BASE_API = envRemoto
   ? 'http://okotesting-001.azurewebsites.net/api/'
-  : 'http://localhost:5000/api/';
+  : 'http://localserver.com:5000/api/';
 
 class Api {
   /** Consulta las meditaciones

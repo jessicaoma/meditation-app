@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   TouchableHighlight,
-  StatusBar,
   SafeAreaView,
   ScrollView,
 } from 'react-native';
@@ -17,7 +16,8 @@ import ScalableText from 'react-native-text';
 //TODO hacer todo el manejo
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Login'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Login'>} route
  * @extends {Component<Props>}
  */
 export default class LoginScreen extends Component {
@@ -37,14 +37,15 @@ export default class LoginScreen extends Component {
   render() {
     return (
       <SafeAreaView style={styles.safe}>
-        <StatusBar barStyle="dark-content" />
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scroll}>
           <View style={styles.content}>
             <View style={styles.header}>
               <Logo isAlternative />
-              <ScalableText style={styles.welcomeTitle}>BIENVENIDO</ScalableText>
+              <ScalableText style={styles.welcomeTitle}>
+                BIENVENIDO
+              </ScalableText>
             </View>
             <View style={styles.container}>
               <View style={styles.full}>
@@ -62,7 +63,9 @@ export default class LoginScreen extends Component {
                 <TouchableOpacity
                   onPress={this.handleLogin}
                   style={[styles.button]}>
-                  <ScalableText style={styles.buttonLabel}>Iniciar Sesión</ScalableText>
+                  <ScalableText style={styles.buttonLabel}>
+                    Iniciar Sesión
+                  </ScalableText>
                 </TouchableOpacity>
                 <TouchableHighlight>
                   <Text style={styles.forgetText}>
@@ -75,7 +78,9 @@ export default class LoginScreen extends Component {
               <TouchableOpacity
                 onPress={this.handleCrearCuenta}
                 style={[styles.button]}>
-                <ScalableText style={styles.buttonLabel}>Crear una cuenta</ScalableText>
+                <ScalableText style={styles.buttonLabel}>
+                  Crear una cuenta
+                </ScalableText>
               </TouchableOpacity>
             </View>
           </View>

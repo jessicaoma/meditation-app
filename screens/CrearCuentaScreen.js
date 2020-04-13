@@ -17,7 +17,8 @@ import ScreenBg from '../components/screenBg';
 //TODO hacer todo el manejo
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'CrearCuenta'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'CrearCuenta'>} route
  * @extends {Component<Props>}
  */
 export default class CrearCuentaScreen extends Component {
@@ -121,7 +122,6 @@ const styles = StyleSheet.create({
   scroll: {
     paddingTop: Dims.statusBarHeight,
   },
-  fondo: {resizeMode: 'cover', height: Dims.window.height},
   container: {
     flex: 1,
     alignItems: 'center',

@@ -7,13 +7,19 @@ import ScalableText from 'react-native-text';
 import colors from '../constants/Colors';
 import API, {user} from '../utils/API';
 import {millisToHours} from '../utils/convert';
+import {HeaderBackButton} from '@react-navigation/stack';
+
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'MisMeditaciones'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'MisMeditaciones'>} route
  * @extends {Component<Props>}
  */
 export default class MisMeditacionesScreen extends Component {
-  static navigationOptions = {};
+  static navigationOptions = ({navigation}) => ({
+    title: 'Mis Meditaciones',
+    headerLeft: () => <HeaderBackButton onPress={() => navigation.goBack()} />,
+  });
   state = {
     progreso: 0,
     completadas: 0,
@@ -39,7 +45,9 @@ export default class MisMeditacionesScreen extends Component {
         <View style={styles.container}>
           <View style={styles.container}>
             <View>
-              <ScalableText style={styles.purpleTitle}>Mi registro</ScalableText>
+              <ScalableText style={styles.purpleTitle}>
+                Mi registro
+              </ScalableText>
             </View>
 
             <View style={styles.inforowtitle}>

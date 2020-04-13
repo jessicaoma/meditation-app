@@ -7,10 +7,12 @@ import {
   View,
   SafeAreaView,
   ImageBackground,
+  Platform,
+  //DeviceInfo,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
-import Dimensions from '../constants/Dimensions';
+import dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import Buttom from '../components/Buttom';
 import Logo from '../components/Logo';
@@ -21,27 +23,44 @@ import API, {user} from '../utils/API';
 import ScreenBg from '../components/screenBg';
 import colors from '../constants/Colors';
 import {enumLoNuevo} from '../utils/types';
+import {getBrightness} from '../utils/convert';
 
 let colorLetra = '#fff';
+
+const headerH =
+  68 +
+  (Platform.OS === 'android'
+    ? dimensions.statusBarHeight
+    : //: DeviceInfo.isIPhoneX_deprecated
+      //? dimensions.statusBarHeight - 20
+      0);
+
 /**
- * Home Screen
- * @typedef {object} Props
- * @prop {import('react-navigation').NavigationScreenProp} [navigation]
+ * Home Screens
+ * @typedef Props
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Home'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Home'>} route
  * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
- * */
+ */
 class Home extends Component {
+  /**
+   * @param {Props} props
+   * @return {import('@react-navigation/stack/lib/typescript/src/types').StackHeaderOptions}
+   */
   static navigationOptions = ({navigation}) => ({
-    headerStyle: {height: 68},
-    headerLeft: (
+    //title: '',
+    headerStyle: {height: headerH},
+    headerLeft: () => (
       <View style={{marginLeft: 16}}>
         <Logo />
       </View>
     ),
-    headerRight: (
+    headerRight: () => (
       <TouchableOpacity
         style={{marginRight: 16}}
         onPress={() => {
+          // @ts-ignore
           navigation.openDrawer();
         }}>
         <TabBarIcon name={'perfil'} />
@@ -160,7 +179,7 @@ class Home extends Component {
             },
           });
           this.props.navigation.navigate('ViajeStack', {
-            categoria: item.categoria.titulo,
+            titulo: item.categoria.titulo,
           });
         };
         break;
@@ -169,18 +188,14 @@ class Home extends Component {
         break;
     }
 
-    var c = color.substring(1);
-    var rgb = parseInt(c, 16); // convertir rrggbb a decimal
-    var r = (rgb >> 16) & 0xff; // extract rojo
-    var g = (rgb >> 8) & 0xff; // extract verde
-    var b = (rgb >> 0) & 0xff; // extract azul
+    var luma = getBrightness(color);
 
-    var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
-
-    if (luma > 150)
+    if (luma > 150) {
       //255 es lo mas claro.
       colorLetra = Colors.textoViaje;
-    else colorLetra = '#fff';
+    } else {
+      colorLetra = '#fff';
+    }
 
     return (
       <Buttom style={[{backgroundColor: color}, styles.box2]} onPress={onpress}>
@@ -199,7 +214,7 @@ class Home extends Component {
     <Buttom
       style={[{backgroundColor: item.color || Colors.primaryDark}, styles.box2]}
       onPress={() => {
-        this.props.navigation.navigate('Viaje', {viaje: item});
+        this.props.navigation.navigate('ViajeStack', {viaje: item});
       }}>
       <ScalableText style={styles.title_boxes2}>{item.titulo}</ScalableText>
     </Buttom>
@@ -233,7 +248,7 @@ class Home extends Component {
   };
 
   _handelPremium = () => {
-    this.props.navigation.navigate('Premium');
+    this.props.navigation.navigate('Suscribete');
   };
 
   _handelMusica = () => {
@@ -245,6 +260,7 @@ class Home extends Component {
       <SafeAreaView style={styles.container}>
         <ScrollView contentInsetAdjustmentBehavior="automatic">
           <ScreenBg
+            // @ts-ignore
             source={require('../assets/images/bg-inicio.png')}
             styleImage={{resizeMode: 'repeat'}}
             styleView={styles.scrollView}
@@ -347,11 +363,11 @@ class Home extends Component {
 const styles = StyleSheet.create({
   container: {flex: 1},
   scrollView: {
-    paddingHorizontal: Dimensions.regularSpace,
-    paddingTop: Dimensions.regularSpace,
+    paddingHorizontal: dimensions.regularSpace,
+    paddingTop: dimensions.regularSpace,
   },
   sectionTitle: {
-    fontSize: Dimensions.paragraph,
+    fontSize: dimensions.paragraph,
     letterSpacing: 1.11,
     lineHeight: 36,
     marginRight: 0,
@@ -370,13 +386,13 @@ const styles = StyleSheet.create({
   separador: {
     borderBottomColor: 'transparent',
     borderBottomWidth: 1,
-    marginTop: Dimensions.smallSpace,
-    marginBottom: Dimensions.bigSpace,
+    marginTop: dimensions.smallSpace,
+    marginBottom: dimensions.bigSpace,
   },
   separador2: {
     borderBottomColor: '#dcdcdc',
     borderBottomWidth: 0,
-    marginTop: Dimensions.smallSpace,
+    marginTop: dimensions.smallSpace,
   },
   title_tipo: {
     fontSize: 12.5,
@@ -385,8 +401,8 @@ const styles = StyleSheet.create({
   },
   title_boxes: {
     color: '#fff',
-    fontSize: Dimensions.bubbleTitle,
-    letterSpacing: Dimensions.bubbleTitleSpacing,
+    fontSize: dimensions.bubbleTitle,
+    letterSpacing: dimensions.bubbleTitleSpacing,
     lineHeight: 20,
     textTransform: 'uppercase',
     alignSelf: 'center',
@@ -396,8 +412,8 @@ const styles = StyleSheet.create({
   },
   title_boxes2: {
     color: '#81777A',
-    fontSize: Dimensions.bubbleTitle,
-    letterSpacing: Dimensions.bubbleTitleSpacing,
+    fontSize: dimensions.bubbleTitle,
+    letterSpacing: dimensions.bubbleTitleSpacing,
     lineHeight: 20,
     textTransform: 'uppercase',
     fontFamily: 'MyriadPro-Regular',
@@ -408,7 +424,7 @@ const styles = StyleSheet.create({
   },
   title_boxes3: {
     fontSize: 13,
-    letterSpacing: Dimensions.bubbleTitleSpacing,
+    letterSpacing: dimensions.bubbleTitleSpacing,
     lineHeight: 15,
     textTransform: 'uppercase',
     fontFamily: 'MyriadPro-Semibold',

@@ -1,15 +1,25 @@
-import {createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator} from '@react-navigation/stack';
+import React from 'react';
 import AngelCartasScreen from '../screens/AngelCartasScreen';
 import AngelScreen from '../screens/AngelScreen';
 
-const AngelNavigator = createSwitchNavigator(
-  {
-    Cartas: AngelCartasScreen,
-    Angel: AngelScreen,
-  },
-  {
-    initialRouteName: 'Cartas',
-  },
-);
+const Stack = createStackNavigator();
+
+function AngelNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Cartas"
+        component={AngelCartasScreen}
+        options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="Angel"
+        component={AngelScreen}
+        options={{header: () => null}}
+      />
+    </Stack.Navigator>
+  );
+}
 
 export default AngelNavigator;

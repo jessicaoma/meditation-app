@@ -13,12 +13,6 @@ import HalfCover from '../components/HalfCover';
 import Dims from '../constants/Dimensions';
 import API, {user} from '../utils/API';
 
-/**
- * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
- */
-
-//TODO se consultara las emociones para sus data base, y se guardara en redux
 //TODO registrar seleccion
 const numColumns = 2;
 
@@ -33,6 +27,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-1.png',
     headerH: 0.1,
     footerH: 0.35,
+    // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-1.png'),
   },
   {
@@ -44,6 +39,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-2.png',
     headerH: 0.1,
     footerH: 0.3,
+    // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-2.png'),
   },
   {
@@ -55,6 +51,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-3.png',
     headerH: 0.35,
     footerH: 0.35,
+    // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-3.png'),
   },
   {
@@ -66,17 +63,22 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-4.png',
     headerH: 0.45,
     footerH: 0.2,
+    // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-4.png'),
   },
 ];
 
-/** @extends {Component<Props>} */
+/**
+ * @typedef Props
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Emociones'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Emociones'>} route
+ * @extends {Component<Props>}
+ */
 export default class EmocionesScreen extends Component {
   state = {
     emociones: [],
   };
   componentDidMount = async () => {
-    /** @type {import('../utils/types').Emoción[]}*/
     let emociones = await API.getEmociones();
     emociones.forEach((emocion, index) => {
       let {imagenFondo, header, footer, headerH, footerH, imagen} = data[index];
@@ -132,7 +134,8 @@ export default class EmocionesScreen extends Component {
               keyExtractor={item => item.key}
             />
             <Text style={styles.suggestion}>
-              ¿Cómo te sientes hoy?{'\n'}{'\n'}
+              ¿Cómo te sientes hoy?{'\n'}
+              {'\n'}
               Llevando un registro de tus emociones podrás conocerte mejor.
             </Text>
           </View>

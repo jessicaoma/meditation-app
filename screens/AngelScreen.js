@@ -3,44 +3,30 @@ import {
   Animated,
   View,
   StyleSheet,
-  Text,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
-import SvgUri from '../components/SvgUri';
+import {SvgUri} from 'react-native-svg';
 import CardFlip from '../components/CardFlip';
 import ScalableText from 'react-native-text';
-/**
- * @typedef {Object} ParamsNavigation
- * @prop {import('../utils/types').CartaDelAngel} carta
- *
- * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
- */
 
 const deviceWidth = Dims.window.width - Dims.regularSpace - Dims.regularSpace;
 const deviceHeight = deviceWidth * 1.5 + Dims.regularSpace;
-//const FIXED_BAR_WIDTH = 40;
 
-/** @extends {Component<Props>} */
+/**
+ * @typedef Props
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Angel'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Angel'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
+ * @extends {Component<Props>}
+ */
 export default class AngelScreen extends Component {
   animVal = new Animated.Value(0);
   render() {
-    /** @type {ParamsNavigation} */
-    const {carta, angel} = this.props.navigation.state.params;
-    // const locationAfirma = angel.mensaje.indexOf('Afirma');
-    // const mensajeSub = angel.mensaje.substring(0, locationAfirma);
-    // const afirmaSup = angel.mensaje.substring(locationAfirma);
-    // const numItems = carta.faces.length;
-    // const itemWidth =
-    //   FIXED_BAR_WIDTH / numItems - (numItems - 1) * Dims.smallSpace;
-    // const imageArray = carta.faces.map((item, index) => {
-    //   return (
-    //   );
-    // });
+    const {carta} = this.props.route.params;
     return (
       <SafeAreaView style={styles.safe}>
         <View style={styles.statusBar} />
@@ -54,18 +40,20 @@ export default class AngelScreen extends Component {
                 <SvgUri
                   width={deviceWidth}
                   height={deviceHeight}
-                  source={{uri: carta.reverso}}
+                  uri={carta.reverso}
                 />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => this.card.flip()}>
                 <SvgUri
                   width={deviceWidth}
                   height={deviceHeight}
-                  source={{uri: carta.frontal}}
+                  uri={carta.frontal}
                 />
               </TouchableOpacity>
             </CardFlip>
-            <ScalableText style={styles.suggestion}>Toca para descubrir</ScalableText>
+            <ScalableText style={styles.suggestion}>
+              Toca para descubrir
+            </ScalableText>
           </View>
         </ScrollView>
       </SafeAreaView>

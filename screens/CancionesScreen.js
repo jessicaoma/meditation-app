@@ -11,15 +11,18 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import API from '../utils/API';
-import SvgUri from '../components/SvgUri';
+import {SvgUri} from 'react-native-svg';
 
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Canciones'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Canciones'>} route
  * @extends {Component<Props>}
  */
 export default class Canciones extends Component {
-  static navigationOptions = {};
+  static navigationOptions = {
+    title: 'Música',
+  };
   state = {
     /** @type {import('../utils/types').Canción[]} */
     canciones: [],
@@ -55,7 +58,7 @@ export default class Canciones extends Component {
         this._handleClick(item);
       }}>
       <ScalableText style={styles.title_boxes}>{item.titulo}</ScalableText>
-      <SvgUri style={styles.image} source={{uri: item.imagenLista}} />
+      <SvgUri style={styles.image} uri={item.imagenLista} />
     </Buttom>
   );
   render() {

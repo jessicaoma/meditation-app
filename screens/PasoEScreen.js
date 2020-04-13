@@ -13,7 +13,7 @@ import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
-import {HeaderBackButton} from 'react-navigation';
+import {HeaderBackButton} from '@react-navigation/stack';
 import Next from '../constants/LogoButtonNext';
 import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
@@ -25,28 +25,24 @@ const screenHeight =
 
 /**
  * Paso Tipo(E): Cierre
- * @typedef {Object} ParamsNavigation
- * @prop {number} position
- * @prop {string} titulo
- *
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
- * @prop {import('redux').Dispatch} dispatch
- * @prop {import('../utils/types').Viaje} viaje
  * @prop {import('../utils/types').Categoria} categoria
- *
+ * @prop {import('../utils/types').Viaje} viaje
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'PasoE'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'PasoE'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
 class PasoEScreen extends Component {
   static navigationOptions = {
-    header: null,
+    header: () => null,
   };
 
   /** @param {Props} props */
   constructor(props) {
     super(props);
     const {viaje} = props;
-    this.pasoIndex = props.navigation.state.params.position;
+    this.pasoIndex = props.route.params.position;
     this.paso = viaje.pasos[this.pasoIndex];
   }
 
@@ -60,19 +56,20 @@ class PasoEScreen extends Component {
   };
 
   _handleClose = () => {
-    const {viaje} = this.props;
-    this.props.navigation.pop(viaje.pasos.length);
+    // @ts-ignore
+    this.props.navigation.pop(this.pasoIndex + 1);
   };
-
 
   nextStep = () => {
     const {viaje} = this.props;
     //API.putDiarioPaso(paso.key, enumStatus.done, null, user);
     // @ts-ignore
     if (this.pasoIndex === viaje.pasos.length - 1) {
+      // @ts-ignore
       this.props.navigation.pop(viaje.pasos.length);
     } else {
       const {tipo} = viaje.pasos[this.pasoIndex + 1];
+      // @ts-ignore
       this.props.navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
         titulo: viaje.pasos[this.pasoIndex + 1].titulo,
         position: this.pasoIndex + 1,
@@ -88,7 +85,11 @@ class PasoEScreen extends Component {
         <ImageBackground
           source={{uri: this.paso.imagenFondo}}
           style={[styles.sliderImage]}>
-          <TouchableOpacity style={styles.close} onPress={() => { this._handleClose()}}>
+          <TouchableOpacity
+            style={styles.close}
+            onPress={() => {
+              this._handleClose();
+            }}>
             <Ionicons name={'md-close'} size={25} color={'#fff'} />
           </TouchableOpacity>
           <View style={styles.headerBack}>
@@ -96,7 +97,7 @@ class PasoEScreen extends Component {
               tintColor="white"
               pressColorAndroid="transparent"
               onPress={() => this.props.navigation.goBack()}
-              backTitleVisible={false}
+              labelVisible={false}
             />
           </View>
           <View style={styles.body}>
@@ -106,7 +107,6 @@ class PasoEScreen extends Component {
                   {contenido.titulo || ''}
                 </ScalableText>
               )}
-              
               <ScalableText style={styles.paragraphBottom}>
                 {contenido.texto}
               </ScalableText>
@@ -191,7 +191,8 @@ const styles = StyleSheet.create({
     marginRight: dimensions.bigSpace,
     zIndex: 100,
   },
-  footer: { //Ultima pantalla 
+  footer: {
+    //Ultima pantalla
     position: 'absolute',
     bottom: 0,
     marginBottom: screenHeight * 0.05,
@@ -216,7 +217,7 @@ const styles = StyleSheet.create({
     top: 0,
     zIndex: 100,
     paddingHorizontal: 20,
-    paddingVertical: 10
+    paddingVertical: 10,
   },
 });
 

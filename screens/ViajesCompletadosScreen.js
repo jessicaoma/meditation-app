@@ -11,20 +11,19 @@ import ItemBubble from '../components/ItemBubble';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
-import {HeaderBackButton} from 'react-navigation';
+import {HeaderBackButton} from '@react-navigation/stack';
 import API, {user} from '../utils/API';
 
 /**
- * @typedef {object} Props
- * @prop {import('react-navigation').NavigationScreenProp} [navigation]
- *
- * Viajes Completados Screen
+ * @typedef Props
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'ViajesCompletados'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'ViajesCompletados'>} route
  * @extends {Component<Props>}
- * */
+ */
 export default class ViajeCompletadosScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Módulos Finalizados',
-    headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
+    headerLeft: () => <HeaderBackButton onPress={() => navigation.goBack()} />,
   });
   state = {
     /** @type {import("../utils/types").Viaje[]} */
@@ -73,8 +72,8 @@ export default class ViajeCompletadosScreen extends Component {
           style={styles.scrollView}>
           <Text style={styles.bigTitle}>¡Vas muy bien!</Text>
           <Text style={styles.bigParagraph}>
-            Has completado los siguientes módulos. Si deseas consultar nuevamente
-            el contenido, presiona sobre el módulo de interés.
+            Has completado los siguientes módulos. Si deseas consultar
+            nuevamente el contenido, presiona sobre el módulo de interés.
           </Text>
           <View style={styles.container}>
             {this.state.viajes.length === 0

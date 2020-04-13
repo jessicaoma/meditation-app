@@ -17,7 +17,11 @@ const widthItem = Dimensions.window.width - Dimensions.regularSpace * 2 - 0;
 
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('../utils/types').Categoria} categoria
+ * @prop {import('../utils/types').Viaje} viaje
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Audiolibros'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Audiolibros'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
 export default class AudiolibrosScreen extends Component {
@@ -32,7 +36,7 @@ export default class AudiolibrosScreen extends Component {
   }
 
   componentDidMount() {
-    this.props.navigation.addListener('willFocus', () => {
+    this.props.navigation.addListener('focus', () => {
       this.refeshData();
     });
   }

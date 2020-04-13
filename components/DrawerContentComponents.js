@@ -1,61 +1,54 @@
 import React, {Component} from 'react';
-import {NavigationActions} from 'react-navigation';
 import {
-  Text,
   View,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
   Platform,
   DeviceInfo,
-  FlatList,
 } from 'react-native';
 import Dimensions from '../constants/Dimensions';
 import Flecha from '../constants/LogoArrowRight';
 import TabBarIcon from './TabBarIcon';
-import SvgUri from '../components/SvgUri';
+import {SvgUri} from 'react-native-svg';
 import ScalableText from 'react-native-text';
 
 const deviceWidth =
   Dimensions.window.width - Dimensions.regularSpace - Dimensions.regularSpace;
 const headerHeight = deviceWidth - Dimensions.regularSpace;
 
-const ContainerHeight = Dimensions.screen.height - Dimensions.statusBarHeight - 
-              (Platform.OS === 'android'
-                  ? + 30
-                    : DeviceInfo.isIPhoneX_deprecated ? Dimensions.statusBarHeight
-                    : 0);
+const ContainerHeight =
+  Dimensions.screen.height -
+  Dimensions.statusBarHeight -
+  (Platform.OS === 'android'
+    ? +30
+    : DeviceInfo.isIPhoneX_deprecated
+    ? Dimensions.statusBarHeight
+    : 0);
 
 /**
  * Drawer Content Render
- * @extends {Component<import('react-navigation').DrawerItemsProps & {descriptors: {[key: string]: import('react-navigation').NavigationDescriptor}}>}
+ * @prop {} navigation
+ * @extends {Component<import('@react-navigation/drawer').DrawerContentComponentProps>}
  */
 export default class DrawerContentComponents extends Component {
-
   navigateToScreen = route => () => {
-    const navigateAction = NavigationActions.navigate({
-      routeName: route,
-    });
-    this.props.navigation.dispatch(navigateAction);
+    this.props.navigation.navigate(route);
   };
 
   renderItem = item => {
     const options = this.props.descriptors[item.key].options;
     return (
       <View style={[styles.itemStyle]} key={item.key}>
-        <TabBarIcon name={item.key} />
+        <TabBarIcon name={item.name} />
         <ScalableText
           style={[styles.labelStyle]}
-          onPress={this.navigateToScreen(item.key)}>
+          onPress={this.navigateToScreen(item.name)}>
           {options.title}
         </ScalableText>
         <Flecha />
       </View>
     );
-  };
-
-  _handelPremium = () => {
-    this.props.navigation.navigate('Premium');
   };
 
   render() {
@@ -66,10 +59,7 @@ export default class DrawerContentComponents extends Component {
             <SvgUri
               width={deviceWidth}
               height={headerHeight}
-              source={{
-                uri:
-                  'http://okoconnect.com/karim/assets/perfil/header-perfil.svg',
-              }}
+              uri="http://okoconnect.com/karim/assets/perfil/header-perfil.svg"
               style={{marginTop: -40}}
             />
             <View style={styles.headerContainer}>
@@ -80,20 +70,17 @@ export default class DrawerContentComponents extends Component {
           </View>
 
           <View style={styles.itemsContainer}>
-            {this.props.items
-              .slice(1, this.props.items.length - 1)
+            {this.props.state.routes
+              .slice(1, this.props.state.routes.length - 1)
               .map(item => this.renderItem(item))}
           </View>
 
           <View style={styles.footer}>
-            <TouchableOpacity onPress={this._handelPremium}>
+            <TouchableOpacity onPress={this.navigateToScreen('Suscribete')}>
               <SvgUri
                 width={deviceWidth}
                 height={deviceWidth / 3.8}
-                source={{
-                  uri:
-                    'http://okoconnect.com/karim/assets/perfil/footer-perfil.svg',
-                }}
+                uri="http://okoconnect.com/karim/assets/perfil/footer-perfil.svg"
               />
               <ScalableText style={styles.footerText}>SUSCRíbete</ScalableText>
             </TouchableOpacity>

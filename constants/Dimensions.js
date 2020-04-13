@@ -17,6 +17,10 @@ import Constants from 'expo-constants';
  * @prop {number} bubbleTitleSpacing Letter SpacingFont 1.1
  * @prop {number} inputText Font Size 16
  * @prop {number} statusBarHeight Status Bar Height
+ * @prop {number} viajeHeadlineSize
+ * @prop {number} viajeHeadlineLineHeight
+ * @prop {number} viajeParrafoSize
+ * @prop {number} viajeParrafoLineHeight
  */
 
 /** @type {Dimension} */

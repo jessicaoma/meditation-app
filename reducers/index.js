@@ -1,5 +1,8 @@
 // Initial state of the store
-const initialState = {};
+const initialState = {
+  categoria: null,
+  viaje: null,
+};
 
 // Function to handle actions and update the state of the store.
 // Notes:

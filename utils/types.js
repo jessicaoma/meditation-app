@@ -1,7 +1,7 @@
 /**
  * @typedef {Object} CartaDelAngel
- * @prop {import('react-native').ImageSourcePropType} frontal front side of the card
- * @prop {import('react-native').ImageSourcePropType} reverso back side of the card
+ * @prop {string} frontal front side of the card
+ * @prop {string} reverso back side of the card
  *
  * @typedef {Object} Categoria
  * @prop {string} key Identificador
@@ -103,11 +103,11 @@
  * @prop {string} titulo
  * @prop {string} descripcion
  * @prop {string} oracion
- * @prop {string} imagenFondo
- * @prop {string} header
- * @prop {string} footer
- * @prop {number} headerH
- * @prop {number} footerH
+ * @prop {string} [imagenFondo]
+ * @prop {string} [header]
+ * @prop {string} [footer]
+ * @prop {number} [headerH]
+ * @prop {number} [footerH]
  * @prop {import('react-native').ImageSourcePropType} imagen
  *
  * @typedef {Object} MisEmociones
