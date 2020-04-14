@@ -3,7 +3,7 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  ImageBackground,
+  Image,
   SafeAreaView,
   TouchableOpacity,
   Platform,
@@ -84,10 +84,10 @@ class PasoEScreen extends Component {
     const contenido = this.paso.contenidos[0];
     return (
       <SafeAreaView
-        style={[styles.safe, {backgroundColor: this.props.categoria.color}]}>
-        <ImageBackground
+        style={[styles.safe]}>
+        <Image
           source={{uri: this.paso.imagenFondo}}
-          style={[styles.sliderImage]}>
+          style={[styles.sliderImage]} />
           <TouchableOpacity style={styles.close} onPress={() => { this._handleClose()}}>
             <Ionicons name={'md-close'} size={25} color={'#fff'} />
           </TouchableOpacity>
@@ -129,7 +129,7 @@ class PasoEScreen extends Component {
               </TouchableOpacity>
             </View>
           )}
-        </ImageBackground>
+
       </SafeAreaView>
     );
   }
@@ -150,22 +150,24 @@ const styles = StyleSheet.create({
   },
   headerBack: {
     position: 'absolute',
-    top: 0,
+    top: dimensions.statusBarHeight,
     zIndex: 100,
   },
   sliderImage: {
     width: dimensions.screen.width,
-    height: '100%',
+    height: dimensions.screen.width * 0.88,
     resizeMode: 'contain',
+    zIndex: 99,
   },
   headline: {
     fontFamily: 'Kiona',
     fontSize: dimensions.viajeHeadlineSize,
     lineHeight: dimensions.viajeHeadlineLineHeight,
-    textAlign: 'center',
+    textAlign: 'left',
     color: Colors.textoViaje,
     letterSpacing: 1.2,
     marginBottom: dimensions.regularSpace,
+    paddingHorizontal: dimensions.bigSpace * 2,
   },
   paragraphBottom: {
     fontFamily: 'MyriadPro-Regular',
@@ -174,14 +176,17 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     color: Colors.textoViaje,
     paddingHorizontal: dimensions.bigSpace * 2,
+    height: '100%'
   },
   body: {
     flex: 1,
     position: 'absolute',
     bottom: 0,
-    height: '46%',
+    left: 0,
+    right: 0,
+    top: '60%',
     display: 'flex',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   buttonNext: {
     position: 'absolute',
@@ -213,7 +218,7 @@ const styles = StyleSheet.create({
   close: {
     position: 'absolute',
     right: 0,
-    top: 0,
+    top: dimensions.statusBarHeight,
     zIndex: 100,
     paddingHorizontal: 20,
     paddingVertical: 10

@@ -22,6 +22,10 @@ import {Ionicons} from '@expo/vector-icons';
 
 const screenHeight =
   dimensions.screen.height -
+  Header.HEIGHT -
+  (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
+const screenHeight2 =
+  dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
 const bottomPositionX = (Platform.OS === 'android' ? 15 : 4);
@@ -117,21 +121,28 @@ class PasoCScreen extends Component {
 
   render() {
     return (
-      <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
-        <View style={styles.container1}>
+      <SafeAreaView style={styles.safe}>
+        <View style={styles.container}>
           <ScrollView style={styles.scroll}>
-
-            <View style={{paddingBottom: dimensions.window.width * 0.562}}>
-              {this.paso.contenidos.map(contenido => (
-                <View>
-                  <ScalableText style={styles.headline}>
-                    {contenido?.titulo ?? ''}
-                  </ScalableText>
-                  <ScalableText style={styles.text2}>
-                    {contenido.texto}
-                  </ScalableText>
-                </View>
-              ))}
+            <View style={{paddingBottom: dimensions.window.width * 0.6666,}}>
+            {this.paso.contenidos.map(contenido => (
+              <>
+                {contenido.titulo !== undefined && (
+                  <View style={styles.container1}>
+                    <ScalableText style={styles.headline}>
+                      {contenido.titulo}
+                    </ScalableText>
+                  </View>
+                )}
+                {contenido.texto !== '' && (
+                  <View style={styles.container2}>
+                    <ScalableText style={styles.text2}>
+                      {contenido.texto}
+                    </ScalableText>
+                  </View>
+                )}
+              </>
+            ))}
             </View>
           </ScrollView>
         </View>
@@ -163,22 +174,28 @@ function mapStateToProps(state) {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
+    backgroundColor: 'white',
   },
   imagefooter: {
     width: dimensions.window.width,
-    height: dimensions.window.width * 0.562,
+    height: dimensions.window.width * 0.6666,
     position: 'absolute',
     zIndex: 2,
     left: 0,
     right: 0,
     bottom: 0,
     resizeMode: 'cover',
+    backgroundColor: 'transparent'
   },
-  container1: {
+  container: {
     height: '100%',
   },
   scroll: {
+    //paddingHorizontal: dimensions.hugeSpace + dimensions.smallSpace,
     paddingHorizontal: dimensions.bigSpace,
+  },
+  container1: {
+    width: '100%',
   },
   headline: {
     fontFamily: 'Kiona',
@@ -186,10 +203,13 @@ const styles = StyleSheet.create({
     lineHeight: dimensions.viajeHeadlineLineHeight,
     textAlign: 'left',
     color: Colors.textoViaje,
-    textTransform: 'uppercase',
+    letterSpacing: -0.5,
     marginBottom: 10,
     marginTop: 25,
-    letterSpacing: -0.5,
+  },
+  container2: {
+    paddingTop: screenHeight * 0.03,
+    width: '100%',
   },
   text2: {
     fontFamily: 'MyriadPro-Regular',
@@ -197,7 +217,6 @@ const styles = StyleSheet.create({
     lineHeight: dimensions.viajeParrafoLineHeight,
     textAlign: 'left',
     color: Colors.textoViaje,
-    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   footer: {

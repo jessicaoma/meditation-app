@@ -43,7 +43,6 @@ export default class ItemBubble extends Component {
               fontFamily: 'MyriadPro-Regular',
               color: 'white',
               fontSize: fontSize ? fontSize : Dims.window.width * 0.038,
-              fontWeight: bold ? 'bold' : 'normal',
             },
           }
         : {
@@ -55,7 +54,6 @@ export default class ItemBubble extends Component {
             styleText: {
               fontFamily: 'MyriadPro-Regular',
               fontSize: fontSize ? fontSize : Dims.window.width * 0.038,
-              fontWeight: bold ? 'bold' : 'normal',
             },
           },
     );
