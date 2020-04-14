@@ -96,10 +96,6 @@ export default class ViajeCompletadosScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  fullscreen: {
-    width: '100%',
-    height: '100%',
-  },
   scrollView: {
   },
   container: {
