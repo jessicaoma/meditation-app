@@ -5,6 +5,8 @@ import {
   ScrollView,
   ActivityIndicator,
   View,
+  SafeAreaView,
+  Image
 } from 'react-native';
 import ScreenBg from '../components/screenBg';
 import ItemBubble from '../components/ItemBubble';
@@ -64,25 +66,31 @@ export default class ViajeCompletadosScreen extends Component {
   };
   render() {
     return (
-      <ScreenBg
-        source={{uri: 'http://okoconnect.com/karim/images/tuangel-bg.png'}}
-        color={'#fff'}
-        styleView={styles.fullscreen}>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Text style={styles.bigTitle}>¡Vas muy bien!</Text>
-          <Text style={styles.bigParagraph}>
-            Has completado los siguientes módulos. Si deseas consultar nuevamente
-            el contenido, presiona sobre el módulo de interés.
-          </Text>
-          <View style={styles.container}>
-            {this.state.viajes.length === 0
-              ? this.renderListEmpty()
-              : this.state.viajes.map(viaje => this.renderItem({item: viaje}))}
-          </View>
+      <SafeAreaView style={styles.safe}>
+        <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
+
+          <Image
+              resizeMode="cover"
+              source={{
+                uri:
+                  'http://okoconnect.com/karim/assets/images/viajes-completados.png',
+              }}
+              style={styles.image}
+            />
+           <Text style={styles.bigTitle}>¡Vas muy bien!</Text>
+            <Text style={styles.bigParagraph}>
+              Has completado los siguientes módulos. Si deseas consultar nuevamente
+              el contenido, presiona sobre el módulo de interés.
+            </Text>
+
+            <View style={styles.container}>
+              {this.state.viajes.length === 0
+                ? this.renderListEmpty()
+                : this.state.viajes.map(viaje => this.renderItem({item: viaje}))}
+            </View>
+         
         </ScrollView>
-      </ScreenBg>
+      </SafeAreaView>
     );
   }
 }
@@ -93,8 +101,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   scrollView: {
-    paddingBottom: 50,
-    paddingTop: Dimensions.regularSpace,
   },
   container: {
     paddingHorizontal: Dimensions.regularSpace,
@@ -121,5 +127,10 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Regular',
     textAlign: 'center',
     paddingHorizontal: Dims.regularSpace,
+  },
+  image: {
+    flex: 1,
+    width: Dims.window.width,
+    height: Dims.window.width * 0.80,
   },
 });
