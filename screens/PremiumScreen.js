@@ -221,21 +221,20 @@ export default class PremiumScreen extends Component {
           <View style={styles.container}>
             <Text style={styles.bigTitle}>Elige un plan</Text>
             <Text style={styles.bigParagraph}>
-              {' '}
               Al suscribirse a la aplicación, el usuario tiene la posibilidad de acceder a:
             </Text>
             <View style={styles.container}>
               {this.features.premium.map(item => this.renderPremiumItem(item))}
             </View>
             <Text style={[styles.bigParagraph]}>
-              {' '}{'\n'}
+              {'\n'}
               Pasado los 7 días de prueba el usuario tendrá acceso a:
             </Text>
             <View style={styles.container}>
               {this.features.premium2.map(item => this.renderPremiumItem(item))}
             </View>
             <Text style={[styles.bigParagraph]}>
-              {' '}{'\n'}
+              {'\n'}
               Suscripción ANUAL. {'\n'}
               Con el plan anual, accede a todo el contenido ilimitado de la plataforma: 
             </Text>
@@ -243,7 +242,7 @@ export default class PremiumScreen extends Component {
               {this.features.premium3.map(item => this.renderPremiumItem(item))}
             </View>
              <Text style={[styles.bigParagraph]}>
-              {' '}{'\n'}
+              {'\n'}
               Suscripción MENSUAL. {'\n'}
               Con el plan mensual, accede a todo el contenido ilimitado de la plataforma:
             </Text>

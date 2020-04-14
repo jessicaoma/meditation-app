@@ -127,19 +127,25 @@ class PasoCScreen extends Component {
             <View style={{paddingBottom: dimensions.window.width * 0.6666,}}>
             {this.paso.contenidos.map(contenido => (
               <>
+                {console.log('cont'+contenido.titulo+'dd')}
                 {contenido.titulo !== undefined && (
-                  <View style={styles.container1}>
-                    <ScalableText style={styles.headline}>
-                      {contenido.titulo}
-                    </ScalableText>
-                  </View>
+                  contenido.titulo !== '' && (
+                    <View style={styles.container1}>
+                      <ScalableText style={styles.headline}>
+                        {contenido.titulo}
+                      </ScalableText>
+                    </View>
+                  )
                 )}
+                {console.log('cont'+contenido.texto+'ss')}
                 {contenido.texto !== '' && (
-                  <View style={styles.container2}>
-                    <ScalableText style={styles.text2}>
-                      {contenido.texto}
-                    </ScalableText>
-                  </View>
+                  contenido.texto !== undefined && (
+                    <View style={styles.container2}>
+                      <ScalableText style={styles.text2}>
+                        {contenido.texto}
+                      </ScalableText>
+                    </View>
+                  )
                 )}
               </>
             ))}
