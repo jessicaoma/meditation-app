@@ -176,16 +176,10 @@ export default class MisEmocionesScreen extends Component {
 
             <View>
               <Text style={styles.bigParagraph}>
-                Acepta los momentos de tristeza. La tristeza no se puede negar
-                ni evitar, forma parte de la aventura de vivir. Depende de ti
-                aprender a afrontarla y sacar partido de ella.
+                Acepta los momentos de tristeza. {'\n'}La tristeza no se puede negar ni evitar, forma parte de la aventura de vivir. Depende de ti aprender a afrontarla y  sacar partido de ella.{'\n'}
               </Text>
               <Text style={styles.bigParagraph}>
-                Para que puedas mantener un equilibrio emocional y entender lo
-                que sientes te recomiendo que visites el curso “Mindfulness”. Si
-                ya lo hiciste, te recomiendo que hagas la meditación para la
-                gratitud, recuerda que trabajar en nuestra gratitud es la mejor
-                forma de ser felices.
+                Para que puedas mantener un equilibrio emocional y entender lo que sientes te recomiendo que visites el curso “Mindfulness”.{'\n'}{'\n'} Si ya lo hiciste, te recomiendo que hagas la meditación para la gratitud, recuerda que trabajar en nuestra gratitud es la mejor forma de ser felices.
                 {'\n'}
               </Text>
             </View>

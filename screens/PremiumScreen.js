@@ -43,7 +43,7 @@ export default class PremiumScreen extends Component {
       },
       {
         id: 2,
-        title: 'Registro de emociones.',
+        title: 'Registro de emociones y oraciones.',
       },
       {
         id: 3,
@@ -65,7 +65,7 @@ export default class PremiumScreen extends Component {
       },
       {
         id: 7,
-        title: 'Cartas con mensajes de los ángeles. .',
+        title: 'Cartas con mensajes de los ángeles.',
       },
     ],
     premium2: [
@@ -141,7 +141,7 @@ export default class PremiumScreen extends Component {
       },
       {
         id: 6,
-        title: 'Un audiolibro de Karim Temple. (Libro: APRENDIENDO A MEDITAR)',
+        title: 'Un audiolibro de Karim Temple (Libro: APRENDIENDO A MEDITAR).',
       },
       {
         id: 7,
@@ -160,7 +160,7 @@ export default class PremiumScreen extends Component {
       {
         id: 2,
         title: 'Plan Mensual',
-        cost: '$7.99 / Anuales',
+        cost: '$7.99 / Mensuales',
         description:
           'Paga mensualmente el monto de $7.99. Se renueva automáticamente cada mes.',
       },
@@ -220,15 +220,12 @@ export default class PremiumScreen extends Component {
           <View style={styles.container}>
             <Text style={styles.bigTitle}>Elige un plan</Text>
             <Text style={styles.bigParagraph}>
-              {' '}
-              Accede a todo el contenido ilimitado de la plataforma, los planes
-              de suscripción incluyen acceso a:
+              Al suscribirse a la aplicación, el usuario tiene la posibilidad de acceder a:
             </Text>
             <View style={styles.container}>
               {this.features.premium.map(item => this.renderPremiumItem(item))}
             </View>
             <Text style={[styles.bigParagraph]}>
-              {' '}
               {'\n'}
               Pasado los 7 días de prueba el usuario tendrá acceso a:
             </Text>
@@ -236,24 +233,20 @@ export default class PremiumScreen extends Component {
               {this.features.premium2.map(item => this.renderPremiumItem(item))}
             </View>
             <Text style={[styles.bigParagraph]}>
-              {' '}
               {'\n'}
               Suscripción ANUAL. {'\n'}
-              Con el plan anual, accede a todo el contenido Ilimitado de la
-              plataforma:
+              Con el plan anual, accede a todo el contenido ilimitado de la plataforma: 
             </Text>
             <View style={styles.container}>
               {this.features.premium3.map(item => this.renderPremiumItem(item))}
             </View>
-            <Text style={[styles.bigParagraph]}>
-              {' '}
+             <Text style={[styles.bigParagraph]}>
               {'\n'}
               Suscripción MENSUAL. {'\n'}
-              Con el plan mensual, accede Ilimitadamente al siguiente de la
-              plataforma:
+              Con el plan mensual, accede a todo el contenido ilimitado de la plataforma:
             </Text>
             <View style={styles.container}>
-              {this.features.premium3.map(item => this.renderPremiumItem(item))}
+              {this.features.premium4.map(item => this.renderPremiumItem(item))}
             </View>
             <View style={styles.container}>
               {this.features.prices.map(item => this.renderPriceBubble(item))}
@@ -321,7 +314,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     color: Colors.gray,
     fontFamily: 'MyriadPro-Regular',
-    textAlign: 'center',
+    textAlign: 'left',
     paddingHorizontal: Dims.regularSpace,
   },
   list: {
@@ -370,22 +363,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 18,
     marginBottom: 10,
-  },
-  inputText: {
-    width: '100%',
-    color: Colors.gray,
-    fontSize: 16,
-    fontWeight: '400',
-    letterSpacing: 1,
-    lineHeight: 50,
-    minHeight: 50,
-    fontFamily: 'MyriadPro-Regular',
-    backgroundColor: 'white',
-    borderRadius: 10,
-    marginBottom: 15,
-    paddingHorizontal: 10,
-    borderColor: '#b9c2df',
-    borderWidth: 1,
   },
   buttonLabel: {
     color: 'white',

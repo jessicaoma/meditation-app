@@ -100,7 +100,7 @@ class PasoAScreen extends Component {
                 <ScalableText style={styles.text2}>
                   {contenido?.titulo ?? ''}
                 </ScalableText>
-                <ScalableText style={styles.paragraphBottom}>
+                <ScalableText style={styles.text2}>
                   {contenido.texto}
                 </ScalableText>
               </View>
@@ -158,19 +158,7 @@ const styles = StyleSheet.create({
   },
   container1: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-  },
-  paragraphBottom: {
-    fontFamily: 'MyriadPro-Regular',
-    fontSize: dimensions.viajeParrafoSize,
-    lineHeight: 24,
-    textAlign: 'center',
-    color: Colors.textoViaje,
-    position: 'absolute',
-    top: '39%',
-    paddingHorizontal: dimensions.bigSpace * 2.5,
+    paddingTop: screenHeight * 0.35,
   },
   container2: {
     flex: 1,
