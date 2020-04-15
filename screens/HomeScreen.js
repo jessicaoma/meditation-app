@@ -23,7 +23,7 @@ import API, {user} from '../utils/API';
 import ScreenBg from '../components/screenBg';
 import colors from '../constants/Colors';
 import {enumLoNuevo} from '../utils/types';
-import {getBrightness} from '../utils/convert';
+import {getBrightness, navigationStacks} from '../utils/convert';
 
 let colorLetra = '#fff';
 
@@ -61,7 +61,8 @@ class Home extends Component {
         style={{marginRight: 16}}
         onPress={() => {
           // @ts-ignore
-          navigation.openDrawer();
+          //navigation.openDrawer();
+          navigation.navigate('PerfilDrawer');
         }}>
         <TabBarIcon name={'perfil'} />
       </TouchableOpacity>
@@ -256,6 +257,7 @@ class Home extends Component {
   };
 
   render() {
+    //console.log(navigationStacks(this.props.navigation));
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView contentInsetAdjustmentBehavior="automatic">

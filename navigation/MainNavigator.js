@@ -7,6 +7,7 @@ import ReflexionScreen from '../screens/ReflexionScreen';
 import EmocionesNavigator from './EmocionesNavigator';
 import ViajeNavigator from './ViajeNavigator';
 import PerfilNavigation from './PerfilNavigation';
+import BottomNavigator from './BottomNavigator';
 import TutorialScreen from '../screens/TutorialScreen';
 import PremiumScreen from '../screens/PremiumScreen';
 import CancionesScreen from '../screens/CancionesScreen';
@@ -24,6 +25,11 @@ export default function MainNavigator() {
           fontFamily: 'MyriadPro-Semibold',
         },
       }}>
+      <Stack.Screen
+        name="Main"
+        component={BottomNavigator}
+        options={{header: () => null}}
+      />
       <Stack.Screen
         name="PerfilDrawer"
         component={PerfilNavigation}

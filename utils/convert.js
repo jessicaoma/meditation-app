@@ -63,3 +63,20 @@ function toRgb(color) {
   var b = (rgb >> 0) & 0xff;
   return {r, g, b};
 }
+
+/**
+ *
+ * @param {import('@react-navigation/native').NavigationProp<Object>} navigation
+ */
+export const navigationStacks = navigation => {
+  let state = navigation.dangerouslyGetState();
+  let parentState = navigation.dangerouslyGetParent();
+  let out = '';
+  if (parentState !== undefined) {
+    out += navigationStacks(parentState);
+  }
+  out += state.routes.reduce((prev, route) => {
+    return prev + route.name + '->';
+  }, '');
+  return out;
+};
