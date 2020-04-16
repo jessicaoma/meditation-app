@@ -102,8 +102,11 @@ class PasoAScreen extends Component {
             <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.container1}>
                 <ScalableText style={styles.text2}>Bienvenido al módulo</ScalableText>
-                <ScalableText style={styles.headline}>{this.props.viaje.titulo}</ScalableText>
-                <ScalableText style={styles.text2}>de este curso</ScalableText>
+                <View style={{display: 'flex', justifyContent: 'center',paddingHorizontal: dimensions.hugeSpace * 2,}}>
+                <ScalableText style={styles.headline}>{this.props.viaje.titulo}{' '}
+                  <ScalableText style={styles.text2}>de este curso</ScalableText>
+                </ScalableText>
+                </View>
               </View>
             </TouchableOpacity>
           )}
@@ -167,6 +170,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  headline: {
+    fontFamily: 'MyriadPro-Semibold',
+    fontSize: 18,
+    lineHeight: 24,
+    textAlign: 'center',
+    color: Colors.textoViaje,
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
   text2: {
     fontFamily: 'MyriadPro-Regular',
     fontSize: 18,
@@ -175,7 +188,7 @@ const styles = StyleSheet.create({
     color: Colors.textoViaje,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingHorizontal: dimensions.hugeSpace * 2,
+    fontWeight: 'normal',
   },
   container3: {
     flex: 1,
@@ -183,25 +196,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  text3: {
-    fontFamily: 'MyriadPro-Regular',
-    fontSize: 18,
-    lineHeight: 24,
-    textAlign: 'right',
-    color: Colors.textoViaje,
-    paddingRight: dimensions.bigSpace,
-    paddingLeft: dimensions.hugeSpace * 3,
-  },
-  headline: {
-    fontFamily: 'MyriadPro-Semibold',
-    fontSize: 18,
-    lineHeight: 24,
-    textAlign: 'center',
-    color: Colors.textoViaje,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    paddingHorizontal: dimensions.hugeSpace * 2,
-  },
+  
   containerButton: {
     position: 'absolute',
     bottom: 0,
