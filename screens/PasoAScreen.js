@@ -168,7 +168,8 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingHorizontal: dimensions.bigSpace * 2,
   },
   headline: {
     fontFamily: 'MyriadPro-Semibold',
@@ -194,7 +195,8 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingHorizontal: dimensions.bigSpace * 2,
   },
   
   containerButton: {
