@@ -10,9 +10,14 @@ import TutorialScreen from '../screens/TutorialScreen';
 import PremiumScreen from '../screens/PremiumScreen';
 import CancionesScreen from '../screens/CancionesScreen';
 import CancionScreen from '../screens/CancionScreen';
+import BottomNavigator from './BottomNavigator';
 
 const MainNavigator = createStackNavigator(
   {
+    Main: {
+      screen: BottomNavigator,
+      navigationOptions: {header: null},
+    },
     PerfilDrawer: {screen: PerfilNavigation, navigationOptions: {header: null}},
     Meditacion: {
       screen: MeditacionScreen,

@@ -42,7 +42,8 @@ class Home extends Component {
       <TouchableOpacity
         style={{marginRight: 16}}
         onPress={() => {
-          navigation.openDrawer();
+          //navigation.openDrawer();
+          navigation.navigate("PerfilDrawer");
         }}>
         <TabBarIcon name={'perfil'} />
       </TouchableOpacity>
