@@ -16,15 +16,14 @@ import SvgUri from '../components/SvgUri';
 import ScalableText from 'react-native-text';
 import TabBarIcon from '../components/TabBarIcon';
 
-const deviceWidth =
-  Dimensions.window.width - Dimensions.regularSpace - Dimensions.regularSpace;
+const deviceWidth = Dimensions.window.width;
 const headerHeight = deviceWidth - Dimensions.regularSpace;
 
 const ContainerHeight =
   Dimensions.screen.height -
   Dimensions.statusBarHeight -
   (Platform.OS === 'android'
-    ? +30
+    ? 0
     : DeviceInfo.isIPhoneX_deprecated
     ? Dimensions.statusBarHeight
     : 0);
@@ -137,18 +136,9 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   container: {
-    minHeight: ContainerHeight,
+    minHeight: '100%',
     justifyContent: 'space-between',
     flexDirection: 'column',
-    backgroundColor: 'white',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   headerContainer: {
     minHeight: deviceWidth,
@@ -171,6 +161,7 @@ const styles = StyleSheet.create({
   },
   itemsContainer: {
     width: '100%',
+    marginBottom: 30,
   },
   itemStyle: {
     flexDirection: 'row',
