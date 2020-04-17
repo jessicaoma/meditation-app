@@ -61,7 +61,7 @@ export default class MeditacionIntroScreen extends Component {
               <ScalableText style={styles.texto}>
                 Para iniciar esta meditación cierra los ojos y comienza a
                 relajarte, inhala y exhala profundamente tres veces y mientras
-                lo haces comienza a sumergirte en tu cuerpo
+                lo haces comienza a sumergirte en tu cuerpo.
               </ScalableText>
               <TouchableOpacity
                 style={[styles.button, {backgroundColor: Colors.primaryDark}]}
