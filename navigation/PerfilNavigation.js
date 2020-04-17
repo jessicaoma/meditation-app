@@ -1,25 +1,33 @@
 import React from 'react';
 import {
-  createDrawerNavigator,
+  //createDrawerNavigator,
   createStackNavigator,
   HeaderBackButton,
 } from 'react-navigation';
 import BottomNavigator from './BottomNavigator';
 import MisEmocionesScreen from '../screens/MisEmocionesScreen';
-import MiDiarioScreen from '../screens/MiDiarioScreen';
+//import MiDiarioScreen from '../screens/MiDiarioScreen';
 import ViajesCompletadosScreen from '../screens/ViajesCompletadosScreen';
 import MisMeditacionesScreen from '../screens/MisMeditacionesScreen';
 import PremiumScreen from '../screens/PremiumScreen';
-import DrawerContentComponents from '../components/DrawerContentComponents';
-import Dims from '../constants/Dimensions';
+//import DrawerContentComponents from '../components/DrawerContentComponents';
+//import Dims from '../constants/Dimensions';
+import PerfilScreen from '../screens/PerfilScreen';
 
-const PerfilNavigation = createDrawerNavigator(
+const PerfilNavigation = createStackNavigator(
   {
-    Main: {
-      screen: BottomNavigator,
+    PerfilDrawer: {
+      screen: PerfilScreen,
+      navigationOptions: ({navigation}) => ({
+        title: 'Perfil',
+        headerLeft: (
+          <HeaderBackButton onPress={() => navigation.goBack(null)} />
+        ),
+      }),
     },
     MisEmociones: {
-      screen: createStackNavigator(
+      screen: MisEmocionesScreen,
+      /*createStackNavigator(
         {MisEmocionesScreen},
         {
           defaultNavigationOptions: ({navigation}) => ({
@@ -34,13 +42,14 @@ const PerfilNavigation = createDrawerNavigator(
             },
           }),
         },
-      ),
+      ),*/
       navigationOptions: {
         title: 'Mis Emociones',
       },
     },
     ViajesCompletados: {
-      screen: createStackNavigator(
+      screen: ViajesCompletadosScreen,
+      /*createStackNavigator(
         {ViajesCompletadosScreen},
         {
           defaultNavigationOptions: ({navigation}) => ({
@@ -55,14 +64,15 @@ const PerfilNavigation = createDrawerNavigator(
             },
           }),
         },
-      ),
+      ),*/
       navigationOptions: {
         title: 'Módulos Finalizados',
       },
     },
-    
+
     MisMeditaciones: {
-      screen: createStackNavigator(
+      screen: MisMeditacionesScreen,
+      /*createStackNavigator(
         {MisMeditacionesScreen},
         {
           defaultNavigationOptions: ({navigation}) => ({
@@ -77,7 +87,7 @@ const PerfilNavigation = createDrawerNavigator(
             },
           }),
         },
-      ),
+      ),*/
       navigationOptions: {
         title: 'Mis Meditaciones',
       },
@@ -90,15 +100,22 @@ const PerfilNavigation = createDrawerNavigator(
     },
   },
   {
-    initialRouteName: 'Main',
-    drawerPosition: 'right',
-    drawerType: 'slide',
-    drawerWidth: Dims.window.width - 50,
-    contentComponent: DrawerContentComponents,
-    edgeWidth: 0,
-    unmountInactiveRoutes: true,
-    overlayColor: 'rgba(206, 209, 230, 0.56)',
-    drawerBackgroundColor: 'transparent',
+    //initialRouteName: 'Main',
+    //drawerPosition: 'right',
+    //drawerType: 'slide',
+    //drawerWidth: Dims.window.width - 50,
+    //contentComponent: DrawerContentComponents,
+    //edgeWidth: 0,
+    //unmountInactiveRoutes: true,
+    //overlayColor: 'rgba(206, 209, 230, 0.56)',
+    //drawerBackgroundColor: 'transparent',
+    defaultNavigationOptions: {
+      headerTitleStyle: {
+        color: '#030303',
+        fontFamily: 'MyriadPro-Semibold',
+      },
+      headerBackTitle: null,
+    },
   },
 );
 
