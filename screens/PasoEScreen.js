@@ -23,6 +23,9 @@ const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
+const proportion = dimensions.window.width / dimensions.window.height;
+const marginTopImage = (proportion > 0.5 ? (dimensions.window.width * 0.25 * -1) : 0);
+const topText = (proportion > 0.5 ? ('48%') : '60%');
 /**
  * Paso Tipo(E): Cierre
  * @typedef {Object} ParamsNavigation
@@ -100,7 +103,7 @@ class PasoEScreen extends Component {
             />
           </View>
           <View style={styles.body}>
-            <ScrollView>
+            <ScrollView contentInsetAdjustmentBehavior="automatic">
               {contenido.titulo !== undefined && (
                 <ScalableText style={styles.headline}>
                   {contenido.titulo || ''}
@@ -155,9 +158,10 @@ const styles = StyleSheet.create({
   },
   sliderImage: {
     width: dimensions.screen.width,
-    height: dimensions.screen.width * 0.88,
+    height: dimensions.screen.width,
     resizeMode: 'contain',
-    zIndex: 99,
+    zIndex: 2,
+    marginTop: marginTopImage,
   },
   headline: {
     fontFamily: 'Kiona',
@@ -184,7 +188,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    top: '58%',
+    top: topText,
     display: 'flex',
     alignItems: 'center',
   },
@@ -195,6 +199,7 @@ const styles = StyleSheet.create({
     marginBottom: screenHeight * 0.05,
     marginRight: dimensions.bigSpace,
     zIndex: 100,
+
   },
   footer: { //Ultima pantalla 
     position: 'absolute',
