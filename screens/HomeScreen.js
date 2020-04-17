@@ -70,7 +70,7 @@ class Home extends Component {
         key: '952bb5e2-726a-475c-8a09-c624f5feb1b1',
         tipo: 0,
         categoria: {
-          key: 'bedf149e-6b2a-46a9-9a82-01d2926f66d1',
+          key: 'c8501484-91f3-499c-873e-05424de54aa0',
           titulo: 'Ser feliz',
           media:
             'http://okoconnect.com/karim/assets/categorias/categoria-1/video.mp4',
@@ -88,7 +88,7 @@ class Home extends Component {
         key: '579625e6-93f3-4c95-ab53-7ff7049ca1c7',
         tipo: 3,
         audiolibro: {
-          key: 'd422c4c4-5bd2-47c0-98e9-bbf620b0b85a',
+          key: '836f9209-4589-4355-abb9-616a0db73baf',
           titulo: 'Aprendiendo a Meditar',
           imagenLista:
             'http://okoconnect.com/karim/assets/audiolibros/audiolibro-1/iconolistado.png',
