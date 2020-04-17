@@ -23,6 +23,7 @@ import ScalableText from 'react-native-text';
 
 const deviceWidth = Dims.window.width - Dims.regularSpace - Dims.regularSpace;
 const deviceHeight = deviceWidth * 1.5 + Dims.regularSpace;
+const containerHeight = Dims.window.height - Dims.statusBarHeight -  (Dims.bigSpace * 2) - 28;
 //const FIXED_BAR_WIDTH = 40;
 
 /** @extends {Component<Props>} */
@@ -80,9 +81,12 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingHorizontal: Dims.regularSpace,
+    display: 'flex',
     flexDirection: 'column',
+    paddingHorizontal: Dims.regularSpace,
     justifyContent: 'center',
+    alignItems: 'center',
+    height: containerHeight,
   },
   statusBar: {
     height: Dims.statusBarHeight,
