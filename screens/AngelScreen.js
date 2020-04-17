@@ -3,16 +3,16 @@ import {
   Animated,
   View,
   StyleSheet,
-  Text,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import SvgUri from '../components/SvgUri';
 import CardFlip from '../components/CardFlip';
 import ScalableText from 'react-native-text';
+import Player from '../player/Player';
 /**
  * @typedef {Object} ParamsNavigation
  * @prop {import('../utils/types').CartaDelAngel} carta
@@ -28,6 +28,13 @@ const deviceHeight = deviceWidth * 1.5 + Dims.regularSpace;
 /** @extends {Component<Props>} */
 export default class AngelScreen extends Component {
   animVal = new Animated.Value(0);
+
+  flipCard = () => {
+    this.card.flip();
+    //TODO play sound
+    this.player._startPlayer();
+  };
+
   render() {
     /** @type {ParamsNavigation} */
     const {carta, angel} = this.props.navigation.state.params;
@@ -41,23 +48,38 @@ export default class AngelScreen extends Component {
     //   return (
     //   );
     // });
+    console.log('Angel');
     return (
       <SafeAreaView style={styles.safe}>
         <View style={styles.statusBar} />
         <ScrollView>
+          <View style={{height: 0}}>
+            <Player //http://okoconnect.com/karim/assets/angeles/cartaangel.mp3
+              source={require('../assets/audio/cartaangel.mp3')}
+              ref={ref => {
+                this.player = ref;
+              }}
+              onEnd={state => {
+                console.log(state);
+                this.player._onSeekSliderValueChange();
+                this.player._onSeekSliderSlidingComplete(0);
+                this.player.playbackInstance.pauseAsync();
+              }}
+            />
+          </View>
           <View style={[styles.container]}>
             <CardFlip
               ref={card => {
                 this.card = card;
               }}>
-              <TouchableOpacity onPress={() => this.card.flip()}>
+              <TouchableOpacity onPress={() => this.flipCard()}>
                 <SvgUri
                   width={deviceWidth}
                   height={deviceHeight}
                   source={{uri: carta.reverso}}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.card.flip()}>
+              <TouchableOpacity onPress={() => this.flipCard()}>
                 <SvgUri
                   width={deviceWidth}
                   height={deviceHeight}
@@ -65,7 +87,9 @@ export default class AngelScreen extends Component {
                 />
               </TouchableOpacity>
             </CardFlip>
-            <ScalableText style={styles.suggestion}>Toca para descubrir</ScalableText>
+            <ScalableText style={styles.suggestion}>
+              Toca para descubrir
+            </ScalableText>
           </View>
         </ScrollView>
       </SafeAreaView>

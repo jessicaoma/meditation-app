@@ -43,6 +43,7 @@ async function loadResourcesAsync() {
       require('./assets/images/emociones/emocion-2.png'),
       require('./assets/images/emociones/emocion-3.png'),
       require('./assets/images/emociones/emocion-4.png'),
+      //require('./assets/audio/cartaangel.mp3'),
     ]),
     Font.loadAsync({
       ...Ionicons.font,
