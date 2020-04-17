@@ -102,11 +102,9 @@ class PasoAScreen extends Component {
             <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.container1}>
                 <ScalableText style={styles.text2}>Bienvenido al módulo</ScalableText>
-                <View style={{display: 'flex', justifyContent: 'center',paddingHorizontal: dimensions.hugeSpace * 2,}}>
-                <ScalableText style={styles.headline}>{this.props.viaje.titulo}{' '}
-                  <ScalableText style={styles.text2}>de este curso</ScalableText>
-                </ScalableText>
-                </View>
+                <ScalableText style={styles.headline}>{this.props.viaje.titulo}</ScalableText>
+                <ScalableText style={styles.text2}>de este curso</ScalableText>
+
               </View>
             </TouchableOpacity>
           )}
