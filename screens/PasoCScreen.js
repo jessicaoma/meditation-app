@@ -67,7 +67,7 @@ class PasoCScreen extends Component {
           style={styles.close}
           onPress={() => {
             //props.navigation.pop(props.route.params.position + 1);
-            props.navigation.popToTop();
+            navigation.popToTop();
           }}>
           <Ionicons name={'md-close'} size={25} color={'#fff'} />
         </TouchableOpacity>

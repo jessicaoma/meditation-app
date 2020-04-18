@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-  Text,
   StyleSheet,
   ScrollView,
   ActivityIndicator,
@@ -15,6 +14,7 @@ import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
 import {HeaderBackButton} from '@react-navigation/stack';
 import API, {user} from '../utils/API';
+import ScalableText from 'react-native-text';
 
 /**
  * @typedef Props
@@ -50,8 +50,6 @@ export default class ViajeCompletadosScreen extends Component {
         key={this.keyExtractor(item)}
         color={item.color}
         fill
-        bold
-        fontSize={18}
         onPress={() => {
           this._handleClick(item);
         }}>
@@ -70,18 +68,18 @@ export default class ViajeCompletadosScreen extends Component {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           <Image
-            resizeMode="cover"
-            source={{
-              uri:
-                'http://okoconnect.com/karim/assets/images/viajes-completados.png',
-            }}
-            style={styles.image}
-          />
-          <Text style={styles.bigTitle}>¡Vas muy bien!</Text>
-          <Text style={styles.bigParagraph}>
-            Has completado los siguientes módulos. Si deseas consultar
-            nuevamente el contenido, presiona sobre el módulo de interés.
-          </Text>
+              resizeMode="cover"
+              source={{
+                uri:
+                  'http://okoconnect.com/karim/assets/images/viajes-completados.png',
+              }}
+              style={styles.image}
+            />
+           <ScalableText style={styles.bigTitle}>¡Vas muy bien!</ScalableText>
+            <ScalableText style={styles.bigParagraph}>
+              Has completado los siguientes módulos. Si deseas consultar nuevamente
+              el contenido, presiona sobre el módulo de interés.
+            </ScalableText>
 
           <View style={styles.container}>
             {this.state.viajes.length === 0
@@ -114,14 +112,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   bigParagraph: {
-    fontSize: 18,
+    fontSize: 16,
     letterSpacing: 1.11,
-    lineHeight: 28,
+    lineHeight: Dims.viajeParrafoLineHeight,
     marginBottom: 5,
     color: Colors.gray,
     fontFamily: 'MyriadPro-Regular',
-    textAlign: 'center',
-    paddingHorizontal: Dims.regularSpace,
+    textAlign: 'left',
+    paddingHorizontal: Dims.bigSpace,
   },
   image: {
     flex: 1,

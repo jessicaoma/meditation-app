@@ -22,7 +22,12 @@ import {Ionicons} from '@expo/vector-icons';
 const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
-
+const headerH =
+  Platform.OS === 'android'
+    ? 56 + dimensions.statusBarHeight
+    : 44 + //DeviceInfo.isIPhoneX_deprecated
+      //? dimensions.statusBarHeight - 20
+      dimensions.statusBarHeight;
 /**
  * Paso Tipo(D): Ejercicio
  * @typedef Props
@@ -35,7 +40,7 @@ const screenHeight =
  */
 class PasoDScreen extends Component {
   /** @param {Props} param*/
-  static navigationOptions = ({route}) => {
+  static navigationOptions = ({navigation, route}) => {
     return {
       title: route.params.titulo,
       headerTintColor: '#fff',
@@ -60,7 +65,7 @@ class PasoDScreen extends Component {
           style={styles.close}
           onPress={() => {
             //props.navigation.pop(props.route.params.position + 1);
-            props.navigation.popToTop();
+            navigation.popToTop();
           }}>
           <Ionicons name={'md-close'} size={25} color={'#fff'} />
         </TouchableOpacity>

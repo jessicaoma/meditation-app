@@ -4,28 +4,16 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Platform,
-  DeviceInfo,
   SafeAreaView,
 } from 'react-native';
 import Dimensions from '../constants/Dimensions';
 import Flecha from '../constants/LogoArrowRight';
-import TabBarIcon from '../components/TabBarIcon';
 import {SvgUri} from 'react-native-svg';
 import ScalableText from 'react-native-text';
+import TabBarIcon from '../components/TabBarIcon';
 
-const deviceWidth =
-  Dimensions.window.width - Dimensions.regularSpace - Dimensions.regularSpace;
+const deviceWidth = Dimensions.window.width;
 const headerHeight = deviceWidth - Dimensions.regularSpace;
-
-const ContainerHeight =
-  Dimensions.screen.height -
-  Dimensions.statusBarHeight -
-  (Platform.OS === 'android'
-    ? +30
-    : DeviceInfo.isIPhoneX_deprecated
-    ? Dimensions.statusBarHeight
-    : 0);
 
 /**
  * @typedef Props
@@ -41,7 +29,7 @@ export default class PerfilScreen extends Component {
 
   render() {
     return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.safe}>
         <ScrollView style={styles.scrollview}>
           <View style={styles.container}>
             <View>
@@ -57,13 +45,9 @@ export default class PerfilScreen extends Component {
                 </ScalableText>
               </View>
             </View>
-
             <View style={styles.itemsContainer}>
-              {/* {this.props.state.routes
-              .slice(1, this.props.state.routes.length - 1)
-            .map(item => this.renderItem(item))} */}
               <View style={[styles.itemStyle]}>
-                <TabBarIcon name="MisEmociones" />
+                <TabBarIcon name={'MisEmociones'} />
                 <ScalableText
                   style={[styles.labelStyle]}
                   onPress={this.navigateToScreen('MisEmociones')}>
@@ -72,7 +56,7 @@ export default class PerfilScreen extends Component {
                 <Flecha />
               </View>
               <View style={[styles.itemStyle]}>
-                <TabBarIcon name="ViajesCompletados" />
+                <TabBarIcon name={'ViajesCompletados'} />
                 <ScalableText
                   style={[styles.labelStyle]}
                   onPress={this.navigateToScreen('ViajesCompletados')}>
@@ -81,7 +65,7 @@ export default class PerfilScreen extends Component {
                 <Flecha />
               </View>
               <View style={[styles.itemStyle]}>
-                <TabBarIcon name="MisMeditaciones" />
+                <TabBarIcon name={'MisMeditaciones'} />
                 <ScalableText
                   style={[styles.labelStyle]}
                   onPress={this.navigateToScreen('MisMeditaciones')}>
@@ -90,7 +74,6 @@ export default class PerfilScreen extends Component {
                 <Flecha />
               </View>
             </View>
-
             <View style={styles.footer}>
               <TouchableOpacity onPress={this.navigateToScreen('Suscribete')}>
                 <SvgUri
@@ -116,22 +99,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   scrollview: {
-    //flex: 1,
-    //height: '100%',
+    flex: 1,
+    height: '100%',
   },
   container: {
-    minHeight: ContainerHeight,
+    minHeight: '100%',
     justifyContent: 'space-between',
     flexDirection: 'column',
-    backgroundColor: 'white',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   headerContainer: {
     minHeight: deviceWidth,
@@ -154,6 +128,7 @@ const styles = StyleSheet.create({
   },
   itemsContainer: {
     width: '100%',
+    marginBottom: 30,
   },
   itemStyle: {
     flexDirection: 'row',

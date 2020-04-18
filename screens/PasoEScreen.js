@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
   View,
   StyleSheet,
-  ScrollView,
   Image,
   SafeAreaView,
   TouchableOpacity,
@@ -22,6 +21,11 @@ import {Ionicons} from '@expo/vector-icons';
 const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
+
+const proportion = dimensions.window.width / dimensions.window.height;
+const marginTopImage =
+  proportion > 0.5 ? dimensions.window.width * 0.25 * -1 : 0;
+const topText = proportion > 0.5 ? '44%' : '60%';
 
 /**
  * Paso Tipo(E): Cierre
@@ -82,11 +86,13 @@ class PasoEScreen extends Component {
 
   render() {
     const contenido = this.paso.contenidos[0];
+    console.log(topText);
+    console.log(marginTopImage);
     return (
-      <SafeAreaView style={[styles.safe]}>
+      <SafeAreaView style={styles.safe}>
         <Image
           source={{uri: this.paso.imagenFondo}}
-          style={[styles.sliderImage]}
+          style={styles.sliderImage}
         />
         <TouchableOpacity
           style={styles.close}
@@ -98,22 +104,20 @@ class PasoEScreen extends Component {
         <View style={styles.headerBack}>
           <HeaderBackButton
             tintColor="white"
-            pressColorAndroid="transparent"
             onPress={() => this.props.navigation.goBack()}
+            pressColorAndroid="transparent"
             labelVisible={false}
           />
         </View>
         <View style={styles.body}>
-          <ScrollView>
-            {contenido.titulo !== undefined && (
-              <ScalableText style={styles.headline}>
-                {contenido.titulo || ''}
-              </ScalableText>
-            )}
-            <ScalableText style={styles.paragraphBottom}>
-              {contenido.texto}
+          {contenido.titulo !== undefined && (
+            <ScalableText style={styles.headline}>
+              {contenido.titulo || ''}
             </ScalableText>
-          </ScrollView>
+          )}
+          <ScalableText style={styles.paragraphBottom}>
+            {contenido.texto}
+          </ScalableText>
         </View>
         {this.pasoIndex === this.props.viaje.pasos.length - 1 ? (
           <View style={styles.footer}>
@@ -157,9 +161,10 @@ const styles = StyleSheet.create({
   },
   sliderImage: {
     width: dimensions.screen.width,
-    height: dimensions.screen.width * 0.88,
+    height: dimensions.screen.width,
     resizeMode: 'contain',
-    zIndex: 99,
+    zIndex: 2,
+    marginTop: marginTopImage,
   },
   headline: {
     fontFamily: 'Kiona',
@@ -169,7 +174,7 @@ const styles = StyleSheet.create({
     color: Colors.textoViaje,
     letterSpacing: 1.2,
     marginBottom: dimensions.regularSpace,
-    paddingHorizontal: dimensions.bigSpace * 2,
+    paddingHorizontal: dimensions.bigSpace,
   },
   paragraphBottom: {
     fontFamily: 'MyriadPro-Regular',
@@ -177,7 +182,7 @@ const styles = StyleSheet.create({
     lineHeight: dimensions.viajeParrafoLineHeight,
     textAlign: 'left',
     color: Colors.textoViaje,
-    paddingHorizontal: dimensions.bigSpace * 2,
+    paddingHorizontal: dimensions.bigSpace,
     height: '100%',
   },
   body: {
@@ -186,9 +191,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    top: '58%',
-    display: 'flex',
-    alignItems: 'center',
+    top: topText,
   },
   buttonNext: {
     position: 'absolute',

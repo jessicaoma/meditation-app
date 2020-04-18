@@ -96,12 +96,10 @@ class PasoAScreen extends Component {
           {this.pasoIndex === 0 && (
             <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.container1}>
-                <ScalableText style={styles.text2}>
-                  {contenido?.titulo ?? ''}
-                </ScalableText>
-                <ScalableText style={styles.text2}>
-                  {contenido.texto}
-                </ScalableText>
+                <ScalableText style={styles.text2}>Bienvenido al módulo</ScalableText>
+                <ScalableText style={styles.headline}>{this.props.viaje.titulo}</ScalableText>
+                <ScalableText style={styles.text2}>de este curso</ScalableText>
+
               </View>
             </TouchableOpacity>
           )}
@@ -117,7 +115,7 @@ class PasoAScreen extends Component {
           {this.pasoIndex === 2 && (
             <>
               <View style={styles.container3}>
-                <ScalableText style={styles.text3}>
+                <ScalableText style={styles.text2}>
                   {contenido.texto}
                 </ScalableText>
               </View>
@@ -161,7 +159,20 @@ const styles = StyleSheet.create({
   },
   container2: {
     flex: 1,
-    paddingTop: screenHeight * 0.33,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: dimensions.bigSpace * 2,
+  },
+  headline: {
+    fontFamily: 'MyriadPro-Semibold',
+    fontSize: 18,
+    lineHeight: 24,
+    textAlign: 'center',
+    color: Colors.textoViaje,
+    justifyContent: 'center',
+    alignItems: 'center',
+
   },
   text2: {
     fontFamily: 'MyriadPro-Regular',
@@ -171,24 +182,16 @@ const styles = StyleSheet.create({
     color: Colors.textoViaje,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingHorizontal: dimensions.hugeSpace * 2,
+    fontWeight: 'normal',
   },
   container3: {
     flex: 1,
-    position: 'absolute',
-    bottom: 15,
-    height: '50%',
+    display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: dimensions.bigSpace * 2,
   },
-  text3: {
-    fontFamily: 'MyriadPro-Regular',
-    fontSize: 18,
-    lineHeight: 24,
-    textAlign: 'right',
-    color: Colors.textoViaje,
-    paddingRight: dimensions.bigSpace,
-    paddingLeft: dimensions.hugeSpace * 3,
-  },
+  
   containerButton: {
     position: 'absolute',
     bottom: 0,
