@@ -7,6 +7,7 @@ import {
   StatusBar,
   SafeAreaView,
   ScrollView,
+  Platform,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import LogoFacebook from '../constants/LogoFacebook';
@@ -73,7 +74,7 @@ export default class CrearCuentaScreen extends Component {
                 </View>
                 <Text style={styles.welcomeTitle}>ó registrarme vía email</Text>
               </View>
-              <View>
+              <View style={styles.full}>
                 <InputLogin
                   placeholder="Nombre"
                   type="text"
@@ -118,6 +119,7 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: 'white',
+    paddingTop: Platform.OS === 'android' ? Dims.statusBarHeight : 0,
   },
   scroll: {
     paddingTop: Dims.statusBarHeight,
@@ -175,5 +177,11 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Regular',
     width: '100%',
     minWidth: '100%',
+  },
+  full: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    paddingHorizontal: 25,
   },
 });

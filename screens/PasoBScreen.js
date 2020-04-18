@@ -54,7 +54,7 @@ class PasoBScreen extends Component {
   };
 
   _handleClose = () => {
-    this.props.navigation.pop(this.pasoIndex + 1);
+    this.props.navigation.popToTop();
   };
 
   nextStep = () => {

@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   View,
   SafeAreaView,
-  Image
+  Image,
 } from 'react-native';
 import ScreenBg from '../components/screenBg';
 import ItemBubble from '../components/ItemBubble';
@@ -25,7 +25,7 @@ import API, {user} from '../utils/API';
 export default class ViajeCompletadosScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Módulos Finalizados',
-    headerLeft: () => <HeaderBackButton onPress={() => navigation.goBack()} />,
+    //headerLeft: () => <HeaderBackButton onPress={() => navigation.goBack()} />,
   });
   state = {
     /** @type {import("../utils/types").Viaje[]} */
@@ -66,28 +66,28 @@ export default class ViajeCompletadosScreen extends Component {
   render() {
     return (
       <SafeAreaView style={styles.safe}>
-        <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
-
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scrollView}>
           <Image
-              resizeMode="cover"
-              source={{
-                uri:
-                  'http://okoconnect.com/karim/assets/images/viajes-completados.png',
-              }}
-              style={styles.image}
-            />
-           <Text style={styles.bigTitle}>¡Vas muy bien!</Text>
-            <Text style={styles.bigParagraph}>
-              Has completado los siguientes módulos. Si deseas consultar nuevamente
-              el contenido, presiona sobre el módulo de interés.
-            </Text>
+            resizeMode="cover"
+            source={{
+              uri:
+                'http://okoconnect.com/karim/assets/images/viajes-completados.png',
+            }}
+            style={styles.image}
+          />
+          <Text style={styles.bigTitle}>¡Vas muy bien!</Text>
+          <Text style={styles.bigParagraph}>
+            Has completado los siguientes módulos. Si deseas consultar
+            nuevamente el contenido, presiona sobre el módulo de interés.
+          </Text>
 
-            <View style={styles.container}>
-              {this.state.viajes.length === 0
-                ? this.renderListEmpty()
-                : this.state.viajes.map(viaje => this.renderItem({item: viaje}))}
-            </View>
-         
+          <View style={styles.container}>
+            {this.state.viajes.length === 0
+              ? this.renderListEmpty()
+              : this.state.viajes.map(viaje => this.renderItem({item: viaje}))}
+          </View>
         </ScrollView>
       </SafeAreaView>
     );
@@ -95,8 +95,8 @@ export default class ViajeCompletadosScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-  },
+  safe: {flex: 1, backgroundColor: '#fff'},
+  scrollView: {},
   container: {
     paddingHorizontal: Dimensions.regularSpace,
     paddingTop: Dimensions.regularSpace,
@@ -126,6 +126,6 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     width: Dims.window.width,
-    height: Dims.window.width * 0.80,
+    height: Dims.window.width * 0.8,
   },
 });

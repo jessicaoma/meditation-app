@@ -7,6 +7,7 @@ import {
   View,
   ScrollView,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
@@ -220,7 +221,8 @@ export default class PremiumScreen extends Component {
           <View style={styles.container}>
             <Text style={styles.bigTitle}>Elige un plan</Text>
             <Text style={styles.bigParagraph}>
-              Al suscribirse a la aplicación, el usuario tiene la posibilidad de acceder a:
+              Al suscribirse a la aplicación, el usuario tiene la posibilidad de
+              acceder a:
             </Text>
             <View style={styles.container}>
               {this.features.premium.map(item => this.renderPremiumItem(item))}
@@ -235,15 +237,17 @@ export default class PremiumScreen extends Component {
             <Text style={[styles.bigParagraph]}>
               {'\n'}
               Suscripción ANUAL. {'\n'}
-              Con el plan anual, accede a todo el contenido ilimitado de la plataforma: 
+              Con el plan anual, accede a todo el contenido ilimitado de la
+              plataforma:
             </Text>
             <View style={styles.container}>
               {this.features.premium3.map(item => this.renderPremiumItem(item))}
             </View>
-             <Text style={[styles.bigParagraph]}>
+            <Text style={[styles.bigParagraph]}>
               {'\n'}
               Suscripción MENSUAL. {'\n'}
-              Con el plan mensual, accede a todo el contenido ilimitado de la plataforma:
+              Con el plan mensual, accede a todo el contenido ilimitado de la
+              plataforma:
             </Text>
             <View style={styles.container}>
               {this.features.premium4.map(item => this.renderPremiumItem(item))}
@@ -269,7 +273,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   statusBar: {
-    //height: Dimensions.statusBarHeight,
+    height: Platform.OS === 'android' ? Dimensions.statusBarHeight : 0,
   },
   scrollView: {
     flex: 1,

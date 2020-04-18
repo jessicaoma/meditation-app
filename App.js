@@ -36,14 +36,14 @@ export default function App(props) {
           require('./assets/images/sliderimage.png'),
           require('./assets/images/bg-inicio.png'),
           require('./assets/images/header-image.png'),
-          require('./assets/images/emociones/emocion-1.png'),
-          require('./assets/images/emociones/emocion-2.png'),
-          require('./assets/images/emociones/emocion-3.png'),
-          require('./assets/images/emociones/emocion-4.png'),
+          //require('./assets/images/emociones/emocion-1.png'),
+          //require('./assets/images/emociones/emocion-2.png'),
+          //require('./assets/images/emociones/emocion-3.png'),
+          //require('./assets/images/emociones/emocion-4.png'),
         ]);
         // Load fonts
         await Font.loadAsync({
-          ...Ionicons.font,
+          //...Ionicons.font,
           'MyriadPro-Bold': require('./assets/fonts/MyriadPro-Bold.ttf'),
           'MyriadPro-Semibold': require('./assets/fonts/MyriadPro-Semibold.ttf'),
           'MyriadPro-Regular': require('./assets/fonts/MyriadPro-Regular.ttf'),

@@ -36,8 +36,8 @@ class Categoria extends Component {
   static navigationOptions = ({route, navigation}) => {
     return {
       title: route.params?.titulo ?? 'Categoria',
-      headerLeft: () => (
-        <HeaderBackButton onPress={() => navigation.goBack()} />
+      headerLeft: props => (
+        <HeaderBackButton {...props} onPress={() => navigation.goBack()} />
       ),
     };
   };

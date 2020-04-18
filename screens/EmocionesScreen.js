@@ -97,7 +97,7 @@ export default class EmocionesScreen extends Component {
    */
   _handleClick = item => {
     API.postRegistroEmocion(item.key, user);
-    this.props.navigation.navigate('Emocion', {
+    this.props.navigation.replace('Emocion', {
       emocion: item,
     });
   };

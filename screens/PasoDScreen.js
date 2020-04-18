@@ -42,28 +42,25 @@ class PasoDScreen extends Component {
       headerTitleStyle: {
         color: 'white',
       },
-      headerStyle: {
-        backgroundColor: 'transparent',
-      },
-      header: props => {
+      headerBackground: () => {
         return (
-          <ImageBackground
+          <Image
             style={{
               backgroundColor: '#b9a0bf',
-            }}
-            imageStyle={{
               resizeMode: 'stretch',
+              width: dimensions.screen.width,
+              height: headerH,
             }}
-            source={require('../assets/images/header-image.png')}>
-            <Header {...props} />
-          </ImageBackground>
+            source={require('../assets/images/header-image.png')}
+          />
         );
       },
       headerRight: props => (
         <TouchableOpacity
           style={styles.close}
           onPress={() => {
-            props.navigation.pop(props.route.params.position + 1);
+            //props.navigation.pop(props.route.params.position + 1);
+            props.navigation.popToTop();
           }}>
           <Ionicons name={'md-close'} size={25} color={'#fff'} />
         </TouchableOpacity>

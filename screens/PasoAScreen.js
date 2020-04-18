@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-  //Animated,
   View,
   StyleSheet,
   ImageBackground,
@@ -56,7 +55,7 @@ class PasoAScreen extends Component {
   };
 
   _handleClose = () => {
-    this.props.navigation.pop(this.pasoIndex + 1);
+    this.props.navigation.popToTop();
   };
 
   nextStep = () => {

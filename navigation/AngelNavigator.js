@@ -7,17 +7,13 @@ const Stack = createStackNavigator();
 
 function AngelNavigator() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Cartas"
-        component={AngelCartasScreen}
-        options={{header: () => null}}
-      />
-      <Stack.Screen
-        name="Angel"
-        component={AngelScreen}
-        options={{header: () => null}}
-      />
+    <Stack.Navigator
+      screenOptions={{
+        header: () => null,
+        headerTransparent: true,
+      }}>
+      <Stack.Screen name="Cartas" component={AngelCartasScreen} />
+      <Stack.Screen name="Angel" component={AngelScreen} />
     </Stack.Navigator>
   );
 }

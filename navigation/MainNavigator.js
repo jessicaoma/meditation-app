@@ -19,7 +19,7 @@ export default function MainNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerBackTitle: null,
+        headerBackTitleVisible: false,
         headerTitleStyle: {
           color: '#030303',
           fontFamily: 'MyriadPro-Semibold',
@@ -28,12 +28,12 @@ export default function MainNavigator() {
       <Stack.Screen
         name="Main"
         component={BottomNavigator}
-        options={{header: () => null}}
+        options={{header: () => null, headerTransparent: true}}
       />
       <Stack.Screen
         name="PerfilDrawer"
         component={PerfilNavigation}
-        options={{header: () => null}}
+        options={{header: () => null, headerTransparent: true}}
       />
       <Stack.Screen
         name="Meditacion"
@@ -78,13 +78,7 @@ export default function MainNavigator() {
       <Stack.Screen
         name="EmocionesStack"
         component={EmocionesNavigator}
-        options={{
-          title: '¿Cómo te sientes hoy?',
-          headerTitleStyle: {
-            color: '#030303',
-            fontFamily: 'MyriadPro-Semibold',
-          },
-        }}
+        options={{header: () => null, headerTransparent: true}}
       />
       <Stack.Screen
         name="ViajeStack"

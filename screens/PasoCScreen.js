@@ -21,12 +21,15 @@ import {Ionicons} from '@expo/vector-icons';
 
 const screenHeight =
   dimensions.screen.height -
-  Header.HEIGHT -
-  (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
-const screenHeight2 =
-  dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
+const headerH =
+  Platform.OS === 'android'
+    ? 56 + dimensions.statusBarHeight
+    : 44 + //DeviceInfo.isIPhoneX_deprecated
+      //? dimensions.statusBarHeight - 20
+      dimensions.statusBarHeight;
+//Android it's 56, on iOS, it's 44, + status bar size.
 /**
  * Paso Tipo(C): Recomendaciones
  * @typedef Props
@@ -46,28 +49,25 @@ class PasoCScreen extends Component {
       headerTitleStyle: {
         color: 'white',
       },
-      headerStyle: {
-        backgroundColor: 'transparent',
-      },
-      header: props => {
+      headerBackground: () => {
         return (
-          <ImageBackground
+          <Image
             style={{
               backgroundColor: '#b9a0bf',
-            }}
-            imageStyle={{
               resizeMode: 'stretch',
+              width: dimensions.screen.width,
+              height: headerH,
             }}
-            source={require('../assets/images/header-image.png')}>
-            <Header {...props} style={{backgroundColor: 'transparent'}} />
-          </ImageBackground>
+            source={require('../assets/images/header-image.png')}
+          />
         );
       },
       headerRight: props => (
         <TouchableOpacity
           style={styles.close}
           onPress={() => {
-            props.navigation.pop(props.route.params.position + 1);
+            //props.navigation.pop(props.route.params.position + 1);
+            props.navigation.popToTop();
           }}>
           <Ionicons name={'md-close'} size={25} color={'#fff'} />
         </TouchableOpacity>
@@ -89,12 +89,6 @@ class PasoCScreen extends Component {
     // API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
   };
 
-  _handleClose = () => {
-    const {viaje} = this.props;
-    // @ts-ignore
-    this.props.navigation.pop(this.pasoIndex + 1);
-  };
-
   nextStep = () => {
     const {viaje} = this.props;
     const {tipo} = viaje.pasos[this.pasoIndex + 1];
@@ -111,31 +105,25 @@ class PasoCScreen extends Component {
       <SafeAreaView style={styles.safe}>
         <View style={styles.container}>
           <ScrollView style={styles.scroll}>
-            <View style={{paddingBottom: dimensions.window.width * 0.6666,}}>
-            {this.paso.contenidos.map(contenido => (
-              <>
-                {console.log('cont'+contenido.titulo+'dd')}
-                {contenido.titulo !== undefined && (
-                  contenido.titulo !== '' && (
+            <View style={{paddingBottom: dimensions.window.width * 0.6666}}>
+              {this.paso.contenidos.map(contenido => (
+                <View key={contenido.key}>
+                  {contenido.titulo !== undefined && contenido.titulo !== '' && (
                     <View style={styles.container1}>
                       <ScalableText style={styles.headline}>
                         {contenido.titulo}
                       </ScalableText>
                     </View>
-                  )
-                )}
-                {console.log('cont'+contenido.texto+'ss')}
-                {contenido.texto !== '' && (
-                  contenido.texto !== undefined && (
+                  )}
+                  {contenido.texto !== undefined && contenido.texto !== '' && (
                     <View style={styles.container2}>
                       <ScalableText style={styles.text2}>
                         {contenido.texto}
                       </ScalableText>
                     </View>
-                  )
-                )}
-              </>
-            ))}
+                  )}
+                </View>
+              ))}
             </View>
           </ScrollView>
         </View>
@@ -177,7 +165,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     resizeMode: 'cover',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   container: {
     height: '100%',

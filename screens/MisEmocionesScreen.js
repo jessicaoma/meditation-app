@@ -29,7 +29,7 @@ import API from '../utils/API';
 export default class MisEmocionesScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Mis Emociones',
-    headerLeft: () => <HeaderBackButton onPress={() => navigation.goBack()} />,
+    //headerLeft: () => <HeaderBackButton onPress={() => navigation.goBack()} />,
   });
 
   constructor(props) {
@@ -157,13 +157,13 @@ export default class MisEmocionesScreen extends Component {
                   <Text style={styles.textTitleGraph}>
                     {this.state.keys[1]}
                   </Text>
-                  <LogoEmocion2 />
+                  <LogoEmocion3 />
                 </View>
                 <View style={styles.containerLabelsChild}>
                   <Text style={styles.textTitleGraph}>
                     {this.state.keys[2]}
                   </Text>
-                  <LogoEmocion3 />
+                  <LogoEmocion2 />
                 </View>
                 <View style={styles.containerLabelsChild}>
                   <Text style={styles.textTitleGraph}>

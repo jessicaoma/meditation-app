@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   TouchableHighlight,
   SafeAreaView,
   ScrollView,
+  Platform,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
@@ -68,9 +68,9 @@ export default class LoginScreen extends Component {
                   </ScalableText>
                 </TouchableOpacity>
                 <TouchableHighlight>
-                  <Text style={styles.forgetText}>
+                  <ScalableText style={styles.forgetText}>
                     ¿Olvidaste tu contraseña?
-                  </Text>
+                  </ScalableText>
                 </TouchableHighlight>
               </View>
             </View>
@@ -91,10 +91,12 @@ export default class LoginScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  safe: {flex: 1, backgroundColor: 'white'},
-  scroll: {
-    paddingTop: Dims.statusBarHeight,
+  safe: {
+    flex: 1,
+    backgroundColor: 'white',
+    paddingTop: Platform.OS === 'android' ? Dims.statusBarHeight : 0,
   },
+  scroll: {},
   container: {
     flex: 1,
     alignItems: 'center',

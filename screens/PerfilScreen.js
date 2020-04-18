@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Platform,
   DeviceInfo,
+  SafeAreaView,
 } from 'react-native';
 import Dimensions from '../constants/Dimensions';
 import Flecha from '../constants/LogoArrowRight';
@@ -33,81 +34,89 @@ const ContainerHeight =
  * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
-export default class DrawerContentComponents extends Component {
+export default class PerfilScreen extends Component {
   navigateToScreen = route => () => {
     this.props.navigation.navigate(route);
   };
 
   render() {
     return (
-      <ScrollView style={styles.scrollview}>
-        <View style={styles.container}>
-          <View>
-            <SvgUri
-              width={deviceWidth}
-              height={headerHeight}
-              uri="http://okoconnect.com/karim/assets/perfil/header-perfil.svg"
-              style={{marginTop: -40}}
-            />
-            <View style={styles.headerContainer}>
-              <ScalableText style={styles.headerText}>
-                Evelin Giraldo
-              </ScalableText>
-            </View>
-          </View>
-
-          <View style={styles.itemsContainer}>
-            {/* {this.props.state.routes
-              .slice(1, this.props.state.routes.length - 1)
-              .map(item => this.renderItem(item))} */}
-            <View style={[styles.itemStyle]}>
-              <TabBarIcon name="MisEmociones" />
-              <ScalableText
-                style={[styles.labelStyle]}
-                onPress={this.navigateToScreen('MisEmociones')}>
-                Mis Emociones
-              </ScalableText>
-              <Flecha />
-            </View>
-            <View style={[styles.itemStyle]}>
-              <TabBarIcon name="ViajesCompletados" />
-              <ScalableText
-                style={[styles.labelStyle]}
-                onPress={this.navigateToScreen('ViajesCompletados')}>
-                Módulos Finalizados
-              </ScalableText>
-              <Flecha />
-            </View>
-            <View style={[styles.itemStyle]}>
-              <TabBarIcon name="MisMeditaciones" />
-              <ScalableText
-                style={[styles.labelStyle]}
-                onPress={this.navigateToScreen('MisMeditaciones')}>
-                Mis Meditaciones
-              </ScalableText>
-              <Flecha />
-            </View>
-          </View>
-
-          <View style={styles.footer}>
-            <TouchableOpacity onPress={this.navigateToScreen('Suscribete')}>
+      <SafeAreaView>
+        <ScrollView style={styles.scrollview}>
+          <View style={styles.container}>
+            <View>
               <SvgUri
                 width={deviceWidth}
-                height={deviceWidth / 3.8}
-                uri="http://okoconnect.com/karim/assets/perfil/footer-perfil.svg"
+                height={headerHeight}
+                uri="http://okoconnect.com/karim/assets/perfil/header-perfil.svg"
+                style={{marginTop: -40}}
               />
-              <ScalableText style={styles.footerText}>SUSCRíbete</ScalableText>
-            </TouchableOpacity>
+              <View style={styles.headerContainer}>
+                <ScalableText style={styles.headerText}>
+                  Evelin Giraldo
+                </ScalableText>
+              </View>
+            </View>
+
+            <View style={styles.itemsContainer}>
+              {/* {this.props.state.routes
+              .slice(1, this.props.state.routes.length - 1)
+            .map(item => this.renderItem(item))} */}
+              <View style={[styles.itemStyle]}>
+                <TabBarIcon name="MisEmociones" />
+                <ScalableText
+                  style={[styles.labelStyle]}
+                  onPress={this.navigateToScreen('MisEmociones')}>
+                  Mis Emociones
+                </ScalableText>
+                <Flecha />
+              </View>
+              <View style={[styles.itemStyle]}>
+                <TabBarIcon name="ViajesCompletados" />
+                <ScalableText
+                  style={[styles.labelStyle]}
+                  onPress={this.navigateToScreen('ViajesCompletados')}>
+                  Módulos Finalizados
+                </ScalableText>
+                <Flecha />
+              </View>
+              <View style={[styles.itemStyle]}>
+                <TabBarIcon name="MisMeditaciones" />
+                <ScalableText
+                  style={[styles.labelStyle]}
+                  onPress={this.navigateToScreen('MisMeditaciones')}>
+                  Mis Meditaciones
+                </ScalableText>
+                <Flecha />
+              </View>
+            </View>
+
+            <View style={styles.footer}>
+              <TouchableOpacity onPress={this.navigateToScreen('Suscribete')}>
+                <SvgUri
+                  width={deviceWidth}
+                  height={deviceWidth / 3.8}
+                  uri="http://okoconnect.com/karim/assets/perfil/footer-perfil.svg"
+                />
+                <ScalableText style={styles.footerText}>
+                  SUSCRíbete
+                </ScalableText>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  scrollview: {
+  safe: {
     flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollview: {
+    //flex: 1,
     //height: '100%',
   },
   container: {

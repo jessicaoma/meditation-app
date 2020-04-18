@@ -18,7 +18,7 @@ import {HeaderBackButton} from '@react-navigation/stack';
 export default class MisMeditacionesScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Mis Meditaciones',
-    headerLeft: () => <HeaderBackButton onPress={() => navigation.goBack()} />,
+    //headerLeft: () => <HeaderBackButton onPress={() => navigation.goBack()} />,
   });
   state = {
     progreso: 0,

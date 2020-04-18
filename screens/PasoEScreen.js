@@ -36,6 +36,7 @@ const screenHeight =
 class PasoEScreen extends Component {
   static navigationOptions = {
     header: () => null,
+    headerTransparent: true,
   };
 
   /** @param {Props} props */
@@ -57,7 +58,8 @@ class PasoEScreen extends Component {
 
   _handleClose = () => {
     // @ts-ignore
-    this.props.navigation.pop(this.pasoIndex + 1);
+    //this.props.navigation.pop(this.pasoIndex + 1);
+    this.props.navigation.popToTop();
   };
 
   nextStep = () => {
@@ -66,7 +68,8 @@ class PasoEScreen extends Component {
     // @ts-ignore
     if (this.pasoIndex === viaje.pasos.length - 1) {
       // @ts-ignore
-      this.props.navigation.pop(viaje.pasos.length);
+      //this.props.navigation.pop(viaje.pasos.length);
+      this.props.navigation.popToTop();
     } else {
       const {tipo} = viaje.pasos[this.pasoIndex + 1];
       // @ts-ignore

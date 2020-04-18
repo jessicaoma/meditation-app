@@ -76,6 +76,7 @@ export default function AppNavigator() {
     <Stack.Navigator
       screenOptions={{
         header: () => null,
+        headerTransparent: true,
       }}>
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />

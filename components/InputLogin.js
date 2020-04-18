@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     fontSize: Dims.inputText,
     fontWeight: '400',
     letterSpacing: 1,
-    lineHeight: 55,
+    //lineHeight: 55,
     paddingHorizontal: 10,
     minHeight: 55,
     fontFamily: 'MyriadPro-Regular',

@@ -16,6 +16,7 @@ function ViajeNavigator(props) {
     <Stack.Navigator
       screenOptions={{
         headerBackTitle: null,
+        headerBackTitleVisible: false,
         headerTitleStyle: {
           color: '#030303',
           fontFamily: 'MyriadPro-Semibold',

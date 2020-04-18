@@ -29,7 +29,7 @@ export default class Emocion extends Component {
   animVal = new Animated.Value(0);
 
   _handelClick = () => {
-    this.props.navigation.navigate('PerfilDrawer', {screen: 'MisEmociones'});
+    this.props.navigation.replace('MisEmociones');
   };
 
   render() {
