@@ -25,7 +25,8 @@ const screenHeight =
 
 const proportion = dimensions.window.width / dimensions.window.height;
 const marginTopImage = (proportion > 0.5 ? (dimensions.window.width * 0.25 * -1) : 0);
-const topText = (proportion > 0.5 ? ('48%') : '60%');
+const topText = (proportion > 0.5 ? ('44%') : '60%');
+
 /**
  * Paso Tipo(E): Cierre
  * @typedef {Object} ParamsNavigation
@@ -85,6 +86,7 @@ class PasoEScreen extends Component {
 
   render() {
     const contenido = this.paso.contenidos[0];
+    console.log(topText);
     return (
       <SafeAreaView
         style={[styles.safe]}>
@@ -103,7 +105,7 @@ class PasoEScreen extends Component {
             />
           </View>
           <View style={styles.body}>
-            <ScrollView contentInsetAdjustmentBehavior="automatic">
+
               {contenido.titulo !== undefined && (
                 <ScalableText style={styles.headline}>
                   {contenido.titulo || ''}
@@ -113,7 +115,7 @@ class PasoEScreen extends Component {
               <ScalableText style={styles.paragraphBottom}>
                 {contenido.texto}
               </ScalableText>
-            </ScrollView>
+
           </View>
           {this.pasoIndex === this.props.viaje.pasos.length - 1 ? (
             <View style={styles.footer}>
@@ -171,7 +173,7 @@ const styles = StyleSheet.create({
     color: Colors.textoViaje,
     letterSpacing: 1.2,
     marginBottom: dimensions.regularSpace,
-    paddingHorizontal: dimensions.bigSpace * 2,
+    paddingHorizontal: dimensions.bigSpace,
   },
   paragraphBottom: {
     fontFamily: 'MyriadPro-Regular',
@@ -179,8 +181,9 @@ const styles = StyleSheet.create({
     lineHeight: dimensions.viajeParrafoLineHeight,
     textAlign: 'left',
     color: Colors.textoViaje,
-    paddingHorizontal: dimensions.bigSpace * 2,
-    height: '100%'
+    paddingHorizontal: dimensions.bigSpace,
+    height: '100%',
+
   },
   body: {
     flex: 1,
@@ -189,8 +192,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: topText,
-    display: 'flex',
-    alignItems: 'center',
+
   },
   buttonNext: {
     position: 'absolute',
