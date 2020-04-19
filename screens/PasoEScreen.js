@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Platform,
+  DeviceInfo,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import API, {user} from '../utils/API';
@@ -24,8 +25,14 @@ const screenHeight =
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
 const proportion = dimensions.window.width / dimensions.window.height;
-const marginTopImage = (proportion > 0.5 ? (dimensions.window.width * 0.25 * -1) : 0);
-const topText = (proportion > 0.5 ? ('44%') : '60%');
+const marginTopImage = 
+  (proportion > 0.5 ? 
+    (dimensions.window.width * 0.25 * -1) : 
+      (Platform.OS === 'android' ? (dimensions.window.width * 0.25 * -1)
+        : DeviceInfo.isIPhoneX_deprecated ? -20
+          : 0) );
+const heightButtonSig = dimensions.window.width * 0.14;
+//const topText = (proportion > 0.5 ? ('44%') : '60%');
 
 /**
  * Paso Tipo(E): Cierre
@@ -86,7 +93,6 @@ class PasoEScreen extends Component {
 
   render() {
     const contenido = this.paso.contenidos[0];
-    console.log(topText);
     return (
       <SafeAreaView
         style={[styles.safe]}>
@@ -105,6 +111,7 @@ class PasoEScreen extends Component {
             />
           </View>
           <View style={styles.body}>
+             <View style={styles.bodyContainer}>
 
               {contenido.titulo !== undefined && (
                 <ScalableText style={styles.headline}>
@@ -115,25 +122,25 @@ class PasoEScreen extends Component {
               <ScalableText style={styles.paragraphBottom}>
                 {contenido.texto}
               </ScalableText>
-
+            </View>
+            {this.pasoIndex === this.props.viaje.pasos.length - 1 ? (
+              <View style={styles.footer}>
+                <TouchableOpacity onPress={this.nextStep}>
+                  <View style={styles.buttonSiguiente}>
+                    <ScalableText style={styles.buttonLabel}>
+                      Siguiente módulo
+                    </ScalableText>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View style={styles.buttonNext}>
+                <TouchableOpacity onPress={this.nextStep}>
+                  <Next />
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
-          {this.pasoIndex === this.props.viaje.pasos.length - 1 ? (
-            <View style={styles.footer}>
-              <TouchableOpacity onPress={this.nextStep}>
-                <View style={styles.buttonSiguiente}>
-                  <ScalableText style={styles.buttonLabel}>
-                    Siguiente módulo
-                  </ScalableText>
-                </View>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <View style={styles.buttonNext}>
-              <TouchableOpacity onPress={this.nextStep}>
-                <Next />
-              </TouchableOpacity>
-            </View>
-          )}
 
       </SafeAreaView>
     );
@@ -154,9 +161,9 @@ const styles = StyleSheet.create({
     paddingTop: dimensions.statusBarHeight,
   },
   headerBack: {
-    position: 'absolute',
     top: dimensions.statusBarHeight,
     zIndex: 100,
+    position: 'absolute',
   },
   sliderImage: {
     width: dimensions.screen.width,
@@ -164,6 +171,17 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     zIndex: 2,
     marginTop: marginTopImage,
+  },
+  body: {
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: screenHeight + heightButtonSig,
+    marginTop: dimensions.window.width * 0.25 * -1,
+  },
+  bodyContainer: {
+
   },
   headline: {
     fontFamily: 'Kiona',
@@ -182,40 +200,28 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     color: Colors.textoViaje,
     paddingHorizontal: dimensions.bigSpace,
-    height: '100%',
-
-  },
-  body: {
-    flex: 1,
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: topText,
-
   },
   buttonNext: {
     position: 'absolute',
     bottom: 0,
     right: 0,
-    marginBottom: screenHeight * 0.05,
+    marginBottom: screenHeight * 0.04,
     marginRight: dimensions.bigSpace,
-    zIndex: 100,
-
   },
   footer: { //Ultima pantalla 
+    marginBottom: screenHeight * 0.04,
+    alignSelf: 'center',
     position: 'absolute',
     bottom: 0,
-    marginBottom: screenHeight * 0.05,
-    alignSelf: 'center',
   },
   buttonSiguiente: {
     backgroundColor: Colors.darkPurple,
     borderRadius: 40,
     paddingHorizontal: dimensions.window.width * 0.15,
-    height: dimensions.window.width * 0.14,
+    height: heightButtonSig,
     justifyContent: 'center',
     alignContent: 'center',
+    
   },
   buttonLabel: {
     color: 'white',
