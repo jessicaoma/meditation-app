@@ -28,6 +28,18 @@ const screenHeight2 =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 const bottomPositionX = (Platform.OS === 'android' ? 15 : 4);
+let headerColor = '#fff';
+
+
+function getIndex(value, arr, prop) {
+    for(var i = 0; i < arr.length; i++) {
+        if(arr[i][prop] === value) {
+            return i;
+        }
+    }
+    return -1; //to handle the case where the value doesn't exist
+}
+
 
 /**
  * Paso Tipo(D): Ejercicio
@@ -58,10 +70,7 @@ class PasoDScreen extends Component {
       header: props => {
         return (
           <ImageBackground
-            source={{
-              uri:
-                'http://okoconnect.com/karim/assets/categorias/categoria-1/header.png',
-            }}
+            source={require('../assets/images/header-image.png')}
             style={{
               width: dimensions.screen.width,
               height:
@@ -71,6 +80,7 @@ class PasoDScreen extends Component {
                   : DeviceInfo.isIPhoneX_deprecated
                   ? dimensions.statusBarHeight - 20
                   : 0),
+              backgroundColor: headerColor,
             }}
             imageStyle={{
               resizeMode: 'stretch',
@@ -91,6 +101,9 @@ class PasoDScreen extends Component {
     const {viaje} = props;
     this.pasoIndex = props.navigation.state.params.position;
     this.paso = viaje.pasos[this.pasoIndex];
+    var color = this.props.categoria.color;
+    var index = getIndex(color, Colors.headers, 'cateColor');
+    headerColor = Colors.headers[index].headerColor;
   }
 
   componentDidMount = async () => {

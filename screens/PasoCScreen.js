@@ -29,6 +29,16 @@ const screenHeight2 =
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
 const bottomPositionX = (Platform.OS === 'android' ? 15 : 4);
+let headerColor = '#fff';
+
+function getIndex(value, arr, prop) {
+    for(var i = 0; i < arr.length; i++) {
+        if(arr[i][prop] === value) {
+            return i;
+        }
+    }
+    return -1; //to handle the case where the value doesn't exist
+}
 
 /**
  * Paso Tipo(C): Recomendaciones
@@ -51,7 +61,14 @@ class PasoCScreen extends Component {
     const {viaje} = props;
     this.pasoIndex = props.navigation.state.params.position;
     this.paso = viaje.pasos[this.pasoIndex];
+
+    var color = this.props.categoria.color;
+    var index = getIndex(color, Colors.headers, 'cateColor');
+    headerColor = Colors.headers[index].headerColor;
+    console.log(headerColor);
   }
+
+  
 
   /** @param {{navigation: import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>}} param*/
   static navigationOptions = ({navigation}) => {
@@ -68,10 +85,7 @@ class PasoCScreen extends Component {
       header: (props) => {
         return (
           <ImageBackground
-            source={{
-              uri:
-                'http://okoconnect.com/karim/assets/categorias/categoria-1/header.png',
-            }}
+            source={require('../assets/images/header-image.png')}
             style={{
               zIndex: 99,
               width: dimensions.screen.width,
@@ -82,6 +96,7 @@ class PasoCScreen extends Component {
                   : DeviceInfo.isIPhoneX_deprecated
                   ? dimensions.statusBarHeight - 20
                   : 0),
+              backgroundColor: headerColor,
             }}
             imageStyle={{
               resizeMode: 'stretch',
@@ -127,7 +142,6 @@ class PasoCScreen extends Component {
             <View style={{paddingBottom: dimensions.window.width * 0.6666,}}>
             {this.paso.contenidos.map(contenido => (
               <>
-                {console.log('cont'+contenido.titulo+'dd')}
                 {contenido.titulo !== undefined && (
                   contenido.titulo !== '' && (
                     <View style={styles.container1}>
@@ -137,7 +151,6 @@ class PasoCScreen extends Component {
                     </View>
                   )
                 )}
-                {console.log('cont'+contenido.texto+'ss')}
                 {contenido.texto !== '' && (
                   contenido.texto !== undefined && (
                     <View style={styles.container2}>

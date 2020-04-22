@@ -31,5 +31,17 @@ const colors = {
   meditacion: '#9898e2',
   textoViaje: '#85787b',
   darkPurple: '#7482a6',
+  headers : [
+    {id: 1, cateColor: '#fdd58d', headerColor: '#b9a0bf'},
+    {id: 2, cateColor: '#f6e1aa', headerColor: '#f8abb4'},
+    {id: 3, cateColor: '#efbfba', headerColor: '#a6afd6'},
+    {id: 4, cateColor: '#f1dee1', headerColor: '#fdc0b9'},
+    {id: 5, cateColor: '#d9def8', headerColor: '#596c85'},
+    {id: 6, cateColor: '#a8aed4', headerColor: '#ffd589'},
+    {id: 7, cateColor: '#d9f6f0', headerColor: '#a6d3d3'},
+    {id: 8, cateColor: '#cbe3e2', headerColor: '#b9a0bf'},
+    {id: 9, cateColor: '#f3ebf9', headerColor: '#ffbfba'},
+    {id: 10, cateColor: '#b2a0bd', headerColor: '#aa94b1'},
+  ],
 };
 export default colors;
