@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
   container1: {
     flex: 1,
     paddingTop: screenHeight * 0.35,
+    paddingHorizontal: dimensions.bigSpace * 2,
   },
   container2: {
     flex: 1,
