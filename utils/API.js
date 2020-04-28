@@ -4,7 +4,7 @@ import {envRemoto} from './types';
 
 const BASE_API = envRemoto
   ? 'http://okotesting-001.azurewebsites.net/api/'
-  : 'http://localserver.com:5000/api/';
+  : 'http://localhost:5000/api/';
 
 class Api {
   /** Consulta las meditaciones
@@ -189,17 +189,15 @@ class Api {
   /**
    * @param {string} itemId Id del paso
    * @param {import('./types').enumStatus} estado Estado del paso
-   * @param {{preguntaId: string, texto: string }[]} respuestas Respuestas dadas en el PasoF
    * @param {string} usuario usuario activo
    */
-  async putDiarioPaso(itemId, estado, respuestas, usuario = user) {
+  async putDiarioPaso(itemId, estado, usuario = user) {
     await fetch(`${BASE_API}diario/paso`, {
       method: 'PUT',
       body: JSON.stringify({
         itemId,
         fecha: dateToStrYYYYMMDD(new Date()),
         estado,
-        respuestas,
         usuario,
       }),
       headers: {'Content-Type': 'application/json'},

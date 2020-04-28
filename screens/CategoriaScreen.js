@@ -61,7 +61,31 @@ class Categoria extends Component {
       const viajes = await API.getViajesCategoria(this.categoria.key, user);
       //const viajes = [this.props.viaje];
       this.setState({viajes, isLoading: false});
+      this.props.dispatch({
+        type: 'SET_MODULOS',
+        payload: {
+          viajes,
+        },
+      });
     });
+  };
+
+  /**
+   * @param {import('../utils/types').Viaje} viaje
+   */
+  determinarPaso = viaje => {
+    let posicion = 0;
+
+    if (viaje.estado === enumStatus.done || viaje.estado === enumStatus.todo) {
+      posicion = 0;
+    } else {
+      posicion = viaje.pasos.findIndex(
+        paso =>
+          paso.estado === enumStatus.doing || paso.estado === enumStatus.todo,
+      );
+    }
+    posicion = posicion < 0 ? 0 : posicion;
+    return posicion;
   };
 
   _goViaje = index => {
@@ -74,16 +98,17 @@ class Categoria extends Component {
       return;
     }
     this.props.dispatch({
-      type: 'SET_VIAJE',
+      type: 'SET_MODULO',
       payload: {
-        viaje,
+        viaje: index,
       },
     });
-    let tipo = viaje.pasos[0].tipo;
+    let position = this.determinarPaso(viaje);
+    let tipo = viaje.pasos[position].tipo;
     //TODO calcular en que paso se quedo, o ir al paso 0.
     this.props.navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
-      position: 0,
-      titulo: viaje.pasos[0].titulo,
+      position,
+      titulo: viaje.pasos[position].titulo,
     });
   };
   //TODO reiniciar el video al llegar al final

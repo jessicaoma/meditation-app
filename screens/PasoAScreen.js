@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Platform,
+  BackHandler,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import API, {user} from '../utils/API';
@@ -16,13 +17,14 @@ import ScalableText from 'react-native-text';
 import {HeaderBackButton} from '@react-navigation/stack';
 import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
+import {useFocusEffect} from '@react-navigation/native';
+import {getBrightness} from '../utils/convert';
 
 const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 let colorLetra = Colors.textoViaje;
-
-
+let pasoAnterio = {};
 
 /**
  * Paso Tipo(A): Highlight
@@ -32,130 +34,161 @@ let colorLetra = Colors.textoViaje;
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'PasoA'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'PasoA'>} route
  * @prop {import('redux').Dispatch} [dispatch]
- * @extends {Component<Props>}
+ * @param {Props} props
  */
-class PasoAScreen extends Component {
-  static navigationOptions = {
-    header: () => null,
-  };
+function PasoAScreen(props) {
+  const {viaje, navigation} = props;
+  const pasoIndex = props.route.params.position;
+  const paso = viaje.pasos[pasoIndex];
+  const contenido = paso.contenidos[0];
+  pasoAnterio.tipo = viaje.pasos[pasoIndex - 1]?.tipo ?? 0;
+  pasoAnterio.titulo = viaje.pasos[pasoIndex - 1]?.titulo ?? '';
+  pasoAnterio.position = pasoIndex - 1;
+  colorLetra =
+    getBrightness(props.categoria.color) > 170 ? Colors.textoViaje : '#fff';
 
-  /** @param {Props} props */
-  constructor(props) {
-    super(props);
-    const {viaje} = props;
-    this.pasoIndex = props.route.params.position;
-    this.paso = viaje.pasos[this.pasoIndex];
-    this.viaje = viaje;
-  }
-
-  componentDidMount = async () => {
-    // const {steps, position} = this.props.navigation.state.params;
-    // const paso = steps[position];
-    //API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
-    if (this.pasoIndex === 0) {
-      API.putDiarioViaje(this.props.viaje.key, enumStatus.doing, user);
+  React.useEffect(() => {
+    API.putDiarioPaso(paso.key, enumStatus.doing, user);
+    if (pasoIndex === 0) {
+      API.putDiarioViaje(props.viaje.key, enumStatus.doing, user);
     }
-  };
+  });
 
-  _handleClose = () => {
-    this.props.navigation.popToTop();
-  };
-
-  nextStep = () => {
-    const {viaje} = this.props;
-    const {tipo} = viaje.pasos[this.pasoIndex + 1];
-    //API.putDiarioPaso(paso.key, enumStatus.done, null, user);
+  function _handleClose() {
     // @ts-ignore
-    this.props.navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
-      position: this.pasoIndex + 1,
-      titulo: viaje.pasos[this.pasoIndex + 1].titulo,
-    });
-  };
-
-  render() {
-    const contenido = this.paso.contenidos[0];
-
-    var color = this.props.categoria.color;
-    var c = color.substring(1);
-    var rgb = parseInt(c, 16); // convertir rrggbb a decimal
-    var r = (rgb >> 16) & 0xff; // extract rojo
-    var g = (rgb >> 8) & 0xff; // extract verde
-    var b = (rgb >> 0) & 0xff; // extract azul
-
-    var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
-
-    if (luma > 170)
-      colorLetra = Colors.textoViaje;
-    else colorLetra = '#fff';
-
-    console.log(luma);
-    console.log(colorLetra);
-
-    return (
-      <SafeAreaView
-        style={[styles.safe, {backgroundColor: this.props.categoria.color}]}>
-        <ImageBackground
-          source={{uri: this.paso.imagenFondo}}
-          style={[styles.sliderImage]}>
-          <TouchableOpacity
-            style={styles.close}
-            onPress={() => {
-              this._handleClose();
-            }}>
-            <Ionicons name={'md-close'} size={25} color={'#fff'} />
-          </TouchableOpacity>
-
-          <View style={styles.headerBack}>
-            <HeaderBackButton
-              tintColor="white"
-              pressColorAndroid="transparent"
-              onPress={() => this.props.navigation.goBack()}
-              labelVisible={false}
-            />
-          </View>
-          {this.pasoIndex === 0 && (
-            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
-              <View style={styles.container1}>
-                <ScalableText style={[styles.text2, {color: colorLetra}]}>Bienvenido al módulo</ScalableText>
-                <ScalableText style={[styles.headline, {color: colorLetra}]}>{this.props.viaje.titulo}</ScalableText>
-                <ScalableText style={[styles.text2, {color: colorLetra}]}>de este curso</ScalableText>
-
-              </View>
-            </TouchableOpacity>
-          )}
-          {this.pasoIndex === 1 && (
-            <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
-              <View style={styles.container2}>
-                <ScalableText style={[styles.text2, {color: colorLetra}]}>
-                  {contenido.texto}
-                </ScalableText>
-              </View>
-            </TouchableOpacity>
-          )}
-          {this.pasoIndex === 2 && (
-            <>
-              <View style={styles.container3}>
-                <ScalableText style={[styles.text2, {color: colorLetra}]}>
-                  {contenido.texto}
-                </ScalableText>
-              </View>
-              <View style={styles.containerButton}>
-                <TouchableOpacity onPress={this.nextStep}>
-                  <Next />
-                </TouchableOpacity>
-              </View>
-            </>
-          )}
-        </ImageBackground>
-      </SafeAreaView>
-    );
+    navigation.popToTop();
   }
+
+  function nextStep() {
+    const {tipo} = viaje.pasos[pasoIndex + 1];
+    API.putDiarioPaso(paso.key, enumStatus.done, user);
+    // @ts-ignore
+    navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
+      position: pasoIndex + 1,
+      titulo: viaje.pasos[pasoIndex + 1].titulo,
+    });
+  }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        if (pasoAnterio < 0) {
+          navigation.goBack();
+        } else {
+          const states = navigation.dangerouslyGetState();
+          const anterior = states.routes[states.routes.length - 2];
+          if (anterior.name !== 'Categoria') {
+            navigation.goBack();
+          } else {
+            const {tipo, position, titulo} = pasoAnterio;
+            // @ts-ignore
+            navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
+              position,
+              titulo,
+            });
+          }
+        }
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [navigation]),
+  );
+
+  return (
+    <SafeAreaView
+      style={[styles.safe, {backgroundColor: props.categoria.color}]}>
+      <ImageBackground
+        source={{uri: paso.imagenFondo}}
+        style={[styles.sliderImage]}>
+        <TouchableOpacity
+          style={styles.close}
+          onPress={() => {
+            _handleClose();
+          }}>
+          <Ionicons name={'md-close'} size={25} color={'#fff'} />
+        </TouchableOpacity>
+        <View style={styles.headerBack}>
+          <HeaderBackButton
+            tintColor="white"
+            pressColorAndroid="transparent"
+            onPress={() => {
+              if (pasoIndex === 0) {
+                props.navigation.goBack();
+              } else {
+                const states = props.navigation.dangerouslyGetState();
+                const anterior = states.routes[states.routes.length - 2];
+                if (anterior.name !== 'Categoria') {
+                  props.navigation.goBack();
+                } else {
+                  const {tipo} = viaje.pasos[pasoIndex - 1];
+                  // @ts-ignore
+                  props.navigation.replace(
+                    `Paso${String.fromCharCode(65 + tipo)}`,
+                    {
+                      position: pasoIndex - 1,
+                      titulo: viaje.pasos[pasoIndex - 1].titulo,
+                    },
+                  );
+                }
+              }
+            }}
+            labelVisible={false}
+          />
+        </View>
+        {pasoIndex === 0 && (
+          <TouchableOpacity style={{flex: 1}} onPress={nextStep}>
+            <View style={styles.container1}>
+              <ScalableText style={[styles.text2, {color: colorLetra}]}>
+                Bienvenido al módulo
+              </ScalableText>
+              <ScalableText style={[styles.headline, {color: colorLetra}]}>
+                {props.viaje.titulo}
+              </ScalableText>
+              <ScalableText style={[styles.text2, {color: colorLetra}]}>
+                de este curso
+              </ScalableText>
+            </View>
+          </TouchableOpacity>
+        )}
+        {pasoIndex === 1 && (
+          <TouchableOpacity style={{flex: 1}} onPress={nextStep}>
+            <View style={styles.container2}>
+              <ScalableText style={[styles.text2, {color: colorLetra}]}>
+                {contenido.texto}
+              </ScalableText>
+            </View>
+          </TouchableOpacity>
+        )}
+        {pasoIndex === 2 && (
+          <>
+            <View style={styles.container3}>
+              <ScalableText style={[styles.text2, {color: colorLetra}]}>
+                {contenido.texto}
+              </ScalableText>
+            </View>
+            <View style={styles.containerButton}>
+              <TouchableOpacity onPress={nextStep}>
+                <Next />
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
+      </ImageBackground>
+    </SafeAreaView>
+  );
 }
 
+PasoAScreen.navigationOptions = {
+  header: () => null,
+};
+
 function mapStateToProps(state) {
+  const {categoria, viajes, viaje} = state;
   return {
-    viaje: state.viaje,
-    categoria: state.categoria,
+    viaje: viajes[viaje],
+    categoria,
   };
 }
 
@@ -209,7 +242,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: dimensions.bigSpace * 2,
   },
-  
   containerButton: {
     position: 'absolute',
     bottom: 0,
