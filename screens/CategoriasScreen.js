@@ -59,7 +59,10 @@ class Categorias extends Component {
   /** @param {import('react-native').ListRenderItemInfo<import('../utils/types').Categoria>} info*/
   renderItem = ({item}) => (
     <Buttom
-      style={{backgroundColor: item.color || Colors.primaryDark}}
+      style={{
+        backgroundColor: item.color || Colors.primaryDark,
+        position: 'relative',
+      }}
       onPress={() => {
         this._handleClick(item);
       }}>
@@ -118,15 +121,10 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Regular',
   },
   image: {
-    resizeMode: 'contain',
-    maxHeight: 80,
-    width: 110,
-    borderBottomRightRadius: 25,
-    borderTopRightRadius: 25,
-    flex: 0,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    resizeMode: 'cover',
+    width: 'auto',
+    height: 80,
+    backgroundColor: 'red'
   },
 });
 
