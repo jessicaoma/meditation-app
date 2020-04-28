@@ -1,20 +1,23 @@
 import React, {Component} from 'react';
 import {
-  Text,
   StyleSheet,
   View,
   FlatList,
   ScrollView,
   SafeAreaView,
   ActivityIndicator,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
 import colors from '../constants/Colors';
-import HalfCover from '../components/HalfCover';
 import Dims from '../constants/Dimensions';
 import API, {user} from '../utils/API';
+import ScalableText from 'react-native-text';
 
 //TODO registrar seleccion
 const numColumns = 2;
+const width = (Dims.window.width - 40) / numColumns;
+const height = (Dims.window.width / numColumns) * 1.5;
 
 // datos que son fijos dentro de la app
 const data = [
@@ -27,8 +30,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-1.png',
     headerH: 0.1,
     footerH: 0.35,
-    // @ts-ignore
-    imagen: require('../assets/images/emociones/emocion-1.png'),
+    imagen: require('../assets/images/emociones/emocion-1.gif'),
   },
   {
     imagenFondo:
@@ -39,8 +41,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-2.png',
     headerH: 0.1,
     footerH: 0.3,
-    // @ts-ignore
-    imagen: require('../assets/images/emociones/emocion-2.png'),
+    imagen: require('../assets/images/emociones/emocion-2.gif'),
   },
   {
     imagenFondo:
@@ -51,8 +52,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-3.png',
     headerH: 0.35,
     footerH: 0.35,
-    // @ts-ignore
-    imagen: require('../assets/images/emociones/emocion-3.png'),
+    imagen: require('../assets/images/emociones/emocion-3.gif'),
   },
   {
     imagenFondo:
@@ -63,8 +63,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-4.png',
     headerH: 0.45,
     footerH: 0.2,
-    // @ts-ignore
-    imagen: require('../assets/images/emociones/emocion-4.png'),
+    imagen: require('../assets/images/emociones/emocion-4.gif'),
   },
 ];
 
@@ -106,15 +105,23 @@ export default class EmocionesScreen extends Component {
    * @param {import('react-native').ListRenderItemInfo<import('../utils/types').Emoción>} item
    */
   renderItem = ({item}) => (
-    <HalfCover
-      source={item.imagen}
+    <TouchableOpacity
       onPress={() => {
         this._handleClick(item);
-      }}
-      height={(Dims.window.width / numColumns) * 1.5}
-      width={(Dims.window.width - 40) / numColumns}
-      style={{backgroundColor: colors.meditacion}}
-    />
+      }}>
+      <View style={styles.carta}>
+        <Image
+          style={{
+            width: width - 12,
+            height: width - 12,
+            resizeMode: 'contain',
+          }}
+          source={item.imagen}
+        />
+
+        <ScalableText style={[styles.cartaTitulo]}>{item.titulo}</ScalableText>
+      </View>
+    </TouchableOpacity>
   );
 
   renderListEmpty = _ => (
@@ -133,11 +140,11 @@ export default class EmocionesScreen extends Component {
               ListEmptyComponent={this.renderListEmpty}
               keyExtractor={item => item.key}
             />
-            <Text style={styles.suggestion}>
+            <ScalableText style={styles.suggestion}>
               ¿Cómo te sientes hoy?{'\n'}
               {'\n'}
               Llevando un registro de tus emociones podrás conocerte mejor.
-            </Text>
+            </ScalableText>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -163,5 +170,29 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     letterSpacing: 1,
+  },
+  carta: {
+    margin: 5,
+    borderRadius: 10,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    backgroundColor: colors.meditacion,
+    height: height,
+    width: width - 5,
+    alignSelf: 'center',
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  cartaTitulo: {
+    textAlign: 'center',
+    color: 'white',
   },
 });

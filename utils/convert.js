@@ -73,7 +73,7 @@ export const navigationStacks = navigation => {
   let parentState = navigation.dangerouslyGetParent();
   let out = '';
   if (parentState !== undefined) {
-    out += navigationStacks(parentState);
+    out += `(${navigationStacks(parentState)})`;
   }
   out += state.routes.reduce((prev, route) => {
     return prev + route.name + '->';

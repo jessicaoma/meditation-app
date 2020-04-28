@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Platform,
   DeviceInfo,
+  BackHandler,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import API, {user} from '../utils/API';
@@ -17,6 +18,7 @@ import {HeaderBackButton} from '@react-navigation/stack';
 import Next from '../constants/LogoButtonNext';
 import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
+import {useFocusEffect} from '@react-navigation/native';
 
 //const screenWidth = dimensions.window.width;
 const screenHeight =
@@ -33,7 +35,7 @@ const marginTopImage =
     ? -20
     : 0;
 const heightButtonSig = dimensions.window.width * 0.14;
-//const topText = (proportion > 0.5 ? ('44%') : '60%');
+let pasoAnterio = {};
 
 /**
  * Paso Tipo(E): Cierre
@@ -43,115 +45,135 @@ const heightButtonSig = dimensions.window.width * 0.14;
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'PasoE'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'PasoE'>} route
  * @prop {import('redux').Dispatch} [dispatch]
- * @extends {Component<Props>}
+ * @param {Props} props
  */
-class PasoEScreen extends Component {
-  static navigationOptions = {
-    header: () => null,
-    headerTransparent: true,
-  };
+function PasoEScreen(props) {
+  const {viaje, navigation} = props;
+  const pasoIndex = props.route.params.position;
+  const paso = viaje.pasos[pasoIndex];
+  const contenido = paso.contenidos[0];
+  pasoAnterio.tipo = viaje.pasos[pasoIndex - 1]?.tipo ?? 0;
+  pasoAnterio.titulo = viaje.pasos[pasoIndex - 1]?.titulo ?? '';
+  pasoAnterio.position = pasoIndex - 1;
 
-  /** @param {Props} props */
-  constructor(props) {
-    super(props);
-    const {viaje} = props;
-    this.pasoIndex = props.route.params.position;
-    this.paso = viaje.pasos[this.pasoIndex];
+  React.useEffect(() => {
+    if (pasoIndex === viaje.pasos.length - 1) {
+      API.putDiarioPaso(paso.key, enumStatus.done, user);
+      API.putDiarioViaje(props.viaje.key, enumStatus.done, user);
+    } else {
+      API.putDiarioPaso(paso.key, enumStatus.doing, user);
+    }
+  });
+
+  function _handleClose() {
+    // @ts-ignore
+    navigation.popToTop();
   }
 
-  componentDidMount = async () => {
-    // const {steps, position} = this.props.navigation.state.params;
-    // const paso = steps[position];
-    //API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
-    if (this.pasoIndex === this.props.viaje.pasos.length - 1) {
-      API.putDiarioViaje(this.props.viaje.key, enumStatus.done, user);
-    }
-  };
-
-  _handleClose = () => {
-    // @ts-ignore
-    //this.props.navigation.pop(this.pasoIndex + 1);
-    this.props.navigation.popToTop();
-  };
-
-  nextStep = () => {
-    const {viaje} = this.props;
-    //API.putDiarioPaso(paso.key, enumStatus.done, null, user);
-    // @ts-ignore
-    if (this.pasoIndex === viaje.pasos.length - 1) {
+  function nextStep() {
+    if (pasoIndex === viaje.pasos.length - 1) {
+      //TODO salto al siguiente modulo o regresar a la categoria
       // @ts-ignore
-      this.props.navigation.popToTop();
+      navigation.popToTop();
     } else {
-      const {tipo} = viaje.pasos[this.pasoIndex + 1];
+      const {tipo} = viaje.pasos[pasoIndex + 1];
+      API.putDiarioPaso(paso.key, enumStatus.done, user);
       // @ts-ignore
-      this.props.navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
-        titulo: viaje.pasos[this.pasoIndex + 1].titulo,
-        position: this.pasoIndex + 1,
+      navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
+        position: pasoIndex + 1,
+        titulo: viaje.pasos[pasoIndex + 1].titulo,
       });
     }
-  };
-
-  render() {
-    const contenido = this.paso.contenidos[0];
-    return (
-      <SafeAreaView style={styles.safe}>
-        <Image
-          source={{uri: this.paso.imagenFondo}}
-          style={[styles.sliderImage]}
-        />
-        <TouchableOpacity
-          style={styles.close}
-          onPress={() => {
-            this._handleClose();
-          }}>
-          <Ionicons name={'md-close'} size={25} color={'#fff'} />
-        </TouchableOpacity>
-        <View style={styles.headerBack}>
-          <HeaderBackButton
-            tintColor="white"
-            pressColorAndroid="transparent"
-            onPress={() => this.props.navigation.goBack()}
-            labelVisible={false}
-          />
-        </View>
-        <View style={styles.body}>
-          <View style={styles.bodyContainer}>
-            {contenido.titulo !== undefined && (
-              <ScalableText style={styles.headline}>
-                {contenido.titulo || ''}
-              </ScalableText>
-            )}
-            <ScalableText style={styles.paragraphBottom}>
-              {contenido.texto}
-            </ScalableText>
-          </View>
-          {this.pasoIndex === this.props.viaje.pasos.length - 1 ? (
-            <View style={styles.footer}>
-              <TouchableOpacity onPress={this.nextStep}>
-                <View style={styles.buttonSiguiente}>
-                  <ScalableText style={styles.buttonLabel}>
-                    Siguiente módulo
-                  </ScalableText>
-                </View>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <View style={styles.buttonNext}>
-              <TouchableOpacity onPress={this.nextStep}>
-                <Next />
-              </TouchableOpacity>
-            </View>
-          )}
-        </View>
-      </SafeAreaView>
-    );
   }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        if (pasoAnterio < 0) {
+          navigation.goBack();
+        } else {
+          const states = navigation.dangerouslyGetState();
+          const anterior = states.routes[states.routes.length - 2];
+          if (anterior.name !== 'Categoria') {
+            navigation.goBack();
+          } else {
+            const {tipo, position, titulo} = pasoAnterio;
+            // @ts-ignore
+            navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
+              position,
+              titulo,
+            });
+          }
+        }
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [navigation]),
+  );
+
+  return (
+    <SafeAreaView style={styles.safe}>
+      <Image source={{uri: paso.imagenFondo}} style={[styles.sliderImage]} />
+      <TouchableOpacity
+        style={styles.close}
+        onPress={() => {
+          _handleClose();
+        }}>
+        <Ionicons name={'md-close'} size={25} color={'#fff'} />
+      </TouchableOpacity>
+      <View style={styles.headerBack}>
+        <HeaderBackButton
+          tintColor="white"
+          pressColorAndroid="transparent"
+          onPress={() => navigation.goBack()}
+          labelVisible={false}
+        />
+      </View>
+      <View style={styles.body}>
+        <View style={styles.bodyContainer}>
+          {contenido.titulo !== undefined && (
+            <ScalableText style={styles.headline}>
+              {contenido.titulo}
+            </ScalableText>
+          )}
+          <ScalableText style={styles.paragraphBottom}>
+            {contenido.texto}
+          </ScalableText>
+        </View>
+        {pasoIndex === viaje.pasos.length - 1 ? (
+          <View style={styles.footer}>
+            <TouchableOpacity onPress={nextStep}>
+              <View style={styles.buttonSiguiente}>
+                <ScalableText style={styles.buttonLabel}>
+                  Siguiente módulo
+                </ScalableText>
+              </View>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={styles.buttonNext}>
+            <TouchableOpacity onPress={nextStep}>
+              <Next />
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    </SafeAreaView>
+  );
 }
 
+PasoEScreen.navigationOptions = {
+  header: () => null,
+  headerTransparent: true,
+};
+
 function mapStateToProps(state) {
+  const {categoria, viajes, viaje} = state;
   return {
-    viaje: state.viaje,
-    categoria: state.categoria,
+    viaje: viajes[viaje],
+    categoria,
   };
 }
 

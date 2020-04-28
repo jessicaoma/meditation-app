@@ -4,6 +4,7 @@ import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import ScalableText from 'react-native-text';
 
+let colorLetra = Colors.gray;
 /**
  * A button whit border radius 30º
  * @typedef Props
@@ -31,6 +32,20 @@ export default class ItemBubble extends Component {
       onPress,
       notMargin,
     } = this.props;
+
+    var c = color.substring(1);
+    var rgb = parseInt(c, 16); // convertir rrggbb a decimal
+    var r = (rgb >> 16) & 0xff; // extract rojo
+    var g = (rgb >> 8) & 0xff; // extract verde
+    var b = (rgb >> 0) & 0xff; // extract azul
+
+    var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+
+    if (luma > 170)
+      colorLetra = Colors.gray;
+    else colorLetra = '#fff';
+
+
     let styleStatus = StyleSheet.create(
       likeButton
         ? {
@@ -54,6 +69,7 @@ export default class ItemBubble extends Component {
             styleText: {
               fontFamily: 'MyriadPro-Regular',
               fontSize: fontSize ? fontSize : Dims.window.width * 0.038,
+              color: fill ? colorLetra : Colors.gray,
             },
           },
     );
@@ -90,7 +106,7 @@ const styles = StyleSheet.create({
     lineHeight: 15,
     fontSize: 13,
     letterSpacing: 0.89,
-    color: Colors.gray,
+    color: colorLetra,
     paddingHorizontal: 6,
     paddingTop: 4,
     flexWrap: 'wrap',

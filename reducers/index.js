@@ -1,7 +1,8 @@
 // Initial state of the store
 const initialState = {
   categoria: null,
-  viaje: null,
+  viajes: [],
+  viaje: 0,
 };
 
 // Function to handle actions and update the state of the store.
@@ -21,7 +22,13 @@ export const reducer = (state = initialState, action) => {
         categoria: payload.categoria,
       };
     }
-    case 'SET_VIAJE': {
+    case 'SET_MODULOS': {
+      return {
+        ...state,
+        viajes: payload.viajes,
+      };
+    }
+    case 'SET_MODULO': {
       return {
         ...state,
         viaje: payload.viaje,
