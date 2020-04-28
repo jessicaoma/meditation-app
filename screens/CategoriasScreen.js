@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     width: 'auto',
     height: 80,
-    backgroundColor: 'red'
   },
 });
 
