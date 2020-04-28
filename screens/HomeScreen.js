@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   ImageBackground,
   Platform,
-  //DeviceInfo,
+  DeviceInfo,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
@@ -28,12 +28,7 @@ import {getBrightness, navigationStacks} from '../utils/convert';
 let colorLetra = '#fff';
 
 const headerH =
-  68 +
-  (Platform.OS === 'android'
-    ? dimensions.statusBarHeight
-    : //: DeviceInfo.isIPhoneX_deprecated
-      //? dimensions.statusBarHeight - 20
-      0);
+  68 + dimensions.statusBarHeight;
 
 /**
  * Home Screens
