@@ -20,6 +20,9 @@ import {Ionicons} from '@expo/vector-icons';
 const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
+let colorLetra = Colors.textoViaje;
+
+
 
 /**
  * Paso Tipo(A): Highlight
@@ -71,6 +74,23 @@ class PasoAScreen extends Component {
 
   render() {
     const contenido = this.paso.contenidos[0];
+
+    var color = this.props.categoria.color;
+    var c = color.substring(1);
+    var rgb = parseInt(c, 16); // convertir rrggbb a decimal
+    var r = (rgb >> 16) & 0xff; // extract rojo
+    var g = (rgb >> 8) & 0xff; // extract verde
+    var b = (rgb >> 0) & 0xff; // extract azul
+
+    var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+
+    if (luma > 170)
+      colorLetra = Colors.textoViaje;
+    else colorLetra = '#fff';
+
+    console.log(luma);
+    console.log(colorLetra);
+
     return (
       <SafeAreaView
         style={[styles.safe, {backgroundColor: this.props.categoria.color}]}>
@@ -96,9 +116,9 @@ class PasoAScreen extends Component {
           {this.pasoIndex === 0 && (
             <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.container1}>
-                <ScalableText style={styles.text2}>Bienvenido al módulo</ScalableText>
-                <ScalableText style={styles.headline}>{this.props.viaje.titulo}</ScalableText>
-                <ScalableText style={styles.text2}>de este curso</ScalableText>
+                <ScalableText style={[styles.text2, {color: colorLetra}]}>Bienvenido al módulo</ScalableText>
+                <ScalableText style={[styles.headline, {color: colorLetra}]}>{this.props.viaje.titulo}</ScalableText>
+                <ScalableText style={[styles.text2, {color: colorLetra}]}>de este curso</ScalableText>
 
               </View>
             </TouchableOpacity>
@@ -106,7 +126,7 @@ class PasoAScreen extends Component {
           {this.pasoIndex === 1 && (
             <TouchableOpacity style={{flex: 1}} onPress={this.nextStep}>
               <View style={styles.container2}>
-                <ScalableText style={styles.text2}>
+                <ScalableText style={[styles.text2, {color: colorLetra}]}>
                   {contenido.texto}
                 </ScalableText>
               </View>
@@ -115,7 +135,7 @@ class PasoAScreen extends Component {
           {this.pasoIndex === 2 && (
             <>
               <View style={styles.container3}>
-                <ScalableText style={styles.text2}>
+                <ScalableText style={[styles.text2, {color: colorLetra}]}>
                   {contenido.texto}
                 </ScalableText>
               </View>
@@ -156,6 +176,7 @@ const styles = StyleSheet.create({
   container1: {
     flex: 1,
     paddingTop: screenHeight * 0.35,
+    paddingHorizontal: dimensions.bigSpace * 2,
   },
   container2: {
     flex: 1,
@@ -169,17 +190,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 24,
     textAlign: 'center',
-    color: Colors.textoViaje,
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   text2: {
     fontFamily: 'MyriadPro-Regular',
     fontSize: 18,
     lineHeight: 24,
     textAlign: 'center',
-    color: Colors.textoViaje,
     justifyContent: 'flex-end',
     alignItems: 'center',
     fontWeight: 'normal',

@@ -4,7 +4,6 @@ import {
   StyleSheet,
   ScrollView,
   Image,
-  ImageBackground,
   SafeAreaView,
   TouchableOpacity,
   Platform,
@@ -15,13 +14,23 @@ import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import Next from '../constants/LogoButtonNext';
-import {Header} from '@react-navigation/stack';
 import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
 
 const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
+
+let headerColor = '#fff';
+
+function getIndex(value, arr, prop) {
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i][prop] === value) {
+      return i;
+    }
+  }
+  return -1; //to handle the case where the value doesn't exist
+}
 
 const headerH =
   Platform.OS === 'android'
@@ -53,7 +62,7 @@ class PasoCScreen extends Component {
         return (
           <Image
             style={{
-              backgroundColor: '#b9a0bf',
+              backgroundColor: headerColor,
               resizeMode: 'stretch',
               width: dimensions.screen.width,
               height: headerH,
@@ -81,6 +90,10 @@ class PasoCScreen extends Component {
     const {viaje} = props;
     this.pasoIndex = props.route.params.position;
     this.paso = viaje.pasos[this.pasoIndex];
+
+    var color = this.props.categoria.color;
+    var index = getIndex(color, Colors.headers, 'cateColor');
+    headerColor = Colors.headers[index].headerColor;
   }
 
   componentDidMount = async () => {
