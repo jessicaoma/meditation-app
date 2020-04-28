@@ -63,16 +63,7 @@ export default class CrearCuentaScreen extends Component {
             styleImage={{resizeMode: 'cover', height: Dims.window.height}}>
             <View style={styles.container}>
               <View style={styles.header}>
-                <Text style={styles.welcomeTitle}>Crear cuenta con</Text>
-                <View style={styles.sociallogos}>
-                  <TouchableOpacity style={{marginRight: 5}}>
-                    <LogoFacebook />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={{}}>
-                    <LogoGoogle />
-                  </TouchableOpacity>
-                </View>
-                <Text style={styles.welcomeTitle}>ó registrarme vía email</Text>
+                <Text style={styles.welcomeTitle}>Regístrate con tu correo electrónico</Text>
               </View>
               <View style={styles.full}>
                 <InputLogin
@@ -130,7 +121,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'column',
     padding: 40,
-    minHeight: Dims.window.height - 120,
+    minHeight: Dims.window.height - 220,
   },
   welcomeTitle: {
     color: '#ABA0B5',
@@ -182,6 +173,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    paddingHorizontal: 25,
+    paddingHorizontal: 0,
   },
 });
