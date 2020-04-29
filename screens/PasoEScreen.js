@@ -149,7 +149,7 @@ function PasoEScreen(props) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation]),
+    }, [navigation, props.categoria.color]),
   );
 
   return (

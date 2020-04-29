@@ -27,9 +27,7 @@ const screenHeight =
 const headerH =
   Platform.OS === 'android'
     ? 56 + dimensions.statusBarHeight
-    : 44 + //DeviceInfo.isIPhoneX_deprecated
-      //? dimensions.statusBarHeight - 20
-      dimensions.statusBarHeight;
+    : 44 + dimensions.statusBarHeight;
 
 let pasoAnterio = {};
 

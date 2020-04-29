@@ -19,7 +19,6 @@ import {Ionicons} from '@expo/vector-icons';
 import {useFocusEffect} from '@react-navigation/native';
 import {HeaderBackButton} from '@react-navigation/stack';
 
-//const screenWidth = dimensions.window.width;
 const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
@@ -27,9 +26,7 @@ const screenHeight =
 const headerH =
   Platform.OS === 'android'
     ? 56 + dimensions.statusBarHeight
-    : 44 + //DeviceInfo.isIPhoneX_deprecated
-      //? dimensions.statusBarHeight - 20
-      dimensions.statusBarHeight;
+    : 44 + dimensions.statusBarHeight;
 
 let pasoAnterio = {};
 
