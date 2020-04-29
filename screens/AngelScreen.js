@@ -17,7 +17,7 @@ import Player from '../player/Player';
 
 const deviceWidth = Dims.window.width - Dims.regularSpace - Dims.regularSpace;
 const deviceHeight = deviceWidth * 1.5 + Dims.regularSpace;
-const containerHeight = Dims.window.height - Dims.statusBarHeight -  (Dims.bigSpace * 2) - 28;
+const containerHeight = Dims.window.height - Dims.statusBarHeight - 28;
 
 /**
  * @typedef Props
@@ -40,7 +40,6 @@ export default class AngelScreen extends Component {
     return (
       <SafeAreaView style={styles.safe}>
         <View style={styles.statusBar} />
-        <ScrollView>
           <View style={{height: 0}}>
             <Player //http://okoconnect.com/karim/assets/angeles/cartaangel.mp3
               source={require('../assets/audio/cartaangel.mp3')}
@@ -79,7 +78,6 @@ export default class AngelScreen extends Component {
               Toca para descubrir
             </ScalableText>
           </View>
-        </ScrollView>
       </SafeAreaView>
     );
   }
