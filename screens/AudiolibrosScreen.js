@@ -6,6 +6,7 @@ import {
   FlatList,
   ActivityIndicator,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import BookListItem from '../components/BookListItem';
 import Dimensions from '../constants/Dimensions';
@@ -97,7 +98,7 @@ export default class AudiolibrosScreen extends Component {
 const styles = StyleSheet.create({
   safe: {flex: 1, backgroundColor: 'white'},
   statusBar: {
-    height: Dimensions.statusBarHeight,
+    height: Platform.OS === 'android' ? Dimensions.statusBarHeight : 0,
   },
   container: {
     flex: 1,

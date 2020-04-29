@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
+  Platform,
 } from 'react-native';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
     height: containerHeight,
   },
   statusBar: {
-    height: Dims.statusBarHeight,
+    height: Platform.OS === 'android' ? Dims.statusBarHeight : 0,
   },
   suggestion: {
     fontFamily: 'MyriadPro-Regular',

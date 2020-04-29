@@ -6,6 +6,7 @@ import {
   FlatList,
   SafeAreaView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   statusBar: {
-    height: Dims.statusBarHeight,
+    height: Platform.OS === 'android' ? Dims.statusBarHeight : 0,
   },
   container: {
     flex: 1,

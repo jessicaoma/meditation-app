@@ -6,6 +6,7 @@ import {
   View,
   ActivityIndicator,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   statusBar: {
-    height: Dims.statusBarHeight,
+    height: Platform.OS === 'android' ? Dims.statusBarHeight : 0,
   },
   container: {
     paddingHorizontal: Dims.regularSpace,

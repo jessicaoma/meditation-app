@@ -23,12 +23,17 @@ import API, {user} from '../utils/API';
 import ScreenBg from '../components/screenBg';
 import colors from '../constants/Colors';
 import {enumLoNuevo} from '../utils/types';
-import {getBrightness, navigationStacks} from '../utils/convert';
+import {getBrightness} from '../utils/convert';
 
 let colorLetra = '#fff';
 
 const headerH =
-  68 + dimensions.statusBarHeight;
+  68 +
+  (Platform.OS === 'android'
+    ? dimensions.statusBarHeight
+    : //: DeviceInfo.isIPhoneX_deprecated
+      //? dimensions.statusBarHeight - 20
+      dimensions.statusBarHeight);
 
 /**
  * Home Screens
