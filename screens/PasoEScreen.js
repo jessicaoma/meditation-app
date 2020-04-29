@@ -16,7 +16,7 @@ import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import {HeaderBackButton} from '@react-navigation/stack';
 import Next from '../constants/LogoButtonNext';
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
 import {useFocusEffect} from '@react-navigation/native';
 
@@ -41,14 +41,16 @@ let pasoAnterio = {};
  * Paso Tipo(E): Cierre
  * @typedef Props
  * @prop {import('../utils/types').Categoria} categoria
- * @prop {import('../utils/types').Viaje} viaje
+ * @prop {import('../utils/types').Viaje[]} viajes
+ * @prop {number} indexViaje
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'PasoE'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'PasoE'>} route
  * @prop {import('redux').Dispatch} [dispatch]
  * @param {Props} props
  */
 function PasoEScreen(props) {
-  const {viaje, navigation} = props;
+  const {indexViaje, viajes, navigation} = props;
+  const viaje = viajes[indexViaje];
   const pasoIndex = props.route.params.position;
   const paso = viaje.pasos[pasoIndex];
   const contenido = paso.contenidos[0];
@@ -59,11 +61,29 @@ function PasoEScreen(props) {
   React.useEffect(() => {
     if (pasoIndex === viaje.pasos.length - 1) {
       API.putDiarioPaso(paso.key, enumStatus.done, user);
-      API.putDiarioViaje(props.viaje.key, enumStatus.done, user);
+      API.putDiarioViaje(viaje.key, enumStatus.done, user);
     } else {
       API.putDiarioPaso(paso.key, enumStatus.doing, user);
     }
   });
+
+  /**
+   * @param {import('../utils/types').Viaje} viaje
+   */
+  function determinarPaso(viaje) {
+    let posicion = 0;
+
+    if (viaje.estado === enumStatus.done || viaje.estado === enumStatus.todo) {
+      posicion = 0;
+    } else {
+      posicion = viaje.pasos.findIndex(
+        paso2 =>
+          paso2.estado === enumStatus.doing || paso2.estado === enumStatus.todo,
+      );
+    }
+    posicion = posicion < 0 ? 0 : posicion;
+    return posicion;
+  }
 
   function _handleClose() {
     // @ts-ignore
@@ -71,10 +91,27 @@ function PasoEScreen(props) {
   }
 
   function nextStep() {
-    if (pasoIndex === viaje.pasos.length - 1) {
+    if (pasoIndex + 1 === viaje.pasos.length) {
       //TODO salto al siguiente modulo o regresar a la categoria
-      // @ts-ignore
-      navigation.popToTop();
+      if (indexViaje + 1 === viajes.length) {
+        // @ts-ignore
+        navigation.popToTop();
+      } else {
+        props.dispatch({
+          type: 'SET_MODULO',
+          payload: {
+            viaje: indexViaje + 1,
+          },
+        });
+        let viaje2 = viajes[indexViaje + 1];
+        let position = determinarPaso(viaje2);
+        let tipo = viaje2.pasos[position].tipo;
+        // @ts-ignore
+        navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
+          position,
+          titulo: viaje2.pasos[position].titulo,
+        });
+      }
     } else {
       const {tipo} = viaje.pasos[pasoIndex + 1];
       API.putDiarioPaso(paso.key, enumStatus.done, user);
@@ -172,7 +209,8 @@ PasoEScreen.navigationOptions = {
 function mapStateToProps(state) {
   const {categoria, viajes, viaje} = state;
   return {
-    viaje: viajes[viaje],
+    indexViaje: viaje,
+    viajes,
     categoria,
   };
 }

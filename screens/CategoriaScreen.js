@@ -105,7 +105,6 @@ class Categoria extends Component {
     });
     let position = this.determinarPaso(viaje);
     let tipo = viaje.pasos[position].tipo;
-    //TODO calcular en que paso se quedo, o ir al paso 0.
     this.props.navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
       position,
       titulo: viaje.pasos[position].titulo,

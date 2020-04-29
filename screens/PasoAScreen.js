@@ -73,7 +73,7 @@ function PasoAScreen(props) {
     React.useCallback(() => {
       const onBackPress = () => {
         if (pasoAnterio < 0) {
-          navigation.goBack();
+          navigation.popToTop();
         } else {
           const states = navigation.dangerouslyGetState();
           const anterior = states.routes[states.routes.length - 2];
@@ -115,7 +115,7 @@ function PasoAScreen(props) {
             pressColorAndroid="transparent"
             onPress={() => {
               if (pasoIndex === 0) {
-                props.navigation.goBack();
+                props.navigation.popToTop();
               } else {
                 const states = props.navigation.dangerouslyGetState();
                 const anterior = states.routes[states.routes.length - 2];

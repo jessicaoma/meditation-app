@@ -5,11 +5,9 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView,
   Platform,
 } from 'react-native';
 import Dims from '../constants/Dimensions';
-import Colors from '../constants/Colors';
 import {SvgUri} from 'react-native-svg';
 import CardFlip from '../components/CardFlip';
 import ScalableText from 'react-native-text';
@@ -40,44 +38,44 @@ export default class AngelScreen extends Component {
     return (
       <SafeAreaView style={styles.safe}>
         <View style={styles.statusBar} />
-          <View style={{height: 0}}>
-            <Player //http://okoconnect.com/karim/assets/angeles/cartaangel.mp3
-              source={require('../assets/audio/cartaangel.mp3')}
-              ref={ref => {
-                this.player = ref;
-              }}
-              onEnd={state => {
-                console.log(state);
-                this.player._onSeekSliderValueChange();
-                this.player._onSeekSliderSlidingComplete(0);
-                this.player.playbackInstance.pauseAsync();
-              }}
-            />
-          </View>
-          <View style={[styles.container]}>
-            <CardFlip
-              ref={card => {
-                this.card = card;
-              }}>
-              <TouchableOpacity onPress={() => this.flipCard()}>
-                <SvgUri
-                  width={deviceWidth}
-                  height={deviceHeight}
-                  uri={carta.reverso}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.flipCard()}>
-                <SvgUri
-                  width={deviceWidth}
-                  height={deviceHeight}
-                  uri={carta.frontal}
-                />
-              </TouchableOpacity>
-            </CardFlip>
-            <ScalableText style={styles.suggestion}>
-              Toca para descubrir
-            </ScalableText>
-          </View>
+        <View style={{height: 0}}>
+          <Player //http://okoconnect.com/karim/assets/angeles/cartaangel.mp3
+            source={require('../assets/audio/cartaangel.mp3')}
+            ref={ref => {
+              this.player = ref;
+            }}
+            onEnd={state => {
+              console.log(state);
+              this.player._onSeekSliderValueChange();
+              this.player._onSeekSliderSlidingComplete(0);
+              this.player.playbackInstance.pauseAsync();
+            }}
+          />
+        </View>
+        <View style={[styles.container]}>
+          <CardFlip
+            ref={card => {
+              this.card = card;
+            }}>
+            <TouchableOpacity onPress={() => this.flipCard()}>
+              <SvgUri
+                width={deviceWidth}
+                height={deviceHeight}
+                uri={carta.reverso}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.flipCard()}>
+              <SvgUri
+                width={deviceWidth}
+                height={deviceHeight}
+                uri={carta.frontal}
+              />
+            </TouchableOpacity>
+          </CardFlip>
+          <ScalableText style={styles.suggestion}>
+            Toca para descubrir
+          </ScalableText>
+        </View>
       </SafeAreaView>
     );
   }
