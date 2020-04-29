@@ -31,17 +31,7 @@ const headerH =
       //? dimensions.statusBarHeight - 20
       dimensions.statusBarHeight;
 
-let headerColor = '#fff';
 let pasoAnterio = {};
-
-function getIndex(value, arr, prop) {
-  for (var i = 0; i < arr.length; i++) {
-    if (arr[i][prop] === value) {
-      return i;
-    }
-  }
-  return -1; //to handle the case where the value doesn't exist
-}
 
 /**
  * Paso Tipo(C): Recomendaciones
@@ -61,9 +51,6 @@ function PasoCScreen(props) {
   pasoAnterio.titulo = viaje.pasos[pasoIndex - 1].titulo;
   pasoAnterio.position = pasoIndex - 1;
 
-  var index = getIndex(props.categoria.color, Colors.headers, 'cateColor');
-  headerColor = Colors.headers[index].headerColor;
-
   React.useEffect(() => {
     API.putDiarioPaso(paso.key, enumStatus.doing, user);
   });
@@ -75,6 +62,7 @@ function PasoCScreen(props) {
     navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
       position: pasoIndex + 1,
       titulo: viaje.pasos[pasoIndex + 1].titulo,
+      colorHeader: Colors.headers[props.categoria.color],
     });
   }
 
@@ -91,6 +79,7 @@ function PasoCScreen(props) {
           navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
             position,
             titulo,
+            colorHeader: Colors.headers[props.categoria.color],
           });
         }
         return true;
@@ -98,7 +87,7 @@ function PasoCScreen(props) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation]),
+    }, [navigation, props.categoria.color]),
   );
 
   return (
@@ -154,7 +143,7 @@ PasoCScreen.navigationOptions = ({navigation, route}) => {
       return (
         <Image
           style={{
-            backgroundColor: headerColor,
+            backgroundColor: route.params.colorHeader,
             resizeMode: 'stretch',
             width: dimensions.screen.width,
             height: headerH,
@@ -188,6 +177,7 @@ PasoCScreen.navigationOptions = ({navigation, route}) => {
             navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
               position,
               titulo,
+              colorHeader: Colors.headers[props.categoria.color],
             });
           }
         }}

@@ -66,6 +66,7 @@ function PasoAScreen(props) {
     navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
       position: pasoIndex + 1,
       titulo: viaje.pasos[pasoIndex + 1].titulo,
+      colorHeader: Colors.headers[props.categoria.color],
     });
   }
 
@@ -85,6 +86,7 @@ function PasoAScreen(props) {
             navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
               position,
               titulo,
+              colorHeader: Colors.headers[props.categoria.color],
             });
           }
         }
@@ -93,7 +95,7 @@ function PasoAScreen(props) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation]),
+    }, [navigation, props.categoria]),
   );
 
   return (
@@ -129,6 +131,7 @@ function PasoAScreen(props) {
                     {
                       position: pasoIndex - 1,
                       titulo: viaje.pasos[pasoIndex - 1].titulo,
+                      colorHeader: Colors.headers[props.categoria.color],
                     },
                   );
                 }

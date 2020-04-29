@@ -108,6 +108,7 @@ class Categoria extends Component {
     this.props.navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
       position,
       titulo: viaje.pasos[position].titulo,
+      colorHeader: colors.headers[this.categoria.color],
     });
   };
   //TODO reiniciar el video al llegar al final
