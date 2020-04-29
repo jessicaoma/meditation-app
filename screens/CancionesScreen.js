@@ -43,7 +43,6 @@ export default class Canciones extends Component {
   /** @param {import('../utils/types').Canción} item */
   keyExtractor = item => item.key;
 
-  renderListHeader = () => <Text style={styles.sectionTitle}>Música</Text>;
 
   renderListEmpty = _ => <ActivityIndicator size="large" color={'#d9e0f9'} />;
 
@@ -67,7 +66,6 @@ export default class Canciones extends Component {
         <FlatList
           style={styles.container}
           data={this.state.canciones}
-          ListHeaderComponent={this.renderListHeader}
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
           ListEmptyComponent={this.renderListEmpty}
@@ -83,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   container: {
-    paddingHorizontal: Dims.regularSpace,
+    padding: Dims.regularSpace,
   },
   sectionTitle: {
     fontSize: Dims.h2,
