@@ -257,7 +257,6 @@ class Home extends Component {
   };
 
   render() {
-    //console.log(navigationStacks(this.props.navigation));
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView contentInsetAdjustmentBehavior="automatic">
