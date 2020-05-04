@@ -7,12 +7,14 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
 import {SvgUri} from 'react-native-svg';
 import ScalableText from 'react-native-text';
+import {connect} from 'react-redux';
 
 //TODO registrar seleccion
 const numColumns = 2;
@@ -23,33 +25,52 @@ const width = (Dims.window.width - 40) / numColumns;
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Cartas'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Cartas'>} route
+ * @prop {string} angelTime
  * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
-export default class AngelCartasScreen extends Component {
+class AngelCartasScreen extends Component {
+  /** @param {Props} props */
   constructor(props) {
     super(props);
-    this.angelMessage = undefined;
     this.state = {
       /**@type {import('../utils/types').CartaDelAngel[]} */
       cartas: [],
     };
+    var now = new Date();
+    var check = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var angelTime = new Date(props.angelTime);
+    console.log(check);
+    console.log(props.angelTime);
+    this.mustJump = check.getTime() <= angelTime.getTime();
   }
 
   componentDidMount = async () => {
-    let cartas = await API.getAngelMessage();
-    this.setState({
-      cartas,
-    });
+    if (!this.mustJump) {
+      let cartas = await API.getAngelMessage();
+      this.setState({
+        cartas,
+      });
+    }
   };
 
   /**
    * @param {import('../utils/types').CartaDelAngel} item
    */
   _handleClick = item => {
-    this.props.navigation.navigate('Angel', {
-      carta: item,
+    let now = new Date();
+    this.props.dispatch({
+      type: 'SET_ANGEL',
+      payload: {
+        angel: item,
+        angelTime: new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate(),
+        ).toJSON(),
+      },
     });
+    this.props.navigation.navigate('Angel');
   };
 
   /**
@@ -76,24 +97,42 @@ export default class AngelCartasScreen extends Component {
     );
   };
 
+  renderListEmpty = _ => (
+    <ActivityIndicator size="large" color={Colors.primaryDark} />
+  );
+
   render() {
-    return (
-      <SafeAreaView style={styles.mainContainer}>
-        <View style={styles.statusBar} />
-        <View style={styles.container}>
-          <Text style={styles.sectionTitle}>Mensajes de tus ángeles</Text>
-          <FlatList
-            data={this.state.cartas}
-            renderItem={this.renderItem}
-            ListFooterComponent={this.renderFooter}
-            numColumns={numColumns}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
-      </SafeAreaView>
-    );
+    if (!this.mustJump) {
+      return (
+        <SafeAreaView style={styles.mainContainer}>
+          <View style={styles.statusBar} />
+          <View style={styles.container}>
+            <Text style={styles.sectionTitle}>Mensajes de tus ángeles</Text>
+            <FlatList
+              data={this.state.cartas}
+              renderItem={this.renderItem}
+              ListFooterComponent={this.renderFooter}
+              numColumns={numColumns}
+              keyExtractor={(item, index) => index.toString()}
+              ListEmptyComponent={this.renderListEmpty}
+            />
+          </View>
+        </SafeAreaView>
+      );
+    } else {
+      this.props.navigation.navigate('Angel');
+      return <SafeAreaView style={styles.mainContainer} />;
+    }
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    angelTime: state.angelTime,
+  };
+}
+
+export default connect(mapStateToProps)(AngelCartasScreen);
 
 const styles = StyleSheet.create({
   mainContainer: {

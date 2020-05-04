@@ -34,6 +34,20 @@ export const reducer = (state = initialState, action) => {
         viaje: payload.viaje,
       };
     }
+    case 'SET_ANGEL': {
+      return {
+        ...state,
+        angel: payload.angel,
+        angelTime: payload.angelTime,
+      };
+    }
+    case 'SET_EMOCION': {
+      return {
+        ...state,
+        emocion: payload.emocion,
+        emocionTime: payload.emocionTime,
+      };
+    }
   }
 
   return state;

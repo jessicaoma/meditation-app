@@ -33,7 +33,6 @@ const Stack = createStackNavigator();
  * @prop {Object} EmocionesStack
  * @prop {Object} Emociones
  * @prop {Object} Emocion
- * @prop {import('../utils/types').Emoción} Emocion.emocion
  * Viaje
  * @prop {Object} ViajeStack
  * @prop {Object} Categoria
@@ -41,18 +40,23 @@ const Stack = createStackNavigator();
  * @prop {Object} PasoA
  * @prop {string} PasoA.titulo
  * @prop {number} PasoA.position
+ * @prop {number} PasoA.colorHeader
  * @prop {Object} PasoB
  * @prop {string} PasoB.titulo
  * @prop {number} PasoB.position
+ * @prop {number} PasoB.colorHeader
  * @prop {Object} PasoC
  * @prop {string} PasoC.titulo
  * @prop {number} PasoC.position
+ * @prop {number} PasoC.colorHeader
  * @prop {Object} PasoD
  * @prop {string} PasoD.titulo
  * @prop {number} PasoD.position
+ * @prop {number} PasoD.colorHeader
  * @prop {Object} PasoE
  * @prop {string} PasoE.titulo
  * @prop {number} PasoE.position
+ * @prop {number} PasoE.colorHeader
  * Perfil
  * @prop {Object} PerfilDrawer
  * @prop {Object} MisEmociones
@@ -68,7 +72,6 @@ const Stack = createStackNavigator();
  * @prop {Object} AngelStack
  * @prop {Object} Cartas
  * @prop {Object} Angel
- * @prop {import('../utils/types').CartaDelAngel} Angel.carta
  */
 
 export default function AppNavigator() {

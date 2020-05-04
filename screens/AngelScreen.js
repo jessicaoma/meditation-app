@@ -12,6 +12,7 @@ import {SvgUri} from 'react-native-svg';
 import CardFlip from '../components/CardFlip';
 import ScalableText from 'react-native-text';
 import Player from '../player/Player';
+import {connect} from 'react-redux';
 
 const deviceWidth = Dims.window.width - Dims.regularSpace - Dims.regularSpace;
 const deviceHeight = deviceWidth * 1.5 + Dims.regularSpace;
@@ -21,10 +22,11 @@ const containerHeight = Dims.window.height - Dims.statusBarHeight - 28;
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Angel'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Angel'>} route
+ * @prop {import('../utils/types').CartaDelAngel} angel
  * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
-export default class AngelScreen extends Component {
+class AngelScreen extends Component {
   animVal = new Animated.Value(0);
 
   flipCard = () => {
@@ -34,7 +36,7 @@ export default class AngelScreen extends Component {
   };
 
   render() {
-    const {carta} = this.props.route.params;
+    const {angel} = this.props;
     return (
       <SafeAreaView style={styles.safe}>
         <View style={styles.statusBar} />
@@ -45,7 +47,6 @@ export default class AngelScreen extends Component {
               this.player = ref;
             }}
             onEnd={state => {
-              console.log(state);
               this.player._onSeekSliderValueChange();
               this.player._onSeekSliderSlidingComplete(0);
               this.player.playbackInstance.pauseAsync();
@@ -61,14 +62,14 @@ export default class AngelScreen extends Component {
               <SvgUri
                 width={deviceWidth}
                 height={deviceHeight}
-                uri={carta.reverso}
+                uri={angel.reverso}
               />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.flipCard()}>
               <SvgUri
                 width={deviceWidth}
                 height={deviceHeight}
-                uri={carta.frontal}
+                uri={angel.frontal}
               />
             </TouchableOpacity>
           </CardFlip>
@@ -79,6 +80,13 @@ export default class AngelScreen extends Component {
       </SafeAreaView>
     );
   }
+}
+
+function mapStateToProps(state) {
+  return {
+    angelTime: state.angelTime,
+    angel: state.angel,
+  };
 }
 
 const styles = StyleSheet.create({
@@ -106,3 +114,5 @@ const styles = StyleSheet.create({
     color: '#665e61',
   },
 });
+
+export default connect(mapStateToProps)(AngelScreen);

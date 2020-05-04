@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   FlatList,
-  ScrollView,
   SafeAreaView,
   ActivityIndicator,
   TouchableOpacity,
@@ -13,6 +12,7 @@ import colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import API, {user} from '../utils/API';
 import ScalableText from 'react-native-text';
+import {connect} from 'react-redux';
 
 //TODO registrar seleccion
 const numColumns = 2;
@@ -71,12 +71,22 @@ const data = [
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Emociones'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Emociones'>} route
+ * @prop {string} emocionTime
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
-export default class EmocionesScreen extends Component {
+class EmocionesScreen extends Component {
   state = {
     emociones: [],
   };
+  constructor(props) {
+    super(props);
+    var now = new Date();
+    var check = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var emocionTime = new Date(props.emocionTime);
+    this.mustJump = check.getTime() <= emocionTime.getTime();
+  }
+
   componentDidMount = async () => {
     let emociones = await API.getEmociones();
     emociones.forEach((emocion, index) => {
@@ -96,9 +106,19 @@ export default class EmocionesScreen extends Component {
    */
   _handleClick = item => {
     API.postRegistroEmocion(item.key, user);
-    this.props.navigation.replace('Emocion', {
-      emocion: item,
+    let now = new Date();
+    this.props.dispatch({
+      type: 'SET_EMOCION',
+      payload: {
+        emocion: item,
+        emocionTime: new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate(),
+        ).toJSON(),
+      },
     });
+    this.props.navigation.replace('Emocion');
   };
 
   /**
@@ -129,37 +149,53 @@ export default class EmocionesScreen extends Component {
   );
 
   render() {
-    return (
-      <SafeAreaView style={styles.safe}>
-        <ScrollView contentInsetAdjustmentBehavior="automatic">
-          <View style={styles.container}>
-            <FlatList
-              data={this.state.emociones}
-              renderItem={this.renderItem}
-              numColumns={numColumns}
-              ListEmptyComponent={this.renderListEmpty}
-              keyExtractor={item => item.key}
-            />
-            <ScalableText style={styles.suggestion}>
-              ¿Cómo te sientes hoy?{'\n'}
-              {'\n'}
-              Llevando un registro de tus emociones podrás conocerte mejor.
-            </ScalableText>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    );
+    if (!this.mustJump) {
+      return (
+        <SafeAreaView style={styles.safe}>
+          <FlatList
+            data={this.state.emociones}
+            renderItem={this.renderItem}
+            numColumns={numColumns}
+            ListEmptyComponent={this.renderListEmpty}
+            keyExtractor={item => item.key}
+            ListFooterComponent={() => (
+              <View style={{paddingBottom: Dims.regularSpace}}>
+                <ScalableText style={styles.suggestion}>
+                  ¿Cómo te sientes hoy?{'\n'}
+                  {'\n'}
+                  Llevando un registro de tus emociones podrás conocerte mejor.
+                </ScalableText>
+              </View>
+            )}
+            style={styles.scroll}
+            ListHeaderComponent={() => (
+              <View style={{paddingTop: Dims.regularSpace}} />
+            )}
+          />
+        </SafeAreaView>
+      );
+    } else {
+      this.props.navigation.replace('Emocion');
+      return <SafeAreaView style={styles.safe} />;
+    }
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    emocionTime: state.emocionTime,
+  };
+}
+
+export default connect(mapStateToProps)(EmocionesScreen);
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: Dims.regularSpace,
-  },
   safe: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  scroll: {
+    paddingHorizontal: Dims.regularSpace,
   },
   suggestion: {
     fontFamily: 'MyriadPro-Regular',

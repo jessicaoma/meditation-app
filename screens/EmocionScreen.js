@@ -14,18 +14,17 @@ import LogoDescargar from '../constants/LogoDescargar';
 import dimensions from '../constants/Dimensions';
 import ScreenBg from '../components/screenBg';
 import ScalableText from 'react-native-text';
-//import MisEmocionesScreen from '../screens/MisEmocionesScreen';
+import {connect} from 'react-redux';
 
-//const deviceWidth = Dims.window.width;
-//const deviceHeight = '100%';
-//const BAR_SPACE = 9;
 /**
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Emocion'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Emocion'>} route
+ * @prop {import('../utils/types').Emoción} emocion
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
-export default class Emocion extends Component {
+class Emocion extends Component {
   animVal = new Animated.Value(0);
 
   _handelClick = () => {
@@ -33,9 +32,7 @@ export default class Emocion extends Component {
   };
 
   render() {
-    /** @type {import('../utils/types').Emoción} */
-    // @ts-ignore
-    const emocion = this.props.route.params?.emocion ?? {};
+    const {emocion} = this.props;
     const info = [
       {
         key: 'slide1',
@@ -50,8 +47,6 @@ export default class Emocion extends Component {
     ];
 
     let imageArray = [];
-    //let barArray = [];
-    //const itemWidth = 5;
     info.forEach((item, i) => {
       const thisImage = (
         <View key={`item${i}`}>
@@ -125,6 +120,13 @@ export default class Emocion extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    emocionTime: state.emocionTime,
+    emocion: state.emocion,
+  };
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -177,3 +179,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+export default connect(mapStateToProps)(Emocion);

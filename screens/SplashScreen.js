@@ -11,10 +11,31 @@ const aspectRadioImage = 320 / 236;
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Splash'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Splash'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
  * @prop {string} usuario
+ * @prop {string} angelTime
+ * @prop {string} emocionTime
  * @param {Props} props
  */
-function SplashScreen({navigation, usuario}) {
+function SplashScreen({navigation, usuario, angelTime, emocionTime, dispatch}) {
+  if (angelTime === undefined) {
+    dispatch({
+      type: 'SET_ANGEL',
+      payload: {
+        angel: undefined,
+        angelTime: new Date(0).toJSON(),
+      },
+    });
+  }
+  if (emocionTime === undefined) {
+    dispatch({
+      type: 'SET_EMOCION',
+      payload: {
+        emocion: undefined,
+        emocionTime: new Date(0).toJSON(),
+      },
+    });
+  }
   setTimeout(() => {
     if (usuario === undefined) {
       // @ts-ignore
@@ -39,6 +60,8 @@ function SplashScreen({navigation, usuario}) {
 function mapStateToProps(state) {
   return {
     usuario: state.usuario,
+    angelTime: state.angelTime,
+    emocionTime: state.emocionTime,
   };
 }
 
