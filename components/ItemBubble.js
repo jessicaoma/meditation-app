@@ -80,8 +80,7 @@ export default class ItemBubble extends Component {
         onPress={onPress}>
         <ScalableText
           style={[styles.text, styleStatus.styleText, this.props.styleText]}>
-          {' '}
-          {this.props.children}{' '}
+          {this.props.children}
         </ScalableText>
       </TouchableOpacity>
     );
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'MyriadPro-Semibold',
-    lineHeight: 15,
+    lineHeight: 16,
     fontSize: 13,
     letterSpacing: 0.89,
     color: colorLetra,
