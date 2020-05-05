@@ -73,12 +73,7 @@ class Emocion extends Component {
                   justifyContent: 'center',
                   paddingHorizontal: 50,
                 }}>
-                <TouchableOpacity style={{marginRight: 20}}>
-                  <LogoCompartir />
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <LogoDescargar />
-                </TouchableOpacity>
+                
               </View>
             </>
           )}

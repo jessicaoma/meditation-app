@@ -45,7 +45,7 @@ function PasoAScreen(props) {
   pasoAnterio.titulo = viaje.pasos[pasoIndex - 1]?.titulo ?? '';
   pasoAnterio.position = pasoIndex - 1;
   colorLetra =
-    getBrightness(props.categoria.color) > 170 ? Colors.textoViaje : '#fff';
+    getBrightness(props.categoria.color) > 190 ? Colors.textoViaje : '#fff';
 
   React.useEffect(() => {
     API.putDiarioPaso(paso.key, enumStatus.doing, user);
