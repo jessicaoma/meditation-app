@@ -230,5 +230,6 @@ const styles = StyleSheet.create({
   cartaTitulo: {
     textAlign: 'center',
     color: 'white',
+    fontSize: 18,
   },
 });
