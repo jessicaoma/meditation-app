@@ -13,7 +13,7 @@ const persistConfig = {
   // Whitelist (Save Specific Reducers)
   //whitelist: ['authReducer'],
   // Blacklist (Don't Save Specific Reducers)
-  blacklist: ['categoria', 'viajes', 'viaje'],
+  blacklist: ['categoria', 'viajes'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

@@ -30,28 +30,29 @@ let pasoAnterio = {};
  * Paso Tipo(A): Highlight
  * @typedef Props
  * @prop {import('../utils/types').Categoria} categoria
- * @prop {import('../utils/types').Viaje} viaje
+ * @prop {import('../utils/types').Viaje[]} viajes
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'PasoA'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'PasoA'>} route
  * @prop {import('redux').Dispatch} [dispatch]
  * @param {Props} props
  */
 function PasoAScreen(props) {
-  const {viaje, navigation} = props;
-  const pasoIndex = props.route.params.position;
-  const paso = viaje.pasos[pasoIndex];
+  const {viajes, navigation} = props;
+  const {position, viajeIndex} = props.route.params;
+  const viaje = viajes[viajeIndex];
+  const paso = viaje.pasos[position];
   const contenido = paso.contenidos[0];
-  pasoAnterio.tipo = viaje.pasos[pasoIndex - 1]?.tipo ?? 0;
-  pasoAnterio.titulo = viaje.pasos[pasoIndex - 1]?.titulo ?? '';
-  pasoAnterio.position = pasoIndex - 1;
+  pasoAnterio.tipo = viaje.pasos[position - 1]?.tipo ?? 0;
+  pasoAnterio.titulo = viaje.pasos[position - 1]?.titulo ?? '';
+  pasoAnterio.position = position - 1;
   colorLetra =
     getBrightness(props.categoria.color) > 190 ? Colors.textoViaje : '#fff';
 
   React.useEffect(() => {
-    API.putDiarioPaso(paso.key, enumStatus.doing, user);
-    if (pasoIndex === 0) {
-      API.putDiarioViaje(props.viaje.key, enumStatus.doing, user);
+    if (position === 0) {
+      API.putDiarioViaje(viaje.key, enumStatus.doing, user);
     }
+    API.putDiarioPaso(paso.key, enumStatus.doing, user);
   });
 
   function _handleClose() {
@@ -60,13 +61,14 @@ function PasoAScreen(props) {
   }
 
   function nextStep() {
-    const {tipo} = viaje.pasos[pasoIndex + 1];
+    const {tipo} = viaje.pasos[position + 1];
     API.putDiarioPaso(paso.key, enumStatus.done, user);
     // @ts-ignore
     navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
-      position: pasoIndex + 1,
-      titulo: viaje.pasos[pasoIndex + 1].titulo,
+      position: position + 1,
+      titulo: viaje.pasos[position + 1].titulo,
       colorHeader: Colors.headers[props.categoria.color],
+      viajeIndex,
     });
   }
 
@@ -74,6 +76,7 @@ function PasoAScreen(props) {
     React.useCallback(() => {
       const onBackPress = () => {
         if (pasoAnterio < 0) {
+          // @ts-ignore
           navigation.popToTop();
         } else {
           const states = navigation.dangerouslyGetState();
@@ -81,12 +84,13 @@ function PasoAScreen(props) {
           if (anterior.name !== 'Categoria') {
             navigation.goBack();
           } else {
-            const {tipo, position, titulo} = pasoAnterio;
+            let {tipo, position: positionA, titulo} = pasoAnterio;
             // @ts-ignore
             navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
-              position,
+              position: positionA,
               titulo,
               colorHeader: Colors.headers[props.categoria.color],
+              viajeIndex,
             });
           }
         }
@@ -95,7 +99,7 @@ function PasoAScreen(props) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation, props.categoria]),
+    }, [navigation, props.categoria.color, viajeIndex]),
   );
 
   return (
@@ -116,7 +120,8 @@ function PasoAScreen(props) {
             tintColor="white"
             pressColorAndroid="transparent"
             onPress={() => {
-              if (pasoIndex === 0) {
+              if (position === 0) {
+                // @ts-ignore
                 props.navigation.popToTop();
               } else {
                 const states = props.navigation.dangerouslyGetState();
@@ -124,14 +129,15 @@ function PasoAScreen(props) {
                 if (anterior.name !== 'Categoria') {
                   props.navigation.goBack();
                 } else {
-                  const {tipo} = viaje.pasos[pasoIndex - 1];
+                  const {tipo} = viaje.pasos[position - 1];
                   // @ts-ignore
                   props.navigation.replace(
                     `Paso${String.fromCharCode(65 + tipo)}`,
                     {
-                      position: pasoIndex - 1,
-                      titulo: viaje.pasos[pasoIndex - 1].titulo,
+                      position: position - 1,
+                      titulo: viaje.pasos[position - 1].titulo,
                       colorHeader: Colors.headers[props.categoria.color],
+                      viajeIndex,
                     },
                   );
                 }
@@ -140,14 +146,14 @@ function PasoAScreen(props) {
             labelVisible={false}
           />
         </View>
-        {pasoIndex === 0 && (
+        {position === 0 && (
           <TouchableOpacity style={{flex: 1}} onPress={nextStep}>
             <View style={styles.container1}>
               <ScalableText style={[styles.text2, {color: colorLetra}]}>
                 Bienvenido al módulo
               </ScalableText>
               <ScalableText style={[styles.headline, {color: colorLetra}]}>
-                {props.viaje.titulo}
+                {viaje.titulo}
               </ScalableText>
               <ScalableText style={[styles.text2, {color: colorLetra}]}>
                 de este curso
@@ -155,7 +161,7 @@ function PasoAScreen(props) {
             </View>
           </TouchableOpacity>
         )}
-        {pasoIndex === 1 && (
+        {position === 1 && (
           <TouchableOpacity style={{flex: 1}} onPress={nextStep}>
             <View style={styles.container2}>
               <ScalableText style={[styles.text2, {color: colorLetra}]}>
@@ -164,7 +170,7 @@ function PasoAScreen(props) {
             </View>
           </TouchableOpacity>
         )}
-        {pasoIndex === 2 && (
+        {position === 2 && (
           <>
             <View style={styles.container3}>
               <ScalableText style={[styles.text2, {color: colorLetra}]}>
@@ -188,9 +194,9 @@ PasoAScreen.navigationOptions = {
 };
 
 function mapStateToProps(state) {
-  const {categoria, viajes, viaje} = state;
+  const {categoria, viajes} = state;
   return {
-    viaje: viajes[viaje],
+    viajes,
     categoria,
   };
 }

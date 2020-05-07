@@ -70,11 +70,7 @@ export default function App(props) {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <View style={styles.container}>
-            <NavigationContainer
-              ref={containerRef}
-              //initialState={initialNavigationState}
-            >
-              {/* <StatusBar barStyle="dark-content" /> */}
+            <NavigationContainer ref={containerRef}>
               <AppNavigator />
             </NavigationContainer>
           </View>

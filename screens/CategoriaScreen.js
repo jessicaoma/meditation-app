@@ -59,7 +59,6 @@ class Categoria extends Component {
     //TODO cambiar este comportamiento con el redux
     this.props.navigation.addListener('focus', async () => {
       const viajes = await API.getViajesCategoria(this.categoria.key, user);
-      //const viajes = [this.props.viaje];
       this.setState({viajes, isLoading: false});
       this.props.dispatch({
         type: 'SET_MODULOS',
@@ -97,15 +96,11 @@ class Categoria extends Component {
     ) {
       return;
     }
-    this.props.dispatch({
-      type: 'SET_MODULO',
-      payload: {
-        viaje: index,
-      },
-    });
     let position = this.determinarPaso(viaje);
     let tipo = viaje.pasos[position].tipo;
+    // @ts-ignore
     this.props.navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
+      viajeIndex: index,
       position,
       titulo: viaje.pasos[position].titulo,
       colorHeader: colors.headers[this.categoria.color],

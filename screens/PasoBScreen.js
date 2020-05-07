@@ -29,21 +29,22 @@ let pasoAnterio = {};
  * Paso Tipo(B): Teoría
  * @typedef Props
  * @prop {import('../utils/types').Categoria} categoria
- * @prop {import('../utils/types').Viaje} viaje
+ * @prop {import('../utils/types').Viaje[]} viajes
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'PasoB'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'PasoB'>} route
  * @prop {import('redux').Dispatch} [dispatch]
  * @param {Props} props
  */
 function PasoBScreen(props) {
-  const {viaje, navigation} = props;
-  const pasoIndex = props.route.params.position;
-  const paso = viaje.pasos[pasoIndex];
+  const {viajes, navigation} = props;
+  const {position, viajeIndex} = props.route.params;
+  const viaje = viajes[viajeIndex];
+  const paso = viaje.pasos[position];
   const [show, setShow] = React.useState(true);
   let player = {};
-  pasoAnterio.tipo = viaje.pasos[pasoIndex - 1].tipo;
-  pasoAnterio.titulo = viaje.pasos[pasoIndex - 1].titulo;
-  pasoAnterio.position = pasoIndex - 1;
+  pasoAnterio.tipo = viaje.pasos[position - 1].tipo;
+  pasoAnterio.titulo = viaje.pasos[position - 1].titulo;
+  pasoAnterio.position = position - 1;
   const contenido = paso.contenidos[0];
 
   React.useEffect(() => {
@@ -56,13 +57,14 @@ function PasoBScreen(props) {
   }
 
   function nextStep() {
-    const {tipo} = viaje.pasos[pasoIndex + 1];
+    const {tipo} = viaje.pasos[position + 1];
     API.putDiarioPaso(paso.key, enumStatus.done, user);
     // @ts-ignore
     navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
-      position: pasoIndex + 1,
-      titulo: viaje.pasos[pasoIndex + 1].titulo,
+      position: position + 1,
+      titulo: viaje.pasos[position + 1].titulo,
       colorHeader: Colors.headers[props.categoria.color],
+      viajeIndex,
     });
   }
 
@@ -84,12 +86,13 @@ function PasoBScreen(props) {
         if (anterior.name !== 'Categoria') {
           navigation.goBack();
         } else {
-          const {tipo, position, titulo} = pasoAnterio;
+          const {tipo, position: positionA, titulo} = pasoAnterio;
           // @ts-ignore
           navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
-            position,
+            position: positionA,
             titulo,
             colorHeader: Colors.headers[props.categoria.color],
+            viajeIndex,
           });
         }
         return true;
@@ -97,7 +100,7 @@ function PasoBScreen(props) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation, props.categoria.color]),
+    }, [navigation, props.categoria.color, viajeIndex]),
   );
 
   return (
@@ -145,12 +148,13 @@ function PasoBScreen(props) {
               if (anterior.name !== 'Categoria') {
                 navigation.goBack();
               } else {
-                const {tipo, position, titulo} = pasoAnterio;
+                const {tipo, position: positionA, titulo} = pasoAnterio;
                 // @ts-ignore
                 navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
-                  position,
+                  position: positionA,
                   titulo,
                   colorHeader: Colors.headers[props.categoria.color],
+                  viajeIndex,
                 });
               }
             }}
@@ -167,9 +171,9 @@ PasoBScreen.navigationOptions = {
 };
 
 function mapStateToProps(state) {
-  const {categoria, viajes, viaje} = state;
+  const {categoria, viajes} = state;
   return {
-    viaje: viajes[viaje],
+    viajes,
     categoria,
   };
 }

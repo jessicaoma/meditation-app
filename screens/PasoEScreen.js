@@ -16,7 +16,7 @@ import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import {HeaderBackButton} from '@react-navigation/stack';
 import Next from '../constants/LogoButtonNext';
-import {connect, useDispatch} from 'react-redux';
+import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
 import {useFocusEffect} from '@react-navigation/native';
 
@@ -49,17 +49,17 @@ let pasoAnterio = {};
  * @param {Props} props
  */
 function PasoEScreen(props) {
-  const {indexViaje, viajes, navigation} = props;
-  const viaje = viajes[indexViaje];
-  const pasoIndex = props.route.params.position;
-  const paso = viaje.pasos[pasoIndex];
+  const {viajes, navigation} = props;
+  const {position, viajeIndex} = props.route.params;
+  const viaje = viajes[viajeIndex];
+  const paso = viaje.pasos[position];
   const contenido = paso.contenidos[0];
-  pasoAnterio.tipo = viaje.pasos[pasoIndex - 1]?.tipo ?? 0;
-  pasoAnterio.titulo = viaje.pasos[pasoIndex - 1]?.titulo ?? '';
-  pasoAnterio.position = pasoIndex - 1;
+  pasoAnterio.tipo = viaje.pasos[position - 1]?.tipo ?? 0;
+  pasoAnterio.titulo = viaje.pasos[position - 1]?.titulo ?? '';
+  pasoAnterio.position = position - 1;
 
   React.useEffect(() => {
-    if (pasoIndex === viaje.pasos.length - 1) {
+    if (position === viaje.pasos.length - 1) {
       API.putDiarioPaso(paso.key, enumStatus.done, user);
       API.putDiarioViaje(viaje.key, enumStatus.done, user);
     } else {
@@ -68,15 +68,15 @@ function PasoEScreen(props) {
   });
 
   /**
-   * @param {import('../utils/types').Viaje} viaje
+   * @param {import('../utils/types').Viaje} v
    */
-  function determinarPaso(viaje) {
+  function determinarPaso(v) {
     let posicion = 0;
 
-    if (viaje.estado === enumStatus.done || viaje.estado === enumStatus.todo) {
+    if (v.estado === enumStatus.done || v.estado === enumStatus.todo) {
       posicion = 0;
     } else {
-      posicion = viaje.pasos.findIndex(
+      posicion = v.pasos.findIndex(
         paso2 =>
           paso2.estado === enumStatus.doing || paso2.estado === enumStatus.todo,
       );
@@ -91,35 +91,34 @@ function PasoEScreen(props) {
   }
 
   function nextStep() {
-    if (pasoIndex + 1 === viaje.pasos.length) {
+    if (position + 1 === viaje.pasos.length) {
       //TODO salto al siguiente modulo o regresar a la categoria
-      if (indexViaje + 1 === viajes.length) {
+      if (viajeIndex + 1 === viajes.length) {
+        // @ts-ignore
+        navigation.navigate('Categorias');
+      } else {
+        let viaje2 = viajes[viajeIndex + 1];
+        let positionN = determinarPaso(viaje2);
+        let tipo = viaje2.pasos[positionN].tipo;
         // @ts-ignore
         navigation.popToTop();
-      } else {
-        props.dispatch({
-          type: 'SET_MODULO',
-          payload: {
-            viaje: indexViaje + 1,
-          },
-        });
-        let viaje2 = viajes[indexViaje + 1];
-        let position = determinarPaso(viaje2);
-        let tipo = viaje2.pasos[position].tipo;
         // @ts-ignore
         navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
-          position,
-          titulo: viaje2.pasos[position].titulo,
+          position: positionN,
+          titulo: viaje2.pasos[positionN].titulo,
+          colorHeader: Colors.headers[props.categoria.color],
+          viajeIndex: viajeIndex + 1,
         });
       }
     } else {
-      const {tipo} = viaje.pasos[pasoIndex + 1];
+      const {tipo} = viaje.pasos[position + 1];
       API.putDiarioPaso(paso.key, enumStatus.done, user);
       // @ts-ignore
       navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
-        position: pasoIndex + 1,
-        titulo: viaje.pasos[pasoIndex + 1].titulo,
+        position: position + 1,
+        titulo: viaje.pasos[position + 1].titulo,
         colorHeader: Colors.headers[props.categoria.color],
+        viajeIndex,
       });
     }
   }
@@ -135,12 +134,13 @@ function PasoEScreen(props) {
           if (anterior.name !== 'Categoria') {
             navigation.goBack();
           } else {
-            const {tipo, position, titulo} = pasoAnterio;
+            const {tipo, position: positionA, titulo} = pasoAnterio;
             // @ts-ignore
             navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
-              position,
+              position: positionA,
               titulo,
               colorHeader: Colors.headers[props.categoria.color],
+              viajeIndex,
             });
           }
         }
@@ -149,7 +149,7 @@ function PasoEScreen(props) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation, props.categoria.color]),
+    }, [navigation, props.categoria.color, viajeIndex]),
   );
 
   return (
@@ -181,12 +181,14 @@ function PasoEScreen(props) {
             {contenido.texto}
           </ScalableText>
         </View>
-        {pasoIndex === viaje.pasos.length - 1 ? (
+        {position === viaje.pasos.length - 1 ? (
           <View style={styles.footer}>
             <TouchableOpacity onPress={nextStep}>
               <View style={styles.buttonSiguiente}>
                 <ScalableText style={styles.buttonLabel}>
-                  Siguiente módulo
+                  {viajeIndex + 1 === viajes.length
+                    ? 'Ver otros cursos'
+                    : 'Siguiente módulo'}
                 </ScalableText>
               </View>
             </TouchableOpacity>
@@ -209,9 +211,8 @@ PasoEScreen.navigationOptions = {
 };
 
 function mapStateToProps(state) {
-  const {categoria, viajes, viaje} = state;
+  const {categoria, viajes} = state;
   return {
-    indexViaje: viaje,
     viajes,
     categoria,
   };

@@ -4,6 +4,7 @@ import {envRemoto} from './types';
 
 const BASE_API = envRemoto
   ? 'http://okotesting-001.azurewebsites.net/api/'
+  //? 'http://50.63.13.57:501/api/'
   : 'http://localhost:5000/api/';
 
 class Api {
@@ -41,7 +42,7 @@ class Api {
   }
 
   /**
-   * @param {string} categoriaId
+   * @param {number} categoriaId
    * @param {string} user usuario activo
    * @return {Promise<import("./types").Viaje[]>} */
   async getViajesCategoria(categoriaId, user) {
@@ -187,7 +188,7 @@ class Api {
   }
 
   /**
-   * @param {string} itemId Id del paso
+   * @param {number} itemId Id del paso
    * @param {import('./types').enumStatus} estado Estado del paso
    * @param {string} usuario usuario activo
    */
@@ -205,7 +206,7 @@ class Api {
   }
 
   /**
-   * @param {string} itemId Id del viaje
+   * @param {number} itemId Id del viaje
    * @param {import('./types').enumStatus} estado Estado del paso
    * @param {string} usuario usuario activo
    */
@@ -250,18 +251,18 @@ class Api {
     return data;
   }
 
-  /**
-   * @param {string} usuario usuario activo
-   * @return {Promise<import('./types').Diario[]>} Registros
-   */
-  async getBitacora(usuario = user) {
-    const myHeaders = new Headers({from: usuario});
-    const query = await fetch(`${BASE_API}diario`, {
-      headers: myHeaders,
-    });
-    const data = await query.json();
-    return data;
-  }
+  // /**
+  //  * @param {string} usuario usuario activo
+  //  * @return {Promise<import('./types').Diario[]>} Registros
+  //  */
+  // async getBitacora(usuario = user) {
+  //   const myHeaders = new Headers({from: usuario});
+  //   const query = await fetch(`${BASE_API}diario`, {
+  //     headers: myHeaders,
+  //   });
+  //   const data = await query.json();
+  //   return data;
+  // }
 }
 
 export default new Api();
