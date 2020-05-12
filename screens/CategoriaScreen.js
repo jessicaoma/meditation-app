@@ -118,8 +118,7 @@ class Categoria extends Component {
         {!this.state.isLoading && (
           <View>
             <ScalableText style={styles.textoViajes}>
-              En esta categoría vas a recorrer {this.state.viajes.length + ' '}
-              secciones con una duración total de 10 horas con 22 min.
+              En este curso vas a recorrer {this.state.viajes.length + ' '} secciones.
             </ScalableText>
           </View>
         )}
