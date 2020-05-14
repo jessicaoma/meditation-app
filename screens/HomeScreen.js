@@ -90,7 +90,20 @@ class Home extends Component {
     const reflexion = await API.getReflexionDelDia();
     const tutorial = await API.getVideo('Tutorial');
     this.setState({enprogreso, lonuevo, reflexion, tutorial});
+    this.props.navigation.addListener('focus', () => {
+      this.refeshData();
+    });
   };
+
+  async refeshData() {
+    this.setState({
+      enprogreso: [],
+    });
+    const enprogreso = await API.getViajesEnProgreso(user);
+    this.setState({
+      enprogreso,
+    });
+  }
 
   /** @param {{item: import("../utils/types").Destacado}} item*/
   _renderItemLonuevo = ({item}) => {
