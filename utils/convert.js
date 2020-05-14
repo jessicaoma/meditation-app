@@ -55,7 +55,7 @@ export const getBrightness = function(color) {
  * @param {string} color A color on the format Hex6 (#ffffff)
  * @returns {object} Object compouse of the RGB values
  */
-function toRgb(color) {
+export function toRgb(color) {
   var c = color.substring(1);
   var rgb = parseInt(c, 16);
   var r = (rgb >> 16) & 0xff;

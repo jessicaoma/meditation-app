@@ -76,12 +76,18 @@
  * @prop {number} progreso Indica hasta que punto se ha reproducido
  * @prop {boolean} isFree Es gratuito o no
  *
- * @typedef {Object} LoNuevo
+ * @typedef {Object} Destacado
  * @prop {number} key Identificador
  * @prop {enumLoNuevo} tipo Tipo de registro asociado
  * @prop {Audiolibro} audiolibro Audiolibro asociada
  * @prop {Canción} cancion Canción asociada
  * @prop {Meditación} meditacion Meditación asociada
+ * @prop {Categoria} categoria categoria asociado
+ *
+ * @typedef {Object} EnProgreso
+ * @prop {number} key Identificador
+ * @prop {enumLoNuevo} tipo Tipo de registro asociado (Curso o Audiolibro)
+ * @prop {Audiolibro} audiolibro Audiolibro asociada
  * @prop {Categoria} categoria categoria asociado
  *
  * @typedef {Object} Reflexión
@@ -149,7 +155,7 @@ export const enumLoNuevo = {
   meditacion: 1,
   /** Value 2 */
   cancion: 2,
-  /** Value 2 */
+  /** Value 3 */
   audiolibro: 3,
 };
 

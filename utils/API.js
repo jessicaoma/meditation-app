@@ -59,14 +59,14 @@ class Api {
    * @return {Promise<import("./types").Viaje[]>} */
   async getViajesEnProgreso(user) {
     const myHeaders = new Headers({from: user});
-    const query = await fetch(`${BASE_API}viajes/enprogreso`, {
+    const query = await fetch(`${BASE_API}enprogreso`, {
       headers: myHeaders,
     });
     const data = await query.json();
     return data;
   }
 
-  /** @return {Promise<import("./types").LoNuevo[]>} */
+  /** @return {Promise<import("./types").Destacado[]>} */
   async getLoNuevo() {
     //const myHeaders = new Headers({from: user});
     const query = await fetch(`${BASE_API}destacados`, {
@@ -224,7 +224,7 @@ class Api {
   }
 
   /**
-   * @param {string} emocionId Id de la emocion
+   * @param {number} emocionId Id de la emocion
    * @param {string} usuario usuario activo
    */
   async postRegistroEmocion(emocionId, usuario = user) {
