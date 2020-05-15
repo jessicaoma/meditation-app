@@ -41,6 +41,7 @@ function PasoBScreen(props) {
   const viaje = viajes[viajeIndex];
   const paso = viaje.pasos[position];
   const [show, setShow] = React.useState(true);
+  const color = (props?.categoria ?? viaje).color;
   let player = {};
   pasoAnterio.tipo = viaje.pasos[position - 1].tipo;
   pasoAnterio.titulo = viaje.pasos[position - 1].titulo;
@@ -53,7 +54,10 @@ function PasoBScreen(props) {
 
   function _handleClose() {
     // @ts-ignore
-    navigation.popToTop();
+    props.navigation.popToTop();
+    if (props.categoria === undefined) {
+      props.navigation.goBack();
+    }
   }
 
   function nextStep() {
@@ -63,7 +67,7 @@ function PasoBScreen(props) {
     navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
       position: position + 1,
       titulo: viaje.pasos[position + 1].titulo,
-      colorHeader: Colors.headers[props.categoria.color],
+      colorHeader: Colors.headers[color],
       viajeIndex,
     });
   }
@@ -91,7 +95,7 @@ function PasoBScreen(props) {
           navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
             position: positionA,
             titulo,
-            colorHeader: Colors.headers[props.categoria.color],
+            colorHeader: Colors.headers[color],
             viajeIndex,
           });
         }
@@ -100,7 +104,7 @@ function PasoBScreen(props) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation, props.categoria.color, viajeIndex]),
+    }, [navigation, color, viajeIndex]),
   );
 
   return (
@@ -153,7 +157,7 @@ function PasoBScreen(props) {
                 navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
                   position: positionA,
                   titulo,
-                  colorHeader: Colors.headers[props.categoria.color],
+                  colorHeader: Colors.headers[color],
                   viajeIndex,
                 });
               }

@@ -67,6 +67,7 @@ export function toRgb(color) {
 /**
  *
  * @param {import('@react-navigation/native').NavigationProp<Object>} navigation
+ * @returns {string}
  */
 export const navigationStacks = navigation => {
   let state = navigation.dangerouslyGetState();
@@ -78,5 +79,23 @@ export const navigationStacks = navigation => {
   out += state.routes.reduce((prev, route) => {
     return prev + route.name + '->';
   }, '');
+  return out;
+};
+
+/**
+ *
+ * @param {import('@react-navigation/native').NavigationProp<Object>} navigation
+ * @param {string} screen
+ * @returns {boolean}
+ */
+export const existScreenInNavigationStacks = (navigation, screen) => {
+  let state = navigation.dangerouslyGetState();
+  let parentState = navigation.dangerouslyGetParent();
+  let out = state.routes.reduce((prev, route) => {
+    return prev || route.name === screen;
+  }, false);
+  if (parentState !== undefined && !out) {
+    out = out || existScreenInNavigationStacks(parentState, screen);
+  }
   return out;
 };
