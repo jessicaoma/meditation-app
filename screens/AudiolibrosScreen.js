@@ -86,7 +86,7 @@ export default class AudiolibrosScreen extends Component {
           data={this.state.audioLibros}
           renderItem={this._renderItem}
           ListEmptyComponent={this._renderEmtpy}
-          keyExtractor={item => item.key}
+          keyExtractor={item => item.key.toString()}
           ListHeaderComponent={this._renderListHeader}
           style={styles.container}
         />

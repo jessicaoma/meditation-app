@@ -9,15 +9,15 @@ import {millisToMinSeg} from '../utils/convert';
 /**
  * Player componet for all media used in the app
  * @typedef {object} Props
- * @prop {import('expo-av/build/AV').PlaybackSource} source Source of the audio/video
+ * @prop {import('expo-av/build/AV').AVPlaybackSource} source Source of the audio/video
  * @prop {boolean} [isVideo] Indicate that the source is a video
  * @prop {boolean} [showControls] Indicate that the controls most be show, default false
  * @prop {boolean} [showPlayFrame] Indicate that the incial play button controls most be show, default false
  * @prop {boolean} [shouldPlay] A boolean describing if the media is supposed to play
  * @prop {import('react-native').ViewStyle|import('react-native').StyleSheet.absoluteFill} [style] Style to aplie to View container
  * @prop {import('react-native').ViewStyle|import('react-native').ViewStyle[]} [styleVideo] Style for the video
- * @prop {(status: import('expo-av/build/AV').PlaybackStatus) => void} [onEnd] Callback when media is ends
- * @prop {(event: import('expo-av/build/Video.types').ReadyForDisplayEvent) => any} [onReadyForDisplay] Call when the video is ready to play
+ * @prop {(status: import('expo-av/build/AV').AVPlaybackStatus) => void} [onEnd] Callback when media is ends
+ * @prop {(event: import('expo-av/build/Video.types').VideoReadyForDisplayEvent) => any} [onReadyForDisplay] Call when the video is ready to play
  * @prop {import('expo-av/build/Video.types').ResizeMode | 'stretch' | 'cover' | 'contain'} [resizeMode] How the video should be scaled for display in the component, default 'stretch'
  * @prop {number} [startPosition] Set the starting point
  * @prop {(isPlaying: boolean) => void} [onPlayPause] Callback when is press the button play/pause
@@ -79,7 +79,7 @@ export default class Player extends Component {
       return null;
     }
     // https://docs.expo.io/versions/v35.0.0/sdk/av/#default-initial-playbackstatustoset
-    /** @type {import('expo-av/build/AV').PlaybackStatusToSet} */
+    /** @type {import('expo-av/build/AV').AVPlaybackStatusToSet} */
     const initialStatus = {
       shouldPlay: this.props.shouldPlay,
       positionMillis: this.props.startPosition || 0,
@@ -109,7 +109,7 @@ export default class Player extends Component {
     this.setState({isLoading: false});
   }
 
-  /** @param {import('expo-av/build/AV').PlaybackStatus} status */
+  /** @param {import('expo-av/build/AV').AVPlaybackStatus} status */
   _onPlaybackStatusUpdate = status => {
     if (status.isLoaded) {
       this.setState({

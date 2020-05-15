@@ -30,6 +30,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-1.png',
     headerH: 0.1,
     footerH: 0.35,
+    // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-1.gif'),
   },
   {
@@ -41,6 +42,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-2.png',
     headerH: 0.1,
     footerH: 0.3,
+    // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-2.gif'),
   },
   {
@@ -52,6 +54,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-3.png',
     headerH: 0.35,
     footerH: 0.35,
+    // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-3.gif'),
   },
   {
@@ -63,6 +66,7 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-4.png',
     headerH: 0.45,
     footerH: 0.2,
+    // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-4.gif'),
   },
 ];
@@ -118,6 +122,7 @@ class EmocionesScreen extends Component {
         ).toJSON(),
       },
     });
+    // @ts-ignore
     this.props.navigation.replace('Emocion');
   };
 
@@ -175,6 +180,7 @@ class EmocionesScreen extends Component {
         </SafeAreaView>
       );
     } else {
+      // @ts-ignore
       this.props.navigation.replace('Emocion');
       return <SafeAreaView style={styles.safe} />;
     }

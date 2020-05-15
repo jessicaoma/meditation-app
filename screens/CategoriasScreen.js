@@ -49,7 +49,7 @@ class Categorias extends Component {
     });
   };
   /** @param {import('../utils/types').Categoria} item */
-  keyExtractor = item => item.key;
+  keyExtractor = item => item.key.toString();
 
   renderListHeader = () => <Text style={styles.sectionTitle}>Cursos</Text>;
 

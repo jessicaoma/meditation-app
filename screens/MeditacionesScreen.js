@@ -31,12 +31,15 @@ export default class MeditacionesScreen extends Component {
       /** @type {import('../utils/types').Meditación[]} */
       meditaciones: [],
       /** @type {import('../utils/types').Video} */
+      // @ts-ignore
       video: {},
     };
   }
   componentDidMount = async () => {
     this.props.navigation.addListener('blur', () => {
-      if (this.player === null) return;
+      if (this.player === null) {
+        return;
+      }
       if (this.player.state.isPlaying) {
         this.player._onPlayPausePressed();
       }
@@ -111,7 +114,7 @@ export default class MeditacionesScreen extends Component {
     return <ActivityIndicator size="large" color={Colors.primaryDark} />;
   };
   /** @param {import('../utils/types').Meditación} item */
-  _keyExtractor = item => item.key;
+  _keyExtractor = item => item.key.toString();
 
   render = () => (
     <SafeAreaView style={styles.mainContainer}>

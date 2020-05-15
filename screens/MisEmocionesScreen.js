@@ -13,7 +13,6 @@ import ItemBubble from '../components/ItemBubble';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
-import {HeaderBackButton} from '@react-navigation/stack';
 import LogoEmocion1 from '../constants/LogoEmocion1';
 import LogoEmocion2 from '../constants/LogoEmocion2';
 import LogoEmocion3 from '../constants/LogoEmocion3';
@@ -29,7 +28,6 @@ import API from '../utils/API';
 export default class MisEmocionesScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Mis Emociones',
-    //headerLeft: () => <HeaderBackButton onPress={() => navigation.goBack()} />,
   });
 
   constructor(props) {
@@ -90,7 +88,7 @@ export default class MisEmocionesScreen extends Component {
 
   componentDidMount = async () => {
     const registros = await API.getRegistroEmociones();
-    this.mes = registros.mes;
+    //this.mes = registros.mes;
     this.semana = registros.semana;
     this.onPressSemanal();
   };
@@ -101,7 +99,6 @@ export default class MisEmocionesScreen extends Component {
 
   _handleClickMeditaciones = () => {
     this.props.navigation.navigate('Main', {screen: 'Meditar'});
-
   };
 
   keyExtractor = item => item.id;
