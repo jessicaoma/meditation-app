@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   Image,
+  ScrollView,
   SafeAreaView,
   TouchableOpacity,
   Platform,
@@ -26,14 +27,7 @@ const screenHeight =
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
 const proportion = dimensions.window.width / dimensions.window.height;
-const marginTopImage =
-  proportion > 0.5
-    ? dimensions.window.width * 0.25 * -1
-    : Platform.OS === 'android'
-    ? dimensions.window.width * 0.25 * -1
-    : DeviceInfo.isIPhoneX_deprecated
-    ? -20
-    : 0;
+
 const heightButtonSig = dimensions.window.width * 0.14;
 let pasoAnterio = {};
 
@@ -172,35 +166,41 @@ function PasoEScreen(props) {
       </View>
       <View style={styles.body}>
         <View style={styles.bodyContainer}>
-          {contenido.titulo !== undefined && (
-            <ScalableText style={styles.headline}>
-              {contenido.titulo}
+          <ScrollView style={styles.scroll}>
+            {contenido.titulo !== undefined && (
+              <ScalableText style={styles.headline}>
+                {"\n"}
+                {contenido.titulo}
+              </ScalableText>
+            )}
+            <ScalableText style={styles.paragraphBottom}>
+              {contenido.texto}
+              {"\n"}{"\n"}{"\n"}
             </ScalableText>
-          )}
-          <ScalableText style={styles.paragraphBottom}>
-            {contenido.texto}
-          </ScalableText>
+          </ScrollView>
         </View>
-        {position === viaje.pasos.length - 1 ? (
-          <View style={styles.footer}>
-            <TouchableOpacity onPress={nextStep}>
-              <View style={styles.buttonSiguiente}>
-                <ScalableText style={styles.buttonLabel}>
-                  {viajeIndex + 1 === viajes.length
-                    ? 'Ver otros cursos'
-                    : 'Siguiente módulo'}
-                </ScalableText>
-              </View>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={styles.buttonNext}>
-            <TouchableOpacity onPress={nextStep}>
-              <Next />
-            </TouchableOpacity>
-          </View>
-        )}
       </View>
+      
+      {position === viaje.pasos.length - 1 ? (
+        <View style={styles.footer}>
+          <TouchableOpacity onPress={nextStep}>
+            <View style={styles.buttonSiguiente}>
+              <ScalableText style={styles.buttonLabel}>
+                {viajeIndex + 1 === viajes.length
+                  ? 'Ver otros cursos'
+                  : 'Siguiente módulo'}
+              </ScalableText>
+            </View>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.buttonNext}>
+          <TouchableOpacity onPress={nextStep}>
+            <Next />
+          </TouchableOpacity>
+        </View>
+      )}
+      
     </SafeAreaView>
   );
 }
@@ -231,18 +231,16 @@ const styles = StyleSheet.create({
   },
   sliderImage: {
     width: dimensions.screen.width,
-    height: dimensions.screen.width,
+    height: dimensions.screen.width * 0.8,
     resizeMode: 'contain',
     zIndex: 2,
-    marginTop: marginTopImage,
   },
   body: {
     display: 'flex',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    height: screenHeight + heightButtonSig,
-    marginTop: dimensions.window.width * 0.25 * -1,
+    marginBottom: screenHeight * 0.08
   },
   bodyContainer: {},
   headline: {

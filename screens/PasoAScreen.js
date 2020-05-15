@@ -155,9 +155,6 @@ function PasoAScreen(props) {
               <ScalableText style={[styles.headline, {color: colorLetra}]}>
                 {viaje.titulo}
               </ScalableText>
-              <ScalableText style={[styles.text2, {color: colorLetra}]}>
-                de este curso
-              </ScalableText>
             </View>
           </TouchableOpacity>
         )}
@@ -217,7 +214,7 @@ const styles = StyleSheet.create({
   },
   container1: {
     flex: 1,
-    paddingTop: screenHeight * 0.35,
+    paddingTop: screenHeight * 0.39,
     paddingHorizontal: dimensions.bigSpace * 2,
   },
   container2: {

@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   },
   headline: {
     fontFamily: 'Kiona',
-    fontSize: dimensions.viajeHeadlineSize,
+    fontSize: 20,
     lineHeight: dimensions.viajeHeadlineLineHeight,
     textAlign: 'center',
     color: Colors.textoViaje,

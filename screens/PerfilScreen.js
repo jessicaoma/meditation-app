@@ -13,7 +13,7 @@ import ScalableText from 'react-native-text';
 import TabBarIcon from '../components/TabBarIcon';
 
 const deviceWidth = Dimensions.window.width;
-const headerHeight = deviceWidth - Dimensions.regularSpace;
+const headerHeight = deviceWidth * 0.6667 + 10;
 
 /**
  * @typedef Props
@@ -37,7 +37,7 @@ export default class PerfilScreen extends Component {
                 width={deviceWidth}
                 height={headerHeight}
                 uri="http://okoconnect.com/karim/assets/perfil/header-perfil.svg"
-                style={{marginTop: -40}}
+                style={{marginTop: -5}}
               />
               <View style={styles.headerContainer}>
                 <ScalableText style={styles.headerText}>
@@ -75,10 +75,10 @@ export default class PerfilScreen extends Component {
               </View>
             </View>
             <View style={styles.footer}>
-              <TouchableOpacity onPress={this.navigateToScreen('Suscribete')}>
+              <TouchableOpacity onPress={this.navigateToScreen('Suscribete')} style={{}}>
                 <SvgUri
                   width={deviceWidth}
-                  height={deviceWidth / 3.8}
+                  height={deviceWidth * 0.27}
                   uri="http://okoconnect.com/karim/assets/perfil/footer-perfil.svg"
                 />
                 <ScalableText style={styles.footerText}>
@@ -103,28 +103,28 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   container: {
-    minHeight: '100%',
+    minHeight: Dimensions.window.height - (deviceWidth * 0.257),
     justifyContent: 'space-between',
     flexDirection: 'column',
   },
   headerContainer: {
-    minHeight: deviceWidth,
-    paddingTop: deviceWidth / 4,
-    paddingLeft: deviceWidth / 8,
+    minHeight: deviceWidth * 0.666667,
     width: '100%',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
     position: 'absolute',
     flexWrap: 'wrap',
+    bottom: 15,
   },
   headerText: {
     fontFamily: 'Kiona',
-    fontSize: 28,
-    color: '#ffffff',
-    width: '70%',
-    textAlign: 'left',
+    fontSize: 22,
+    color: '#7883a4',
+    textAlign: 'center',
     textTransform: 'uppercase',
+    flex: 1,
+    position: 'absolute',
   },
   itemsContainer: {
     width: '100%',
@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     //resizeMode: 'cover',
+
   },
   footerText: {
     fontFamily: 'Kiona',
