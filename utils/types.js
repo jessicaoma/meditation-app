@@ -118,6 +118,7 @@
  *
  * @typedef {Object} MisEmociones
  * @prop {number[]} semana
+ * @prop {string} mensaje
  *
  * @typedef {Object} Evento
  * @prop {enumDiario} tipo
