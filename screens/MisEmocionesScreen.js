@@ -13,12 +13,12 @@ import ItemBubble from '../components/ItemBubble';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
-import {HeaderBackButton} from '@react-navigation/stack';
 import LogoEmocion1 from '../constants/LogoEmocion1';
 import LogoEmocion2 from '../constants/LogoEmocion2';
 import LogoEmocion3 from '../constants/LogoEmocion3';
 import LogoEmocion4 from '../constants/LogoEmocion4';
 import API from '../utils/API';
+import ScalableText from 'react-native-text';
 
 /**
  * @typedef Props
@@ -29,7 +29,6 @@ import API from '../utils/API';
 export default class MisEmocionesScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Mis Emociones',
-    //headerLeft: () => <HeaderBackButton onPress={() => navigation.goBack()} />,
   });
 
   constructor(props) {
@@ -43,6 +42,7 @@ export default class MisEmocionesScreen extends Component {
     };
     this.semana = [0, 0, 0, 0];
     this.mes = [0, 0, 0, 0];
+    this.mensaje = '';
   }
   onPressSemanal = () => {
     this.setState({
@@ -90,8 +90,9 @@ export default class MisEmocionesScreen extends Component {
 
   componentDidMount = async () => {
     const registros = await API.getRegistroEmociones();
-    this.mes = registros.mes;
+    //this.mes = registros.mes;
     this.semana = registros.semana;
+    this.mensaje = registros.mensaje;
     this.onPressSemanal();
   };
 
@@ -101,7 +102,6 @@ export default class MisEmocionesScreen extends Component {
 
   _handleClickMeditaciones = () => {
     this.props.navigation.navigate('Main', {screen: 'Meditar'});
-
   };
 
   keyExtractor = item => item.id;
@@ -175,13 +175,9 @@ export default class MisEmocionesScreen extends Component {
             </View>
 
             <View>
-              <Text style={styles.bigParagraph}>
-                Acepta los momentos de tristeza. {'\n'}La tristeza no se puede negar ni evitar, forma parte de la aventura de vivir. Depende de ti aprender a afrontarla y  sacar partido de ella.{'\n'}
-              </Text>
-              <Text style={styles.bigParagraph}>
-                Para que puedas mantener un equilibrio emocional y entender lo que sientes te recomiendo que visites el curso “Mindfulness”.{'\n'}{'\n'} Si ya lo hiciste, te recomiendo que hagas la meditación para la gratitud, recuerda que trabajar en nuestra gratitud es la mejor forma de ser felices.
-                {'\n'}
-              </Text>
+              <ScalableText style={styles.bigParagraph}>
+                {this.mensaje}
+              </ScalableText>
             </View>
             <View>
               <ItemBubble

@@ -10,8 +10,6 @@ import {
   Platform,
 } from 'react-native';
 import Colors from '../constants/Colors';
-import LogoFacebook from '../constants/LogoFacebook';
-import LogoGoogle from '../constants/LogoGoogle';
 import InputLogin from '../components/InputLogin';
 import Dims from '../constants/Dimensions';
 import ScreenBg from '../components/screenBg';

@@ -1,6 +1,6 @@
 // Initial state of the store
 const initialState = {
-  categoria: null,
+  categoria: undefined,
   viajes: [],
 };
 

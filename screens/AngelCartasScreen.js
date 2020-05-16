@@ -40,8 +40,6 @@ class AngelCartasScreen extends Component {
     var now = new Date();
     var check = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     var angelTime = new Date(props.angelTime);
-    console.log(check);
-    console.log(props.angelTime);
     this.mustJump = check.getTime() <= angelTime.getTime();
   }
 

@@ -42,12 +42,12 @@ function PasoAScreen(props) {
   const viaje = viajes[viajeIndex];
   const paso = viaje.pasos[position];
   const contenido = paso.contenidos[0];
+
+  const color = (props?.categoria ?? viaje).color;
   pasoAnterio.tipo = viaje.pasos[position - 1]?.tipo ?? 0;
   pasoAnterio.titulo = viaje.pasos[position - 1]?.titulo ?? '';
   pasoAnterio.position = position - 1;
-  colorLetra =
-    getBrightness(props.categoria.color) > 190 ? Colors.textoViaje : '#fff';
-
+  colorLetra = getBrightness(color) > 190 ? Colors.textoViaje : '#fff';
   React.useEffect(() => {
     if (position === 0) {
       API.putDiarioViaje(viaje.key, enumStatus.doing, user);
@@ -56,8 +56,15 @@ function PasoAScreen(props) {
   });
 
   function _handleClose() {
-    // @ts-ignore
-    navigation.popToTop();
+    if (position === 0) {
+      props.navigation.goBack();
+    } else {
+      // @ts-ignore
+      props.navigation.popToTop();
+      if (props.categoria === undefined) {
+        props.navigation.goBack();
+      }
+    }
   }
 
   function nextStep() {
@@ -67,7 +74,7 @@ function PasoAScreen(props) {
     navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
       position: position + 1,
       titulo: viaje.pasos[position + 1].titulo,
-      colorHeader: Colors.headers[props.categoria.color],
+      colorHeader: Colors.headers[color],
       viajeIndex,
     });
   }
@@ -76,8 +83,12 @@ function PasoAScreen(props) {
     React.useCallback(() => {
       const onBackPress = () => {
         if (pasoAnterio < 0) {
-          // @ts-ignore
-          navigation.popToTop();
+          if (props.categoria !== undefined) {
+            // @ts-ignore
+            props.navigation.popToTop();
+          } else {
+            props.navigation.goBack();
+          }
         } else {
           const states = navigation.dangerouslyGetState();
           const anterior = states.routes[states.routes.length - 2];
@@ -89,7 +100,7 @@ function PasoAScreen(props) {
             navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
               position: positionA,
               titulo,
-              colorHeader: Colors.headers[props.categoria.color],
+              colorHeader: Colors.headers[color],
               viajeIndex,
             });
           }
@@ -99,12 +110,11 @@ function PasoAScreen(props) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation, props.categoria.color, viajeIndex]),
+    }, [props.categoria, props.navigation, navigation, color, viajeIndex]),
   );
 
   return (
-    <SafeAreaView
-      style={[styles.safe, {backgroundColor: props.categoria.color}]}>
+    <SafeAreaView style={[styles.safe, {backgroundColor: color}]}>
       <ImageBackground
         source={{uri: paso.imagenFondo}}
         style={[styles.sliderImage]}>
@@ -121,8 +131,12 @@ function PasoAScreen(props) {
             pressColorAndroid="transparent"
             onPress={() => {
               if (position === 0) {
-                // @ts-ignore
-                props.navigation.popToTop();
+                if (props.categoria !== undefined) {
+                  // @ts-ignore
+                  props.navigation.popToTop();
+                } else {
+                  props.navigation.goBack();
+                }
               } else {
                 const states = props.navigation.dangerouslyGetState();
                 const anterior = states.routes[states.routes.length - 2];
@@ -136,7 +150,7 @@ function PasoAScreen(props) {
                     {
                       position: position - 1,
                       titulo: viaje.pasos[position - 1].titulo,
-                      colorHeader: Colors.headers[props.categoria.color],
+                      colorHeader: Colors.headers[color],
                       viajeIndex,
                     },
                   );

@@ -28,6 +28,7 @@ class Emocion extends Component {
   animVal = new Animated.Value(0);
 
   _handelClick = () => {
+    // @ts-ignore
     this.props.navigation.replace('MisEmociones');
   };
 
@@ -72,9 +73,14 @@ class Emocion extends Component {
                   flexDirection: 'row',
                   justifyContent: 'center',
                   paddingHorizontal: 50,
-                }}>
-                
-              </View>
+                }}
+              />
+              {/* <TouchableOpacity style={{marginRight: 20}}>
+                  <LogoCompartir />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <LogoDescargar />
+                </TouchableOpacity> */}
             </>
           )}
         </View>

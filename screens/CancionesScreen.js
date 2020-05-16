@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-  Text,
   FlatList,
   StyleSheet,
   ActivityIndicator,
@@ -41,8 +40,7 @@ export default class Canciones extends Component {
     });
   };
   /** @param {import('../utils/types').Canción} item */
-  keyExtractor = item => item.key;
-
+  keyExtractor = item => item.key.toString();
 
   renderListEmpty = _ => <ActivityIndicator size="large" color={'#d9e0f9'} />;
 

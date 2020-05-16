@@ -7,7 +7,6 @@ import ScalableText from 'react-native-text';
 import colors from '../constants/Colors';
 import API, {user} from '../utils/API';
 import {millisToHours} from '../utils/convert';
-import {HeaderBackButton} from '@react-navigation/stack';
 
 /**
  * @typedef Props
@@ -18,7 +17,6 @@ import {HeaderBackButton} from '@react-navigation/stack';
 export default class MisMeditacionesScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Mis Meditaciones',
-    //headerLeft: () => <HeaderBackButton onPress={() => navigation.goBack()} />,
   });
   state = {
     progreso: 0,

@@ -5,9 +5,9 @@ import {Video} from 'expo-av';
 /**
  * @typedef {Object} Props Properties of the component
  * @prop {(ref: any) => void} refVideo Callback to get the video player reference
- * @prop {(status: import('expo-av/build/AV').PlaybackStatus) => void} onPlaybackStatusUpdate Callback on the status updates
+ * @prop {(status: import('expo-av/build/AV').AVPlaybackStatus) => void} onPlaybackStatusUpdate Callback on the status updates
  * @prop {import('react-native').ViewStyle} [styleVideo] Extra Style to the player
- * @prop {(event: import('expo-av/build/Video.types').ReadyForDisplayEvent) => any} [onReadyForDisplay] Call when the video is ready to play
+ * @prop {(event: import('expo-av/build/Video.types').VideoReadyForDisplayEvent) => any} [onReadyForDisplay] Call when the video is ready to play
  * @prop {import('expo-av/build/Video.types').ResizeMode | 'stretch' | 'cover' | 'contain'} resizeMode Resize Mode
  * @prop {boolean} [shouldPlay] A boolean describing if the media is supposed to play
  */

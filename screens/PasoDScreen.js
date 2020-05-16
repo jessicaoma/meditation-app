@@ -18,6 +18,7 @@ import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
 import {useFocusEffect} from '@react-navigation/native';
 import {HeaderBackButton} from '@react-navigation/stack';
+import { existScreenInNavigationStacks } from '../utils/convert';
 
 const screenHeight =
   dimensions.screen.height -
@@ -45,6 +46,7 @@ function PasoDScreen(props) {
   const {position, viajeIndex} = props.route.params;
   const viaje = viajes[viajeIndex];
   const paso = viaje.pasos[position];
+  const color = (props?.categoria ?? viaje).color;
   pasoAnterio.tipo = viaje.pasos[position - 1].tipo;
   pasoAnterio.titulo = viaje.pasos[position - 1].titulo;
   pasoAnterio.position = position - 1;
@@ -60,7 +62,7 @@ function PasoDScreen(props) {
     navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
       position: position + 1,
       titulo: viaje.pasos[position + 1].titulo,
-      colorHeader: Colors.headers[props.categoria.color],
+      colorHeader: Colors.headers[color],
       viajeIndex,
     });
   }
@@ -78,7 +80,7 @@ function PasoDScreen(props) {
           navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
             position: positionA,
             titulo,
-            colorHeader: Colors.headers[props.categoria.color],
+            colorHeader: Colors.headers[color],
             viajeIndex,
           });
         }
@@ -87,7 +89,7 @@ function PasoDScreen(props) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation, props.categoria.color, viajeIndex]),
+    }, [navigation, color, viajeIndex]),
   );
   return (
     <SafeAreaView style={styles.safe}>
@@ -149,6 +151,9 @@ PasoDScreen.navigationOptions = ({navigation, route}) => {
         style={styles.close}
         onPress={() => {
           navigation.popToTop();
+          if (existScreenInNavigationStacks(navigation, 'PerfilDrawer')) {
+            navigation.goBack();
+          }
         }}>
         <Ionicons name={'md-close'} size={25} color={'#fff'} />
       </TouchableOpacity>
@@ -167,7 +172,8 @@ PasoDScreen.navigationOptions = ({navigation, route}) => {
             navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
               position,
               titulo,
-              colorHeader: Colors.headers[props.categoria.color],
+              colorHeader:
+                Colors.headers[(props?.categoria ?? props.viaje).color],
               viajeIndex: route.params.viajeIndex,
             });
           }

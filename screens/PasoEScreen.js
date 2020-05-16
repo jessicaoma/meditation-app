@@ -48,6 +48,7 @@ function PasoEScreen(props) {
   const viaje = viajes[viajeIndex];
   const paso = viaje.pasos[position];
   const contenido = paso.contenidos[0];
+  const color = (props?.categoria ?? viaje).color;
   pasoAnterio.tipo = viaje.pasos[position - 1]?.tipo ?? 0;
   pasoAnterio.titulo = viaje.pasos[position - 1]?.titulo ?? '';
   pasoAnterio.position = position - 1;
@@ -82,6 +83,9 @@ function PasoEScreen(props) {
   function _handleClose() {
     // @ts-ignore
     navigation.popToTop();
+    if (props.categoria === undefined) {
+      props.navigation.goBack();
+    }
   }
 
   function nextStep() {
@@ -100,7 +104,7 @@ function PasoEScreen(props) {
         navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
           position: positionN,
           titulo: viaje2.pasos[positionN].titulo,
-          colorHeader: Colors.headers[props.categoria.color],
+          colorHeader: Colors.headers[color],
           viajeIndex: viajeIndex + 1,
         });
       }
@@ -111,7 +115,7 @@ function PasoEScreen(props) {
       navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
         position: position + 1,
         titulo: viaje.pasos[position + 1].titulo,
-        colorHeader: Colors.headers[props.categoria.color],
+        colorHeader: Colors.headers[color],
         viajeIndex,
       });
     }
@@ -133,7 +137,7 @@ function PasoEScreen(props) {
             navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
               position: positionA,
               titulo,
-              colorHeader: Colors.headers[props.categoria.color],
+              colorHeader: Colors.headers[color],
               viajeIndex,
             });
           }
@@ -143,9 +147,34 @@ function PasoEScreen(props) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation, props.categoria.color, viajeIndex]),
+    }, [navigation, color, viajeIndex]),
   );
-
+  let Pie = <></>;
+  if (position === viaje.pasos.length - 1) {
+    if (props.categoria !== undefined) {
+      Pie = (
+        <View style={styles.footer}>
+          <TouchableOpacity onPress={nextStep}>
+            <View style={styles.buttonSiguiente}>
+              <ScalableText style={styles.buttonLabel}>
+                {viajeIndex + 1 === viajes.length
+                  ? 'Ver otros cursos'
+                  : 'Siguiente módulo'}
+              </ScalableText>
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+  } else {
+    Pie = (
+      <View style={styles.buttonNext}>
+        <TouchableOpacity onPress={nextStep}>
+          <Next />
+        </TouchableOpacity>
+      </View>
+    );
+  }
   return (
     <SafeAreaView style={styles.safe}>
       <Image source={{uri: paso.imagenFondo}} style={[styles.sliderImage]} />
@@ -180,26 +209,8 @@ function PasoEScreen(props) {
           </ScrollView>
         </View>
       </View>
-      
-      {position === viaje.pasos.length - 1 ? (
-        <View style={styles.footer}>
-          <TouchableOpacity onPress={nextStep}>
-            <View style={styles.buttonSiguiente}>
-              <ScalableText style={styles.buttonLabel}>
-                {viajeIndex + 1 === viajes.length
-                  ? 'Ver otros cursos'
-                  : 'Siguiente módulo'}
-              </ScalableText>
-            </View>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <View style={styles.buttonNext}>
-          <TouchableOpacity onPress={nextStep}>
-            <Next />
-          </TouchableOpacity>
-        </View>
-      )}
+      {Pie}
+
       
     </SafeAreaView>
   );

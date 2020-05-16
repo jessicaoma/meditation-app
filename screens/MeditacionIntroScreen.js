@@ -28,6 +28,7 @@ export default class MeditacionIntroScreen extends Component {
   }
 
   goPlayerMeditar = _ => {
+    // @ts-ignore
     this.props.navigation.replace('Meditacion', {
       meditacion: this.meditacion,
     });
