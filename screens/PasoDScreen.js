@@ -151,9 +151,6 @@ PasoDScreen.navigationOptions = ({navigation, route}) => {
         style={styles.close}
         onPress={() => {
           navigation.popToTop();
-          if (existScreenInNavigationStacks(navigation, 'PerfilDrawer')) {
-            navigation.goBack();
-          }
         }}>
         <Ionicons name={'md-close'} size={25} color={'#fff'} />
       </TouchableOpacity>

@@ -42,7 +42,6 @@ function PasoAScreen(props) {
   const viaje = viajes[viajeIndex];
   const paso = viaje.pasos[position];
   const contenido = paso.contenidos[0];
-
   const color = (props?.categoria ?? viaje).color;
   pasoAnterio.tipo = viaje.pasos[position - 1]?.tipo ?? 0;
   pasoAnterio.titulo = viaje.pasos[position - 1]?.titulo ?? '';
@@ -61,9 +60,6 @@ function PasoAScreen(props) {
     } else {
       // @ts-ignore
       props.navigation.popToTop();
-      if (props.categoria === undefined) {
-        props.navigation.goBack();
-      }
     }
   }
 

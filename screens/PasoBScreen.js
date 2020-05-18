@@ -55,9 +55,6 @@ function PasoBScreen(props) {
   function _handleClose() {
     // @ts-ignore
     props.navigation.popToTop();
-    if (props.categoria === undefined) {
-      props.navigation.goBack();
-    }
   }
 
   function nextStep() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
 import MisEmocionesScreen from '../screens/MisEmocionesScreen';
-import ViajesCompletadosScreen from '../screens/ViajesCompletadosScreen';
+import ViajeCompletadoNavigator from './ViajeCompletadoNavigator';
 import MisMeditacionesScreen from '../screens/MisMeditacionesScreen';
 import Perfil from '../screens/PerfilScreen';
 
@@ -37,9 +37,11 @@ export default function PerfilNavigation() {
         options={MisEmocionesScreen.navigationOptions}
       />
       <Stack.Screen
-        name="ViajesCompletados"
-        component={ViajesCompletadosScreen}
-        options={ViajesCompletadosScreen.navigationOptions}
+        name="ViajesCompletadosStack"
+        component={ViajeCompletadoNavigator}
+        options={{
+          header: () => null,
+        }}
       />
       <Stack.Screen
         name="MisMeditaciones"

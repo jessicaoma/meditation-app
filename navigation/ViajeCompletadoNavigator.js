@@ -1,6 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import * as React from 'react';
-import CategoriaScreen from '../screens/CategoriaScreen';
+import ViajesCompletadosScreen from '../screens/ViajesCompletadosScreen';
 import PasoAScreen from '../screens/PasoAScreen';
 import PasoBScreen from '../screens/PasoBScreen';
 import PasoCScreen from '../screens/PasoCScreen';
@@ -9,7 +9,7 @@ import PasoEScreen from '../screens/PasoEScreen';
 
 const Stack = createStackNavigator();
 
-function ViajeNavigator(props) {
+function ViajeCompletadoNavigator(props) {
   //console.log(props);
   return (
     <Stack.Navigator
@@ -22,10 +22,9 @@ function ViajeNavigator(props) {
         },
       }}>
       <Stack.Screen
-        name="Categoria"
-        component={CategoriaScreen}
-        options={CategoriaScreen.navigationOptions}
-        initialParams={props.route.params}
+        name="ViajesCompletados"
+        component={ViajesCompletadosScreen}
+        options={ViajesCompletadosScreen.navigationOptions}
       />
       <Stack.Screen
         name="PasoA"
@@ -56,4 +55,4 @@ function ViajeNavigator(props) {
   );
 }
 
-export default ViajeNavigator;
+export default ViajeCompletadoNavigator;

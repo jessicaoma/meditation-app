@@ -14,6 +14,7 @@ import Dimensions from '../constants/Dimensions';
 import API, {user} from '../utils/API';
 import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
+import {HeaderBackButton} from '@react-navigation/stack';
 
 /**
  * @typedef Props
@@ -25,6 +26,9 @@ import {connect} from 'react-redux';
 class ViajeCompletadosScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Módulos Finalizados',
+    headerLeft: props => (
+      <HeaderBackButton {...props} onPress={() => navigation.goBack()} />
+    ),
   });
   state = {
     /** @type {import("../utils/types").Viaje[]} */
@@ -50,12 +54,9 @@ class ViajeCompletadosScreen extends Component {
         viajes: [viaje],
       },
     });
-    this.props.navigation.navigate('ViajeStack', {
-      screen: 'PasoA',
-      params: {
-        position: 0,
-        viajeIndex: 0,
-      },
+    this.props.navigation.navigate('PasoA', {
+      position: 0,
+      viajeIndex: 0,
     });
   };
 

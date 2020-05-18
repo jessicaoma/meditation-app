@@ -162,9 +162,6 @@ PasoCScreen.navigationOptions = ({navigation, route}) => {
         onPress={() => {
           //props.navigation.pop(props.route.params.position + 1);
           navigation.popToTop();
-          if (existScreenInNavigationStacks(navigation, 'PerfilDrawer')) {
-            navigation.goBack();
-          }
         }}>
         <Ionicons name={'md-close'} size={25} color={'#fff'} />
       </TouchableOpacity>

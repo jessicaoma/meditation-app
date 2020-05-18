@@ -59,7 +59,7 @@ export default class PerfilScreen extends Component {
                 <TabBarIcon name={'ViajesCompletados'} />
                 <ScalableText
                   style={[styles.labelStyle]}
-                  onPress={this.navigateToScreen('ViajesCompletados')}>
+                  onPress={this.navigateToScreen('ViajesCompletadosStack')}>
                   Módulos Finalizados
                 </ScalableText>
                 <Flecha />
