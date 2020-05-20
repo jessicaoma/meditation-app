@@ -5,11 +5,14 @@ import {
   ActivityIndicator,
   SafeAreaView,
   View,
+  TouchableOpacity
 } from 'react-native';
-import ItemBubble from '../components/ItemBubble';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import Dimensions from '../constants/Dimensions';
+import LogoCursoDone from '../constants/LogoCursoDone';
+import LogoCursoNext from '../constants/LogoCursoNext';
+import LogoCursoDoing from '../constants/LogoCursoDoing';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import ScalableText from 'react-native-text';
@@ -103,7 +106,7 @@ class Categoria extends Component {
       viajeIndex: index,
       position,
       titulo: viaje.pasos[position].titulo,
-      colorHeader: this.categoria.colorCabecera,
+      colorHeader: colors.headers[this.categoria.color],
     });
   };
   //TODO reiniciar el video al llegar al final
@@ -118,7 +121,7 @@ class Categoria extends Component {
         {!this.state.isLoading && (
           <View>
             <ScalableText style={styles.textoViajes}>
-              {this.categoria.textoIntroductorio}
+              En dosis pequeñas, la preocupación, el estrés y la ansiedad pueden ser fuerzas positivas en nuestra vida, sin embargo investigaciones demuestran que vivimos demasiado estresados y ansiosos. 
             </ScalableText>
           </View>
         )}
@@ -151,45 +154,40 @@ class Categoria extends Component {
     );
   };
 
-  /** @type {import('react-native').ListRenderItem<import('../utils/types').Viaje>} */
-  renderItem = ({item, index}) => {
-    switch (item.estado) {
+  renderStatus = (estado) => {
+    switch (estado) {
       case enumStatus.doing:
-        return (
-          <ItemBubble
-            color={this.categoria.color}
-            onPress={() => {
-              this._goViaje(index);
-            }}
-            styleText={{textTransform: 'none'}}>
-            {item.titulo}
-          </ItemBubble>
-        );
+        return (<LogoCursoDoing color={this.categoria.color} style={styles.statusIcon} />);
       case enumStatus.done:
-        return (
-          <ItemBubble
-            color={this.categoria.color}
-            onPress={() => {
-              this._goViaje(index);
-            }}
-            fill
-            bold>
-            {item.titulo}
-          </ItemBubble>
-        );
+        return (<LogoCursoDone color={this.categoria.color} style={styles.statusIcon} />);
       default:
-        return (
-          <ItemBubble
-            color={this.categoria.color}
-            onPress={() => {
-              this._goViaje(index);
-            }}
-            disable>
-            {item.titulo}
-          </ItemBubble>
-        );
+        return (<LogoCursoNext style={styles.statusIcon} />);
     }
   };
+
+  /** @type {import('react-native').ListRenderItem<import('../utils/types').Viaje>} */
+  renderItem = ({item, index}) => {
+    return( 
+      <TouchableOpacity onPress={() => { this._goViaje(index); }}>
+        <View style={styles.listItem}>
+          <View style={[styles.itemNumber, {borderColor: this.categoria.color}]}>
+            <ScalableText style={styles.itemNumberText}>{index + 1}.</ScalableText>
+          </View>
+          <View style={styles.infoSect}>
+                <View style={styles.tituloSection}>
+                    <View><ScalableText style={styles.titulo}>{item.titulo}</ScalableText></View>
+                    <View style={styles.statusIcon}>{this.renderStatus(item.estado)}</View>
+                </View>
+
+                <View><ScalableText style={styles.explicacion}>Frena los impactos negativos de la ansiedad y el estrés en tu vida.</ScalableText></View>
+                <View style={[styles.tiempoWrap, {backgroundColor: this.categoria.color}]}><ScalableText style={styles.tiempo}>99min</ScalableText></View>
+          </View>
+
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
 
   renderListEmpty = () => {
     return this.state.isLoading ? (
@@ -197,13 +195,12 @@ class Categoria extends Component {
     ) : (
       <View>
         <ScalableText style={styles.textoVacio}>
-          Amet commodo nulla facilisi nullam vehicula. Lectus proin nibh nisl
-          condimentum. Duis ultricies lacus sed turpis tincidunt id. Enim nunc
-          faucibus a pellentesque sit amet.{' '}
+          En dosis pequeñas, la preocupación, el estrés y la ansiedad pueden ser fuerzas positivas en nuestra vida, sin embargo investigaciones demuestran que vivimos demasiado estresados y ansiosos. {' '}
         </ScalableText>
       </View>
     );
   };
+
   keyExtractor = item => item.key;
 
   render() {
@@ -238,6 +235,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
+    paddingHorizontal: Dimensions.smallSpace,
   },
   containerHeader: {
     padding: Dimensions.regularSpace,
@@ -270,12 +268,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   textoViajes: {
-    padding: 40,
+    padding: 5,
     paddingTop: 20,
     color: colors.textoViaje,
     lineHeight: 22,
-    textAlign: 'center',
-    fontSize: Dimensions.paragraph,
+    textAlign: 'left',
+    fontSize: 16,
+    letterSpacing: 1,
+    marginBottom: 20,
   },
   textoVacio: {
     padding: 40,
@@ -283,6 +283,83 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     textAlign: 'center',
     fontSize: Dimensions.paragraph,
+  },
+  listItem: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'row',
+    marginBottom: 25,
+  },
+  infoSect: {
+    display: 'flex',
+    flexDirection: 'column',
+    paddingLeft: 10,
+    maxWidth: '100%',
+    flex: 1,
+  },
+  itemNumber: {
+    borderRightWidth: 2,
+    paddingRight: 5,
+  },
+  itemNumberText: {
+    fontFamily: 'MyriadPro-Semibold',
+    lineHeight: 22,
+    fontSize: 15,
+    color: '#85787B',
+  },
+  
+  tituloSection: {
+    display: 'flex',
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-between',
+    position: 'relative',
+    marginBottom: 3,
+  },
+  titulo: {
+    fontFamily: 'MyriadPro-Semibold',
+    lineHeight: 18,
+    fontSize: 17,
+    color: '#85787B',
+    letterSpacing: 1.06,
+    flex: 0.8, 
+    flexWrap: 'wrap',
+    paddingRight: 28,
+    marginTop: 5,
+  },
+  statusIcon:{
+    marginLeft: 5,
+    marginTop: -3,
+    position: 'absolute',
+    right: 0
+  },
+  explicacion: {
+    fontFamily: 'MyriadPro-Regular',
+    lineHeight: 16,
+    fontSize: 14,
+    color: '#85787B',
+    width: '100%',
+    letterSpacing: 0.88,
+  },
+  tiempoWrap: {
+    backgroundColor: '#ddd',
+    borderRadius: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    maxWidth: 60,
+    display: 'flex',
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'center',
+
+  },
+  tiempo: {
+    fontSize: 11,
+    letterSpacing: 0.69,
+    lineHeight: 11,
+    color: '#333',
+    fontFamily: 'MyriadPro-Regular',
   },
 });
 
