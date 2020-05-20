@@ -2,6 +2,7 @@
 const initialState = {
   categoria: undefined,
   viajes: [],
+  //TODO Usuario {name: string, token:string, email: string}
 };
 
 // Function to handle actions and update the state of the store.

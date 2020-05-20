@@ -251,18 +251,20 @@ class Api {
     return data;
   }
 
-  // /**
-  //  * @param {string} usuario usuario activo
-  //  * @return {Promise<import('./types').Diario[]>} Registros
-  //  */
-  // async getBitacora(usuario = user) {
-  //   const myHeaders = new Headers({from: usuario});
-  //   const query = await fetch(`${BASE_API}diario`, {
-  //     headers: myHeaders,
-  //   });
-  //   const data = await query.json();
-  //   return data;
-  // }
+  async registerUser(userData) {
+    const query = await fetch(`${BASE_API}Account/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
+    if (query.status >= 300) {
+      return await query.json();
+    } else {
+      return await query.text();
+    }
+  }
 }
 
 export default new Api();

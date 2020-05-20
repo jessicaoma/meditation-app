@@ -8,11 +8,14 @@ import {
   SafeAreaView,
   ScrollView,
   Platform,
+  Alert,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
 import Dims from '../constants/Dimensions';
 import ScreenBg from '../components/screenBg';
+import API from '../utils/API';
+
 //TODO hacer todo el manejo
 /**
  * @typedef Props
@@ -21,13 +24,56 @@ import ScreenBg from '../components/screenBg';
  * @extends {Component<Props>}
  */
 export default class CrearCuentaScreen extends Component {
-  handleLogin = () => {
-    this.props.navigation.navigate('Login');
+  state = {
+    name: '',
+    email: '',
+    pass: '',
+    pass2: '',
   };
+
+  checkEmail = () => {
+    const reg = /^((([a-z]|d|[!#$%&'*+-/=?^_`{|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(.([a-z]|d|[!#$%&'*+-/=?^_`{|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|d|-|.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))).)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|d|-|.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))).?$/;
+    return reg.test(this.state.email.trim());
+  };
+
+  checkPass = () => {
+    const reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W])(?=.{6,})/;
+    return reg.test(this.state.pass.trim());
+  };
+
+  handleLogin = async () => {
+    if (
+      this.state.name.trim().length === 0 ||
+      !this.checkEmail() ||
+      !this.checkPass() ||
+      this.state.pass !== this.state.pass2
+    ) {
+      this.setState({error: 'datos invalidos'});
+      return;
+    }
+
+    const datos = {
+      FirstName: this.state.name.trim(),
+      Email: this.state.email.trim(),
+      Password: this.state.pass,
+      ConfirmPassword: this.state.pass2,
+    };
+    const result = await API.registerUser(datos);
+    if (typeof result === 'string') {
+      Alert.alert('create success');
+    } else {
+      Alert.alert('create fail');
+    }
+
+    this.props.navigation.navigate('App');
+  };
+  nameRef = {};
   emailRef = {};
   passwordRef = {};
   passwordRef2 = {};
-
+  refName = input => {
+    this.nameRef = input;
+  };
   refEmail = input => {
     this.emailRef = input;
   };
@@ -61,7 +107,9 @@ export default class CrearCuentaScreen extends Component {
             styleImage={{resizeMode: 'cover', height: Dims.window.height}}>
             <View style={styles.container}>
               <View style={styles.header}>
-                <Text style={styles.welcomeTitle}>Regístrate con tu correo electrónico</Text>
+                <Text style={styles.welcomeTitle}>
+                  Regístrate con tu correo electrónico
+                </Text>
               </View>
               <View style={styles.full}>
                 <InputLogin
@@ -69,6 +117,11 @@ export default class CrearCuentaScreen extends Component {
                   type="text"
                   onSubmitEditing={this.goEmail}
                   blurOnSubmit={false}
+                  inputRef={this.refName}
+                  onChange={name => {
+                    this.setState({name});
+                  }}
+                  value={this.state.name}
                 />
                 <InputLogin
                   placeholder="Correo"
@@ -76,18 +129,32 @@ export default class CrearCuentaScreen extends Component {
                   onSubmitEditing={this.goPassword}
                   blurOnSubmit={false}
                   inputRef={this.refEmail}
+                  onChange={email => {
+                    this.setState({email});
+                  }}
+                  value={this.state.email}
                 />
                 <InputLogin
                   placeholder="Contraseña"
                   type="password"
                   onSubmitEditing={this.goPassword2}
+                  blurOnSubmit={false}
                   inputRef={this.refPassword}
+                  onChange={pass => {
+                    this.setState({pass});
+                  }}
+                  value={this.state.pass}
                 />
                 <InputLogin
                   placeholder="Confirmar Contraseña"
                   type="password"
                   inputRef={this.refPassword2}
+                  onChange={pass2 => {
+                    this.setState({pass2});
+                  }}
+                  value={this.state.pass2}
                 />
+                <Text>{this.state.error}</Text>
               </View>
               <View>
                 <TouchableOpacity
