@@ -5,7 +5,7 @@ import {
   ActivityIndicator,
   SafeAreaView,
   View,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
@@ -106,7 +106,7 @@ class Categoria extends Component {
       viajeIndex: index,
       position,
       titulo: viaje.pasos[position].titulo,
-      colorHeader: colors.headers[this.categoria.color],
+      colorHeader: this.categoria.colorCabecera,
     });
   };
   //TODO reiniciar el video al llegar al final
@@ -121,7 +121,10 @@ class Categoria extends Component {
         {!this.state.isLoading && (
           <View>
             <ScalableText style={styles.textoViajes}>
-              En dosis pequeñas, la preocupación, el estrés y la ansiedad pueden ser fuerzas positivas en nuestra vida, sin embargo investigaciones demuestran que vivimos demasiado estresados y ansiosos. 
+              {/*this.categoria.textoIntroductorio*/}
+              En dosis pequeñas, la preocupación, el estrés y la ansiedad pueden
+              ser fuerzas positivas en nuestra vida, sin embargo investigaciones
+              demuestran que vivimos demasiado estresados y ansiosos.
             </ScalableText>
           </View>
         )}
@@ -154,40 +157,69 @@ class Categoria extends Component {
     );
   };
 
-  renderStatus = (estado) => {
+  renderStatus = estado => {
     switch (estado) {
       case enumStatus.doing:
-        return (<LogoCursoDoing color={this.categoria.color} style={styles.statusIcon} />);
+        return (
+          <LogoCursoDoing
+            color={this.categoria.color}
+            style={styles.statusIcon}
+          />
+        );
       case enumStatus.done:
-        return (<LogoCursoDone color={this.categoria.color} style={styles.statusIcon} />);
+        return (
+          <LogoCursoDone
+            color={this.categoria.color}
+            style={styles.statusIcon}
+          />
+        );
       default:
-        return (<LogoCursoNext style={styles.statusIcon} />);
+        return <LogoCursoNext style={styles.statusIcon} />;
     }
   };
 
   /** @type {import('react-native').ListRenderItem<import('../utils/types').Viaje>} */
   renderItem = ({item, index}) => {
-    return( 
-      <TouchableOpacity onPress={() => { this._goViaje(index); }}>
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          this._goViaje(index);
+        }}>
         <View style={styles.listItem}>
-          <View style={[styles.itemNumber, {borderColor: this.categoria.color}]}>
-            <ScalableText style={styles.itemNumberText}>{index + 1}.</ScalableText>
+          <View
+            style={[styles.itemNumber, {borderColor: this.categoria.color}]}>
+            <ScalableText style={styles.itemNumberText}>
+              {index + 1}.
+            </ScalableText>
           </View>
           <View style={styles.infoSect}>
-                <View style={styles.tituloSection}>
-                    <View><ScalableText style={styles.titulo}>{item.titulo}</ScalableText></View>
-                    <View style={styles.statusIcon}>{this.renderStatus(item.estado)}</View>
-                </View>
+            <View style={styles.tituloSection}>
+              <View>
+                <ScalableText style={styles.titulo}>{item.titulo}</ScalableText>
+              </View>
+              <View style={styles.statusIcon}>
+                {this.renderStatus(item.estado)}
+              </View>
+            </View>
 
-                <View><ScalableText style={styles.explicacion}>Frena los impactos negativos de la ansiedad y el estrés en tu vida.</ScalableText></View>
-                <View style={[styles.tiempoWrap, {backgroundColor: this.categoria.color}]}><ScalableText style={styles.tiempo}>99min</ScalableText></View>
+            <View>
+              <ScalableText style={styles.explicacion}>
+                Frena los impactos negativos de la ansiedad y el estrés en tu
+                vida.
+              </ScalableText>
+            </View>
+            <View
+              style={[
+                styles.tiempoWrap,
+                {backgroundColor: this.categoria.color},
+              ]}>
+              <ScalableText style={styles.tiempo}>99min</ScalableText>
+            </View>
           </View>
-
         </View>
       </TouchableOpacity>
     );
   };
-
 
   renderListEmpty = () => {
     return this.state.isLoading ? (
@@ -195,7 +227,9 @@ class Categoria extends Component {
     ) : (
       <View>
         <ScalableText style={styles.textoVacio}>
-          En dosis pequeñas, la preocupación, el estrés y la ansiedad pueden ser fuerzas positivas en nuestra vida, sin embargo investigaciones demuestran que vivimos demasiado estresados y ansiosos. {' '}
+          En dosis pequeñas, la preocupación, el estrés y la ansiedad pueden ser
+          fuerzas positivas en nuestra vida, sin embargo investigaciones
+          demuestran que vivimos demasiado estresados y ansiosos.
         </ScalableText>
       </View>
     );
@@ -252,7 +286,6 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     //marginBottom: Dimensions.bigSpace,
   },
-  titulo: {},
   cover: {
     height: 210,
     //marginBottom: 10,
@@ -307,7 +340,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#85787B',
   },
-  
   tituloSection: {
     display: 'flex',
     flexDirection: 'row',
@@ -322,16 +354,16 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: '#85787B',
     letterSpacing: 1.06,
-    flex: 0.8, 
+    flex: 0.8,
     flexWrap: 'wrap',
     paddingRight: 28,
     marginTop: 5,
   },
-  statusIcon:{
+  statusIcon: {
     marginLeft: 5,
     marginTop: -3,
     position: 'absolute',
-    right: 0
+    right: 0,
   },
   explicacion: {
     fontFamily: 'MyriadPro-Regular',
@@ -352,7 +384,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'center',
-
   },
   tiempo: {
     fontSize: 11,
