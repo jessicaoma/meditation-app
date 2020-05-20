@@ -18,7 +18,7 @@ export default class LogoDescargar extends Component {
             transform="translate(-7.000000, -5.000000)"
             stroke="#FFFFFF"
             stroke-width="2">
-            <G id="descargar" transform="translate(8.000000, 6.000000)">
+            <G id="descargar" transform="translate(8.000000, 6.000000)" stroke="#FFFFFF">
               <Polyline
                 id="Path-12"
                 transform="translate(9.000000, 7.500000) rotate(-180.000000) translate(-9.000000, -7.500000) "

@@ -1,10 +1,10 @@
 /**
  * @typedef {Object} CartaDelAngel
- * @prop {import('react-native').ImageSourcePropType} frontal front side of the card
- * @prop {import('react-native').ImageSourcePropType} reverso back side of the card
+ * @prop {string} frontal front side of the card
+ * @prop {string} reverso back side of the card
  *
  * @typedef {Object} Categoria
- * @prop {string} key Identificador
+ * @prop {number} key Identificador
  * @prop {string} titulo Título
  * @prop {string} [imagenPrevia] Imagen previa de la introcucción
  * @prop {string} [media] Ruta del video introductorio
@@ -14,7 +14,7 @@
  * @prop {Viaje[]} [Viajes] Lista de viajes
  *
  * @typedef {Object} Viaje
- * @prop {string} key Identificador
+ * @prop {number} key Identificador
  * @prop {string} titulo Título
  * @prop {string} categoriaId Categoria padre
  * @prop {string} imagenFondo Fondo del viaje
@@ -24,7 +24,7 @@
  * @prop {Paso[]} [pasos] Lista de pasos en el viajes
  *
  * @typedef Paso
- * @prop {string} key
+ * @prop {number} key
  * @prop {string} titulo
  * @prop {string} [viajeId] viaje padre
  * @prop {string} [color] Color caracteristico de la categoria padre
@@ -34,7 +34,7 @@
  * @prop {enumPaso} tipo
  *
  * @typedef Contenido
- * @prop {string} key
+ * @prop {number} key
  * @prop {string} [imagen]
  * @prop {string} [texto]
  * @prop {string} [titulo]
@@ -43,7 +43,7 @@
  * @prop {string} [media] Video para Paso.Teoria
  *
  * @typedef {Object} Meditación
- * @prop {string} key Identificador
+ * @prop {number} key Identificador
  * @prop {string} titulo Título
  * @prop {string} media Ruta del audio correspondiente a la meditación
  * @prop {string} imagenFondo Fondo de la meditación
@@ -58,7 +58,7 @@
  * @prop {number} completadas
  *
  * @typedef {Object} Canción
- * @prop {string} key Identificador
+ * @prop {number} key Identificador
  * @prop {string} titulo Título
  * @prop {string} media Ruta del audio correspondiente a la meditación
  * @prop {string} imagenFondo Fondo de la meditación
@@ -67,7 +67,7 @@
  * @prop {boolean} isFree Es gratuito o no
  *
  * @typedef {Object} Audiolibro
- * @prop {string} key Identificador
+ * @prop {number} key Identificador
  * @prop {string} titulo Título
  * @prop {string} media Ruta del audio correspondiente al Audiolibro
  * @prop {string} imagenFondo Fondo del Audiolibro
@@ -76,12 +76,18 @@
  * @prop {number} progreso Indica hasta que punto se ha reproducido
  * @prop {boolean} isFree Es gratuito o no
  *
- * @typedef {Object} LoNuevo
- * @prop {string} key Identificador
+ * @typedef {Object} Destacado
+ * @prop {number} key Identificador
  * @prop {enumLoNuevo} tipo Tipo de registro asociado
  * @prop {Audiolibro} audiolibro Audiolibro asociada
  * @prop {Canción} cancion Canción asociada
  * @prop {Meditación} meditacion Meditación asociada
+ * @prop {Categoria} categoria categoria asociado
+ *
+ * @typedef {Object} EnProgreso
+ * @prop {number} key Identificador
+ * @prop {enumLoNuevo} tipo Tipo de registro asociado (Curso o Audiolibro)
+ * @prop {Audiolibro} audiolibro Audiolibro asociada
  * @prop {Categoria} categoria categoria asociado
  *
  * @typedef {Object} Reflexión
@@ -99,24 +105,20 @@
  * @prop {string} color Color caracteristico de la meditación
  *
  * @typedef {Object} Emoción
- * @prop {string} key Identificador
+ * @prop {number} key Identificador
  * @prop {string} titulo
  * @prop {string} descripcion
  * @prop {string} oracion
- * @prop {string} imagenFondo
- * @prop {string} header
- * @prop {string} footer
- * @prop {number} headerH
- * @prop {number} footerH
+ * @prop {string} [imagenFondo]
+ * @prop {string} [header]
+ * @prop {string} [footer]
+ * @prop {number} [headerH]
+ * @prop {number} [footerH]
  * @prop {import('react-native').ImageSourcePropType} imagen
  *
  * @typedef {Object} MisEmociones
- * @prop {number[]} mes
  * @prop {number[]} semana
- *
- * @typedef {Object} Diario
- * @prop {string} fecha
- * @prop {Evento[]} eventos
+ * @prop {string} mensaje
  *
  * @typedef {Object} Evento
  * @prop {enumDiario} tipo
@@ -154,7 +156,7 @@ export const enumLoNuevo = {
   meditacion: 1,
   /** Value 2 */
   cancion: 2,
-  /** Value 2 */
+  /** Value 3 */
   audiolibro: 3,
 };
 

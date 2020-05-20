@@ -10,7 +10,7 @@ export default class LogoEmocion1 extends Component {
         height="24px"
         viewBox="0 0 23.75 23.06">
         <G id="Layer_2" stroke="transparent" fill="#8e92a6" data-name="Layer 2">
-          <G id="Layer_1-2" data-name="Layer 1">
+          <G id="Layer_1-2" data-name="Layer 1" fill="#8e92a6">
             <Path d="M11.87,6.35a.29.29,0,0,0,.29-.28V4.83a.29.29,0,0,0-.58,0V6.07A.29.29,0,0,0,11.87,6.35Z" />
             <Path d="M11.87,6.52a.46.46,0,0,1-.47-.45V4.83a.47.47,0,0,1,.93,0V6.07A.46.46,0,0,1,11.87,6.52Zm0-1.81a.12.12,0,0,0-.12.11V6.07a.12.12,0,0,0,.24,0V4.83A.12.12,0,0,0,11.87,4.71Z" />
             <Path d="M11.87,4a.29.29,0,0,0,.29-.28V2.52a.29.29,0,0,0-.58,0V3.75A.29.29,0,0,0,11.87,4Z" />

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   ImageBackground,
   Platform,
+  BackHandler,
 } from 'react-native';
-
 import Player from '../player/Player';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
@@ -15,129 +15,167 @@ import dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
-import {HeaderBackButton} from 'react-navigation';
+import {HeaderBackButton} from '@react-navigation/stack';
 import {Ionicons} from '@expo/vector-icons';
+import {useFocusEffect} from '@react-navigation/native';
 
 const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
+let pasoAnterio = {};
+
 /**
  * Paso Tipo(B): Teoría
- * @typedef {Object} ParamsNavigation
- * @prop {number} position
- * @prop {string} titulo
- *
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
- * @prop {import('redux').Dispatch} dispatch
- * @prop {import('../utils/types').Viaje} viaje
  * @prop {import('../utils/types').Categoria} categoria
- *
- * @extends {Component<Props>}
+ * @prop {import('../utils/types').Viaje[]} viajes
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'PasoB'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'PasoB'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
+ * @param {Props} props
  */
-class PasoBScreen extends Component {
-  static navigationOptions = {
-    header: null,
-  };
+function PasoBScreen(props) {
+  const {viajes, navigation} = props;
+  const {position, viajeIndex} = props.route.params;
+  const viaje = viajes[viajeIndex];
+  const paso = viaje.pasos[position];
+  const [show, setShow] = React.useState(true);
+  const color = (props?.categoria ?? viaje).color;
+  let player = {};
+  pasoAnterio.tipo = viaje.pasos[position - 1].tipo;
+  pasoAnterio.titulo = viaje.pasos[position - 1].titulo;
+  pasoAnterio.position = position - 1;
+  const contenido = paso.contenidos[0];
 
+  React.useEffect(() => {
+    API.putDiarioPaso(paso.key, enumStatus.doing, user);
+  });
 
-  /** @param {Props} props */
-  constructor(props) {
-    super(props);
-    const {viaje} = props;
-    this.pasoIndex = props.navigation.state.params.position;
-    this.paso = viaje.pasos[this.pasoIndex];
-    this.state = {
-      show: true,
-    };
+  function _handleClose() {
+    // @ts-ignore
+    props.navigation.popToTop();
   }
 
-  componentDidMount = async () => {
-    // const {steps, position} = this.props.navigation.state.params;
-    // const paso = steps[position];
-    // API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
-  };
-
-  _handleClose = () => {
-    const {viaje} = this.props;
-    this.props.navigation.pop(viaje.pasos.length);
-  };
-
-  nextStep = () => {
-    const {viaje} = this.props;
-    const {tipo} = viaje.pasos[this.pasoIndex + 1];
-    //API.putDiarioPaso(paso.key, enumStatus.done, null, user);
+  function nextStep() {
+    const {tipo} = viaje.pasos[position + 1];
+    API.putDiarioPaso(paso.key, enumStatus.done, user);
     // @ts-ignore
-    this.props.navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
-      position: this.pasoIndex + 1,
-      titulo: viaje.pasos[this.pasoIndex + 1].titulo,
+    navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
+      position: position + 1,
+      titulo: viaje.pasos[position + 1].titulo,
+      colorHeader: Colors.headers[color],
+      viajeIndex,
     });
-  };
+  }
 
   /** @param {Player} ref*/
-  refPlayer = ref => {
-    this.player = ref;
-  };
-
-  otro = () => {
-    this.player._startPlayer();
-    //this.nextStep();
-  };
-
-  render() {
-    const contenido = this.paso.contenidos[0];
-    return (
-      <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
-        <ImageBackground
-          source={{uri: this.paso.imagenFondo}}
-          style={styles.sliderImage}>
-          <TouchableOpacity style={styles.close} onPress={() => { this._handleClose()}}>
-            <Ionicons name={'md-close'} size={25} color={'#bdc4e1'} />
-          </TouchableOpacity>
-          <View style={styles.container1}>
-            <ScalableText style={styles.headline}>
-              {this.paso.titulo}
-            </ScalableText>
-          </View>
-          <View style={this.state.show ? styles.container2 : styles.hidden}>
-            <TouchableOpacity onPress={this.otro}>
-              <View style={styles.button}>
-                <ScalableText style={styles.buttonLabel}>
-                  Escuchar el audio
-                </ScalableText>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <Player
-            ref={this.refPlayer}
-            source={{
-              uri: contenido.media,
-            }}
-            showControls
-            onEnd={this.nextStep}
-            onPlayPause={() => {
-              this.setState({show: false});
-            }}
-          />
-          <View style={styles.headerBack}>
-            <HeaderBackButton
-              tintColor="#bdc4e1"
-              pressColorAndroid="transparent"
-              onPress={() => this.props.navigation.goBack()}
-              backTitleVisible={false}
-            />
-          </View>
-        </ImageBackground>
-      </SafeAreaView>
-    );
+  function refPlayer(ref) {
+    player = ref;
   }
+
+  function mostrarControles() {
+    //TODO hacer que al pulsar se muestren los controles
+    player._startPlayer();
+  }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        const states = navigation.dangerouslyGetState();
+        const anterior = states.routes[states.routes.length - 2];
+        if (anterior.name !== 'Categoria') {
+          navigation.goBack();
+        } else {
+          const {tipo, position: positionA, titulo} = pasoAnterio;
+          // @ts-ignore
+          navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
+            position: positionA,
+            titulo,
+            colorHeader: Colors.headers[color],
+            viajeIndex,
+          });
+        }
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [navigation, color, viajeIndex]),
+  );
+
+  return (
+    <SafeAreaView style={[styles.safe, {backgroundColor: 'white'}]}>
+      <ImageBackground
+        source={{uri: paso.imagenFondo}}
+        style={styles.sliderImage}>
+        <TouchableOpacity
+          style={styles.close}
+          onPress={() => {
+            _handleClose();
+          }}>
+          <Ionicons name={'md-close'} size={25} color={'#bdc4e1'} />
+        </TouchableOpacity>
+        <View style={styles.container1}>
+          <ScalableText style={styles.headline}>{paso.titulo}</ScalableText>
+        </View>
+        <View style={show ? styles.container2 : styles.hidden}>
+          <TouchableOpacity onPress={mostrarControles}>
+            <View style={styles.button}>
+              <ScalableText style={styles.buttonLabel}>
+                Escuchar el audio
+              </ScalableText>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <Player
+          ref={refPlayer}
+          source={{
+            uri: contenido.media,
+          }}
+          showControls
+          onEnd={nextStep}
+          onPlayPause={() => {
+            setShow(false);
+          }}
+        />
+        <View style={styles.headerBack}>
+          <HeaderBackButton
+            tintColor="#bdc4e1"
+            pressColorAndroid="transparent"
+            onPress={() => {
+              const states = navigation.dangerouslyGetState();
+              const anterior = states.routes[states.routes.length - 2];
+              if (anterior.name !== 'Categoria') {
+                navigation.goBack();
+              } else {
+                const {tipo, position: positionA, titulo} = pasoAnterio;
+                // @ts-ignore
+                navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
+                  position: positionA,
+                  titulo,
+                  colorHeader: Colors.headers[color],
+                  viajeIndex,
+                });
+              }
+            }}
+            labelVisible={false}
+          />
+        </View>
+      </ImageBackground>
+    </SafeAreaView>
+  );
 }
 
+PasoBScreen.navigationOptions = {
+  header: () => null,
+};
+
 function mapStateToProps(state) {
+  const {categoria, viajes} = state;
   return {
-    viaje: state.viaje,
-    categoria: state.categoria,
+    viajes,
+    categoria,
   };
 }
 
@@ -168,7 +206,7 @@ const styles = StyleSheet.create({
   },
   headline: {
     fontFamily: 'Kiona',
-    fontSize: dimensions.viajeHeadlineSize,
+    fontSize: 20,
     lineHeight: dimensions.viajeHeadlineLineHeight,
     textAlign: 'center',
     color: Colors.textoViaje,
@@ -190,8 +228,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkPurple,
     borderRadius: 40,
     paddingHorizontal: dimensions.window.width * 0.15,
-    //paddingBottom: dimensions.window.width * 0.035,
-    //paddingTop: dimensions.window.width * 0.045,
     height: dimensions.window.width * 0.14,
     justifyContent: 'center',
     alignContent: 'center',

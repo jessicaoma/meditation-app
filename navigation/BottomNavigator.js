@@ -1,5 +1,6 @@
 import React from 'react';
-import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import AudiolibrosScreen from '../screens/AudiolibrosScreen';
@@ -8,65 +9,81 @@ import CategoriasScreen from '../screens/CategoriasScreen';
 import Colors from '../constants/Colors';
 import AngelNavigator from './AngelNavigator';
 
-const homeStack = createStackNavigator({Home: HomeScreen});
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-const BottomNavigator = createBottomTabNavigator(
-  {
-    Inicio: {
-      screen: homeStack,
-      navigationOptions: {
-        title: 'Inicio',
-        tabBarIcon: ({tintColor}) => (
-          <TabBarIcon name={'inicio'} tintColor={tintColor} />
-        ),
-      },
-    },
-    Categorias: {
-      screen: CategoriasScreen,
-      navigationOptions: {
-        title: 'Cursos',
-        tabBarIcon: ({tintColor}) => (
-          <TabBarIcon name={'viajes'} tintColor={tintColor} />
-        ),
-      },
-    },
-    Meditar: {
-      screen: MeditacionesScreen,
-      navigationOptions: {
-        title: 'Medita',
-        tabBarIcon: ({tintColor}) => (
-          <TabBarIcon name={'meditar'} tintColor={tintColor} />
-        ),
-      },
-    },
-    Audiolibros: {
-      screen: AudiolibrosScreen,
-      navigationOptions: {
-        title: 'Audiolibros',
-        tabBarIcon: ({tintColor}) => (
-          <TabBarIcon name={'audiolibros'} tintColor={tintColor} />
-        ),
-      },
-    },
-    AngelStack: {
-      screen: AngelNavigator,
-      navigationOptions: {
-        title: 'Mensajes',
-        tabBarIcon: ({tintColor}) => (
-          <TabBarIcon name={'angel'} tintColor={tintColor} />
-        ),
-      },
-    },
-  },
-  {
-    tabBarOptions: {
-      activeTintColor: Colors.tabIconSelected,
-      inactiveTintColor: Colors.tabIconDefault,
-    },
-    initialRouteName: 'Inicio',
-    //TODO elimnar despues
-    resetOnBlur: true,
-  },
-);
+function homeStack() {
+  return (
+    <Stack.Navigator screenOptions={{title: ''}}>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={HomeScreen.navigationOptions}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function BottomNavigator() {
+  return (
+    <Tab.Navigator
+      tabBarOptions={{
+        activeTintColor: Colors.tabIconSelected,
+        inactiveTintColor: Colors.tabIconDefault,
+      }}
+      screenOptions={{unmountOnBlur: true}}>
+      <Tab.Screen
+        name="Inicio"
+        component={homeStack}
+        options={{
+          title: 'Inicio',
+          tabBarIcon: ({color}) => (
+            <TabBarIcon name={'inicio'} tintColor={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Categorias"
+        component={CategoriasScreen}
+        options={{
+          title: 'Cursos',
+          tabBarIcon: ({color}) => (
+            <TabBarIcon name={'viajes'} tintColor={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Meditar"
+        component={MeditacionesScreen}
+        options={{
+          title: 'Medita',
+          tabBarIcon: ({color}) => (
+            <TabBarIcon name={'meditar'} tintColor={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Audiolibros"
+        component={AudiolibrosScreen}
+        options={{
+          title: 'Audiolibros',
+          tabBarIcon: ({color}) => (
+            <TabBarIcon name={'audiolibros'} tintColor={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="AngelStack"
+        component={AngelNavigator}
+        options={{
+          title: 'Mensajes',
+          tabBarIcon: ({color}) => (
+            <TabBarIcon name={'angel'} tintColor={color} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
 
 export default BottomNavigator;

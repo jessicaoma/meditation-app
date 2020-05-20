@@ -5,29 +5,28 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView,
+  Platform,
 } from 'react-native';
 import Dims from '../constants/Dimensions';
-import Colors from '../constants/Colors';
-import SvgUri from '../components/SvgUri';
+import {SvgUri} from 'react-native-svg';
 import CardFlip from '../components/CardFlip';
 import ScalableText from 'react-native-text';
 import Player from '../player/Player';
-/**
- * @typedef {Object} ParamsNavigation
- * @prop {import('../utils/types').CartaDelAngel} carta
- *
- * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
- */
+import {connect} from 'react-redux';
 
 const deviceWidth = Dims.window.width - Dims.regularSpace - Dims.regularSpace;
 const deviceHeight = deviceWidth * 1.5 + Dims.regularSpace;
-const containerHeight = Dims.window.height - Dims.statusBarHeight -  (Dims.bigSpace * 2) - 28;
-//const FIXED_BAR_WIDTH = 40;
+const containerHeight = Dims.window.height - Dims.statusBarHeight - 28;
 
-/** @extends {Component<Props>} */
-export default class AngelScreen extends Component {
+/**
+ * @typedef Props
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Angel'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Angel'>} route
+ * @prop {import('../utils/types').CartaDelAngel} angel
+ * @prop {import('redux').Dispatch} [dispatch]
+ * @extends {Component<Props>}
+ */
+class AngelScreen extends Component {
   animVal = new Animated.Value(0);
 
   flipCard = () => {
@@ -37,65 +36,57 @@ export default class AngelScreen extends Component {
   };
 
   render() {
-    /** @type {ParamsNavigation} */
-    const {carta, angel} = this.props.navigation.state.params;
-    // const locationAfirma = angel.mensaje.indexOf('Afirma');
-    // const mensajeSub = angel.mensaje.substring(0, locationAfirma);
-    // const afirmaSup = angel.mensaje.substring(locationAfirma);
-    // const numItems = carta.faces.length;
-    // const itemWidth =
-    //   FIXED_BAR_WIDTH / numItems - (numItems - 1) * Dims.smallSpace;
-    // const imageArray = carta.faces.map((item, index) => {
-    //   return (
-    //   );
-    // });
-    console.log('Angel');
+    const {angel} = this.props;
     return (
       <SafeAreaView style={styles.safe}>
         <View style={styles.statusBar} />
-        <ScrollView>
-          <View style={{height: 0}}>
-            <Player //http://okoconnect.com/karim/assets/angeles/cartaangel.mp3
-              source={require('../assets/audio/cartaangel.mp3')}
-              ref={ref => {
-                this.player = ref;
-              }}
-              onEnd={state => {
-                console.log(state);
-                this.player._onSeekSliderValueChange();
-                this.player._onSeekSliderSlidingComplete(0);
-                this.player.playbackInstance.pauseAsync();
-              }}
-            />
-          </View>
-          <View style={[styles.container]}>
-            <CardFlip
-              ref={card => {
-                this.card = card;
-              }}>
-              <TouchableOpacity onPress={() => this.flipCard()}>
-                <SvgUri
-                  width={deviceWidth}
-                  height={deviceHeight}
-                  source={{uri: carta.reverso}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.flipCard()}>
-                <SvgUri
-                  width={deviceWidth}
-                  height={deviceHeight}
-                  source={{uri: carta.frontal}}
-                />
-              </TouchableOpacity>
-            </CardFlip>
-            <ScalableText style={styles.suggestion}>
-              Toca para descubrir
-            </ScalableText>
-          </View>
-        </ScrollView>
+        <View style={{height: 0}}>
+          <Player //http://okoconnect.com/karim/assets/angeles/cartaangel.mp3
+            source={require('../assets/audio/cartaangel.mp3')}
+            ref={ref => {
+              this.player = ref;
+            }}
+            onEnd={state => {
+              this.player._onSeekSliderValueChange();
+              this.player._onSeekSliderSlidingComplete(0);
+              this.player.playbackInstance.pauseAsync();
+            }}
+          />
+        </View>
+        <View style={[styles.container]}>
+          <CardFlip
+            ref={card => {
+              this.card = card;
+            }}>
+            <TouchableOpacity onPress={() => this.flipCard()}>
+              <SvgUri
+                width={deviceWidth}
+                height={deviceHeight}
+                uri={angel.reverso}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.flipCard()}>
+              <SvgUri
+                width={deviceWidth}
+                height={deviceHeight}
+                uri={angel.frontal}
+              />
+            </TouchableOpacity>
+          </CardFlip>
+          <ScalableText style={styles.suggestion}>
+            Toca para descubrir
+          </ScalableText>
+        </View>
       </SafeAreaView>
     );
   }
+}
+
+function mapStateToProps(state) {
+  return {
+    angelTime: state.angelTime,
+    angel: state.angel,
+  };
 }
 
 const styles = StyleSheet.create({
@@ -113,7 +104,7 @@ const styles = StyleSheet.create({
     height: containerHeight,
   },
   statusBar: {
-    height: Dims.statusBarHeight,
+    height: Platform.OS === 'android' ? Dims.statusBarHeight : 0,
   },
   suggestion: {
     fontFamily: 'MyriadPro-Regular',
@@ -123,3 +114,5 @@ const styles = StyleSheet.create({
     color: '#665e61',
   },
 });
+
+export default connect(mapStateToProps)(AngelScreen);

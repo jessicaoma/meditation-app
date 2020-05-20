@@ -6,6 +6,7 @@ import {
   FlatList,
   ActivityIndicator,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
@@ -14,11 +15,12 @@ import API from '../utils/API';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import ScalableText from 'react-native-text';
-import SvgUri from '../components/SvgUri';
-//TODO comportamiento al finalizar video
+import {SvgUri} from 'react-native-svg';
+
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Meditaciones'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Meditaciones'>} route
  * @extends {Component<Props>}
  */
 export default class MeditacionesScreen extends Component {
@@ -29,12 +31,15 @@ export default class MeditacionesScreen extends Component {
       /** @type {import('../utils/types').Meditación[]} */
       meditaciones: [],
       /** @type {import('../utils/types').Video} */
+      // @ts-ignore
       video: {},
     };
   }
   componentDidMount = async () => {
-    this.props.navigation.addListener('willBlur', () => {
-      if (this.player === null) return;
+    this.props.navigation.addListener('blur', () => {
+      if (this.player === null) {
+        return;
+      }
       if (this.player.state.isPlaying) {
         this.player._onPlayPausePressed();
       }
@@ -72,7 +77,7 @@ export default class MeditacionesScreen extends Component {
           this._handleClick(item);
         }}>
         <ScalableText style={styles.title_boxes}>{item.titulo}</ScalableText>
-        <SvgUri style={styles.image} source={{uri: item.imagenLista}} />
+        <SvgUri style={styles.image} uri={item.imagenLista} />
       </Buttom>
     );
   };
@@ -109,7 +114,7 @@ export default class MeditacionesScreen extends Component {
     return <ActivityIndicator size="large" color={Colors.primaryDark} />;
   };
   /** @param {import('../utils/types').Meditación} item */
-  _keyExtractor = item => item.key;
+  _keyExtractor = item => item.key.toString();
 
   render = () => (
     <SafeAreaView style={styles.mainContainer}>
@@ -132,7 +137,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   statusBar: {
-    height: Dims.statusBarHeight,
+    height: Platform.OS === 'android' ? Dims.statusBarHeight : 0,
   },
   container: {
     paddingHorizontal: Dims.regularSpace,

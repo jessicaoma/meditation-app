@@ -14,31 +14,26 @@ import LogoDescargar from '../constants/LogoDescargar';
 import dimensions from '../constants/Dimensions';
 import ScreenBg from '../components/screenBg';
 import ScalableText from 'react-native-text';
-import MisEmocionesScreen from '../screens/MisEmocionesScreen';
+import {connect} from 'react-redux';
 
-//const deviceWidth = Dims.window.width;
-//const deviceHeight = '100%';
-const BAR_SPACE = 9;
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Emocion'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Emocion'>} route
+ * @prop {import('../utils/types').Emoción} emocion
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
-export default class Emocion extends Component {
+class Emocion extends Component {
   animVal = new Animated.Value(0);
 
-  static navigationOptions = ({navigation}) => ({
-    MisEmociones: MisEmocionesScreen,
-  });
-
   _handelClick = () => {
-    console.log('click');
-    this.props.navigation.navigate('MisEmociones');
+    // @ts-ignore
+    this.props.navigation.replace('MisEmociones');
   };
 
   render() {
-    /** @type {import('../utils/types').Emoción} */
-    const emocion = this.props.navigation.getParam('emocion', {});
+    const {emocion} = this.props;
     const info = [
       {
         key: 'slide1',
@@ -53,30 +48,24 @@ export default class Emocion extends Component {
     ];
 
     let imageArray = [];
-    let barArray = [];
-    const itemWidth = 5;
     info.forEach((item, i) => {
       const thisImage = (
-        <View key={`item${i}`}>          
-        {i === 0 ? (
-          <>
-            <ScalableText style={styles.bigTitle}>
-              {item.title}
-            </ScalableText>
-            <ScalableText style={styles.paragraph}>
-              {item.text}
-            </ScalableText>
-          </>
+        <View key={`item${i}`}>
+          {i === 0 ? (
+            <>
+              <ScalableText style={styles.bigTitle}>{item.title}</ScalableText>
+              <ScalableText style={styles.paragraph}>{item.text}</ScalableText>
+            </>
           ) : (
             <>
-              <ScalableText style={styles.bigTitle}>
-                {item.title}
-              </ScalableText>
-              <ScalableText style={styles.paragraph}>
-                {item.text}
-              </ScalableText>
-              <TouchableOpacity style={styles.button} onPress={this._handelClick}>
-                  <ScalableText style={styles.buttonLabel}>Ir a mis emociones</ScalableText>
+              <ScalableText style={styles.bigTitle}>{item.title}</ScalableText>
+              <ScalableText style={styles.paragraph}>{item.text}</ScalableText>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={this._handelClick}>
+                <ScalableText style={styles.buttonLabel}>
+                  Ir a mis emociones
+                </ScalableText>
               </TouchableOpacity>
               <View
                 style={{
@@ -84,14 +73,14 @@ export default class Emocion extends Component {
                   flexDirection: 'row',
                   justifyContent: 'center',
                   paddingHorizontal: 50,
-                }}>
-                <TouchableOpacity style={{marginRight: 20}}>
+                }}
+              />
+              {/* <TouchableOpacity style={{marginRight: 20}}>
                   <LogoCompartir />
                 </TouchableOpacity>
                 <TouchableOpacity>
                   <LogoDescargar />
-                </TouchableOpacity>
-              </View>
+                </TouchableOpacity> */}
             </>
           )}
         </View>
@@ -99,42 +88,44 @@ export default class Emocion extends Component {
       imageArray.push(thisImage);
     });
 
-
-
     return (
       <SafeAreaView style={{flex: 1}}>
         <ScreenBg
           source={{uri: emocion.imagenFondo}}
           styleImage={{resizeMode: 'cover', height: dimensions.window.height}}>
           <ScrollView>
-          <View style={{minHeight: dimensions.window.height}}>
-            <Image
-              style={{
-                width: dimensions.window.width,
-                height: dimensions.window.height * emocion.headerH,
-              }}
-              source={{uri: emocion.header}}
-            />
-            <View style={styles.container}>
-              <ScrollView
-                style={styles.slider}>
-                {imageArray}
-              </ScrollView>
+            <View style={{minHeight: dimensions.window.height}}>
+              <Image
+                style={{
+                  width: dimensions.window.width,
+                  height: dimensions.window.height * emocion.headerH,
+                }}
+                source={{uri: emocion.header}}
+              />
+              <View style={styles.container}>
+                <ScrollView style={styles.slider}>{imageArray}</ScrollView>
+              </View>
+              <Image
+                style={{
+                  width: dimensions.window.width,
+                  height: dimensions.window.height * emocion.footerH,
+                  minHeight: dimensions.window.height * emocion.footerH,
+                }}
+                source={{uri: emocion.footer}}
+              />
             </View>
-          <Image
-            style={{
-              width: dimensions.window.width,
-              height: dimensions.window.height * emocion.footerH,
-              minHeight: dimensions.window.height * emocion.footerH,
-            }}
-            source={{uri: emocion.footer}}
-          />
-          </View>
           </ScrollView>
         </ScreenBg>
       </SafeAreaView>
     );
   }
+}
+
+function mapStateToProps(state) {
+  return {
+    emocionTime: state.emocionTime,
+    emocion: state.emocion,
+  };
 }
 
 const styles = StyleSheet.create({
@@ -189,3 +180,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+export default connect(mapStateToProps)(Emocion);

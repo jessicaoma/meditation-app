@@ -6,8 +6,8 @@ import {
   Image,
   View,
   ScrollView,
-  TextInput,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
@@ -15,9 +15,6 @@ import Dimensions from '../constants/Dimensions';
 import {Ionicons} from '@expo/vector-icons';
 
 /**
- * @typedef {object} Props
- * @prop {import('react-navigation').NavigationScreenProp} [navigation]
- *
  * @typedef PremiumFeature
  * @prop {number} id
  * @prop {string} title
@@ -28,11 +25,14 @@ import {Ionicons} from '@expo/vector-icons';
  * @prop {string} cost
  * @prop {string} description
  *
+ * @typedef Props
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Suscribete'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Suscribete'>} route
  * @extends {Component<Props>}
  * */
 export default class PremiumScreen extends Component {
   static navigationOptions = {
-    header: null,
+    header: () => null,
   };
 
   features = {
@@ -48,12 +48,12 @@ export default class PremiumScreen extends Component {
       },
       {
         id: 3,
-        title:
-          'Una música de relajación.',
+        title: 'Una música de relajación.',
       },
       {
         id: 4,
-        title: 'Un módulo del curso (Ser Feliz) de desarrollo personal. Con recomendaciones y ejercicios.',
+        title:
+          'Un módulo del curso (Ser Feliz) de desarrollo personal. Con recomendaciones y ejercicios.',
       },
       {
         id: 5,
@@ -61,7 +61,8 @@ export default class PremiumScreen extends Component {
       },
       {
         id: 6,
-        title: 'Un extracto de un audiolibro de Karim Temple. (Aprendiendo a Meditar)',
+        title:
+          'Un extracto de un audiolibro de Karim Temple. (Aprendiendo a Meditar)',
       },
       {
         id: 7,
@@ -79,8 +80,7 @@ export default class PremiumScreen extends Component {
       },
       {
         id: 3,
-        title:
-          'Videos de los cursos. ',
+        title: 'Videos de los cursos. ',
       },
       {
         id: 4,
@@ -98,12 +98,12 @@ export default class PremiumScreen extends Component {
       },
       {
         id: 3,
-        title:
-          'Música de relajación. ',
+        title: 'Música de relajación. ',
       },
       {
         id: 4,
-        title: 'Cursos de desarrollo personal. Con recomendaciones y ejercicios. ',
+        title:
+          'Cursos de desarrollo personal. Con recomendaciones y ejercicios. ',
       },
       {
         id: 5,
@@ -129,12 +129,12 @@ export default class PremiumScreen extends Component {
       },
       {
         id: 3,
-        title:
-          'Música de relajación. ',
+        title: 'Música de relajación. ',
       },
       {
         id: 4,
-        title: 'Cursos de desarrollo personal. Con recomendaciones y ejercicios.',
+        title:
+          'Cursos de desarrollo personal. Con recomendaciones y ejercicios.',
       },
       {
         id: 5,
@@ -169,7 +169,7 @@ export default class PremiumScreen extends Component {
   };
 
   _handleClose = () => {
-    this.props.navigation.goBack(null);
+    this.props.navigation.goBack();
   };
 
   /** @param {Prices} plan */
@@ -221,7 +221,8 @@ export default class PremiumScreen extends Component {
           <View style={styles.container}>
             <Text style={styles.bigTitle}>Elige un plan</Text>
             <Text style={styles.bigParagraph}>
-              Al suscribirse a la aplicación, el usuario tiene la posibilidad de acceder a:
+              Al suscribirse a la aplicación, el usuario tiene la posibilidad de
+              acceder a:
             </Text>
             <View style={styles.container}>
               {this.features.premium.map(item => this.renderPremiumItem(item))}
@@ -236,15 +237,17 @@ export default class PremiumScreen extends Component {
             <Text style={[styles.bigParagraph]}>
               {'\n'}
               Suscripción ANUAL. {'\n'}
-              Con el plan anual, accede a todo el contenido ilimitado de la plataforma: 
+              Con el plan anual, accede a todo el contenido ilimitado de la
+              plataforma:
             </Text>
             <View style={styles.container}>
               {this.features.premium3.map(item => this.renderPremiumItem(item))}
             </View>
-             <Text style={[styles.bigParagraph]}>
+            <Text style={[styles.bigParagraph]}>
               {'\n'}
               Suscripción MENSUAL. {'\n'}
-              Con el plan mensual, accede a todo el contenido ilimitado de la plataforma:
+              Con el plan mensual, accede a todo el contenido ilimitado de la
+              plataforma:
             </Text>
             <View style={styles.container}>
               {this.features.premium4.map(item => this.renderPremiumItem(item))}
@@ -252,7 +255,6 @@ export default class PremiumScreen extends Component {
             <View style={styles.container}>
               {this.features.prices.map(item => this.renderPriceBubble(item))}
             </View>
-           
           </View>
         </ScrollView>
         <View style={[styles.containerBottomButton]}>
@@ -266,12 +268,12 @@ export default class PremiumScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  safe:{
+  safe: {
     flex: 1,
     backgroundColor: 'white',
   },
   statusBar: {
-    //height: Dimensions.statusBarHeight,
+    height: Platform.OS === 'android' ? Dimensions.statusBarHeight : 0,
   },
   scrollView: {
     flex: 1,

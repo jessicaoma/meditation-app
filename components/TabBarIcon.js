@@ -7,9 +7,7 @@ import LogoAngel from '../constants/LogoAngel';
 import LogoPerfil from '../constants/LogoPerfil';
 import LogoEmociones from '../constants/LogoEmociones';
 import LogoViajesCompletados from '../constants/LogoViajesCompletados';
-import LogoDiario from '../constants/LogoDiario';
 import LogoMisMeditaciones from '../constants/LogoMisMeditaciones';
-import LogoPremium from '../constants/LogoPremium';
 
 /**
  * @typedef {Object} Props
@@ -40,12 +38,8 @@ export default function TabBarIcon({name, tintColor}) {
         return <LogoEmociones tintColor={tintColor} />;
       case 'ViajesCompletados':
         return <LogoViajesCompletados tintColor={tintColor} />;
-      case 'MiDiario':
-        return <LogoDiario tintColor={tintColor} />;
       case 'MisMeditaciones':
         return <LogoMisMeditaciones tintColor={tintColor} />;
-      case 'Premium':
-        return <LogoPremium tintColor={tintColor} />;
     }
   }
   return renderIcon();

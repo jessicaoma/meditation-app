@@ -3,6 +3,7 @@ import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Dims from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import ScalableText from 'react-native-text';
+import {getBrightness} from '../utils/convert';
 
 let colorLetra = Colors.gray;
 /**
@@ -17,7 +18,7 @@ let colorLetra = Colors.gray;
  * @prop {boolean} [likeButton] Indicates use a look similar to Button
  * @prop {boolean} [notMargin] Indicates that remove all margin
  * @prop {string} children Text to show
- * @prop {import('react-native').TextStyle} styleText Style to apply on the Text
+ * @prop {import('react-native').TextStyle} [styleText] Style to apply on the Text
  * @extends {Component<Props>}
  */
 export default class ItemBubble extends Component {
@@ -33,18 +34,11 @@ export default class ItemBubble extends Component {
       notMargin,
     } = this.props;
 
-    var c = color.substring(1);
-    var rgb = parseInt(c, 16); // convertir rrggbb a decimal
-    var r = (rgb >> 16) & 0xff; // extract rojo
-    var g = (rgb >> 8) & 0xff; // extract verde
-    var b = (rgb >> 0) & 0xff; // extract azul
-
-    var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
-
-    if (luma > 170)
+    if (getBrightness(color) > 190) {
       colorLetra = Colors.gray;
-    else colorLetra = '#fff';
-
+    } else {
+      colorLetra = '#fff';
+    }
 
     let styleStatus = StyleSheet.create(
       likeButton
@@ -80,8 +74,7 @@ export default class ItemBubble extends Component {
         onPress={onPress}>
         <ScalableText
           style={[styles.text, styleStatus.styleText, this.props.styleText]}>
-          {' '}
-          {this.props.children}{' '}
+          {this.props.children}
         </ScalableText>
       </TouchableOpacity>
     );
@@ -103,7 +96,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'MyriadPro-Semibold',
-    lineHeight: 15,
+    lineHeight: 16,
     fontSize: 13,
     letterSpacing: 0.89,
     color: colorLetra,

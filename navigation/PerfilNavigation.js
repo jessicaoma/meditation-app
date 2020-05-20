@@ -1,122 +1,53 @@
 import React from 'react';
-import {
-  //createDrawerNavigator,
-  createStackNavigator,
-  HeaderBackButton,
-} from 'react-navigation';
-import BottomNavigator from './BottomNavigator';
+import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
 import MisEmocionesScreen from '../screens/MisEmocionesScreen';
-//import MiDiarioScreen from '../screens/MiDiarioScreen';
-import ViajesCompletadosScreen from '../screens/ViajesCompletadosScreen';
+import ViajeCompletadoNavigator from './ViajeCompletadoNavigator';
 import MisMeditacionesScreen from '../screens/MisMeditacionesScreen';
-import PremiumScreen from '../screens/PremiumScreen';
-//import DrawerContentComponents from '../components/DrawerContentComponents';
-//import Dims from '../constants/Dimensions';
-import PerfilScreen from '../screens/PerfilScreen';
+import Perfil from '../screens/PerfilScreen';
 
-const PerfilNavigation = createStackNavigator(
-  {
-    PerfilDrawer: {
-      screen: PerfilScreen,
-      navigationOptions: ({navigation}) => ({
-        title: 'Perfil',
-        headerLeft: (
-          <HeaderBackButton onPress={() => navigation.goBack(null)} />
-        ),
-      }),
-    },
-    MisEmociones: {
-      screen: MisEmocionesScreen,
-      /*createStackNavigator(
-        {MisEmocionesScreen},
-        {
-          defaultNavigationOptions: ({navigation}) => ({
-            title: 'Mis emociones',
-            headerBackTitle: null,
-            headerLeft: (
-              <HeaderBackButton onPress={() => navigation.goBack(null)} />
-            ),
-            headerTitleStyle: {
-              color: '#030303',
-              fontFamily: 'MyriadPro-Semibold',
-            },
-          }),
-        },
-      ),*/
-      navigationOptions: {
-        title: 'Mis Emociones',
-      },
-    },
-    ViajesCompletados: {
-      screen: ViajesCompletadosScreen,
-      /*createStackNavigator(
-        {ViajesCompletadosScreen},
-        {
-          defaultNavigationOptions: ({navigation}) => ({
-            title: 'Módulos Completados',
-            headerBackTitle: null,
-            headerLeft: (
-              <HeaderBackButton onPress={() => navigation.goBack(null)} />
-            ),
-            headerTitleStyle: {
-              color: '#030303',
-              fontFamily: 'MyriadPro-Semibold',
-            },
-          }),
-        },
-      ),*/
-      navigationOptions: {
-        title: 'Módulos Finalizados',
-      },
-    },
+const Stack = createStackNavigator();
 
-    MisMeditaciones: {
-      screen: MisMeditacionesScreen,
-      /*createStackNavigator(
-        {MisMeditacionesScreen},
-        {
-          defaultNavigationOptions: ({navigation}) => ({
-            title: 'Mis Meditaciones',
-            headerBackTitle: null,
-            headerLeft: (
-              <HeaderBackButton onPress={() => navigation.goBack(null)} />
-            ),
-            headerTitleStyle: {
-              color: '#030303',
-              fontFamily: 'MyriadPro-Semibold',
-            },
-          }),
+export default function PerfilNavigation() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleStyle: {
+          color: '#030303',
+          fontFamily: 'MyriadPro-Semibold',
         },
-      ),*/
-      navigationOptions: {
-        title: 'Mis Meditaciones',
-      },
-    },
-    Premium: {
-      screen: PremiumScreen,
-      navigationOptions: {
-        title: 'Convierte en Premium',
-      },
-    },
-  },
-  {
-    //initialRouteName: 'Main',
-    //drawerPosition: 'right',
-    //drawerType: 'slide',
-    //drawerWidth: Dims.window.width - 50,
-    //contentComponent: DrawerContentComponents,
-    //edgeWidth: 0,
-    //unmountInactiveRoutes: true,
-    //overlayColor: 'rgba(206, 209, 230, 0.56)',
-    //drawerBackgroundColor: 'transparent',
-    defaultNavigationOptions: {
-      headerTitleStyle: {
-        color: '#030303',
-        fontFamily: 'MyriadPro-Semibold',
-      },
-      headerBackTitle: null,
-    },
-  },
-);
-
-export default PerfilNavigation;
+        headerBackTitleVisible: false,
+      }}>
+      <Stack.Screen
+        name="Perfil"
+        component={Perfil}
+        options={props => {
+          return {
+            headerLeft: p => (
+              <HeaderBackButton
+                {...p}
+                onPress={() => props.navigation.goBack()}
+              />
+            ),
+          };
+        }}
+      />
+      <Stack.Screen
+        name="MisEmociones"
+        component={MisEmocionesScreen}
+        options={MisEmocionesScreen.navigationOptions}
+      />
+      <Stack.Screen
+        name="ViajesCompletadosStack"
+        component={ViajeCompletadoNavigator}
+        options={{
+          header: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="MisMeditaciones"
+        component={MisMeditacionesScreen}
+        options={MisMeditacionesScreen.navigationOptions}
+      />
+    </Stack.Navigator>
+  );
+}

@@ -1,25 +1,54 @@
-// @ts-nocheck
 import React from 'react';
-import {StyleSheet, SafeAreaView, Image, StatusBar} from 'react-native';
+import {StyleSheet, SafeAreaView, Image} from 'react-native';
 import Colors from '../constants/Colors';
 import Logo from '../components/Logo';
 import Dimensions from '../constants/Dimensions';
+import {connect} from 'react-redux';
 
 const aspectRadioImage = 320 / 236;
 //TODO revisar como mejorar la experiencia (posiblemente se deba eliminar esta pantalla)
 /**
- * @typedef {Object} Props Properties of the component
- * @property {import('react-navigation').NavigationScreenProp} navigation Callback used when the component is Press
- * @param {Props} props Properties
+ * @typedef Props
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Splash'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Splash'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
+ * @prop {string} usuario
+ * @prop {string} angelTime
+ * @prop {string} emocionTime
+ * @param {Props} props
  */
-export default function SplashScreen({navigation}) {
+function SplashScreen({navigation, usuario, angelTime, emocionTime, dispatch}) {
+  if (angelTime === undefined) {
+    dispatch({
+      type: 'SET_ANGEL',
+      payload: {
+        angel: undefined,
+        angelTime: new Date(0).toJSON(),
+      },
+    });
+  }
+  if (emocionTime === undefined) {
+    dispatch({
+      type: 'SET_EMOCION',
+      payload: {
+        emocion: undefined,
+        emocionTime: new Date(0).toJSON(),
+      },
+    });
+  }
   setTimeout(() => {
-    navigation.navigate('Login');
+    if (usuario === undefined) {
+      // @ts-ignore
+      navigation.replace('Login');
+    } else {
+      // @ts-ignore
+      navigation.replace('App');
+    }
   }, 1000);
   return (
     <SafeAreaView style={styles.contaner}>
-      <StatusBar barStyle="dark-content" />
       <Image
+        // @ts-ignore
         source={require('../assets/images/splash-bg.png')}
         style={styles.background}
       />
@@ -27,6 +56,16 @@ export default function SplashScreen({navigation}) {
     </SafeAreaView>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    usuario: state.usuario,
+    angelTime: state.angelTime,
+    emocionTime: state.emocionTime,
+  };
+}
+
+export default connect(mapStateToProps)(SplashScreen);
 
 const styles = StyleSheet.create({
   contaner: {

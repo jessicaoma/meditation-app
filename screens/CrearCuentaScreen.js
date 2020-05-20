@@ -7,17 +7,17 @@ import {
   StatusBar,
   SafeAreaView,
   ScrollView,
+  Platform,
 } from 'react-native';
 import Colors from '../constants/Colors';
-import LogoFacebook from '../constants/LogoFacebook';
-import LogoGoogle from '../constants/LogoGoogle';
 import InputLogin from '../components/InputLogin';
 import Dims from '../constants/Dimensions';
 import ScreenBg from '../components/screenBg';
 //TODO hacer todo el manejo
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'CrearCuenta'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'CrearCuenta'>} route
  * @extends {Component<Props>}
  */
 export default class CrearCuentaScreen extends Component {
@@ -61,18 +61,9 @@ export default class CrearCuentaScreen extends Component {
             styleImage={{resizeMode: 'cover', height: Dims.window.height}}>
             <View style={styles.container}>
               <View style={styles.header}>
-                <Text style={styles.welcomeTitle}>Crear cuenta con</Text>
-                <View style={styles.sociallogos}>
-                  <TouchableOpacity style={{marginRight: 5}}>
-                    <LogoFacebook />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={{}}>
-                    <LogoGoogle />
-                  </TouchableOpacity>
-                </View>
-                <Text style={styles.welcomeTitle}>ó registrarme vía email</Text>
+                <Text style={styles.welcomeTitle}>Regístrate con tu correo electrónico</Text>
               </View>
-              <View>
+              <View style={styles.full}>
                 <InputLogin
                   placeholder="Nombre"
                   type="text"
@@ -117,18 +108,18 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: 'white',
+    paddingTop: Platform.OS === 'android' ? Dims.statusBarHeight : 0,
   },
   scroll: {
     paddingTop: Dims.statusBarHeight,
   },
-  fondo: {resizeMode: 'cover', height: Dims.window.height},
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'column',
     padding: 40,
-    minHeight: Dims.window.height - 120,
+    minHeight: Dims.window.height - 220,
   },
   welcomeTitle: {
     color: '#ABA0B5',
@@ -175,5 +166,11 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Regular',
     width: '100%',
     minWidth: '100%',
+  },
+  full: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    paddingHorizontal: 0,
   },
 });

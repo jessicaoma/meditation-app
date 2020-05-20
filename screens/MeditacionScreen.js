@@ -3,23 +3,27 @@ import {View, StyleSheet, SafeAreaView} from 'react-native';
 import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import API from '../utils/API';
-//TODO comportamiento al finalizar video
+
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp<{param:{meditacion:import('../utils/types').Meditación}}>} navigation
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Meditacion'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Meditacion'>} route
  * @extends {Component<Props>}
  */
 export default class MeditacionScreen extends Component {
-  static navigationOptions = ({navigation}) => {
-    /** @type {import('../utils/types').Meditación} */
-    let meditacion = navigation.getParam('meditacion', {titulo: 'Meditación'});
-    return {title: meditacion.titulo, headerBackTitle: null};
+  /** @param {Props} props */
+  static navigationOptions = ({navigation, route}) => {
+    return {
+      title: (route.params?.meditacion ?? {titulo: 'Meditación'}).titulo,
+    };
   };
 
+  /** @param {Props} props */
   constructor(props) {
     super(props);
-    /** @type {import('../utils/types').Meditación} */
-    this.meditacion = props.navigation.getParam('meditacion', {});
+    /** @type {import('../utils/types').Meditación } */
+    // @ts-ignore
+    this.meditacion = props.route.params?.meditacion ?? {};
   }
 
   // /** @type {Player} */
@@ -27,7 +31,7 @@ export default class MeditacionScreen extends Component {
   // refAudio = ref => {
   //   this.audio = ref;
   // };
-  /** @param {import('expo-av/build/AV').PlaybackStatus} status */
+  /** @param {import('expo-av/build/AV').AVPlaybackStatus} status */
   onEnd = status => {
     // @ts-ignore
     API.postDiarioMeditacion(this.meditacion.key, status.durationMillis);

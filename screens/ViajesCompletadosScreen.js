@@ -1,105 +1,139 @@
 import React, {Component} from 'react';
 import {
   StyleSheet,
-  ScrollView,
   ActivityIndicator,
   View,
   SafeAreaView,
-  Image
+  Image,
+  FlatList,
 } from 'react-native';
-import ScreenBg from '../components/screenBg';
 import ItemBubble from '../components/ItemBubble';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
-import {HeaderBackButton} from 'react-navigation';
 import API, {user} from '../utils/API';
 import ScalableText from 'react-native-text';
+import {connect} from 'react-redux';
+import {HeaderBackButton} from '@react-navigation/stack';
 
 /**
- * @typedef {object} Props
- * @prop {import('react-navigation').NavigationScreenProp} [navigation]
- *
- * Viajes Completados Screen
+ * @typedef Props
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'ViajesCompletados'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'ViajesCompletados'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
- * */
-export default class ViajeCompletadosScreen extends Component {
+ */
+class ViajeCompletadosScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Módulos Finalizados',
-    headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />,
+    headerLeft: props => (
+      <HeaderBackButton {...props} onPress={() => navigation.goBack()} />
+    ),
   });
   state = {
     /** @type {import("../utils/types").Viaje[]} */
     viajes: [],
+    isLoading: true,
   };
   componentDidMount = async () => {
     const viajes = await API.getViajesCompletados(user);
-    this.setState({viajes});
+    this.setState({viajes, isLoading: false});
   };
 
   /** @param {import("../utils/types").Viaje} viaje*/
   _handleClick = viaje => {
-    this.props.navigation.navigate('ViajeStack', {
-      viaje,
+    this.props.dispatch({
+      type: 'SET_CATEGORIA',
+      payload: {
+        categoria: undefined,
+      },
+    });
+    this.props.dispatch({
+      type: 'SET_MODULOS',
+      payload: {
+        viajes: [viaje],
+      },
+    });
+    this.props.navigation.navigate('PasoA', {
+      position: 0,
+      viajeIndex: 0,
     });
   };
 
-  /** @param {{item : import('../utils/types').Viaje}} item*/
-  renderItem = ({item}) => {
+  /** @param {import('react-native').ListRenderItemInfo<import('../utils/types').Viaje>} item*/
+  renderItem = ({item, index}) => {
     return (
-      <ItemBubble
-        key={this.keyExtractor(item)}
-        color={item.color}
-        fill
-        onPress={() => {
-          this._handleClick(item);
+      <View
+        style={{
+          paddingHorizontal: Dimensions.regularSpace,
+          paddingTop: index === 0 ? Dimensions.regularSpace : 0,
         }}>
-        {item.titulo}
-      </ItemBubble>
+        <ItemBubble
+          color={item.color}
+          fill
+          onPress={() => {
+            this._handleClick(item);
+          }}>
+          {item.titulo}
+        </ItemBubble>
+      </View>
     );
   };
-  keyExtractor = item => item.key;
-  renderListEmpty = _ => {
-    return <ActivityIndicator size="large" color={Colors.primaryDark} />;
+  keyExtractor = item => item.key.toString();
+  renderListEmpty = () => {
+    if (this.state.isLoading) {
+      return <ActivityIndicator size="large" color={Colors.primaryDark} />;
+    } else {
+      return (
+        <ScalableText style={styles.bigParagraph}>
+          Aún no has finalizado ningún módulo de los cursos.{'\n\n'}
+          ¡Anímate a recorrer el curso de tu preferencia!
+        </ScalableText>
+      );
+    }
   };
   render() {
     return (
       <SafeAreaView style={styles.safe}>
-        <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
-
-          <Image
-              resizeMode="cover"
-              source={{
-                uri:
-                  'http://okoconnect.com/karim/assets/images/viajes-completados.png',
-              }}
-              style={styles.image}
-            />
-           <ScalableText style={styles.bigTitle}>¡Vas muy bien!</ScalableText>
-            <ScalableText style={styles.bigParagraph}>
-              Has completado los siguientes módulos. Si deseas consultar nuevamente
-              el contenido, presiona sobre el módulo de interés.
-            </ScalableText>
-
-            <View style={styles.container}>
-              {this.state.viajes.length === 0
-                ? this.renderListEmpty()
-                : this.state.viajes.map(viaje => this.renderItem({item: viaje}))}
-            </View>
-         
-        </ScrollView>
+        <FlatList
+          data={this.state.viajes}
+          renderItem={this.renderItem}
+          ListHeaderComponent={() => (
+            <>
+              <Image
+                resizeMode="cover"
+                source={{
+                  uri:
+                    'http://okoconnect.com/karim/assets/images/viajes-completados.png',
+                }}
+                style={styles.image}
+              />
+              {!this.state.isLoading && this.state.viajes.length > 0 && (
+                <>
+                  <ScalableText style={styles.bigTitle}>
+                    ¡Vas muy bien!
+                  </ScalableText>
+                  <ScalableText style={styles.bigParagraph}>
+                    Has completado los siguientes módulos. Si deseas consultar
+                    nuevamente el contenido, presiona sobre el módulo de
+                    interés.
+                  </ScalableText>
+                </>
+              )}
+            </>
+          )}
+          ListEmptyComponent={this.renderListEmpty}
+          keyExtractor={this.keyExtractor}
+        />
       </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-  },
-  container: {
-    paddingHorizontal: Dimensions.regularSpace,
-    paddingTop: Dimensions.regularSpace,
-  },
+  safe: {flex: 1, backgroundColor: '#fff'},
+  scrollView: {},
+  container: {},
   bigTitle: {
     fontSize: 22,
     letterSpacing: 1.11,
@@ -125,6 +159,8 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     width: Dims.window.width,
-    height: Dims.window.width * 0.80,
+    height: Dims.window.width * 0.8,
   },
 });
+
+export default connect(null)(ViajeCompletadosScreen);

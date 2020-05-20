@@ -6,25 +6,24 @@ import {
   View,
   ActivityIndicator,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import Buttom from '../components/Buttom';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import API from '../utils/API';
 import ScalableText from 'react-native-text';
-import SvgUri from '../components/SvgUri';
+import {SvgUri} from 'react-native-svg';
 import {connect} from 'react-redux';
 
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Categorias'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Categorias'>} route
  * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
 class Categorias extends Component {
-  static navigationOptions = {
-    header: null,
-  };
   /** @type {{categorias:import('../utils/types').Categoria[]}} */
   state = {
     categorias: [],
@@ -39,8 +38,8 @@ class Categorias extends Component {
 
   /** @param {import('../utils/types').Categoria} item */
   _handleClick = item => {
-    this.props.navigation.navigate('Categoria', {
-      categoria: item.titulo,
+    this.props.navigation.navigate('ViajeStack', {
+      titulo: item.titulo,
     });
     this.props.dispatch({
       type: 'SET_CATEGORIA',
@@ -50,7 +49,7 @@ class Categorias extends Component {
     });
   };
   /** @param {import('../utils/types').Categoria} item */
-  keyExtractor = item => item.key;
+  keyExtractor = item => item.key.toString();
 
   renderListHeader = () => <Text style={styles.sectionTitle}>Cursos</Text>;
 
@@ -61,12 +60,15 @@ class Categorias extends Component {
   /** @param {import('react-native').ListRenderItemInfo<import('../utils/types').Categoria>} info*/
   renderItem = ({item}) => (
     <Buttom
-      style={{backgroundColor: item.color || Colors.primaryDark}}
+      style={{
+        backgroundColor: item.color || Colors.primaryDark,
+        position: 'relative',
+      }}
       onPress={() => {
         this._handleClick(item);
       }}>
       <ScalableText style={styles.title_boxes}>{item.titulo}</ScalableText>
-      <SvgUri style={styles.image} source={{uri: item.imagenLista}} />
+      <SvgUri style={styles.image} uri={item.imagenLista} />
     </Buttom>
   );
   render() {
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   statusBar: {
-    height: Dims.statusBarHeight,
+    height: Platform.OS === 'android' ? Dims.statusBarHeight : 0,
   },
   container: {
     paddingHorizontal: Dims.regularSpace,
@@ -120,15 +122,9 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Regular',
   },
   image: {
-    resizeMode: 'contain',
-    maxHeight: 80,
-    width: 110,
-    borderBottomRightRadius: 25,
-    borderTopRightRadius: 25,
-    flex: 0,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    resizeMode: 'cover',
+    width: 'auto',
+    height: 80,
   },
 });
 

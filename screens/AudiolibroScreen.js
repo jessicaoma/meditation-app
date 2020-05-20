@@ -9,29 +9,30 @@ const timer = 10000; // 10 sec
 
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
- *
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Audiolibro'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Audiolibro'>} route
  * @extends {Component<Props>}
  */
 export default class AudiolibroScreen extends Component {
-  /** @param {{navigation : import('react-navigation').NavigationScreenProp}} param*/
-  static navigationOptions = ({navigation}) => {
-    /** @type {import('../utils/types').Audiolibro} */
-    let audiolibro = navigation.getParam('audiolibro', {titulo: 'Audiolibro'});
-    return {title: audiolibro.titulo};
+  /** @param {Props} props*/
+  static navigationOptions = props => {
+    return {
+      title: (props.route.params?.audiolibro ?? {titulo: 'Audilibro'}).titulo,
+    };
   };
 
+  /** @param {Props} props*/
   constructor(props) {
     super(props);
-    /** @type {import('../utils/types').Audiolibro} */
-    this.audiolibro = props.navigation.getParam('audiolibro', {});
+    /** @type {import('../utils/types').Audiolibro } */
+    this.audiolibro = props.route.params.audiolibro;
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
-  /** @param {import('expo-av/build/AV').PlaybackStatus} status */
+  /** @param {import('expo-av/build/AV').AVPlaybackStatus} status */
   onEnd = status => {
     API.putDiarioAudiolibro(this.audiolibro.key, 0, enumStatus.done);
     this.props.navigation.goBack();
@@ -46,7 +47,7 @@ export default class AudiolibroScreen extends Component {
     );
   };
 
-  /** @param {import('expo-av/build/Video.types').ReadyForDisplayEvent} event*/
+  /** @param {import('expo-av/build/Video.types').VideoReadyForDisplayEvent} event*/
   onReady = event => {
     this.interval = setInterval(() => {
       this._callApi();

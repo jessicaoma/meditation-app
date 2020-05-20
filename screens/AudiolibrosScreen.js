@@ -6,6 +6,7 @@ import {
   FlatList,
   ActivityIndicator,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import BookListItem from '../components/BookListItem';
 import Dimensions from '../constants/Dimensions';
@@ -17,7 +18,11 @@ const widthItem = Dimensions.window.width - Dimensions.regularSpace * 2 - 0;
 
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @prop {import('../utils/types').Categoria} categoria
+ * @prop {import('../utils/types').Viaje} viaje
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Audiolibros'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Audiolibros'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
 export default class AudiolibrosScreen extends Component {
@@ -32,7 +37,7 @@ export default class AudiolibrosScreen extends Component {
   }
 
   componentDidMount() {
-    this.props.navigation.addListener('willFocus', () => {
+    this.props.navigation.addListener('focus', () => {
       this.refeshData();
     });
   }
@@ -81,7 +86,7 @@ export default class AudiolibrosScreen extends Component {
           data={this.state.audioLibros}
           renderItem={this._renderItem}
           ListEmptyComponent={this._renderEmtpy}
-          keyExtractor={item => item.key}
+          keyExtractor={item => item.key.toString()}
           ListHeaderComponent={this._renderListHeader}
           style={styles.container}
         />
@@ -93,7 +98,7 @@ export default class AudiolibrosScreen extends Component {
 const styles = StyleSheet.create({
   safe: {flex: 1, backgroundColor: 'white'},
   statusBar: {
-    height: Dimensions.statusBarHeight,
+    height: Platform.OS === 'android' ? Dimensions.statusBarHeight : 0,
   },
   container: {
     flex: 1,

@@ -3,24 +3,17 @@ import {
   StyleSheet,
   View,
   FlatList,
-  ScrollView,
   SafeAreaView,
   ActivityIndicator,
   TouchableOpacity,
-  Image
+  Image,
 } from 'react-native';
 import colors from '../constants/Colors';
-import HalfCover from '../components/HalfCover';
 import Dims from '../constants/Dimensions';
 import API, {user} from '../utils/API';
 import ScalableText from 'react-native-text';
+import {connect} from 'react-redux';
 
-/**
- * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
- */
-
-//TODO se consultara las emociones para sus data base, y se guardara en redux
 //TODO registrar seleccion
 const numColumns = 2;
 const width = (Dims.window.width - 40) / numColumns;
@@ -37,8 +30,8 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-1.png',
     headerH: 0.1,
     footerH: 0.35,
+    // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-1.gif'),
-    title: 'Alegría',
   },
   {
     imagenFondo:
@@ -49,8 +42,8 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-2.png',
     headerH: 0.1,
     footerH: 0.3,
+    // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-2.gif'),
-    title: 'Tristeza',
   },
   {
     imagenFondo:
@@ -61,8 +54,8 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-3.png',
     headerH: 0.35,
     footerH: 0.35,
+    // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-3.gif'),
-    title: 'Ira',
   },
   {
     imagenFondo:
@@ -73,28 +66,41 @@ const data = [
       'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-4.png',
     headerH: 0.45,
     footerH: 0.2,
+    // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-4.gif'),
-    title: 'Miedo',
   },
 ];
 
-/** @extends {Component<Props>} */
-export default class EmocionesScreen extends Component {
+/**
+ * @typedef Props
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Emociones'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Emociones'>} route
+ * @prop {string} emocionTime
+ * @prop {import('redux').Dispatch} [dispatch]
+ * @extends {Component<Props>}
+ */
+class EmocionesScreen extends Component {
   state = {
     emociones: [],
   };
+  constructor(props) {
+    super(props);
+    var now = new Date();
+    var check = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var emocionTime = new Date(props.emocionTime);
+    this.mustJump = check.getTime() <= emocionTime.getTime();
+  }
+
   componentDidMount = async () => {
-    /** @type {import('../utils/types').Emoción[]}*/
     let emociones = await API.getEmociones();
     emociones.forEach((emocion, index) => {
-      let {imagenFondo, header, footer, headerH, footerH, imagen, title} = data[index];
+      let {imagenFondo, header, footer, headerH, footerH, imagen} = data[index];
       emocion.imagenFondo = imagenFondo;
       emocion.imagen = imagen;
       emocion.header = header;
       emocion.footer = footer;
       emocion.headerH = headerH;
       emocion.footerH = footerH;
-      emocion.title = title;
     });
     this.setState({emociones});
   };
@@ -104,28 +110,41 @@ export default class EmocionesScreen extends Component {
    */
   _handleClick = item => {
     API.postRegistroEmocion(item.key, user);
-    this.props.navigation.navigate('Emocion', {
-      emocion: item,
+    let now = new Date();
+    this.props.dispatch({
+      type: 'SET_EMOCION',
+      payload: {
+        emocion: item,
+        emocionTime: new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate(),
+        ).toJSON(),
+      },
     });
+    // @ts-ignore
+    this.props.navigation.replace('Emocion');
   };
 
   /**
    * @param {import('react-native').ListRenderItemInfo<import('../utils/types').Emoción>} item
    */
   renderItem = ({item}) => (
-    
-    <TouchableOpacity onPress={() => {this._handleClick(item);}}>
+    <TouchableOpacity
+      onPress={() => {
+        this._handleClick(item);
+      }}>
       <View style={styles.carta}>
-          <Image
-            style={{
-              width: width - 12,
-              height: width - 12,
-              resizeMode: 'contain',
-            }}
-            source={item.imagen}
-          />
+        <Image
+          style={{
+            width: width - 12,
+            height: width - 12,
+            resizeMode: 'contain',
+          }}
+          source={item.imagen}
+        />
 
-        <ScalableText style={[styles.cartaTitulo]}>{item.title}</ScalableText>
+        <ScalableText style={[styles.cartaTitulo]}>{item.titulo}</ScalableText>
       </View>
     </TouchableOpacity>
   );
@@ -135,36 +154,54 @@ export default class EmocionesScreen extends Component {
   );
 
   render() {
-    return (
-      <SafeAreaView style={styles.safe}>
-        <ScrollView contentInsetAdjustmentBehavior="automatic">
-          <View style={styles.container}>
-            <FlatList
-              data={this.state.emociones}
-              renderItem={this.renderItem}
-              numColumns={numColumns}
-              ListEmptyComponent={this.renderListEmpty}
-              keyExtractor={item => item.key}
-            />
-            <ScalableText style={styles.suggestion}>
-              ¿Cómo te sientes hoy?{'\n'}{'\n'}
-              Llevando un registro de tus emociones podrás conocerte mejor.
-            </ScalableText>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    );
+    if (!this.mustJump) {
+      return (
+        <SafeAreaView style={styles.safe}>
+          <FlatList
+            data={this.state.emociones}
+            renderItem={this.renderItem}
+            numColumns={numColumns}
+            ListEmptyComponent={this.renderListEmpty}
+            keyExtractor={item => item.key}
+            ListFooterComponent={() => (
+              <View style={{paddingBottom: Dims.regularSpace}}>
+                <ScalableText style={styles.suggestion}>
+                  ¿Cómo te sientes hoy?{'\n'}
+                  {'\n'}
+                  Llevando un registro de tus emociones podrás conocerte mejor.
+                </ScalableText>
+              </View>
+            )}
+            style={styles.scroll}
+            ListHeaderComponent={() => (
+              <View style={{paddingTop: Dims.regularSpace}} />
+            )}
+          />
+        </SafeAreaView>
+      );
+    } else {
+      // @ts-ignore
+      this.props.navigation.replace('Emocion');
+      return <SafeAreaView style={styles.safe} />;
+    }
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    emocionTime: state.emocionTime,
+  };
+}
+
+export default connect(mapStateToProps)(EmocionesScreen);
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: Dims.regularSpace,
-  },
   safe: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  scroll: {
+    paddingHorizontal: Dims.regularSpace,
   },
   suggestion: {
     fontFamily: 'MyriadPro-Regular',
@@ -189,7 +226,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2.22,
     backgroundColor: colors.meditacion,
     height: height,
-    width: width-5,
+    width: width - 5,
     alignSelf: 'center',
     display: 'flex',
     flex: 1,
@@ -199,5 +236,6 @@ const styles = StyleSheet.create({
   cartaTitulo: {
     textAlign: 'center',
     color: 'white',
+    fontSize: 18,
   },
 });

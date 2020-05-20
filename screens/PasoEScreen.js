@@ -1,23 +1,25 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
-  ScrollView,
   Image,
+  ScrollView,
   SafeAreaView,
   TouchableOpacity,
   Platform,
   DeviceInfo,
+  BackHandler,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import API, {user} from '../utils/API';
 import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
-import {HeaderBackButton} from 'react-navigation';
+import {HeaderBackButton} from '@react-navigation/stack';
 import Next from '../constants/LogoButtonNext';
 import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
+import {useFocusEffect} from '@react-navigation/native';
 
 //const screenWidth = dimensions.window.width;
 const screenHeight =
@@ -25,132 +27,202 @@ const screenHeight =
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
 const proportion = dimensions.window.width / dimensions.window.height;
-const marginTopImage = 
-  (proportion > 0.5 ? 
-    (dimensions.window.width * 0.25 * -1) : 
-      (Platform.OS === 'android' ? (dimensions.window.width * 0.25 * -1)
-        : DeviceInfo.isIPhoneX_deprecated ? -20
-          : 0) );
+
 const heightButtonSig = dimensions.window.width * 0.14;
-//const topText = (proportion > 0.5 ? ('44%') : '60%');
+let pasoAnterio = {};
 
 /**
  * Paso Tipo(E): Cierre
- * @typedef {Object} ParamsNavigation
- * @prop {number} position
- * @prop {string} titulo
- *
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp<{params:ParamsNavigation}>} navigation
- * @prop {import('redux').Dispatch} dispatch
- * @prop {import('../utils/types').Viaje} viaje
  * @prop {import('../utils/types').Categoria} categoria
- *
- * @extends {Component<Props>}
+ * @prop {import('../utils/types').Viaje[]} viajes
+ * @prop {number} indexViaje
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'PasoE'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'PasoE'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
+ * @param {Props} props
  */
-class PasoEScreen extends Component {
-  static navigationOptions = {
-    header: null,
-  };
+function PasoEScreen(props) {
+  const {viajes, navigation} = props;
+  const {position, viajeIndex} = props.route.params;
+  const viaje = viajes[viajeIndex];
+  const paso = viaje.pasos[position];
+  const contenido = paso.contenidos[0];
+  const color = (props?.categoria ?? viaje).color;
+  pasoAnterio.tipo = viaje.pasos[position - 1]?.tipo ?? 0;
+  pasoAnterio.titulo = viaje.pasos[position - 1]?.titulo ?? '';
+  pasoAnterio.position = position - 1;
 
-  /** @param {Props} props */
-  constructor(props) {
-    super(props);
-    const {viaje} = props;
-    this.pasoIndex = props.navigation.state.params.position;
-    this.paso = viaje.pasos[this.pasoIndex];
+  React.useEffect(() => {
+    if (position === viaje.pasos.length - 1) {
+      API.putDiarioPaso(paso.key, enumStatus.done, user);
+      API.putDiarioViaje(viaje.key, enumStatus.done, user);
+    } else {
+      API.putDiarioPaso(paso.key, enumStatus.doing, user);
+    }
+  });
+
+  /**
+   * @param {import('../utils/types').Viaje} v
+   */
+  function determinarPaso(v) {
+    let posicion = 0;
+
+    if (v.estado === enumStatus.done || v.estado === enumStatus.todo) {
+      posicion = 0;
+    } else {
+      posicion = v.pasos.findIndex(
+        paso2 =>
+          paso2.estado === enumStatus.doing || paso2.estado === enumStatus.todo,
+      );
+    }
+    posicion = posicion < 0 ? 0 : posicion;
+    return posicion;
   }
 
-  componentDidMount = async () => {
-    // const {steps, position} = this.props.navigation.state.params;
-    // const paso = steps[position];
-    //API.putDiarioPaso(paso.key, enumStatus.doing, null, user);
-    if (this.pasoIndex === this.props.viaje.pasos.length - 1) {
-      API.putDiarioViaje(this.props.viaje.key, enumStatus.done, user);
-    }
-  };
-
-  _handleClose = () => {
-    const {viaje} = this.props;
-    this.props.navigation.pop(viaje.pasos.length);
-  };
-
-
-  nextStep = () => {
-    const {viaje} = this.props;
-    //API.putDiarioPaso(paso.key, enumStatus.done, null, user);
+  function _handleClose() {
     // @ts-ignore
-    if (this.pasoIndex === viaje.pasos.length - 1) {
-      this.props.navigation.pop(viaje.pasos.length);
+    navigation.popToTop();
+  }
+
+  function nextStep() {
+    if (position + 1 === viaje.pasos.length) {
+      //TODO salto al siguiente modulo o regresar a la categoria
+      if (viajeIndex + 1 === viajes.length) {
+        // @ts-ignore
+        navigation.navigate('Categorias');
+      } else {
+        let viaje2 = viajes[viajeIndex + 1];
+        let positionN = determinarPaso(viaje2);
+        let tipo = viaje2.pasos[positionN].tipo;
+        // @ts-ignore
+        navigation.popToTop();
+        // @ts-ignore
+        navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
+          position: positionN,
+          titulo: viaje2.pasos[positionN].titulo,
+          colorHeader: Colors.headers[color],
+          viajeIndex: viajeIndex + 1,
+        });
+      }
     } else {
-      const {tipo} = viaje.pasos[this.pasoIndex + 1];
-      this.props.navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
-        titulo: viaje.pasos[this.pasoIndex + 1].titulo,
-        position: this.pasoIndex + 1,
+      const {tipo} = viaje.pasos[position + 1];
+      API.putDiarioPaso(paso.key, enumStatus.done, user);
+      // @ts-ignore
+      navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
+        position: position + 1,
+        titulo: viaje.pasos[position + 1].titulo,
+        colorHeader: Colors.headers[color],
+        viajeIndex,
       });
     }
-  };
+  }
 
-  render() {
-    const contenido = this.paso.contenidos[0];
-    return (
-      <SafeAreaView
-        style={[styles.safe]}>
-        <Image
-          source={{uri: this.paso.imagenFondo}}
-          style={[styles.sliderImage]} />
-          <TouchableOpacity style={styles.close} onPress={() => { this._handleClose()}}>
-            <Ionicons name={'md-close'} size={25} color={'#fff'} />
-          </TouchableOpacity>
-          <View style={styles.headerBack}>
-            <HeaderBackButton
-              tintColor="white"
-              pressColorAndroid="transparent"
-              onPress={() => this.props.navigation.goBack()}
-              backTitleVisible={false}
-            />
-          </View>
-          <View style={styles.body}>
-             <View style={styles.bodyContainer}>
-
-              {contenido.titulo !== undefined && (
-                <ScalableText style={styles.headline}>
-                  {contenido.titulo || ''}
-                </ScalableText>
-              )}
-              
-              <ScalableText style={styles.paragraphBottom}>
-                {contenido.texto}
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        if (pasoAnterio < 0) {
+          navigation.goBack();
+        } else {
+          const states = navigation.dangerouslyGetState();
+          const anterior = states.routes[states.routes.length - 2];
+          if (anterior.name !== 'Categoria') {
+            navigation.goBack();
+          } else {
+            const {tipo, position: positionA, titulo} = pasoAnterio;
+            // @ts-ignore
+            navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
+              position: positionA,
+              titulo,
+              colorHeader: Colors.headers[color],
+              viajeIndex,
+            });
+          }
+        }
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [navigation, color, viajeIndex]),
+  );
+  let Pie = <></>;
+  if (position === viaje.pasos.length - 1) {
+    if (props.categoria !== undefined) {
+      Pie = (
+        <View style={styles.footer}>
+          <TouchableOpacity onPress={nextStep}>
+            <View style={styles.buttonSiguiente}>
+              <ScalableText style={styles.buttonLabel}>
+                {viajeIndex + 1 === viajes.length
+                  ? 'Ver otros cursos'
+                  : 'Siguiente módulo'}
               </ScalableText>
             </View>
-            {this.pasoIndex === this.props.viaje.pasos.length - 1 ? (
-              <View style={styles.footer}>
-                <TouchableOpacity onPress={this.nextStep}>
-                  <View style={styles.buttonSiguiente}>
-                    <ScalableText style={styles.buttonLabel}>
-                      Siguiente módulo
-                    </ScalableText>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <View style={styles.buttonNext}>
-                <TouchableOpacity onPress={this.nextStep}>
-                  <Next />
-                </TouchableOpacity>
-              </View>
-            )}
-          </View>
-
-      </SafeAreaView>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+  } else {
+    Pie = (
+      <View style={styles.buttonNext}>
+        <TouchableOpacity onPress={nextStep}>
+          <Next />
+        </TouchableOpacity>
+      </View>
     );
   }
+  return (
+    <SafeAreaView style={styles.safe}>
+      <Image source={{uri: paso.imagenFondo}} style={[styles.sliderImage]} />
+      <TouchableOpacity
+        style={styles.close}
+        onPress={() => {
+          _handleClose();
+        }}>
+        <Ionicons name={'md-close'} size={25} color={'#fff'} />
+      </TouchableOpacity>
+      <View style={styles.headerBack}>
+        <HeaderBackButton
+          tintColor="white"
+          pressColorAndroid="transparent"
+          onPress={() => navigation.goBack()}
+          labelVisible={false}
+        />
+      </View>
+      <View style={styles.body}>
+        <View style={styles.bodyContainer}>
+          <ScrollView style={styles.scroll}>
+            {contenido.titulo !== undefined && (
+              <ScalableText style={styles.headline}>
+                {"\n"}
+                {contenido.titulo}
+              </ScalableText>
+            )}
+            <ScalableText style={styles.paragraphBottom}>
+              {contenido.texto}
+              {"\n"}{"\n"}{"\n"}
+            </ScalableText>
+          </ScrollView>
+        </View>
+      </View>
+      {Pie}
+
+      
+    </SafeAreaView>
+  );
 }
 
+PasoEScreen.navigationOptions = {
+  header: () => null,
+  headerTransparent: true,
+};
+
 function mapStateToProps(state) {
+  const {categoria, viajes} = state;
   return {
-    viaje: state.viaje,
-    categoria: state.categoria,
+    viajes,
+    categoria,
   };
 }
 
@@ -167,22 +239,18 @@ const styles = StyleSheet.create({
   },
   sliderImage: {
     width: dimensions.screen.width,
-    height: dimensions.screen.width,
+    height: dimensions.screen.width * 0.8,
     resizeMode: 'contain',
     zIndex: 2,
-    marginTop: marginTopImage,
   },
   body: {
     display: 'flex',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    height: screenHeight + heightButtonSig,
-    marginTop: dimensions.window.width * 0.25 * -1,
+    marginBottom: screenHeight * 0.08
   },
-  bodyContainer: {
-
-  },
+  bodyContainer: {},
   headline: {
     fontFamily: 'Kiona',
     fontSize: dimensions.viajeHeadlineSize,
@@ -208,7 +276,8 @@ const styles = StyleSheet.create({
     marginBottom: screenHeight * 0.04,
     marginRight: dimensions.bigSpace,
   },
-  footer: { //Ultima pantalla 
+  footer: {
+    //Ultima pantalla
     marginBottom: screenHeight * 0.04,
     alignSelf: 'center',
     position: 'absolute',
@@ -221,7 +290,6 @@ const styles = StyleSheet.create({
     height: heightButtonSig,
     justifyContent: 'center',
     alignContent: 'center',
-    
   },
   buttonLabel: {
     color: 'white',
@@ -234,7 +302,7 @@ const styles = StyleSheet.create({
     top: dimensions.statusBarHeight,
     zIndex: 100,
     paddingHorizontal: 20,
-    paddingVertical: 10
+    paddingVertical: 10,
   },
 });
 

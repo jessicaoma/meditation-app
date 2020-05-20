@@ -4,25 +4,28 @@ import Player from '../player/Player';
 import {SafeAreaView} from 'react-native';
 
 /**
- * @typedef {object} Props
- * @prop {import('react-navigation').NavigationScreenProp} navigation
+ * @typedef Props
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Tutorial'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Tutorial'>} route
  * @extends {Component<Props>}
  */
 export default class TutorialScreen extends Component {
-  static navigationOptions = ({navigation}) => {
-    /** @type {import("../utils/types").Video} */
-    let video = navigation.getParam('video', {titulo: 'Turotial'});
-    return {title: video.titulo, headerBackTitle: null};
+  /** @param {Props} props*/
+  static navigationOptions = ({route}) => {
+    return {
+      title: (route.params?.video ?? {titulo: 'Turotial'}).titulo,
+    };
   };
 
-  /** @param {import('expo-av/build/AV').PlaybackStatus} status */
+  /** @param {import('expo-av/build/AV').AVPlaybackStatus} status */
   onEnd = status => {
     this.props.navigation.goBack();
   };
 
   render() {
     /** @type {import("../utils/types").Video} */
-    let video = this.props.navigation.getParam('video', {});
+    // @ts-ignore
+    let video = this.props.route.params?.video ?? {};
     return (
       <SafeAreaView style={{flex: 1}}>
         <ScreenBg

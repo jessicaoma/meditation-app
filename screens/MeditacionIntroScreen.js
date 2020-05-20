@@ -5,26 +5,30 @@ import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import Player from '../player/Player';
-//TODO comportamiento al finalizar video
+
 /**
  * @typedef Props
- * @prop {import('react-navigation').NavigationScreenProp<{param:{meditacion:import('../utils/types').Meditación}}>} navigation
+ * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'MeditacionIntro'>} navigation
+ * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'MeditacionIntro'>} route
  * @extends {Component<Props>}
  */
 export default class MeditacionIntroScreen extends Component {
-  static navigationOptions = ({navigation}) => {
-    /** @type {import('../utils/types').Meditación} */
-    let meditacion = navigation.getParam('meditacion', {titulo: 'Meditación'});
-    return {title: meditacion.titulo, headerBackTitle: null};
+  static navigationOptions = ({route}) => {
+    return {
+      title: (route.params?.meditacion ?? {titulo: 'Meditación'}).titulo,
+    };
   };
 
+  /** @param {Props} props */
   constructor(props) {
     super(props);
     /** @type {import('../utils/types').Meditación} */
-    this.meditacion = props.navigation.getParam('meditacion', {});
+    // @ts-ignore
+    this.meditacion = props.route.params?.meditacion ?? {};
   }
 
   goPlayerMeditar = _ => {
+    // @ts-ignore
     this.props.navigation.replace('Meditacion', {
       meditacion: this.meditacion,
     });
