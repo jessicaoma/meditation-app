@@ -19,7 +19,6 @@ import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
 import {useFocusEffect} from '@react-navigation/native';
 import {HeaderBackButton} from '@react-navigation/stack';
-import {existScreenInNavigationStacks} from '../utils/convert';
 
 const screenHeight =
   dimensions.screen.height -
@@ -44,10 +43,10 @@ let pasoAnterio = {};
  */
 function PasoCScreen(props) {
   const {viajes, navigation} = props;
-  const {position, viajeIndex} = props.route.params;
+  const {position, viajeIndex, colorHeader} = props.route.params;
   const viaje = viajes[viajeIndex];
   const paso = viaje.pasos[position];
-  const color = (props?.categoria ?? viaje).color;
+  //const color = (props?.categoria ?? viaje).color;
   pasoAnterio.tipo = viaje.pasos[position - 1].tipo;
   pasoAnterio.titulo = viaje.pasos[position - 1].titulo;
   pasoAnterio.position = position - 1;
@@ -63,7 +62,7 @@ function PasoCScreen(props) {
     navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
       position: position + 1,
       titulo: viaje.pasos[position + 1].titulo,
-      colorHeader: Colors.headers[color],
+      colorHeader,
       viajeIndex,
     });
   }
@@ -81,7 +80,7 @@ function PasoCScreen(props) {
           navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
             position: positionA,
             titulo,
-            colorHeader: Colors.headers[color],
+            colorHeader,
             viajeIndex,
           });
         }
@@ -90,7 +89,7 @@ function PasoCScreen(props) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation, color, viajeIndex]),
+    }, [navigation, colorHeader, viajeIndex]),
   );
 
   return (
@@ -181,8 +180,7 @@ PasoCScreen.navigationOptions = ({navigation, route}) => {
             navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
               position,
               titulo,
-              colorHeader:
-                Colors.headers[(props?.categoria ?? props.viaje).color],
+              colorHeader: route.params.colorHeader,
               viajeIndex: route.params.viajeIndex,
             });
           }

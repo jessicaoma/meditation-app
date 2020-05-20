@@ -3,8 +3,8 @@ import {dateToStrYYYYMMDD} from './convert';
 import {envRemoto} from './types';
 
 const BASE_API = envRemoto
-  //? 'http://okotesting-001.azurewebsites.net/api/'
-  ? 'http://50.63.13.57:501/api/'
+  ? //? 'http://okotesting-001.azurewebsites.net/api/'
+    'http://50.63.13.57:501/api/'
   : 'http://localhost:5000/api/';
 
 class Api {

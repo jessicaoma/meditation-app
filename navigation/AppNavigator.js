@@ -41,26 +41,26 @@ const Stack = createStackNavigator();
  * @prop {string} PasoA.titulo
  * @prop {number} PasoA.position
  * @prop {number} PasoA.viajeIndex
- * @prop {number} PasoA.colorHeader
+ * @prop {string} PasoA.colorHeader
  * @prop {Object} PasoB
  * @prop {string} PasoB.titulo
  * @prop {number} PasoB.position
- * @prop {number} PasoB.colorHeader
+ * @prop {string} PasoB.colorHeader
  * @prop {number} PasoB.viajeIndex
  * @prop {Object} PasoC
  * @prop {string} PasoC.titulo
  * @prop {number} PasoC.position
- * @prop {number} PasoC.colorHeader
+ * @prop {string} PasoC.colorHeader
  * @prop {number} PasoC.viajeIndex
  * @prop {Object} PasoD
  * @prop {string} PasoD.titulo
  * @prop {number} PasoD.position
- * @prop {number} PasoD.colorHeader
+ * @prop {string} PasoD.colorHeader
  * @prop {number} PasoD.viajeIndex
  * @prop {Object} PasoE
  * @prop {string} PasoE.titulo
  * @prop {number} PasoE.position
- * @prop {number} PasoE.colorHeader
+ * @prop {string} PasoE.colorHeader
  * @prop {number} PasoE.viajeIndex
  * Perfil
  * @prop {Object} PerfilDrawer

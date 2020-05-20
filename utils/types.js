@@ -10,7 +10,9 @@
  * @prop {string} [media] Ruta del video introductorio
  * @prop {string} [imagenFondo] Fondo de la categoria
  * @prop {string} color Color caracteristico de la categoria
+ * @prop {string} colorCabecera Color de la cabecera para los pasos de Recomendaciones y Ejercico
  * @prop {string} imagenLista Imagen para la lista
+ * @prop {string} textoIntroductorio  Texto a colocar mientras se cargan los módulos
  * @prop {Viaje[]} [Viajes] Lista de viajes
  *
  * @typedef {Object} Viaje
@@ -19,6 +21,7 @@
  * @prop {string} categoriaId Categoria padre
  * @prop {string} imagenFondo Fondo del viaje
  * @prop {string} [color] Color caracteristico de la categoria padre
+ * @prop {string} [colorCabecera] Color de la cabecera para los pasos de Recomendaciones y Ejercico
  * @prop {enumStatus} estado Estatus del viaje
  * @prop {boolean} isFree Es gratuito o no
  * @prop {Paso[]} [pasos] Lista de pasos en el viajes

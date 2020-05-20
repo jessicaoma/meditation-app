@@ -38,7 +38,7 @@ let pasoAnterio = {};
  */
 function PasoAScreen(props) {
   const {viajes, navigation} = props;
-  const {position, viajeIndex} = props.route.params;
+  const {position, viajeIndex, colorHeader} = props.route.params;
   const viaje = viajes[viajeIndex];
   const paso = viaje.pasos[position];
   const contenido = paso.contenidos[0];
@@ -70,7 +70,7 @@ function PasoAScreen(props) {
     navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
       position: position + 1,
       titulo: viaje.pasos[position + 1].titulo,
-      colorHeader: Colors.headers[color],
+      colorHeader,
       viajeIndex,
     });
   }
@@ -81,9 +81,9 @@ function PasoAScreen(props) {
         if (pasoAnterio < 0) {
           if (props.categoria !== undefined) {
             // @ts-ignore
-            props.navigation.popToTop();
+            navigation.popToTop();
           } else {
-            props.navigation.goBack();
+            navigation.goBack();
           }
         } else {
           const states = navigation.dangerouslyGetState();
@@ -96,7 +96,7 @@ function PasoAScreen(props) {
             navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
               position: positionA,
               titulo,
-              colorHeader: Colors.headers[color],
+              colorHeader,
               viajeIndex,
             });
           }
@@ -106,7 +106,7 @@ function PasoAScreen(props) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [props.categoria, props.navigation, navigation, color, viajeIndex]),
+    }, [props.categoria, navigation, colorHeader, viajeIndex]),
   );
 
   return (
@@ -146,7 +146,7 @@ function PasoAScreen(props) {
                     {
                       position: position - 1,
                       titulo: viaje.pasos[position - 1].titulo,
-                      colorHeader: Colors.headers[color],
+                      colorHeader,
                       viajeIndex,
                     },
                   );

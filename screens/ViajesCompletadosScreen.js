@@ -57,6 +57,8 @@ class ViajeCompletadosScreen extends Component {
     this.props.navigation.navigate('PasoA', {
       position: 0,
       viajeIndex: 0,
+      titulo: viaje.pasos[0].titulo,
+      colorHeader: viaje.colorCabecera,
     });
   };
 

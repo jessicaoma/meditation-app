@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Platform,
-  DeviceInfo,
+  //DeviceInfo,
   BackHandler,
 } from 'react-native';
 import Colors from '../constants/Colors';
@@ -16,7 +16,7 @@ import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import {HeaderBackButton} from '@react-navigation/stack';
-import Next from '../constants/LogoButtonNext';
+//import Next from '../constants/LogoButtonNext';
 import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
 import {useFocusEffect} from '@react-navigation/native';
@@ -26,7 +26,7 @@ const screenHeight =
   dimensions.screen.height -
   (Platform.OS === 'android' ? dimensions.statusBarHeight : 0);
 
-const proportion = dimensions.window.width / dimensions.window.height;
+//const proportion = dimensions.window.width / dimensions.window.height;
 
 const heightButtonSig = dimensions.window.width * 0.14;
 let pasoAnterio = {};
@@ -44,11 +44,11 @@ let pasoAnterio = {};
  */
 function PasoEScreen(props) {
   const {viajes, navigation} = props;
-  const {position, viajeIndex} = props.route.params;
+  const {position, viajeIndex, colorHeader} = props.route.params;
   const viaje = viajes[viajeIndex];
   const paso = viaje.pasos[position];
   const contenido = paso.contenidos[0];
-  const color = (props?.categoria ?? viaje).color;
+  //const color = (props?.categoria ?? viaje).color;
   pasoAnterio.tipo = viaje.pasos[position - 1]?.tipo ?? 0;
   pasoAnterio.titulo = viaje.pasos[position - 1]?.titulo ?? '';
   pasoAnterio.position = position - 1;
@@ -86,26 +86,25 @@ function PasoEScreen(props) {
   }
 
   function nextStep() {
-    if (position + 1 === viaje.pasos.length) {
-      //TODO salto al siguiente modulo o regresar a la categoria
-      if (viajeIndex + 1 === viajes.length) {
-        // @ts-ignore
-        navigation.navigate('Categorias');
-      } else {
-        let viaje2 = viajes[viajeIndex + 1];
-        let positionN = determinarPaso(viaje2);
-        let tipo = viaje2.pasos[positionN].tipo;
-        // @ts-ignore
-        navigation.popToTop();
-        // @ts-ignore
-        navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
-          position: positionN,
-          titulo: viaje2.pasos[positionN].titulo,
-          colorHeader: Colors.headers[color],
-          viajeIndex: viajeIndex + 1,
-        });
-      }
+    //if (position + 1 === viaje.pasos.length) {
+    if (viajeIndex + 1 === viajes.length) {
+      // @ts-ignore
+      navigation.navigate('Categorias');
     } else {
+      let viaje2 = viajes[viajeIndex + 1];
+      let positionN = determinarPaso(viaje2);
+      let tipo = viaje2.pasos[positionN].tipo;
+      // @ts-ignore
+      navigation.popToTop();
+      // @ts-ignore
+      navigation.navigate(`Paso${String.fromCharCode(65 + tipo)}`, {
+        position: positionN,
+        titulo: viaje2.pasos[positionN].titulo,
+        colorHeader,
+        viajeIndex: viajeIndex + 1,
+      });
+    }
+    /*} else {
       const {tipo} = viaje.pasos[position + 1];
       API.putDiarioPaso(paso.key, enumStatus.done, user);
       // @ts-ignore
@@ -115,7 +114,7 @@ function PasoEScreen(props) {
         colorHeader: Colors.headers[color],
         viajeIndex,
       });
-    }
+    }*/
   }
 
   useFocusEffect(
@@ -134,7 +133,7 @@ function PasoEScreen(props) {
             navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
               position: positionA,
               titulo,
-              colorHeader: Colors.headers[color],
+              colorHeader,
               viajeIndex,
             });
           }
@@ -144,26 +143,26 @@ function PasoEScreen(props) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation, color, viajeIndex]),
+    }, [colorHeader, navigation, viajeIndex]),
   );
   let Pie = <></>;
-  if (position === viaje.pasos.length - 1) {
-    if (props.categoria !== undefined) {
-      Pie = (
-        <View style={styles.footer}>
-          <TouchableOpacity onPress={nextStep}>
-            <View style={styles.buttonSiguiente}>
-              <ScalableText style={styles.buttonLabel}>
-                {viajeIndex + 1 === viajes.length
-                  ? 'Ver otros cursos'
-                  : 'Siguiente módulo'}
-              </ScalableText>
-            </View>
-          </TouchableOpacity>
-        </View>
-      );
-    }
-  } else {
+  //if (position + 1 === viaje.pasos.length) {
+  if (props.categoria !== undefined) {
+    Pie = (
+      <View style={styles.footer}>
+        <TouchableOpacity onPress={nextStep}>
+          <View style={styles.buttonSiguiente}>
+            <ScalableText style={styles.buttonLabel}>
+              {viajeIndex + 1 === viajes.length
+                ? 'Ver otros cursos'
+                : 'Siguiente módulo'}
+            </ScalableText>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+  /*} else {
     Pie = (
       <View style={styles.buttonNext}>
         <TouchableOpacity onPress={nextStep}>
@@ -171,7 +170,7 @@ function PasoEScreen(props) {
         </TouchableOpacity>
       </View>
     );
-  }
+  }*/
   return (
     <SafeAreaView style={styles.safe}>
       <Image source={{uri: paso.imagenFondo}} style={[styles.sliderImage]} />
@@ -192,23 +191,23 @@ function PasoEScreen(props) {
       </View>
       <View style={styles.body}>
         <View style={styles.bodyContainer}>
-          <ScrollView style={styles.scroll}>
+          <ScrollView /*style={styles.scroll}*/>
             {contenido.titulo !== undefined && (
               <ScalableText style={styles.headline}>
-                {"\n"}
+                {'\n'}
                 {contenido.titulo}
               </ScalableText>
             )}
             <ScalableText style={styles.paragraphBottom}>
               {contenido.texto}
-              {"\n"}{"\n"}{"\n"}
+              {'\n'}
+              {'\n'}
+              {'\n'}
             </ScalableText>
           </ScrollView>
         </View>
       </View>
       {Pie}
-
-      
     </SafeAreaView>
   );
 }
@@ -248,7 +247,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: screenHeight * 0.08
+    marginBottom: screenHeight * 0.08,
   },
   bodyContainer: {},
   headline: {

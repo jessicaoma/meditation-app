@@ -103,7 +103,7 @@ class Categoria extends Component {
       viajeIndex: index,
       position,
       titulo: viaje.pasos[position].titulo,
-      colorHeader: colors.headers[this.categoria.color],
+      colorHeader: this.categoria.colorCabecera,
     });
   };
   //TODO reiniciar el video al llegar al final
@@ -118,7 +118,7 @@ class Categoria extends Component {
         {!this.state.isLoading && (
           <View>
             <ScalableText style={styles.textoViajes}>
-              En este curso vas a recorrer {this.state.viajes.length + ' '} secciones.
+              {this.categoria.textoIntroductorio}
             </ScalableText>
           </View>
         )}

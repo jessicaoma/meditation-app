@@ -37,7 +37,7 @@ let pasoAnterio = {};
  */
 function PasoBScreen(props) {
   const {viajes, navigation} = props;
-  const {position, viajeIndex} = props.route.params;
+  const {position, viajeIndex, colorHeader} = props.route.params;
   const viaje = viajes[viajeIndex];
   const paso = viaje.pasos[position];
   const [show, setShow] = React.useState(true);
@@ -64,7 +64,7 @@ function PasoBScreen(props) {
     navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
       position: position + 1,
       titulo: viaje.pasos[position + 1].titulo,
-      colorHeader: Colors.headers[color],
+      colorHeader,
       viajeIndex,
     });
   }
@@ -92,7 +92,7 @@ function PasoBScreen(props) {
           navigation.replace(`Paso${String.fromCharCode(65 + tipo)}`, {
             position: positionA,
             titulo,
-            colorHeader: Colors.headers[color],
+            colorHeader,
             viajeIndex,
           });
         }
@@ -101,7 +101,7 @@ function PasoBScreen(props) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation, color, viajeIndex]),
+    }, [navigation, viajeIndex, colorHeader]),
   );
 
   return (
