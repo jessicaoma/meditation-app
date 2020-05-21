@@ -4,6 +4,7 @@ import Colors from '../constants/Colors';
 import Logo from '../components/Logo';
 import Dimensions from '../constants/Dimensions';
 import {connect} from 'react-redux';
+import * as Actions from '../reducers/types';
 
 const aspectRadioImage = 320 / 236;
 //TODO revisar como mejorar la experiencia (posiblemente se deba eliminar esta pantalla)
@@ -20,7 +21,7 @@ const aspectRadioImage = 320 / 236;
 function SplashScreen({navigation, usuario, angelTime, emocionTime, dispatch}) {
   if (angelTime === undefined) {
     dispatch({
-      type: 'SET_ANGEL',
+      type: Actions.SET_ANGEL,
       payload: {
         angel: undefined,
         angelTime: new Date(0).toJSON(),
@@ -29,7 +30,7 @@ function SplashScreen({navigation, usuario, angelTime, emocionTime, dispatch}) {
   }
   if (emocionTime === undefined) {
     dispatch({
-      type: 'SET_EMOCION',
+      type: Actions.SET_EMOCION,
       payload: {
         emocion: undefined,
         emocionTime: new Date(0).toJSON(),
@@ -39,7 +40,7 @@ function SplashScreen({navigation, usuario, angelTime, emocionTime, dispatch}) {
   setTimeout(() => {
     if (usuario === undefined) {
       // @ts-ignore
-      navigation.replace('Login');
+      navigation.navigate('Login');
     } else {
       // @ts-ignore
       navigation.replace('App');

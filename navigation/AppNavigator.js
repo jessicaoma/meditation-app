@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import MainNavigator from './MainNavigator';
 import SplashScreen from '../screens/SplashScreen';
 import LoginScreen from '../screens/LoginScreen';
 import CrearCuentaScreen from '../screens/CrearCuentaScreen';
+import { connect } from 'react-redux';
 
 const Stack = createStackNavigator();
 
@@ -79,17 +80,44 @@ const Stack = createStackNavigator();
  * @prop {Object} Angel
  */
 
-export default function AppNavigator() {
+function AppNavigator(props) {
+  const [logged, setLogged] = React.useState(false);
+
+  React.useEffect(() => {
+    const isLogged = () => {
+      if (props.usuario !== undefined) {
+        setLogged(true);
+      } else {
+        setLogged(false);
+      }
+    };
+    isLogged();
+  }, [props.usuario]);
+
   return (
     <Stack.Navigator
       screenOptions={{
+        ...TransitionPresets.SlideFromRightIOS,
         header: () => null,
         headerTransparent: true,
       }}>
-      <Stack.Screen name="Splash" component={SplashScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="CrearCuenta" component={CrearCuentaScreen} />
-      <Stack.Screen name="App" component={MainNavigator} />
+      {!logged ? (
+        <>
+          <Stack.Screen name="Splash" component={SplashScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="CrearCuenta" component={CrearCuentaScreen} />
+        </>
+      ) : (
+        <Stack.Screen name="App" component={MainNavigator} />
+      )}
     </Stack.Navigator>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    usuario: state.usuario,
+  };
+};
+
+export default connect(mapStateToProps)(AppNavigator);

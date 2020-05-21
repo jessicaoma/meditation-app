@@ -7,27 +7,67 @@ import {
   SafeAreaView,
   ScrollView,
   Platform,
+  Alert,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
 import Logo from '../components/Logo';
 import Dims from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
+import API from '../utils/API';
+import {SAVE_USER} from '../reducers/types';
+import {connect} from 'react-redux';
 //TODO hacer todo el manejo
 /**
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Login'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Login'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
-export default class LoginScreen extends Component {
-  handleLogin = () => {
-    this.props.navigation.navigate('App');
+class LoginScreen extends Component {
+  state = {
+    email: '',
+    pass: '',
+  };
+
+  handleLogin = async () => {
+    let error = '';
+    if (this.state.email.length === 0) {
+      error += 'Debes ingresar su correo\n';
+    }
+    if (this.state.pass.length === 0) {
+      error += 'Debes ingresar su constraseña\n';
+    }
+    if (error !== '') {
+      Alert.alert('Datos Inválidos', error);
+      return;
+    }
+    const datos = {
+      email: this.state.email.trim(),
+      password: this.state.pass,
+      rememberme: true,
+    };
+    const result = await API.loginUser(datos);
+    if (result.token !== undefined) {
+      this.props.dispatch({
+        type: SAVE_USER,
+        payload: {usuario: result},
+      });
+    } else {
+      Alert.alert('create fail');
+      this.props.navigation.navigate('Login');
+    }
+    //this.props.navigation.navigate('App');
   };
   handleCrearCuenta = () => {
     this.props.navigation.navigate('CrearCuenta');
   };
+  emailRef = {};
   passwordRef = {};
+  refEmail = input => {
+    this.emailRef = input;
+  };
   refPassword = input => {
     this.passwordRef = input;
   };
@@ -54,11 +94,20 @@ export default class LoginScreen extends Component {
                   type="text"
                   onSubmitEditing={this.goPassword}
                   blurOnSubmit={false}
+                  inputRef={this.refEmail}
+                  onChange={email => {
+                    this.setState({email});
+                  }}
+                  value={this.state.email}
                 />
                 <InputLogin
                   placeholder="Contraseña"
                   type="password"
                   inputRef={this.refPassword}
+                  onChange={pass => {
+                    this.setState({pass});
+                  }}
+                  value={this.state.pass}
                 />
                 <TouchableOpacity
                   onPress={this.handleLogin}
@@ -167,3 +216,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
   },
 });
+
+export default connect(null)(LoginScreen);

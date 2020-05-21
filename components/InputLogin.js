@@ -16,8 +16,9 @@ import {Ionicons} from '@expo/vector-icons';
  * @prop {'text' | 'password'} [type] Type of the input text
  * @prop {(e: import('react-native').NativeSyntheticEvent<import('react-native').TextInputChangeEventData>) => void} [onChange] Callback to event change
  * @prop {boolean} [blurOnSubmit] If true, the text field will blur when submitted. The default value is true.
- * @prop {(e: import('react-native').NativeSyntheticEvent<import('react-native').TextInputSubmitEditingEventData>) => void} [onSubmitEditing] Callback that is called when the text input's submit button is pressed.
+ * @prop {(text: string) => void} [onSubmitEditing] Callback that is called when the text input's submit button is pressed.
  * @prop {(input: import('react-native').TextInput) => void} [inputRef] Reference of the Textinput
+ * @prop {string} [value] Text value for the Textinput
  */
 
 /**
@@ -49,6 +50,7 @@ export default class InputLogin extends Component {
       blurOnSubmit,
       onSubmitEditing,
       inputRef,
+      value,
     } = this.props;
     return (
       <View style={styles.container}>
@@ -58,11 +60,12 @@ export default class InputLogin extends Component {
             placeholder={placeholder}
             placeholderTextColor="#ABA0B5"
             secureTextEntry={false}
-            onChange={onChange}
+            onChangeText={onChange}
             returnKeyType={'next'}
             blurOnSubmit={blurOnSubmit}
             onSubmitEditing={onSubmitEditing}
             ref={inputRef}
+            value={value}
           />
         ) : (
           <>
@@ -71,10 +74,11 @@ export default class InputLogin extends Component {
               placeholder={placeholder}
               placeholderTextColor="#ABA0B5"
               secureTextEntry={this.state.password}
-              onChange={onChange}
+              onChangeText={onChange}
               blurOnSubmit={blurOnSubmit}
               onSubmitEditing={onSubmitEditing}
               ref={inputRef}
+              value={value}
             />
             <TouchableOpacity onPress={this._changeIcon}>
               <Ionicons

@@ -24,6 +24,7 @@ import ScreenBg from '../components/screenBg';
 import colors from '../constants/Colors';
 import {enumLoNuevo} from '../utils/types';
 import {getBrightness} from '../utils/convert';
+import {SET_CATEGORIA} from '../reducers/types';
 
 let colorLetra = '#fff';
 
@@ -152,7 +153,7 @@ class Home extends Component {
 
         onpress = () => {
           this.props.dispatch({
-            type: 'SET_CATEGORIA',
+            type: SET_CATEGORIA,
             payload: {
               categoria: item.categoria,
             },
@@ -211,7 +212,7 @@ class Home extends Component {
         tipo = 'Curso';
         onpress = () => {
           this.props.dispatch({
-            type: 'SET_CATEGORIA',
+            type: SET_CATEGORIA,
             payload: {
               categoria: item.categoria,
             },
