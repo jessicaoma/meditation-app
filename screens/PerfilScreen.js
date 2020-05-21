@@ -11,6 +11,8 @@ import Flecha from '../constants/LogoArrowRight';
 import {SvgUri} from 'react-native-svg';
 import ScalableText from 'react-native-text';
 import TabBarIcon from '../components/TabBarIcon';
+import {connect} from 'react-redux';
+import {SAVE_USER} from '../reducers/types';
 
 const deviceWidth = Dimensions.window.width;
 const headerHeight = deviceWidth * 0.6667 + 10;
@@ -19,12 +21,21 @@ const headerHeight = deviceWidth * 0.6667 + 10;
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Perfil'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Perfil'>} route
+ * @prop {import('../utils/types').Usuario} usuario
  * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
-export default class PerfilScreen extends Component {
+class PerfilScreen extends Component {
   navigateToScreen = route => () => {
     this.props.navigation.navigate(route);
+  };
+
+  logout = () => {
+    //this.props.navigation.goBack();
+    this.props.dispatch({
+      type: SAVE_USER,
+      payload: {usuario: undefined},
+    });
   };
 
   render() {
@@ -32,7 +43,7 @@ export default class PerfilScreen extends Component {
       <SafeAreaView style={styles.safe}>
         <ScrollView style={styles.scrollview}>
           <View style={styles.container}>
-            <View>
+            <View style={{minHeight: headerHeight}}>
               <SvgUri
                 width={deviceWidth}
                 height={headerHeight}
@@ -41,7 +52,8 @@ export default class PerfilScreen extends Component {
               />
               <View style={styles.headerContainer}>
                 <ScalableText style={styles.headerText}>
-                  Evelin Giraldo
+                  {/* Evelin Giraldo */}
+                  {this.props?.usuario?.name ?? ''}
                 </ScalableText>
               </View>
             </View>
@@ -73,9 +85,17 @@ export default class PerfilScreen extends Component {
                 </ScalableText>
                 <Flecha />
               </View>
+              <View style={[styles.itemStyle]}>
+                <TabBarIcon name={'MisMeditaciones'} />
+                <ScalableText style={[styles.labelStyle]} onPress={this.logout}>
+                  Cerrar Sesión
+                </ScalableText>
+              </View>
             </View>
             <View style={styles.footer}>
-              <TouchableOpacity onPress={this.navigateToScreen('Suscribete')} style={{}}>
+              <TouchableOpacity
+                onPress={this.navigateToScreen('Suscribete')}
+                style={{}}>
                 <SvgUri
                   width={deviceWidth}
                   height={deviceWidth * 0.27}
@@ -93,6 +113,12 @@ export default class PerfilScreen extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    usuario: state.usuario,
+  };
+};
+
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
@@ -103,7 +129,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   container: {
-    minHeight: Dimensions.window.height - (deviceWidth * 0.257),
+    minHeight: Dimensions.window.height - deviceWidth * 0.257,
     justifyContent: 'space-between',
     flexDirection: 'column',
   },
@@ -151,7 +177,6 @@ const styles = StyleSheet.create({
   },
   footer: {
     //resizeMode: 'cover',
-
   },
   footerText: {
     fontFamily: 'Kiona',
@@ -166,3 +191,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default connect(mapStateToProps)(PerfilScreen);

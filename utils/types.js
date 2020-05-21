@@ -127,10 +127,11 @@
  * @prop {enumDiario} tipo
  * @prop {string} texto
  * @prop {string} color
- * @prop {Array<Registro>} preguntas
- * @typedef {Object} Registro
- * @prop {string} pregunta
- * @prop {string} respuesta
+ *
+ * @typedef {Object} Usuario
+ * @prop {string} name
+ * @prop {string} email
+ * @prop {string} token
  */
 
 /**

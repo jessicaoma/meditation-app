@@ -13,6 +13,7 @@ import Dims from '../constants/Dimensions';
 import API, {user} from '../utils/API';
 import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
+import {SET_EMOCION} from '../reducers/types';
 
 //TODO registrar seleccion
 const numColumns = 2;
@@ -112,7 +113,7 @@ class EmocionesScreen extends Component {
     API.postRegistroEmocion(item.key, user);
     let now = new Date();
     this.props.dispatch({
-      type: 'SET_EMOCION',
+      type: SET_EMOCION,
       payload: {
         emocion: item,
         emocionTime: new Date(

@@ -1,7 +1,11 @@
+import * as Actions from './types';
+
 // Initial state of the store
 const initialState = {
   categoria: undefined,
   viajes: [],
+  usuario: undefined,
+  //TODO Usuario {name: string, token:string, email: string}
 };
 
 // Function to handle actions and update the state of the store.
@@ -15,33 +19,39 @@ export const reducer = (state = initialState, action) => {
   const {type, payload} = action;
 
   switch (type) {
-    case 'SET_CATEGORIA': {
+    case Actions.SET_CATEGORIA: {
       return {
         ...state,
         categoria: payload.categoria,
       };
     }
-    case 'SET_MODULOS': {
+    case Actions.SET_MODULOS: {
       return {
         ...state,
         viajes: payload.viajes,
       };
     }
-    case 'SET_ANGEL': {
+    case Actions.SET_ANGEL: {
       return {
         ...state,
         angel: payload.angel,
         angelTime: payload.angelTime,
       };
     }
-    case 'SET_EMOCION': {
+    case Actions.SET_EMOCION: {
       return {
         ...state,
         emocion: payload.emocion,
         emocionTime: payload.emocionTime,
       };
     }
+    case Actions.SAVE_USER: {
+      return {
+        ...state,
+        usuario: payload.usuario,
+      };
+    }
+    default:
+      return state;
   }
-
-  return state;
 };

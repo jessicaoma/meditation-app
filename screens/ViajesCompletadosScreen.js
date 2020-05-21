@@ -15,6 +15,7 @@ import API, {user} from '../utils/API';
 import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
 import {HeaderBackButton} from '@react-navigation/stack';
+import {SET_MODULOS, SET_CATEGORIA} from '../reducers/types';
 
 /**
  * @typedef Props
@@ -43,13 +44,13 @@ class ViajeCompletadosScreen extends Component {
   /** @param {import("../utils/types").Viaje} viaje*/
   _handleClick = viaje => {
     this.props.dispatch({
-      type: 'SET_CATEGORIA',
+      type: SET_CATEGORIA,
       payload: {
         categoria: undefined,
       },
     });
     this.props.dispatch({
-      type: 'SET_MODULOS',
+      type: SET_MODULOS,
       payload: {
         viajes: [viaje],
       },
