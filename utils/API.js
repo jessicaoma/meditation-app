@@ -259,11 +259,23 @@ class Api {
       },
       body: JSON.stringify(userData),
     });
-    if (query.status >= 300) {
+    if (query.status >= 200 && query.status < 300) {
       return await query.json();
-    } else {
-      return await query.text();
     }
+    return {};
+  }
+  async loginUser(userData) {
+    const query = await fetch(`${BASE_API}Account/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
+    if (query.status >= 200 && query.status < 300) {
+      return await query.json();
+    }
+    return {};
   }
 }
 

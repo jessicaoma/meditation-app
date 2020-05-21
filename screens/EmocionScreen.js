@@ -9,8 +9,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Colors from '../constants/Colors';
-import LogoCompartir from '../constants/LogoCompartir';
-import LogoDescargar from '../constants/LogoDescargar';
+//import LogoCompartir from '../constants/LogoCompartir';
+//import LogoDescargar from '../constants/LogoDescargar';
 import dimensions from '../constants/Dimensions';
 import ScreenBg from '../components/screenBg';
 import ScalableText from 'react-native-text';

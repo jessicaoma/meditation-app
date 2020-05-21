@@ -15,15 +15,18 @@ import InputLogin from '../components/InputLogin';
 import Dims from '../constants/Dimensions';
 import ScreenBg from '../components/screenBg';
 import API from '../utils/API';
+import {connect} from 'react-redux';
+import {SAVE_USER} from '../reducers/types';
 
 //TODO hacer todo el manejo
 /**
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'CrearCuenta'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'CrearCuenta'>} route
+ * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
-export default class CrearCuentaScreen extends Component {
+class CrearCuentaScreen extends Component {
   state = {
     name: '',
     email: '',
@@ -42,16 +45,24 @@ export default class CrearCuentaScreen extends Component {
   };
 
   handleLogin = async () => {
-    if (
-      this.state.name.trim().length === 0 ||
-      !this.checkEmail() ||
-      !this.checkPass() ||
-      this.state.pass !== this.state.pass2
-    ) {
-      this.setState({error: 'datos invalidos'});
+    let error = '';
+    if (this.state.name.trim().length === 0) {
+      error += 'Debes ingresar un nombre\n';
+    }
+    if (!this.checkEmail()) {
+      error += 'Debes ingresar un corre valido\n';
+    }
+    if (!this.checkPass()) {
+      error +=
+        'La contraseña debe cumplir:\n\tTener una mayúscula\n\tTener una minúscula\n\tTener un numero\n\tTener un Signo\n';
+    }
+    if (this.state.pass.trim() !== this.state.pass2.trim()) {
+      error += 'La confirmación debe ser igual a la Contraseña';
+    }
+    if (error !== '') {
+      Alert.alert('Datos Inválidos', error);
       return;
     }
-
     const datos = {
       FirstName: this.state.name.trim(),
       Email: this.state.email.trim(),
@@ -59,13 +70,15 @@ export default class CrearCuentaScreen extends Component {
       ConfirmPassword: this.state.pass2,
     };
     const result = await API.registerUser(datos);
-    if (typeof result === 'string') {
-      Alert.alert('create success');
+    if (result.token !== undefined) {
+      this.props.dispatch({
+        type: SAVE_USER,
+        payload: {usuario: result},
+      });
     } else {
       Alert.alert('create fail');
+      this.props.navigation.navigate('Login');
     }
-
-    this.props.navigation.navigate('App');
   };
   nameRef = {};
   emailRef = {};
@@ -241,3 +254,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
 });
+
+export default connect(null)(CrearCuentaScreen);

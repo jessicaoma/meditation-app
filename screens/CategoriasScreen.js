@@ -15,6 +15,7 @@ import API from '../utils/API';
 import ScalableText from 'react-native-text';
 import {SvgUri} from 'react-native-svg';
 import {connect} from 'react-redux';
+import {SET_CATEGORIA} from '../reducers/types';
 
 /**
  * @typedef Props
@@ -42,7 +43,7 @@ class Categorias extends Component {
       titulo: item.titulo,
     });
     this.props.dispatch({
-      type: 'SET_CATEGORIA',
+      type: SET_CATEGORIA,
       payload: {
         categoria: item,
       },

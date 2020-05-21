@@ -15,6 +15,7 @@ import API from '../utils/API';
 import {SvgUri} from 'react-native-svg';
 import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
+import {SET_ANGEL} from '../reducers/types';
 
 //TODO registrar seleccion
 const numColumns = 2;
@@ -58,7 +59,7 @@ class AngelCartasScreen extends Component {
   _handleClick = item => {
     let now = new Date();
     this.props.dispatch({
-      type: 'SET_ANGEL',
+      type: SET_ANGEL,
       payload: {
         angel: item,
         angelTime: new Date(

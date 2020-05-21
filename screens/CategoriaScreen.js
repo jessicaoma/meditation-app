@@ -16,6 +16,7 @@ import ScalableText from 'react-native-text';
 import {HeaderBackButton} from '@react-navigation/stack';
 import {connect} from 'react-redux';
 import colors from '../constants/Colors';
+import {SET_MODULOS} from '../reducers/types';
 
 /**
  * @typedef Props
@@ -61,7 +62,7 @@ class Categoria extends Component {
       const viajes = await API.getViajesCategoria(this.categoria.key, user);
       this.setState({viajes, isLoading: false});
       this.props.dispatch({
-        type: 'SET_MODULOS',
+        type: SET_MODULOS,
         payload: {
           viajes,
         },
