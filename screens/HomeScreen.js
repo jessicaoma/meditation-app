@@ -290,7 +290,7 @@ class Home extends Component {
           <ScreenBg
             // @ts-ignore
             source={require('../assets/images/bg-inicio.png')}
-            styleImage={{resizeMode: 'repeat'}}
+            styleImage={{resizeMode: 'contain'}}
             styleView={styles.scrollView}
             color="#fff">
             <Cover
