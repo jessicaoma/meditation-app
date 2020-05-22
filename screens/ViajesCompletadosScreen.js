@@ -79,7 +79,7 @@ class ViajeCompletadosScreen extends Component {
           <View style={styles.listItem}>
             <View style={[styles.itemNumber, {borderColor: item.color}]}>
               <ScalableText style={styles.itemNumberText}>
-                {index + 1}.
+              
               </ScalableText>
             </View>
             <View style={styles.infoSect}>
@@ -92,6 +92,13 @@ class ViajeCompletadosScreen extends Component {
                 <View style={styles.statusIcon}>
                   <LogoCursoDone color={item.color} style={styles.statusIcon} />
                 </View>
+              </View>
+              <View
+                style={[
+                  styles.tiempoWrap,
+                  {backgroundColor: item.color},
+                ]}>
+                <ScalableText style={styles.tiempo}>{item.duracion}min</ScalableText>
               </View>
             </View>
           </View>
@@ -229,6 +236,25 @@ const styles = StyleSheet.create({
     marginTop: -3,
     position: 'absolute',
     right: 0,
+  },
+  tiempoWrap: {
+    backgroundColor: '#ddd',
+    borderRadius: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    maxWidth: 60,
+    display: 'flex',
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  tiempo: {
+    fontSize: 11,
+    letterSpacing: 0.69,
+    lineHeight: 11,
+    color: '#333',
+    fontFamily: 'MyriadPro-Regular',
   },
 });
 

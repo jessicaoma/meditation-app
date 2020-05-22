@@ -122,10 +122,7 @@ class Categoria extends Component {
         {!this.state.isLoading && (
           <View>
             <ScalableText style={styles.textoViajes}>
-              {/*this.categoria.textoIntroductorio*/}
-              En dosis pequeñas, la preocupación, el estrés y la ansiedad pueden
-              ser fuerzas positivas en nuestra vida, sin embargo investigaciones
-              demuestran que vivimos demasiado estresados y ansiosos.
+              {this.categoria.textoIntroductorio}
             </ScalableText>
           </View>
         )}
@@ -205,8 +202,7 @@ class Categoria extends Component {
 
             <View>
               <ScalableText style={styles.explicacion}>
-                Frena los impactos negativos de la ansiedad y el estrés en tu
-                vida.
+                {item.descripcion}
               </ScalableText>
             </View>
             <View
@@ -214,7 +210,7 @@ class Categoria extends Component {
                 styles.tiempoWrap,
                 {backgroundColor: this.categoria.color},
               ]}>
-              <ScalableText style={styles.tiempo}>99min</ScalableText>
+              <ScalableText style={styles.tiempo}>{item.duracion}min</ScalableText>
             </View>
           </View>
         </View>
@@ -228,9 +224,7 @@ class Categoria extends Component {
     ) : (
       <View>
         <ScalableText style={styles.textoVacio}>
-          En dosis pequeñas, la preocupación, el estrés y la ansiedad pueden ser
-          fuerzas positivas en nuestra vida, sin embargo investigaciones
-          demuestran que vivimos demasiado estresados y ansiosos.
+          {this.categoria.textoIntroductorio}
         </ScalableText>
       </View>
     );
@@ -239,6 +233,7 @@ class Categoria extends Component {
   keyExtractor = item => item.key;
 
   render() {
+
     return (
       <SafeAreaView style={styles.safe}>
         <ScreenBg source={{uri: this.categoria.imagenFondo}} color={'#fff'}>

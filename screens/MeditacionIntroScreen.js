@@ -87,7 +87,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  video: {},
+  video: {
+    borderRadius: 10,
+  },
   containBG: {},
   container: {
     width: '100%',

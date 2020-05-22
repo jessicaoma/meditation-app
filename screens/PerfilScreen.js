@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
+  Platform
 } from 'react-native';
 import Dimensions from '../constants/Dimensions';
 import Flecha from '../constants/LogoArrowRight';
@@ -16,7 +17,7 @@ import {SAVE_USER} from '../reducers/types';
 
 const deviceWidth = Dimensions.window.width;
 const headerHeight = deviceWidth * 0.6667 + 10;
-
+const minHeightContainer = (Platform.OS === 'android' ? Dimensions.window.height - deviceWidth * 0.267 + 30 : Dimensions.window.height - deviceWidth * 0.33);
 /**
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Perfil'>} navigation
@@ -86,7 +87,7 @@ class PerfilScreen extends Component {
                 <Flecha />
               </View>
               <View style={[styles.itemStyle]}>
-                <TabBarIcon name={'MisMeditaciones'} />
+                <TabBarIcon name={'Salir'} />
                 <ScalableText style={[styles.labelStyle]} onPress={this.logout}>
                   Cerrar Sesión
                 </ScalableText>
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   container: {
-    minHeight: Dimensions.window.height - deviceWidth * 0.257,
+    minHeight: minHeightContainer,
     justifyContent: 'space-between',
     flexDirection: 'column',
   },

@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     color: Colors.textoViaje,
     letterSpacing: -0.5,
-    marginBottom: 10,
+    marginBottom: 5,
     marginTop: 25,
   },
   container2: {
