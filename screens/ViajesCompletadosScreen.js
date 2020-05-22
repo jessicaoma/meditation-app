@@ -6,9 +6,8 @@ import {
   SafeAreaView,
   Image,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
-import ItemBubble from '../components/ItemBubble';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
@@ -18,7 +17,6 @@ import {connect} from 'react-redux';
 import {HeaderBackButton} from '@react-navigation/stack';
 import LogoCursoDone from '../constants/LogoCursoDone';
 import {SET_MODULOS, SET_CATEGORIA} from '../reducers/types';
-
 
 /**
  * @typedef Props
@@ -74,20 +72,30 @@ class ViajeCompletadosScreen extends Component {
           paddingHorizontal: Dimensions.regularSpace,
           paddingTop: index === 0 ? Dimensions.regularSpace : 0,
         }}>
-        <TouchableOpacity onPress={() => { this._goViaje(index); }}>
-        <View style={styles.listItem}>
-          <View style={[styles.itemNumber, {borderColor: item.color}]}>
-            <ScalableText style={styles.itemNumberText}>{index + 1}.</ScalableText>
-          </View>
-          <View style={styles.infoSect}>
-                <View style={styles.tituloSection}>
-                    <View><ScalableText style={styles.titulo}>{item.titulo}</ScalableText></View>
-                    <View style={styles.statusIcon}><LogoCursoDone color={item.color} style={styles.statusIcon} /></View>
+        <TouchableOpacity
+          onPress={() => {
+            this._handleClick(item);
+          }}>
+          <View style={styles.listItem}>
+            <View style={[styles.itemNumber, {borderColor: item.color}]}>
+              <ScalableText style={styles.itemNumberText}>
+                {index + 1}.
+              </ScalableText>
+            </View>
+            <View style={styles.infoSect}>
+              <View style={styles.tituloSection}>
+                <View>
+                  <ScalableText style={styles.titulo}>
+                    {item.titulo}
+                  </ScalableText>
                 </View>
+                <View style={styles.statusIcon}>
+                  <LogoCursoDone color={item.color} style={styles.statusIcon} />
+                </View>
+              </View>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
-
+        </TouchableOpacity>
       </View>
     );
   };
@@ -196,7 +204,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#85787B',
   },
-  
+
   tituloSection: {
     display: 'flex',
     flexDirection: 'row',
@@ -211,16 +219,16 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: '#85787B',
     letterSpacing: 1.06,
-    flex: 0.8, 
+    flex: 0.8,
     flexWrap: 'wrap',
     paddingRight: 28,
     marginTop: 5,
   },
-  statusIcon:{
+  statusIcon: {
     marginLeft: 5,
     marginTop: -3,
     position: 'absolute',
-    right: 0
+    right: 0,
   },
 });
 
