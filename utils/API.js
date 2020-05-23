@@ -107,14 +107,6 @@ class Api {
   }
 
   /** Consulta las meditaciones
-   * @return {Promise<import("./types").Emoción[]>} */
-  async getEmociones() {
-    const query = await fetch(`${BASE_API}emociones`);
-    const data = await query.json();
-    return data;
-  }
-
-  /** Consulta las meditaciones
    * @param {string} itemId Id de la meditacion
    * @param {number} progreso duracion de la meditacion
    * @param {string} usuario usuario activo
@@ -223,57 +215,168 @@ class Api {
     });
   }
 
+  /** Consulta las emociones
+   * @param {string} token Token de Autorización
+   * @return {Promise<import("./types").Emoción[] | {errors : Object}>} */
+  async getEmociones(token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}emociones`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status === 200) {
+      return await query.json();
+    } else {
+      return {
+        errors: {
+          message: 'Error Interno',
+        },
+      };
+    }
+  }
+
   /**
    * @param {number} emocionId Id de la emocion
-   * @param {string} usuario usuario activo
+   * @param {string} token Token de autorización
+   * @return {Promise<{errors?: Object, emocionId?: number, fecha?: string}>}
    */
-  async postRegistroEmocion(emocionId, usuario = user) {
-    await fetch(`${BASE_API}emociones/registro`, {
-      method: 'POST',
-      body: JSON.stringify({
-        emocionId,
-        fecha: dateToStrYYYYMMDD(new Date()),
-        usuario,
-      }),
-      headers: {'Content-Type': 'application/json'},
-    });
+  async postRegistroEmocion(emocionId, token) {
+    let query;
+    const date = dateToStrYYYYMMDD(new Date());
+    try {
+      query = await fetch(`${BASE_API}emociones/registro`, {
+        method: 'POST',
+        body: JSON.stringify({
+          emocionId,
+          fecha: date,
+        }),
+        headers: {
+          Authorization: `Bearer  ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status >= 200 && query.status < 500) {
+      if (query.status < 400) {
+        //TODO este metodo debe retornar los datos del metodo /emociones/registro/{fecha}
+        //return await query.json();
+        return {
+          emocionId,
+          fecha: date,
+        };
+      } else {
+        return {
+          errors: {
+            message: 'Datos inválidos',
+          },
+        };
+      }
+    }
   }
   /**
-   * @param {string} usuario usuario activo
-   * @return {Promise<import('./types').MisEmociones>} Registros
+   * @param {string} token Token de autorización
+   * @return {Promise<import('./types').MisEmociones | {errors : Object} >} Registros
    */
-  async getRegistroEmociones(usuario = user) {
-    const myHeaders = new Headers({from: usuario});
-    const query = await fetch(`${BASE_API}emociones/registro`, {
-      headers: myHeaders,
-    });
-    const data = await query.json();
-    return data;
+  async getRegistroEmociones(token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}emociones/registro`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status >= 200 && query.status < 500) {
+      if (query.status < 400) {
+        //TODO este metodo debe retornar los datos del metodo /emociones/registro/{fecha}
+        //return await query.json();
+        return await query.json();
+      } else {
+        return {
+          errors: {
+            message: 'Datos inválidos',
+          },
+        };
+      }
+    }
   }
 
   async registerUser(userData) {
-    const query = await fetch(`${BASE_API}Account/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    });
-    if (query.status >= 200 && query.status < 300) {
-      return await query.json();
+    let query;
+    try {
+      query = await fetch(`${BASE_API}Account/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status >= 200 && query.status < 500) {
+      if (query.status < 400) {
+        return await query.json();
+      } else {
+        //TODO agregar los mensajes del API
+        return {
+          errors: {
+            message: 'Datos inválidos',
+          },
+        };
+      }
     }
     return {};
   }
   async loginUser(userData) {
-    const query = await fetch(`${BASE_API}Account/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    });
-    if (query.status >= 200 && query.status < 300) {
-      return await query.json();
+    let query;
+    try {
+      query = await fetch(`${BASE_API}Account/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status >= 200 && query.status < 500) {
+      if (query.status < 400) {
+        return await query.json();
+      } else {
+        //TODO agregar los mensajes del API
+        return {
+          errors: {
+            message: 'Datos inválidos',
+          },
+        };
+      }
     }
     return {};
   }
@@ -281,5 +384,5 @@ class Api {
 
 export default new Api();
 
-// TODO cambiar forma de obtener el correo del usuario 'example@example.com'
+// TODO proximo a eliminar
 export const user = 'asdf';

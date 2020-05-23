@@ -78,9 +78,7 @@ class ViajeCompletadosScreen extends Component {
           }}>
           <View style={styles.listItem}>
             <View style={[styles.itemNumber, {borderColor: item.color}]}>
-              <ScalableText style={styles.itemNumberText}>
-              
-              </ScalableText>
+              <ScalableText style={styles.itemNumberText} />
             </View>
             <View style={styles.infoSect}>
               <View style={styles.tituloSection}>
@@ -93,12 +91,10 @@ class ViajeCompletadosScreen extends Component {
                   <LogoCursoDone color={item.color} style={styles.statusIcon} />
                 </View>
               </View>
-              <View
-                style={[
-                  styles.tiempoWrap,
-                  {backgroundColor: item.color},
-                ]}>
-                <ScalableText style={styles.tiempo}>{item.duracion}min</ScalableText>
+              <View style={[styles.tiempoWrap, {backgroundColor: item.color}]}>
+                <ScalableText style={styles.tiempo}>
+                  {item.duracion}min
+                </ScalableText>
               </View>
             </View>
           </View>

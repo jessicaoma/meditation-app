@@ -25,6 +25,8 @@
  * @prop {enumStatus} estado Estatus del viaje
  * @prop {boolean} isFree Es gratuito o no
  * @prop {Paso[]} [pasos] Lista de pasos en el viajes
+ * @prop {string} [duracion] Duracion del modulo
+ * @prop {string} [descripcion] Descripción del modulo
  *
  * @typedef Paso
  * @prop {number} key

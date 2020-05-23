@@ -5,7 +5,6 @@ const initialState = {
   categoria: undefined,
   viajes: [],
   usuario: undefined,
-  //TODO Usuario {name: string, token:string, email: string}
 };
 
 // Function to handle actions and update the state of the store.
@@ -49,6 +48,14 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         usuario: payload.usuario,
+      };
+    }
+    case Actions.DELETE_USER: {
+      return {
+        ...state,
+        usuario: undefined,
+        emocion: undefined,
+        emocionTime: new Date(0).toJSON(),
       };
     }
     default:
