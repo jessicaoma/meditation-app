@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
-import API, {user} from '../utils/API';
+import API from '../utils/API';
 import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
 import {SET_EMOCION} from '../reducers/types';
@@ -78,6 +78,7 @@ const data = [
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Emociones'>} route
  * @prop {string} emocionTime
  * @prop {import('redux').Dispatch} [dispatch]
+ * @prop {import('../utils/types').Usuario} usuario
  * @extends {Component<Props>}
  */
 class EmocionesScreen extends Component {
@@ -88,43 +89,57 @@ class EmocionesScreen extends Component {
     super(props);
     var now = new Date();
     var check = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    var emocionTime = new Date(props.emocionTime);
+    var s = props.emocionTime.split('-');
+    var emocionTime = new Date(s[0], s[1] - 1, s[2]);
     this.mustJump = check.getTime() <= emocionTime.getTime();
   }
 
   componentDidMount = async () => {
-    let emociones = await API.getEmociones();
-    emociones.forEach((emocion, index) => {
-      let {imagenFondo, header, footer, headerH, footerH, imagen} = data[index];
-      emocion.imagenFondo = imagenFondo;
-      emocion.imagen = imagen;
-      emocion.header = header;
-      emocion.footer = footer;
-      emocion.headerH = headerH;
-      emocion.footerH = footerH;
-    });
-    this.setState({emociones});
+    if (this.mustJump) {
+      return;
+    }
+    let emociones = await API.getEmociones(this.props.usuario.token);
+    if (emociones.errors) {
+      //TODO Preguntar que mostrar
+      console.error('error al consultar emociones');
+      console.error(emociones.errors);
+    } else {
+      emociones.forEach((emocion, index) => {
+        let {imagenFondo, header, footer, headerH, footerH, imagen} = data[
+          index
+        ];
+        emocion.imagenFondo = imagenFondo;
+        emocion.imagen = imagen;
+        emocion.header = header;
+        emocion.footer = footer;
+        emocion.headerH = headerH;
+        emocion.footerH = footerH;
+      });
+      this.setState({emociones});
+    }
   };
 
   /**
    * @param {import('../utils/types').Emoción} item
    */
   _handleClick = item => {
-    API.postRegistroEmocion(item.key, user);
-    let now = new Date();
-    this.props.dispatch({
-      type: SET_EMOCION,
-      payload: {
-        emocion: item,
-        emocionTime: new Date(
-          now.getFullYear(),
-          now.getMonth(),
-          now.getDate(),
-        ).toJSON(),
-      },
+    API.postRegistroEmocion(item.key, this.props.usuario.token).then(result => {
+      if (result.errors) {
+        //TODO Preguntar que mostrar
+        console.error('error al consultar emociones');
+        console.error(result.errors);
+      } else {
+        this.props.dispatch({
+          type: SET_EMOCION,
+          payload: {
+            emocion: item,
+            emocionTime: result.fecha,
+          },
+        });
+        // @ts-ignore
+        this.props.navigation.replace('Emocion');
+      }
     });
-    // @ts-ignore
-    this.props.navigation.replace('Emocion');
   };
 
   /**
@@ -191,6 +206,7 @@ class EmocionesScreen extends Component {
 function mapStateToProps(state) {
   return {
     emocionTime: state.emocionTime,
+    usuario: state.usuario,
   };
 }
 

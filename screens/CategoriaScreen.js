@@ -210,7 +210,9 @@ class Categoria extends Component {
                 styles.tiempoWrap,
                 {backgroundColor: this.categoria.color},
               ]}>
-              <ScalableText style={styles.tiempo}>{item.duracion}min</ScalableText>
+              <ScalableText style={styles.tiempo}>
+                {item.duracion}min
+              </ScalableText>
             </View>
           </View>
         </View>
@@ -233,7 +235,6 @@ class Categoria extends Component {
   keyExtractor = item => item.key;
 
   render() {
-
     return (
       <SafeAreaView style={styles.safe}>
         <ScreenBg source={{uri: this.categoria.imagenFondo}} color={'#fff'}>

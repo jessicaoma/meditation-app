@@ -19,7 +19,6 @@ import {SAVE_USER} from '../reducers/types';
 import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
 
-//TODO hacer todo el manejo
 /**
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Login'>} navigation
@@ -52,17 +51,18 @@ class LoginScreen extends Component {
       rememberme: true,
     };
     const result = await API.loginUser(datos);
-    if (result.token !== undefined) {
+    console.log(result)
+
+    if (result.errors === undefined) {
       this.props.dispatch({
         type: SAVE_USER,
         payload: {usuario: result},
       });
     } else {
-      /*Alert.alert('create fail');*/
-      this.setState({error});
-      this.props.navigation.navigate('Login');
+      if (result.errors.network)
+        Alert.alert('Login fail', result.errors.network);
+      else Alert.alert('Login fail', result.errors.message);
     }
-    //this.props.navigation.navigate('App');
   };
   handleCrearCuenta = () => {
     this.props.navigation.navigate('CrearCuenta');

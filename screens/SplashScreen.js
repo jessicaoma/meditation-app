@@ -7,13 +7,12 @@ import {connect} from 'react-redux';
 import * as Actions from '../reducers/types';
 
 const aspectRadioImage = 320 / 236;
-//TODO revisar como mejorar la experiencia (posiblemente se deba eliminar esta pantalla)
 /**
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Splash'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Splash'>} route
  * @prop {import('redux').Dispatch} [dispatch]
- * @prop {string} usuario
+ * @prop {import('../utils/types').Usuario} usuario
  * @prop {string} angelTime
  * @prop {string} emocionTime
  * @param {Props} props
@@ -43,7 +42,7 @@ function SplashScreen({navigation, usuario, angelTime, emocionTime, dispatch}) {
       navigation.navigate('Login');
     } else {
       // @ts-ignore
-      navigation.replace('App');
+      //navigation.replace('App');
     }
   }, 1000);
   return (

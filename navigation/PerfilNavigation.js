@@ -48,11 +48,6 @@ export default function PerfilNavigation() {
         component={MisMeditacionesScreen}
         options={MisMeditacionesScreen.navigationOptions}
       />
-      <Stack.Screen
-        name="Salir"
-        component={MisMeditacionesScreen}
-        options={MisMeditacionesScreen.navigationOptions}
-      />
     </Stack.Navigator>
   );
 }

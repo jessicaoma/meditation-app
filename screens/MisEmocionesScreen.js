@@ -19,14 +19,16 @@ import LogoEmocion3 from '../constants/LogoEmocion3';
 import LogoEmocion4 from '../constants/LogoEmocion4';
 import API from '../utils/API';
 import ScalableText from 'react-native-text';
+import {connect} from 'react-redux';
 
 /**
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'MisEmociones'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'MisEmociones'>} route
+ * @prop {import('../utils/types').Usuario} usuario
  * @extends {Component<Props>}
  */
-export default class MisEmocionesScreen extends Component {
+class MisEmocionesScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Mis Emociones',
   });
@@ -66,31 +68,8 @@ export default class MisEmocionesScreen extends Component {
     });
   };
 
-  /*onPressMensual = () => {
-    this.setState({
-      emocionesData: this.mes, //[14, 7, 4, 4],
-      title: 'Mensual',
-      yAxis: [
-        {
-          value: 0,
-          label: '0',
-        },
-        {
-          value: 15,
-          label: '15',
-        },
-        {
-          value: 30,
-          label: '30',
-        },
-      ],
-      dias: 30,
-    });
-  };*/
-
   componentDidMount = async () => {
-    const registros = await API.getRegistroEmociones();
-    //this.mes = registros.mes;
+    const registros = await API.getRegistroEmociones(this.props.usuario.token);
     this.semana = registros.semana;
     this.mensaje = registros.mensaje;
     this.onPressSemanal();
@@ -201,6 +180,12 @@ export default class MisEmocionesScreen extends Component {
       </SafeAreaView>
     );
   }
+}
+
+function mapStateToProps(state) {
+  return {
+    usuario: state.usuario,
+  };
 }
 
 const styles = StyleSheet.create({
@@ -316,3 +301,5 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+export default connect(mapStateToProps)(MisEmocionesScreen);
