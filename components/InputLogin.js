@@ -4,7 +4,6 @@ import {View, TextInput, StyleSheet, TouchableOpacity} from 'react-native';
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import {Ionicons} from '@expo/vector-icons';
-
 /**
  * @typedef State
  * @property {'md-eye' | 'md-eye-off'} icon Icon to show in the input

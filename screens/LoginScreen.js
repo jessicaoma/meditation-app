@@ -17,6 +17,8 @@ import ScalableText from 'react-native-text';
 import API from '../utils/API';
 import {SAVE_USER} from '../reducers/types';
 import {connect} from 'react-redux';
+import {Ionicons} from '@expo/vector-icons';
+
 //TODO hacer todo el manejo
 /**
  * @typedef Props
@@ -34,13 +36,14 @@ class LoginScreen extends Component {
   handleLogin = async () => {
     let error = '';
     if (this.state.email.length === 0) {
-      error += 'Debes ingresar su correo\n';
+      error += 'Debes ingresar tu correo\n';
     }
     if (this.state.pass.length === 0) {
-      error += 'Debes ingresar su constraseña\n';
+      error += 'Debes ingresar tu constraseña\n';
     }
     if (error !== '') {
-      Alert.alert('Datos Inválidos', error);
+      /*Alert.alert('Datos Inválidos', error);*/
+      this.setState({error});
       return;
     }
     const datos = {
@@ -55,7 +58,8 @@ class LoginScreen extends Component {
         payload: {usuario: result},
       });
     } else {
-      Alert.alert('create fail');
+      /*Alert.alert('create fail');*/
+      this.setState({error});
       this.props.navigation.navigate('Login');
     }
     //this.props.navigation.navigate('App');
@@ -74,6 +78,8 @@ class LoginScreen extends Component {
   goPassword = () => {
     this.passwordRef.focus();
   };
+
+
   render() {
     return (
       <SafeAreaView style={styles.safe}>
@@ -88,9 +94,25 @@ class LoginScreen extends Component {
               </ScalableText>
             </View>
             <View style={styles.container}>
+
+              {this.state.error && (
+                  <>
+                  <View style={[styles.errorContainer]}>
+                    <Ionicons
+                      name="md-alert"
+                      size={25}
+                      style={{color:'#efbfba',marginRight:10,}}/>
+                      <ScalableText style={styles.errorTexto}>
+                        {this.state.error}
+                      </ScalableText>
+                    </View>
+                  </>
+                )
+              }
+
               <View style={styles.full}>
                 <InputLogin
-                  placeholder="Correo"
+                  placeholder="Correo electrónico"
                   type="text"
                   onSubmitEditing={this.goPassword}
                   blurOnSubmit={false}
@@ -215,6 +237,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 25,
   },
+  errorContainer: {
+    flex: 0,
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%'
+  },
+  errorTexto: {
+    fontFamily: 'MyriadPro-Semibold',
+    color: '#ABA0B5',
+    fontSize: 12,
+    lineHeight: 13,
+  }
 });
 
 export default connect(null)(LoginScreen);

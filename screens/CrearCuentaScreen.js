@@ -17,6 +17,8 @@ import ScreenBg from '../components/screenBg';
 import API from '../utils/API';
 import {connect} from 'react-redux';
 import {SAVE_USER} from '../reducers/types';
+import {Ionicons} from '@expo/vector-icons';
+import ScalableText from 'react-native-text';
 
 //TODO hacer todo el manejo
 /**
@@ -50,17 +52,18 @@ class CrearCuentaScreen extends Component {
       error += 'Debes ingresar un nombre\n';
     }
     if (!this.checkEmail()) {
-      error += 'Debes ingresar un corre valido\n';
+      error += 'Debes ingresar un correo valido\n';
     }
     if (!this.checkPass()) {
       error +=
-        'La contraseña debe cumplir:\n\tTener una mayúscula\n\tTener una minúscula\n\tTener un numero\n\tTener un Signo\n';
+        'La contraseña debe tener una mayúscula, una minúscula, un número y un signo\n';
     }
     if (this.state.pass.trim() !== this.state.pass2.trim()) {
       error += 'La confirmación debe ser igual a la Contraseña';
     }
     if (error !== '') {
-      Alert.alert('Datos Inválidos', error);
+      /*Alert.alert('Datos Inválidos', error);*/
+      this.setState({error});
       return;
     }
     const datos = {
@@ -76,7 +79,8 @@ class CrearCuentaScreen extends Component {
         payload: {usuario: result},
       });
     } else {
-      Alert.alert('create fail');
+      /*Alert.alert('create fail');*/
+      this.setState({error});
       this.props.navigation.navigate('Login');
     }
   };
@@ -125,6 +129,22 @@ class CrearCuentaScreen extends Component {
                 </Text>
               </View>
               <View style={styles.full}>
+
+                {this.state.error && (
+                    <>
+                    <View style={[styles.errorContainer]}>
+                      <Ionicons
+                        name="md-alert"
+                        size={25}
+                        style={{color:'#efbfba',marginRight:10,}}/>
+                        <ScalableText style={styles.errorTexto}>
+                          {this.state.error}
+                        </ScalableText>
+                      </View>
+                    </>
+                  )
+                }
+               
                 <InputLogin
                   placeholder="Nombre"
                   type="text"
@@ -167,7 +187,6 @@ class CrearCuentaScreen extends Component {
                   }}
                   value={this.state.pass2}
                 />
-                <Text>{this.state.error}</Text>
               </View>
               <View>
                 <TouchableOpacity
@@ -253,6 +272,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 0,
   },
+  errorContainer: {
+    flex: 0,
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%'
+  },
+  errorTexto: {
+    fontFamily: 'MyriadPro-Semibold',
+    color: '#ABA0B5',
+    fontSize: 12,
+    lineHeight: 13,
+  }
 });
 
 export default connect(null)(CrearCuentaScreen);
