@@ -80,6 +80,7 @@ class CrearCuentaScreen extends Component {
       });
     } else {
       /*Alert.alert('create fail');*/
+      error = 'Error al crear cuenta';
       this.setState({error});
       this.props.navigation.navigate('Login');
     }
@@ -276,7 +277,9 @@ const styles = StyleSheet.create({
     flex: 0,
     display: 'flex',
     flexDirection: 'row',
-    width: '100%'
+    width: '100%',
+    paddingHorizontal: 20,
+    marginBottom: 10
   },
   errorTexto: {
     fontFamily: 'MyriadPro-Semibold',

@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   itemsContainer: {
     width: '100%',
-    marginBottom: 30,
+    marginBottom: 15,
   },
   itemStyle: {
     flexDirection: 'row',

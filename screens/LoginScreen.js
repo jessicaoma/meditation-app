@@ -59,9 +59,13 @@ class LoginScreen extends Component {
         payload: {usuario: result},
       });
     } else {
-      if (result.errors.network)
-        Alert.alert('Login fail', result.errors.network);
-      else Alert.alert('Login fail', result.errors.message);
+      if (result.errors.network){
+        error = result.errors.network
+        this.setState({error});
+      }else{
+        error = result.errors.message
+        this.setState({error});
+      }
     }
   };
   handleCrearCuenta = () => {
@@ -101,7 +105,7 @@ class LoginScreen extends Component {
                     <Ionicons
                       name="md-alert"
                       size={25}
-                      style={{color:'#efbfba',marginRight:10,}}/>
+                      style={{color:'#efbfba',marginRight:10,marginTop:-5}}/>
                       <ScalableText style={styles.errorTexto}>
                         {this.state.error}
                       </ScalableText>
@@ -241,7 +245,8 @@ const styles = StyleSheet.create({
     flex: 0,
     display: 'flex',
     flexDirection: 'row',
-    width: '100%'
+    width: '100%',
+    marginBottom: 10,
   },
   errorTexto: {
     fontFamily: 'MyriadPro-Semibold',

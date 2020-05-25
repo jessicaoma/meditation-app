@@ -413,8 +413,7 @@ const styles = StyleSheet.create({
   separador: {
     borderBottomColor: 'transparent',
     borderBottomWidth: 1,
-    marginTop: dimensions.smallSpace,
-    marginBottom: dimensions.bigSpace,
+    marginBottom: dimensions.smallSpace,
   },
   separador2: {
     borderBottomColor: '#dcdcdc',
