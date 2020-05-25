@@ -1,5 +1,9 @@
 import React from 'react';
-import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  HeaderBackButton,
+  TransitionPresets,
+} from '@react-navigation/stack';
 import MisEmocionesScreen from '../screens/MisEmocionesScreen';
 import ViajeCompletadoNavigator from './ViajeCompletadoNavigator';
 import MisMeditacionesScreen from '../screens/MisMeditacionesScreen';
@@ -11,6 +15,7 @@ export default function PerfilNavigation() {
   return (
     <Stack.Navigator
       screenOptions={{
+        ...TransitionPresets.SlideFromRightIOS,
         headerTitleStyle: {
           color: '#030303',
           fontFamily: 'MyriadPro-Semibold',

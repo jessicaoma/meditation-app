@@ -232,7 +232,7 @@ class Categoria extends Component {
     );
   };
 
-  keyExtractor = item => item.key;
+  keyExtractor = item => item.key.toString();
 
   render() {
     return (

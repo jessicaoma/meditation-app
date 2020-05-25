@@ -7,7 +7,6 @@ import {
   SafeAreaView,
   ScrollView,
   Platform,
-  Alert,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
@@ -30,18 +29,21 @@ class LoginScreen extends Component {
   state = {
     email: '',
     pass: '',
+    error: '',
   };
-
+  checkEmail = () => {
+    const reg = /^((([a-z]|d|[!#$%&'*+-/=?^_`{|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(.([a-z]|d|[!#$%&'*+-/=?^_`{|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|d|-|.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))).)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|d|-|.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))).?$/;
+    return reg.test(this.state.email.trim());
+  };
   handleLogin = async () => {
     let error = '';
-    if (this.state.email.length === 0) {
-      error += 'Debes ingresar tu correo\n';
+    if (!this.checkEmail()) {
+      error += 'Debes ingresar un correo valido\n';
     }
     if (this.state.pass.length === 0) {
       error += 'Debes ingresar tu constraseña\n';
     }
     if (error !== '') {
-      /*Alert.alert('Datos Inválidos', error);*/
       this.setState({error});
       return;
     }
@@ -51,7 +53,7 @@ class LoginScreen extends Component {
       rememberme: true,
     };
     const result = await API.loginUser(datos);
-    console.log(result)
+    //console.log(result);
 
     if (result.errors === undefined) {
       this.props.dispatch({
@@ -59,11 +61,11 @@ class LoginScreen extends Component {
         payload: {usuario: result},
       });
     } else {
-      if (result.errors.network){
-        error = result.errors.network
+      if (result.errors.network) {
+        error = result.errors.network;
         this.setState({error});
-      }else{
-        error = result.errors.message
+      } else {
+        error = result.errors.message;
         this.setState({error});
       }
     }
@@ -83,7 +85,6 @@ class LoginScreen extends Component {
     this.passwordRef.focus();
   };
 
-
   render() {
     return (
       <SafeAreaView style={styles.safe}>
@@ -98,22 +99,18 @@ class LoginScreen extends Component {
               </ScalableText>
             </View>
             <View style={styles.container}>
-
-              {this.state.error && (
-                  <>
-                  <View style={[styles.errorContainer]}>
-                    <Ionicons
-                      name="md-alert"
-                      size={25}
-                      style={{color:'#efbfba',marginRight:10,marginTop:-5}}/>
-                      <ScalableText style={styles.errorTexto}>
-                        {this.state.error}
-                      </ScalableText>
-                    </View>
-                  </>
-                )
-              }
-
+              {this.state.error !== '' && (
+                <View style={[styles.errorContainer]}>
+                  <Ionicons
+                    name="md-alert"
+                    size={25}
+                    style={{color: '#efbfba', marginRight: 10, marginTop: -5}}
+                  />
+                  <ScalableText style={styles.errorTexto}>
+                    {this.state.error}
+                  </ScalableText>
+                </View>
+              )}
               <View style={styles.full}>
                 <InputLogin
                   placeholder="Correo electrónico"
@@ -253,7 +250,7 @@ const styles = StyleSheet.create({
     color: '#ABA0B5',
     fontSize: 12,
     lineHeight: 13,
-  }
+  },
 });
 
 export default connect(null)(LoginScreen);

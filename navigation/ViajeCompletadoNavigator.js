@@ -1,4 +1,4 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import * as React from 'react';
 import ViajesCompletadosScreen from '../screens/ViajesCompletadosScreen';
 import PasoAScreen from '../screens/PasoAScreen';
@@ -14,6 +14,7 @@ function ViajeCompletadoNavigator(props) {
   return (
     <Stack.Navigator
       screenOptions={{
+        ...TransitionPresets.SlideFromRightIOS,
         headerBackTitle: null,
         headerBackTitleVisible: false,
         headerTitleStyle: {

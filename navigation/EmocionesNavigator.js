@@ -1,4 +1,8 @@
-import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  HeaderBackButton,
+  TransitionPresets,
+} from '@react-navigation/stack';
 import * as React from 'react';
 import EmocionesScreen from '../screens/EmocionesScreen';
 import EmocionScreen from '../screens/EmocionScreen';
@@ -16,6 +20,7 @@ export default function EmocionesNavigator() {
     <Stack.Navigator
       screenOptions={props => {
         return {
+          ...TransitionPresets.SlideFromRightIOS,
           title: '¿Cómo te sientes hoy?',
           headerTitleStyle: {
             color: '#030303',

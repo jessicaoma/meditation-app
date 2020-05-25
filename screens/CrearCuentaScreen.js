@@ -8,7 +8,6 @@ import {
   SafeAreaView,
   ScrollView,
   Platform,
-  Alert,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
@@ -34,6 +33,7 @@ class CrearCuentaScreen extends Component {
     email: '',
     pass: '',
     pass2: '',
+    error: '',
   };
 
   checkEmail = () => {
@@ -130,22 +130,21 @@ class CrearCuentaScreen extends Component {
                 </Text>
               </View>
               <View style={styles.full}>
-
                 {this.state.error && (
-                    <>
+                  <>
                     <View style={[styles.errorContainer]}>
                       <Ionicons
                         name="md-alert"
                         size={25}
-                        style={{color:'#efbfba',marginRight:10,}}/>
-                        <ScalableText style={styles.errorTexto}>
-                          {this.state.error}
-                        </ScalableText>
-                      </View>
-                    </>
-                  )
-                }
-               
+                        style={{color: '#efbfba', marginRight: 10}}
+                      />
+                      <ScalableText style={styles.errorTexto}>
+                        {this.state.error}
+                      </ScalableText>
+                    </View>
+                  </>
+                )}
+
                 <InputLogin
                   placeholder="Nombre"
                   type="text"
@@ -279,14 +278,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     paddingHorizontal: 20,
-    marginBottom: 10
+    marginBottom: 10,
   },
   errorTexto: {
     fontFamily: 'MyriadPro-Semibold',
     color: '#ABA0B5',
     fontSize: 12,
     lineHeight: 13,
-  }
+  },
 });
 
 export default connect(null)(CrearCuentaScreen);

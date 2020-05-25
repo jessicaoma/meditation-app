@@ -1,4 +1,4 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import * as React from 'react';
 import MeditacionScreen from '../screens/MeditacionScreen';
 import MeditacionIntroScreen from '../screens/MeditacionIntroScreen';
@@ -19,6 +19,7 @@ export default function MainNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
+        ...TransitionPresets.SlideFromRightIOS,
         headerBackTitleVisible: false,
         headerTitleStyle: {
           color: '#030303',

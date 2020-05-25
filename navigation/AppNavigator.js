@@ -4,7 +4,7 @@ import MainNavigator from './MainNavigator';
 import SplashScreen from '../screens/SplashScreen';
 import LoginScreen from '../screens/LoginScreen';
 import CrearCuentaScreen from '../screens/CrearCuentaScreen';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 const Stack = createStackNavigator();
 

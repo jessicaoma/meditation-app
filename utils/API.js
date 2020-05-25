@@ -371,11 +371,12 @@ class Api {
         return await query.json();
       } else {
         //TODO agregar los mensajes del API
-        return {
+        return await query.json();
+        /*{
           errors: {
             message: 'Datos inválidos',
           },
-        };
+        }*/
       }
     }
     return {};
