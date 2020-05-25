@@ -95,14 +95,17 @@ class EmocionesScreen extends Component {
   }
 
   componentDidMount = async () => {
-    if (this.mustJump) {
+    var now = new Date();
+    var check = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var s = this.props.emocionTime.split('-');
+    var emocionTime = new Date(s[0], s[1] - 1, s[2]);
+    if (check.getTime() <= emocionTime.getTime()) {
       return;
     }
     let emociones = await API.getEmociones(this.props.usuario.token);
+    console.log(emociones);
     if (emociones.errors) {
       //TODO Preguntar que mostrar
-      console.error('error al consultar emociones');
-      console.error(emociones.errors);
     } else {
       emociones.forEach((emocion, index) => {
         let {imagenFondo, header, footer, headerH, footerH, imagen} = data[
@@ -124,11 +127,11 @@ class EmocionesScreen extends Component {
    */
   _handleClick = item => {
     API.postRegistroEmocion(item.key, this.props.usuario.token).then(result => {
-      if (result.errors) {
-        //TODO Preguntar que mostrar
-        console.error('error al consultar emociones');
-        console.error(result.errors);
-      } else {
+      // if (result.errors) {
+         //TODO Preguntar que mostrar
+      //   console.error('error al consultar emociones');
+      //   console.error(result.errors);
+      // } else {
         this.props.dispatch({
           type: SET_EMOCION,
           payload: {
@@ -138,7 +141,7 @@ class EmocionesScreen extends Component {
         });
         // @ts-ignore
         this.props.navigation.replace('Emocion');
-      }
+      // }
     });
   };
 

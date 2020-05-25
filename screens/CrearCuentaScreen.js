@@ -130,7 +130,7 @@ class CrearCuentaScreen extends Component {
                 </Text>
               </View>
               <View style={styles.full}>
-                {this.state.error && (
+                {this.state.error !== "" && (
                   <>
                     <View style={[styles.errorContainer]}>
                       <Ionicons
