@@ -38,10 +38,10 @@ class LoginScreen extends Component {
   handleLogin = async () => {
     let error = '';
     if (!this.checkEmail()) {
-      error += 'Debes ingresar un correo valido\n';
+      error += 'Debes ingresar un correo válido\n';
     }
     if (this.state.pass.length === 0) {
-      error += 'Debes ingresar tu constraseña\n';
+      error += 'Debes ingresar tu contraseña\n';
     }
     if (error !== '') {
       this.setState({error});

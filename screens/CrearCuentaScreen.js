@@ -52,7 +52,7 @@ class CrearCuentaScreen extends Component {
       error += 'Debes ingresar un nombre\n';
     }
     if (!this.checkEmail()) {
-      error += 'Debes ingresar un correo valido\n';
+      error += 'Debes ingresar un correo válido\n';
     }
     if (!this.checkPass()) {
       error +=
