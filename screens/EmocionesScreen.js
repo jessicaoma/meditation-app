@@ -14,6 +14,7 @@ import API from '../utils/API';
 import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
 import {SET_EMOCION} from '../reducers/types';
+import { dateToStrYYYYMMDD } from '../utils/convert';
 
 //TODO registrar seleccion
 const numColumns = 2;
@@ -95,15 +96,10 @@ class EmocionesScreen extends Component {
   }
 
   componentDidMount = async () => {
-    var now = new Date();
-    var check = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    var s = this.props.emocionTime.split('-');
-    var emocionTime = new Date(s[0], s[1] - 1, s[2]);
-    if (check.getTime() <= emocionTime.getTime()) {
+    if (this.mustJump) {
       return;
     }
     let emociones = await API.getEmociones(this.props.usuario.token);
-    console.log(emociones);
     if (emociones.errors) {
       //TODO Preguntar que mostrar
     } else {
@@ -136,7 +132,8 @@ class EmocionesScreen extends Component {
           type: SET_EMOCION,
           payload: {
             emocion: item,
-            emocionTime: result.fecha,
+            //emocionTime: result.fecha,
+            emocionTime: dateToStrYYYYMMDD(new Date()),
           },
         });
         // @ts-ignore
