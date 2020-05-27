@@ -249,7 +249,8 @@ class Api {
    */
   async postRegistroEmocion(emocionId, token) {
     let query;
-    const date = dateToStrYYYYMMDD(new Date());
+    const now = new Date();
+    const date = dateToStrYYYYMMDD(now);
     try {
       query = await fetch(`${BASE_API}emociones/registro`, {
         method: 'POST',
@@ -270,13 +271,20 @@ class Api {
       };
     }
     if (query.status >= 200 && query.status < 500) {
+      console.log(query.status);
       if (query.status < 400) {
         //TODO este metodo debe retornar los datos del metodo /emociones/registro/{fecha}
         //return await query.json();
         return {
           emocionId,
-          fecha: date,
+          fecha: new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate(),
+          ).toJSON(),
         };
+      } else if (query.status < 500) {
+        return await query.json();
       } else {
         return {
           errors: {
@@ -315,6 +323,36 @@ class Api {
           },
         };
       }
+    }
+  }
+
+  /** Consulta si existe una emoción para el dia
+   * @param {string} date Fecha a consultar
+   * @param {string} token Token de Autorización
+   * @return {Promise<import("./types").Emoción | {errors : Object}>} */
+  async getEmocionOfDate(date, token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}emociones/registro/${date}`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status === 200) {
+      return await query.json();
+    } else if (query.status < 500) {
+      return await query.json();
+    } else {
+      return {
+        errors: {
+          message: 'Error Interno',
+        },
+      };
     }
   }
 
@@ -374,9 +412,11 @@ class Api {
     }
     if (query.status >= 200 && query.status < 500) {
       if (query.status < 400) {
+        /** @returns {import('./types').Usuario} */
         return await query.json();
       } else {
         //TODO agregar los mensajes del API
+        /** @returns {{errors: Array}} */
         return await query.json();
         /*{
           errors: {

@@ -16,6 +16,50 @@ import ScreenBg from '../components/screenBg';
 import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
 
+// datos que son fijos dentro de la app
+const emocionImages = [
+  {
+    imagenFondo:
+      'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-1.png',
+    header:
+      'http://okoconnect.com/karim/assets/images/emociones/header-emocion-1.png',
+    footer:
+      'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-1.png',
+    headerH: 0.1,
+    footerH: 0.35,
+  },
+  {
+    imagenFondo:
+      'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-2.png',
+    header:
+      'http://okoconnect.com/karim/assets/images/emociones/header-emocion-2.png',
+    footer:
+      'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-2.png',
+    headerH: 0.1,
+    footerH: 0.3,
+  },
+  {
+    imagenFondo:
+      'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-3.png',
+    header:
+      'http://okoconnect.com/karim/assets/images/emociones/header-emocion-3.png',
+    footer:
+      'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-3.png',
+    headerH: 0.35,
+    footerH: 0.35,
+  },
+  {
+    imagenFondo:
+      'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-4.png',
+    header:
+      'http://okoconnect.com/karim/assets/images/emociones/header-emocion-4.png',
+    footer:
+      'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-4.png',
+    headerH: 0.45,
+    footerH: 0.2,
+  },
+];
+
 /**
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Emocion'>} navigation
@@ -34,6 +78,14 @@ class Emocion extends Component {
 
   render() {
     const {emocion} = this.props;
+    let {imagenFondo, header, footer, headerH, footerH} = emocionImages[
+      emocion.key - 1
+    ];
+    emocion.imagenFondo = imagenFondo;
+    emocion.header = header;
+    emocion.footer = footer;
+    emocion.headerH = headerH;
+    emocion.footerH = footerH;
     const info = [
       {
         key: 'slide1',
@@ -123,7 +175,6 @@ class Emocion extends Component {
 
 function mapStateToProps(state) {
   return {
-    emocionTime: state.emocionTime,
     emocion: state.emocion,
   };
 }

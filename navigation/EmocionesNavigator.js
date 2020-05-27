@@ -7,18 +7,30 @@ import * as React from 'react';
 import EmocionesScreen from '../screens/EmocionesScreen';
 import EmocionScreen from '../screens/EmocionScreen';
 import MisEmocionesScreen from '../screens/MisEmocionesScreen';
-// import {useStore} from 'react-redux';
+import {connect} from 'react-redux';
 
 const Stack = createStackNavigator();
 
-// const store = useStore();
-// const state = store.getState();
-// console.log(state.emocion);
-//let init = props.emocion === null ? 'Emociones' : 'Emocion';
-export default function EmocionesNavigator() {
+function EmocionesNavigator(props) {
+  let now = new Date();
+  let check = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  let emocionTime = new Date(props.emocionTime);
+  const [time, setTime] = React.useState(
+    check.getTime() <= emocionTime.getTime(),
+    //false,
+  );
+  React.useEffect(() => {
+    const isLogged = () => {
+      let n = new Date();
+      let c = new Date(n.getFullYear(), n.getMonth(), n.getDate());
+      let aT = new Date(props.emocionTime);
+      setTime(c.getTime() <= aT.getTime());
+    };
+    isLogged();
+  }, [props.emocionTime]);
   return (
     <Stack.Navigator
-      screenOptions={props => {
+      screenOptions={prop => {
         return {
           ...TransitionPresets.SlideFromRightIOS,
           title: '¿Cómo te sientes hoy?',
@@ -29,20 +41,33 @@ export default function EmocionesNavigator() {
           headerLeft: () => (
             <HeaderBackButton
               onPress={() => {
-                props.navigation.goBack();
+                prop.navigation.goBack();
               }}
               labelVisible={false}
             />
           ),
         };
       }}>
-      <Stack.Screen name="Emociones" component={EmocionesScreen} />
-      <Stack.Screen name="Emocion" component={EmocionScreen} />
-      <Stack.Screen
-        name="MisEmociones"
-        component={MisEmocionesScreen}
-        options={MisEmocionesScreen.navigationOptions}
-      />
+      {!time ? (
+        <Stack.Screen name="Emociones" component={EmocionesScreen} />
+      ) : (
+        <>
+          <Stack.Screen name="Emocion" component={EmocionScreen} />
+          <Stack.Screen
+            name="MisEmociones"
+            component={MisEmocionesScreen}
+            options={MisEmocionesScreen.navigationOptions}
+          />
+        </>
+      )}
     </Stack.Navigator>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    emocionTime: state.emocionTime,
+  };
+};
+
+export default connect(mapStateToProps)(EmocionesNavigator);

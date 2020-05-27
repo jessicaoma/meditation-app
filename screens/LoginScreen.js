@@ -14,9 +14,10 @@ import Logo from '../components/Logo';
 import Dims from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import API from '../utils/API';
-import {SAVE_USER} from '../reducers/types';
+import {SAVE_USER, SET_EMOCION} from '../reducers/types';
 import {connect} from 'react-redux';
 import {Ionicons} from '@expo/vector-icons';
+import {dateToStrYYYYMMDD} from '../utils/convert';
 
 /**
  * @typedef Props
@@ -56,9 +57,26 @@ class LoginScreen extends Component {
     //console.log(result);
 
     if (result.errors === undefined) {
-      this.props.dispatch({
-        type: SAVE_USER,
-        payload: {usuario: result},
+      const now = new Date();
+      const date = dateToStrYYYYMMDD(now);
+      API.getEmocionOfDate(date, result.token).then(r => {
+        if (result.errors === undefined) {
+          this.props.dispatch({
+            type: SET_EMOCION,
+            payload: {
+              emocion: r,
+              emocionTime: new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                now.getDate(),
+              ).toJSON(),
+            },
+          });
+        }
+        this.props.dispatch({
+          type: SAVE_USER,
+          payload: {usuario: result},
+        });
       });
     } else {
       if (result.errors.network) {

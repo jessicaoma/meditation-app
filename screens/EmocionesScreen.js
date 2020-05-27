@@ -14,7 +14,6 @@ import API from '../utils/API';
 import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
 import {SET_EMOCION} from '../reducers/types';
-import { dateToStrYYYYMMDD } from '../utils/convert';
 
 //TODO registrar seleccion
 const numColumns = 2;
@@ -24,50 +23,18 @@ const height = (Dims.window.width / numColumns) * 1.5;
 // datos que son fijos dentro de la app
 const data = [
   {
-    imagenFondo:
-      'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-1.png',
-    header:
-      'http://okoconnect.com/karim/assets/images/emociones/header-emocion-1.png',
-    footer:
-      'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-1.png',
-    headerH: 0.1,
-    footerH: 0.35,
     // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-1.gif'),
   },
   {
-    imagenFondo:
-      'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-2.png',
-    header:
-      'http://okoconnect.com/karim/assets/images/emociones/header-emocion-2.png',
-    footer:
-      'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-2.png',
-    headerH: 0.1,
-    footerH: 0.3,
     // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-2.gif'),
   },
   {
-    imagenFondo:
-      'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-3.png',
-    header:
-      'http://okoconnect.com/karim/assets/images/emociones/header-emocion-3.png',
-    footer:
-      'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-3.png',
-    headerH: 0.35,
-    footerH: 0.35,
     // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-3.gif'),
   },
   {
-    imagenFondo:
-      'http://okoconnect.com/karim/assets/images/emociones/bg-emocion-4.png',
-    header:
-      'http://okoconnect.com/karim/assets/images/emociones/header-emocion-4.png',
-    footer:
-      'http://okoconnect.com/karim/assets/images/emociones/footer-emocion-4.png',
-    headerH: 0.45,
-    footerH: 0.2,
     // @ts-ignore
     imagen: require('../assets/images/emociones/emocion-4.gif'),
   },
@@ -88,31 +55,16 @@ class EmocionesScreen extends Component {
   };
   constructor(props) {
     super(props);
-    var now = new Date();
-    var check = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    var s = props.emocionTime.split('-');
-    var emocionTime = new Date(s[0], s[1] - 1, s[2]);
-    this.mustJump = check.getTime() <= emocionTime.getTime();
   }
 
   componentDidMount = async () => {
-    if (this.mustJump) {
-      return;
-    }
     let emociones = await API.getEmociones(this.props.usuario.token);
-    if (emociones.errors) {
+    if (emociones.errors !== undefined) {
       //TODO Preguntar que mostrar
     } else {
       emociones.forEach((emocion, index) => {
-        let {imagenFondo, header, footer, headerH, footerH, imagen} = data[
-          index
-        ];
-        emocion.imagenFondo = imagenFondo;
+        let {imagen} = data[index];
         emocion.imagen = imagen;
-        emocion.header = header;
-        emocion.footer = footer;
-        emocion.headerH = headerH;
-        emocion.footerH = footerH;
       });
       this.setState({emociones});
     }
@@ -123,22 +75,19 @@ class EmocionesScreen extends Component {
    */
   _handleClick = item => {
     API.postRegistroEmocion(item.key, this.props.usuario.token).then(result => {
-      // if (result.errors) {
-         //TODO Preguntar que mostrar
-      //   console.error('error al consultar emociones');
-      //   console.error(result.errors);
-      // } else {
+      if (result.errors) {
+        //TODO Preguntar que mostrar
+        //   console.error('error al consultar emociones');
+        console.log(result.errors);
+      } else {
         this.props.dispatch({
           type: SET_EMOCION,
           payload: {
             emocion: item,
-            //emocionTime: result.fecha,
-            emocionTime: dateToStrYYYYMMDD(new Date()),
+            emocionTime: result.fecha,
           },
         });
-        // @ts-ignore
-        this.props.navigation.replace('Emocion');
-      // }
+      }
     });
   };
 
@@ -159,7 +108,6 @@ class EmocionesScreen extends Component {
           }}
           source={item.imagen}
         />
-
         <ScalableText style={[styles.cartaTitulo]}>{item.titulo}</ScalableText>
       </View>
     </TouchableOpacity>
@@ -170,42 +118,35 @@ class EmocionesScreen extends Component {
   );
 
   render() {
-    if (!this.mustJump) {
-      return (
-        <SafeAreaView style={styles.safe}>
-          <FlatList
-            data={this.state.emociones}
-            renderItem={this.renderItem}
-            numColumns={numColumns}
-            ListEmptyComponent={this.renderListEmpty}
-            keyExtractor={item => item.key}
-            ListFooterComponent={() => (
-              <View style={{paddingBottom: Dims.regularSpace}}>
-                <ScalableText style={styles.suggestion}>
-                  ¿Cómo te sientes hoy?{'\n'}
-                  {'\n'}
-                  Llevando un registro de tus emociones podrás conocerte mejor.
-                </ScalableText>
-              </View>
-            )}
-            style={styles.scroll}
-            ListHeaderComponent={() => (
-              <View style={{paddingTop: Dims.regularSpace}} />
-            )}
-          />
-        </SafeAreaView>
-      );
-    } else {
-      // @ts-ignore
-      this.props.navigation.replace('Emocion');
-      return <SafeAreaView style={styles.safe} />;
-    }
+    return (
+      <SafeAreaView style={styles.safe}>
+        <FlatList
+          data={this.state.emociones}
+          renderItem={this.renderItem}
+          numColumns={numColumns}
+          ListEmptyComponent={this.renderListEmpty}
+          keyExtractor={item => item.key}
+          ListFooterComponent={() => (
+            <View style={{paddingBottom: Dims.regularSpace}}>
+              <ScalableText style={styles.suggestion}>
+                ¿Cómo te sientes hoy?{'\n'}
+                {'\n'}
+                Llevando un registro de tus emociones podrás conocerte mejor.
+              </ScalableText>
+            </View>
+          )}
+          style={styles.scroll}
+          ListHeaderComponent={() => (
+            <View style={{paddingTop: Dims.regularSpace}} />
+          )}
+        />
+      </SafeAreaView>
+    );
   }
 }
 
 function mapStateToProps(state) {
   return {
-    emocionTime: state.emocionTime,
     usuario: state.usuario,
   };
 }
