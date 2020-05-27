@@ -38,19 +38,13 @@ class AngelCartasScreen extends Component {
       /**@type {import('../utils/types').CartaDelAngel[]} */
       cartas: [],
     };
-    var now = new Date();
-    var check = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    var angelTime = new Date(props.angelTime);
-    this.mustJump = check.getTime() <= angelTime.getTime();
   }
 
   componentDidMount = async () => {
-    if (!this.mustJump) {
-      let cartas = await API.getAngelMessage();
-      this.setState({
-        cartas,
-      });
-    }
+    let cartas = await API.getAngelMessage();
+    this.setState({
+      cartas,
+    });
   };
 
   /**
@@ -69,7 +63,6 @@ class AngelCartasScreen extends Component {
         ).toJSON(),
       },
     });
-    this.props.navigation.navigate('Angel');
   };
 
   /**
@@ -101,27 +94,22 @@ class AngelCartasScreen extends Component {
   );
 
   render() {
-    if (!this.mustJump) {
-      return (
-        <SafeAreaView style={styles.mainContainer}>
-          <View style={styles.statusBar} />
-          <View style={styles.container}>
-            <Text style={styles.sectionTitle}>Mensajes de tus ángeles</Text>
-            <FlatList
-              data={this.state.cartas}
-              renderItem={this.renderItem}
-              ListFooterComponent={this.renderFooter}
-              numColumns={numColumns}
-              keyExtractor={(item, index) => index.toString()}
-              ListEmptyComponent={this.renderListEmpty}
-            />
-          </View>
-        </SafeAreaView>
-      );
-    } else {
-      this.props.navigation.navigate('Angel');
-      return <SafeAreaView style={styles.mainContainer} />;
-    }
+    return (
+      <SafeAreaView style={styles.mainContainer}>
+        <View style={styles.statusBar} />
+        <View style={styles.container}>
+          <Text style={styles.sectionTitle}>Mensajes de tus ángeles</Text>
+          <FlatList
+            data={this.state.cartas}
+            renderItem={this.renderItem}
+            ListFooterComponent={this.renderFooter}
+            numColumns={numColumns}
+            keyExtractor={(item, index) => index.toString()}
+            ListEmptyComponent={this.renderListEmpty}
+          />
+        </View>
+      </SafeAreaView>
+    );
   }
 }
 
