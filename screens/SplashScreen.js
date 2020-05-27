@@ -12,12 +12,12 @@ const aspectRadioImage = 320 / 236;
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Splash'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Splash'>} route
  * @prop {import('redux').Dispatch} [dispatch]
- * @prop {import('../utils/types').Usuario} usuario
+
  * @prop {string} angelTime
  * @prop {string} emocionTime
  * @param {Props} props
  */
-function SplashScreen({navigation, usuario, angelTime, emocionTime, dispatch}) {
+function SplashScreen({navigation, angelTime, emocionTime, dispatch}) {
   if (angelTime === undefined) {
     dispatch({
       type: Actions.SET_ANGEL,
@@ -37,13 +37,13 @@ function SplashScreen({navigation, usuario, angelTime, emocionTime, dispatch}) {
     });
   }
   setTimeout(() => {
-    if (usuario === undefined) {
-      // @ts-ignore
-      navigation.navigate('Login');
-    } else {
-      // @ts-ignore
-      //navigation.replace('App');
-    }
+    // if (usuario === undefined) {
+    //   // @ts-ignore
+    //   navigation.navigate('Login');
+    // } else {
+    //   // @ts-ignore
+    //   navigation.replace('App');
+    // }
   }, 1000);
   return (
     <SafeAreaView style={styles.contaner}>
@@ -59,7 +59,6 @@ function SplashScreen({navigation, usuario, angelTime, emocionTime, dispatch}) {
 
 function mapStateToProps(state) {
   return {
-    usuario: state.usuario,
     angelTime: state.angelTime,
     emocionTime: state.emocionTime,
   };

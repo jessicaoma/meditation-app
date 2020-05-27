@@ -84,7 +84,6 @@ class AngelScreen extends Component {
 
 function mapStateToProps(state) {
   return {
-    angelTime: state.angelTime,
     angel: state.angel,
   };
 }
