@@ -131,6 +131,7 @@ class LoginScreen extends Component {
                     this.setState({pass});
                   }}
                   value={this.state.pass}
+                  onSubmitEditing={this.handleLogin}
                 />
                 <TouchableOpacity
                   onPress={this.handleLogin}

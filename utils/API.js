@@ -336,10 +336,16 @@ class Api {
       };
     }
     if (query.status >= 200 && query.status < 500) {
-      if (query.status < 400) {
+      if (query.status < 300) {
+        //Salida correcta
+        /** @returns {import('./types').Usuario} */
+        return await query.json();
+      }
+      if (query.status < 500) {
+        //Salida correcta
+        /** @returns {{errors: Array}} */
         return await query.json();
       } else {
-        //TODO agregar los mensajes del API
         return {
           errors: {
             message: 'Datos inválidos',

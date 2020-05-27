@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   ScrollView,
   Platform,
+  FlatList,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
@@ -33,7 +34,7 @@ class CrearCuentaScreen extends Component {
     email: '',
     pass: '',
     pass2: '',
-    error: '',
+    error: [],
   };
 
   checkEmail = () => {
@@ -47,22 +48,22 @@ class CrearCuentaScreen extends Component {
   };
 
   handleLogin = async () => {
-    let error = '';
+    let error = [];
     if (this.state.name.trim().length === 0) {
-      error += 'Debes ingresar un nombre\n';
+      error.push('Debes ingresar un nombre');
     }
     if (!this.checkEmail()) {
-      error += 'Debes ingresar un correo válido\n';
+      error.push('Debes ingresar un correo válido');
     }
     if (!this.checkPass()) {
-      error +=
-        'La contraseña debe tener una mayúscula, una minúscula, un número y un signo\n';
+      error.push(
+        'La contraseña debe tener una mayúscula, una minúscula, un número y un signo',
+      );
     }
     if (this.state.pass.trim() !== this.state.pass2.trim()) {
-      error += 'La confirmación debe ser igual a la Contraseña';
+      error.push('La confirmación debe ser igual a la Contraseña');
     }
-    if (error !== '') {
-      /*Alert.alert('Datos Inválidos', error);*/
+    if (error.length > 0) {
       this.setState({error});
       return;
     }
@@ -79,10 +80,14 @@ class CrearCuentaScreen extends Component {
         payload: {usuario: result},
       });
     } else {
-      /*Alert.alert('create fail');*/
-      error = 'Error al crear cuenta';
-      this.setState({error});
-      this.props.navigation.navigate('Login');
+      //error = 'Error al crear cuenta';
+      if (result.errors.message !== undefined) {
+        this.setState({error: result.errors});
+      } else {
+        error.push(result.errors.message);
+        this.setState({error});
+      }
+      //this.props.navigation.navigate('Login');
     }
   };
   nameRef = {};
@@ -130,8 +135,9 @@ class CrearCuentaScreen extends Component {
                 </Text>
               </View>
               <View style={styles.full}>
-                {this.state.error !== "" && (
-                  <>
+                <FlatList
+                  data={this.state.error}
+                  renderItem={error => (
                     <View style={[styles.errorContainer]}>
                       <Ionicons
                         name="md-alert"
@@ -139,12 +145,12 @@ class CrearCuentaScreen extends Component {
                         style={{color: '#efbfba', marginRight: 10}}
                       />
                       <ScalableText style={styles.errorTexto}>
-                        {this.state.error}
+                        {error}
                       </ScalableText>
                     </View>
-                  </>
-                )}
-
+                  )}
+                  keyExtractor={(_, index) => index.toString()}
+                />
                 <InputLogin
                   placeholder="Nombre"
                   type="text"
