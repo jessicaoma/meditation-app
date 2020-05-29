@@ -115,6 +115,9 @@ class CrearCuentaScreen extends Component {
   goPassword2 = () => {
     this.passwordRef2.focus();
   };
+  _handleClose = () => {
+    this.props.navigation.goBack();
+  };
   render() {
     return (
       <SafeAreaView style={styles.safe}>
@@ -128,6 +131,10 @@ class CrearCuentaScreen extends Component {
             }}
             color="white"
             styleImage={{resizeMode: 'cover', height: Dims.window.height}}>
+            <TouchableOpacity style={styles.close} onPress={this._handleClose}>
+              <Ionicons name={'md-close'} size={30} color={Colors.primaryDark} />
+            </TouchableOpacity>
+
             <View style={styles.container}>
               <View style={styles.header}>
                 <Text style={styles.welcomeTitle}>
@@ -223,7 +230,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'column',
-    padding: 40,
+    paddingHorizontal: 40,
+    paddingVertical: 50,
     minHeight: Dims.window.height - 220,
   },
   welcomeTitle: {
@@ -291,6 +299,12 @@ const styles = StyleSheet.create({
     color: '#ABA0B5',
     fontSize: 12,
     lineHeight: 13,
+  },
+  close: {
+    position: 'absolute',
+    right: 25,
+    top: 0,
+    zIndex: 100,
   },
 });
 

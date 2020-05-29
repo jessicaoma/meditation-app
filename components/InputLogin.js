@@ -63,6 +63,7 @@ export default class InputLogin extends Component {
             returnKeyType={'next'}
             blurOnSubmit={blurOnSubmit}
             onSubmitEditing={onSubmitEditing}
+            autoCapitalize = 'none'
             ref={inputRef}
             value={value}
           />

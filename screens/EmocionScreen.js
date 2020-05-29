@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: Colors.darkPurple,
     borderRadius: 40,
-    paddingHorizontal: dimensions.window.width * 0.15,
+    paddingHorizontal: dimensions.window.width * 0.1,
     height: dimensions.window.width * 0.14,
     justifyContent: 'center',
     alignContent: 'center',
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
   buttonLabel: {
     color: 'white',
     fontFamily: 'MyriadPro-Regular',
-    fontSize: 20,
+    fontSize: 16,
     textAlign: 'center',
   },
 });
