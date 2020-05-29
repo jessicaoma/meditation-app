@@ -26,6 +26,7 @@ const width = (Dims.window.width - 40) / numColumns;
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Cartas'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Cartas'>} route
  * @prop {string} angelTime
+ * @prop {import('../utils/types').Usuario} usuario
  * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
@@ -40,7 +41,7 @@ class AngelCartasScreen extends Component {
   }
 
   componentDidMount = async () => {
-    let cartas = await API.getAngelMessage();
+    let cartas = await API.getAngelMessage(this.props.usuario.token);
     this.setState({
       cartas,
     });
@@ -115,6 +116,7 @@ class AngelCartasScreen extends Component {
 function mapStateToProps(state) {
   return {
     angelTime: state.angelTime,
+    usuario: state.usuario,
   };
 }
 

@@ -89,8 +89,8 @@ class Home extends Component {
   componentDidMount = async () => {
     const enprogreso = await API.getEnProgreso(this.props.usuario.token);
     const lonuevo = await API.getDestacados(this.props.usuario.token);
-    const reflexion = await API.getReflexionDelDia();
-    const tutorial = await API.getVideo('Tutorial');
+    const reflexion = await API.getReflexionDelDia(this.props.usuario.token);
+    const tutorial = await API.getVideo('Tutorial', this.props.usuario.token);
     this.setState({enprogreso, lonuevo, reflexion, tutorial});
     this.props.navigation.addListener('focus', () => {
       this.refeshData();

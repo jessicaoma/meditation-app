@@ -47,7 +47,7 @@ class MeditacionesScreen extends Component {
       }
     });
     const data = await API.getMeditaciones(this.props.usuario.token);
-    const video = await API.getVideo('Meditaciones');
+    const video = await API.getVideo('Meditaciones', this.props.usuario.token);
     this.setState({
       meditaciones: data,
       video,

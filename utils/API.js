@@ -2,11 +2,91 @@ import {dateToStrYYYYMMDD} from './convert';
 import {envRemoto} from './types';
 
 const BASE_API = envRemoto
-  ? //? 'http://okotesting-001.azurewebsites.net/api/'
-    'http://50.63.13.57:501/api/'
+  ? 'http://50.63.13.57:501/api/'
   : 'http://localhost:5000/api/';
 
 class Api {
+  /** @param {string} token Token de autentificación
+   * @return {Promise<import("./types").CartaDelAngel[] | {errors: any}>} */
+  async getAngelMessage(token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}angels/mensaje`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status < 300) {
+      return await query.json();
+    } else {
+      return {
+        errors: {
+          message: 'Datos inválidos',
+        },
+      };
+    }
+  }
+
+  /** @param {string} token Token de autentificación
+   * @return {Promise<import("./types").Reflexión | {errors: any}>} */
+  async getReflexionDelDia(token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}reflexion/deldia`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status < 300) {
+      return await query.json();
+    } else {
+      return {
+        errors: {
+          message: 'Datos inválidos',
+        },
+      };
+    }
+  }
+
+  /** Busca uno de los siguientes videos (Bienvenida, Tutorial, MeditacionesIntro)
+   * @param {string} titulo Titulo del video
+   * @param {string} token Token de autentificación
+   * @returns {Promise<import("./types").Video | {errors: any}>}
+   */
+  async getVideo(titulo, token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}videos/${titulo}`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status < 300) {
+      return await query.json();
+    } else {
+      return {
+        errors: {
+          message: 'Datos inválidos',
+        },
+      };
+    }
+  }
+
   /** Consulta las meditaciones
    * @param {string} token Token de Autorización
    * @return {Promise<import("./types").Meditación[] | {errors: any}>} */
@@ -165,13 +245,6 @@ class Api {
         },
       };
     }
-  }
-
-  /** @return {Promise<import("./types").CartaDelAngel[]>} */
-  async getAngelMessage() {
-    const query = await fetch(`${BASE_API}angels/mensaje`);
-    const data = await query.json();
-    return data;
   }
 
   /**
@@ -390,22 +463,31 @@ class Api {
     }
   }
 
-  /** @return {Promise<import("./types").Reflexión>} */
-  async getReflexionDelDia() {
-    //const myHeaders = new Headers({from: user});
-    const query = await fetch(`${BASE_API}reflexion/deldia`, {
-      //headers: myHeaders,
-    });
-    const data = await query.json();
-    return data;
-  }
-
   /** Consulta las meditaciones
-   * @return {Promise<import("./types").Canción[]>} */
-  async getCanciones() {
-    const query = await fetch(`${BASE_API}canciones`);
-    const data = await query.json();
-    return data;
+   * @param {string} token Token de Autorización
+   * @return {Promise<import("./types").Canción[]  | {errors: any}>} */
+  async getCanciones(token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}canciones`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status < 300) {
+      return await query.json();
+    } else {
+      return {
+        errors: {
+          message: 'Datos inválidos',
+        },
+      };
+    }
   }
 
   // /**
@@ -420,16 +502,6 @@ class Api {
   //   const data = await query.json();
   //   return data;
   // }
-
-  /** Busca uno de los siguientes videos (Bienvenida, Tutorial, MeditacionesIntro)
-   * @param {string} titulo Titulo del video
-   * @returns {Promise<import("./types").Video>}
-   */
-  async getVideo(titulo) {
-    const query = await fetch(`${BASE_API}videos/${titulo}`);
-    const data = await query.json();
-    return data;
-  }
 
   /** Consulta las emociones
    * @param {string} token Token de Autorización
@@ -645,6 +717,3 @@ class Api {
 }
 
 export default new Api();
-
-// TODO proximo a eliminar
-export const user = 'asdf';

@@ -11,14 +11,16 @@ import Dims from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
 import API from '../utils/API';
 import {SvgUri} from 'react-native-svg';
+import {connect} from 'react-redux';
 
 /**
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Canciones'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Canciones'>} route
+ * @prop {import('../utils/types').Usuario} usuario
  * @extends {Component<Props>}
  */
-export default class Canciones extends Component {
+class Canciones extends Component {
   static navigationOptions = {
     title: 'Música',
   };
@@ -28,7 +30,7 @@ export default class Canciones extends Component {
   };
 
   componentDidMount = async () => {
-    const data = await API.getCanciones();
+    const data = await API.getCanciones(this.props.usuario.token);
     this.setState({
       canciones: data,
     });
@@ -73,6 +75,13 @@ export default class Canciones extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  const {usuario} = state;
+  return {
+    usuario,
+  };
+}
+
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
@@ -108,3 +117,5 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
   },
 });
+
+export default connect(mapStateToProps)(Canciones);
