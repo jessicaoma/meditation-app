@@ -37,7 +37,6 @@ function SplashScreen({navigation, usuario, angelTime, emocionTime, dispatch}) {
     });
   }
   setTimeout(() => {
-    console.log('Slash ' + (usuario === undefined));
     if (usuario === undefined) {
       try {
         navigation.navigate('Login');

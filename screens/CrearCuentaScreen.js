@@ -51,15 +51,15 @@ class CrearCuentaScreen extends Component {
       error.push('Debes ingresar un nombre');
     }
     if (!this.checkEmail()) {
-      error.push('Debes ingresar un correo válido');
+      error.push('Debe ingresar una dirección de correo válida.');
     }
     if (!this.checkPass()) {
       error.push(
-        'La contraseña debe tener una mayúscula, una minúscula, un número y un signo',
+        'La contraseña debe tener una mayúscula, una minúscula, un número, un signo y una longitud de al menos 6 caracteres.',
       );
     }
     if (this.state.pass.trim() !== this.state.pass2.trim()) {
-      error.push('La confirmación debe ser igual a la Contraseña');
+      error.push('La contraseña y su confirmación no coinciden.');
     }
     if (error.length > 0) {
       this.setState({error});
@@ -78,13 +78,7 @@ class CrearCuentaScreen extends Component {
         payload: {usuario: result},
       });
     } else {
-      //error = 'Error al crear cuenta';
-      if (result.errors.message !== undefined) {
-        this.setState({error: result.errors});
-      } else {
-        error.push(result.errors.message);
-        this.setState({error});
-      }
+      this.setState({error: result.errors});
       //this.props.navigation.navigate('Login');
     }
   };
@@ -130,7 +124,11 @@ class CrearCuentaScreen extends Component {
             color="white"
             styleImage={{resizeMode: 'cover', height: Dims.window.height}}>
             <TouchableOpacity style={styles.close} onPress={this._handleClose}>
-              <Ionicons name={'md-close'} size={30} color={Colors.primaryDark} />
+              <Ionicons
+                name={'md-close'}
+                size={30}
+                color={Colors.primaryDark}
+              />
             </TouchableOpacity>
 
             <View style={styles.container}>
