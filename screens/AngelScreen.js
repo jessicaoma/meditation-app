@@ -31,7 +31,6 @@ class AngelScreen extends Component {
 
   flipCard = () => {
     this.card.flip();
-    //TODO play sound
     this.player._startPlayer();
   };
 

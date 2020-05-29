@@ -4,6 +4,7 @@ import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import API from '../utils/API';
 import {enumStatus} from '../utils/types';
+import {connect} from 'react-redux';
 
 const timer = 10000; // 10 sec
 
@@ -11,9 +12,10 @@ const timer = 10000; // 10 sec
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Audiolibro'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Audiolibro'>} route
+ * @prop {import('../utils/types').Usuario} usuario
  * @extends {Component<Props>}
  */
-export default class AudiolibroScreen extends Component {
+class AudiolibroScreen extends Component {
   /** @param {Props} props*/
   static navigationOptions = props => {
     return {
@@ -34,7 +36,12 @@ export default class AudiolibroScreen extends Component {
 
   /** @param {import('expo-av/build/AV').AVPlaybackStatus} status */
   onEnd = status => {
-    API.putDiarioAudiolibro(this.audiolibro.key, 0, enumStatus.done);
+    API.putDiarioAudiolibro(
+      this.audiolibro.key,
+      0,
+      enumStatus.done,
+      this.props.usuario.token,
+    );
     this.props.navigation.goBack();
   };
 
@@ -44,6 +51,7 @@ export default class AudiolibroScreen extends Component {
       // @ts-ignore
       (await this.player.playbackInstance.getStatusAsync()).positionMillis,
       enumStatus.doing,
+      this.props.usuario.token,
     );
   };
 
@@ -95,6 +103,12 @@ export default class AudiolibroScreen extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    usuario: state.usuario,
+  };
+}
+
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
@@ -102,3 +116,5 @@ const styles = StyleSheet.create({
   },
   image: {resizeMode: 'cover'},
 });
+
+export default connect(mapStateToProps)(AudiolibroScreen);

@@ -10,7 +10,7 @@ import {
   BackHandler,
 } from 'react-native';
 import Colors from '../constants/Colors';
-import API, {user} from '../utils/API';
+import API from '../utils/API';
 import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import ScalableText from 'react-native-text';
@@ -37,6 +37,7 @@ let pasoAnterio = {};
  * @prop {import('../utils/types').Viaje[]} viajes
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'PasoD'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'PasoD'>} route
+ * @prop {import('../utils/types').Usuario} usuario
  * @prop {import('redux').Dispatch} [dispatch]
  * @param {Props} props
  */
@@ -51,12 +52,12 @@ function PasoDScreen(props) {
   pasoAnterio.position = position - 1;
 
   React.useEffect(() => {
-    API.putDiarioPaso(paso.key, enumStatus.doing, user);
+    API.putDiarioPaso(paso.key, enumStatus.doing, props.usuario.token);
   });
 
   function nextStep() {
     const {tipo} = viaje.pasos[position + 1];
-    API.putDiarioPaso(paso.key, enumStatus.done, user);
+    API.putDiarioPaso(paso.key, enumStatus.done, props.usuario.token);
     // @ts-ignore
     navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
       position: position + 1,
@@ -179,10 +180,11 @@ PasoDScreen.navigationOptions = ({navigation, route}) => {
 };
 
 function mapStateToProps(state) {
-  const {categoria, viajes} = state;
+  const {categoria, viajes, usuario} = state;
   return {
     viajes,
     categoria,
+    usuario,
   };
 }
 

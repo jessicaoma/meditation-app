@@ -55,9 +55,9 @@ export const reducer = (state = initialState, action) => {
         ...state,
         usuario: undefined,
         emocion: undefined,
-        emocionTime: new Date(0).toJSON(),
+        emocionTime: undefined,
         angel: undefined,
-        angelTime: new Date(0).toJSON(),
+        angelTime: undefined,
       };
     }
     default:

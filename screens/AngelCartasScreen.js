@@ -17,7 +17,6 @@ import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
 import {SET_ANGEL} from '../reducers/types';
 
-//TODO registrar seleccion
 const numColumns = 2;
 const height = ((Dims.window.width - 40) / numColumns) * 1.5;
 const width = (Dims.window.width - 40) / numColumns;

@@ -8,7 +8,6 @@ import {
   SafeAreaView,
   ScrollView,
   Platform,
-  FlatList,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import InputLogin from '../components/InputLogin';
@@ -20,7 +19,6 @@ import {SAVE_USER} from '../reducers/types';
 import {Ionicons} from '@expo/vector-icons';
 import ScalableText from 'react-native-text';
 
-//TODO hacer todo el manejo
 /**
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'CrearCuenta'>} navigation
@@ -142,10 +140,11 @@ class CrearCuentaScreen extends Component {
                 </Text>
               </View>
               <View style={styles.full}>
-                <FlatList
-                  data={this.state.error}
-                  renderItem={error => (
-                    <View style={[styles.errorContainer]}>
+                {this.state.error.length > 0 ? (
+                  this.state.error.map((error, index) => (
+                    <View
+                      style={[styles.errorContainer]}
+                      key={index.toString()}>
                       <Ionicons
                         name="md-alert"
                         size={25}
@@ -155,9 +154,10 @@ class CrearCuentaScreen extends Component {
                         {error}
                       </ScalableText>
                     </View>
-                  )}
-                  keyExtractor={(_, index) => index.toString()}
-                />
+                  ))
+                ) : (
+                  <></>
+                )}
                 <InputLogin
                   placeholder="Nombre"
                   type="text"

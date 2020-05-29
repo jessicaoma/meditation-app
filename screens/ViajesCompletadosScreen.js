@@ -11,7 +11,7 @@ import {
 import Colors from '../constants/Colors';
 import Dims from '../constants/Dimensions';
 import Dimensions from '../constants/Dimensions';
-import API, {user} from '../utils/API';
+import API from '../utils/API';
 import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
 import {HeaderBackButton} from '@react-navigation/stack';
@@ -22,6 +22,7 @@ import {SET_MODULOS, SET_CATEGORIA} from '../reducers/types';
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'ViajesCompletados'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'ViajesCompletados'>} route
+ * @prop {import('../utils/types').Usuario} usuario
  * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
@@ -38,8 +39,12 @@ class ViajeCompletadosScreen extends Component {
     isLoading: true,
   };
   componentDidMount = async () => {
-    const viajes = await API.getViajesCompletados(user);
-    this.setState({viajes, isLoading: false});
+    const data = await API.getViajesCompletados(this.props.usuario.token);
+    if (data.errors === undefined) {
+      this.setState({viajes: data, isLoading: false});
+    } else {
+      //TODO Falta manejar
+    }
   };
 
   /** @param {import("../utils/types").Viaje} viaje*/
@@ -254,4 +259,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null)(ViajeCompletadosScreen);
+function mapStateToProps(state) {
+  return {
+    usuario: state.usuario,
+  };
+}
+
+export default connect(mapStateToProps)(ViajeCompletadosScreen);

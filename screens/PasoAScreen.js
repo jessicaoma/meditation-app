@@ -9,7 +9,7 @@ import {
   BackHandler,
 } from 'react-native';
 import Colors from '../constants/Colors';
-import API, {user} from '../utils/API';
+import API from '../utils/API';
 import {enumStatus} from '../utils/types';
 import dimensions from '../constants/Dimensions';
 import Next from '../constants/LogoButtonNext';
@@ -33,6 +33,7 @@ let pasoAnterio = {};
  * @prop {import('../utils/types').Viaje[]} viajes
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'PasoA'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'PasoA'>} route
+ * @prop {import('../utils/types').Usuario} usuario
  * @prop {import('redux').Dispatch} [dispatch]
  * @param {Props} props
  */
@@ -48,10 +49,11 @@ function PasoAScreen(props) {
   pasoAnterio.position = position - 1;
   colorLetra = getBrightness(color) > 190 ? Colors.textoViaje : '#fff';
   React.useEffect(() => {
+    //TODO ¿como mostrar los errores?
     if (position === 0) {
-      API.putDiarioViaje(viaje.key, enumStatus.doing, user);
+      API.putDiarioViaje(viaje.key, enumStatus.doing, props.usuario.token);
     }
-    API.putDiarioPaso(paso.key, enumStatus.doing, user);
+    API.putDiarioPaso(paso.key, enumStatus.doing, props.usuario.token);
   });
 
   function _handleClose() {
@@ -65,7 +67,7 @@ function PasoAScreen(props) {
 
   function nextStep() {
     const {tipo} = viaje.pasos[position + 1];
-    API.putDiarioPaso(paso.key, enumStatus.done, user);
+    API.putDiarioPaso(paso.key, enumStatus.done, props.usuario.token);
     // @ts-ignore
     navigation.push(`Paso${String.fromCharCode(65 + tipo)}`, {
       position: position + 1,
@@ -201,10 +203,11 @@ PasoAScreen.navigationOptions = {
 };
 
 function mapStateToProps(state) {
-  const {categoria, viajes} = state;
+  const {categoria, viajes, usuario} = state;
   return {
     viajes,
     categoria,
+    usuario,
   };
 }
 

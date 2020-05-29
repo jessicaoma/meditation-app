@@ -16,14 +16,16 @@ import ScreenBg from '../components/screenBg';
 import Player from '../player/Player';
 import ScalableText from 'react-native-text';
 import {SvgUri} from 'react-native-svg';
+import {connect} from 'react-redux';
 
 /**
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Meditaciones'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Meditaciones'>} route
+ * @prop {import('../utils/types').Usuario} usuario
  * @extends {Component<Props>}
  */
-export default class MeditacionesScreen extends Component {
+class MeditacionesScreen extends Component {
   static navigationOptions = {};
   constructor(props) {
     super(props);
@@ -44,7 +46,7 @@ export default class MeditacionesScreen extends Component {
         this.player._onPlayPausePressed();
       }
     });
-    const data = await API.getMeditaciones();
+    const data = await API.getMeditaciones(this.props.usuario.token);
     const video = await API.getVideo('Meditaciones');
     this.setState({
       meditaciones: data,
@@ -83,7 +85,6 @@ export default class MeditacionesScreen extends Component {
   };
 
   _renderListHeader = _ => {
-    //TODO el video cambiara de localizacion
     return (
       <View>
         <Text style={styles.sectionTitle}>Meditaciones</Text>
@@ -129,6 +130,12 @@ export default class MeditacionesScreen extends Component {
       />
     </SafeAreaView>
   );
+}
+
+function mapStateToProps(state) {
+  return {
+    usuario: state.usuario,
+  };
 }
 
 const styles = StyleSheet.create({
@@ -199,3 +206,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
   },
 });
+
+export default connect(mapStateToProps)(MeditacionesScreen);

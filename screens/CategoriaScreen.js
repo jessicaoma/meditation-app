@@ -13,7 +13,7 @@ import Dimensions from '../constants/Dimensions';
 import LogoCursoDone from '../constants/LogoCursoDone';
 import LogoCursoNext from '../constants/LogoCursoNext';
 import LogoCursoDoing from '../constants/LogoCursoDoing';
-import API, {user} from '../utils/API';
+import API from '../utils/API';
 import {enumStatus} from '../utils/types';
 import ScalableText from 'react-native-text';
 import {HeaderBackButton} from '@react-navigation/stack';
@@ -26,6 +26,7 @@ import {SET_MODULOS} from '../reducers/types';
  * @prop {import('../utils/types').Categoria} categoria
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Categoria'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Categoria'>} route
+ * @prop {import('../utils/types').Usuario} usuario
  * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
@@ -60,16 +61,22 @@ class Categoria extends Component {
         this.player._onPlayPausePressed();
       }
     });
-    //TODO cambiar este comportamiento con el redux
     this.props.navigation.addListener('focus', async () => {
-      const viajes = await API.getViajesCategoria(this.categoria.key, user);
-      this.setState({viajes, isLoading: false});
-      this.props.dispatch({
-        type: SET_MODULOS,
-        payload: {
-          viajes,
-        },
-      });
+      const respuesta = await API.getViajesCategoria(
+        this.categoria.key,
+        this.props.usuario.token,
+      );
+      if (respuesta.errors === undefined) {
+        this.setState({viajes: respuesta, isLoading: false});
+        this.props.dispatch({
+          type: SET_MODULOS,
+          payload: {
+            viajes: respuesta,
+          },
+        });
+      } else {
+        //TODO Falta manejar
+      }
     });
   };
 
@@ -78,7 +85,6 @@ class Categoria extends Component {
    */
   determinarPaso = viaje => {
     let posicion = 0;
-
     if (viaje.estado === enumStatus.done || viaje.estado === enumStatus.todo) {
       posicion = 0;
     } else {
@@ -110,7 +116,7 @@ class Categoria extends Component {
       colorHeader: this.categoria.colorCabecera,
     });
   };
-  //TODO reiniciar el video al llegar al final
+
   /** @param {Player} ref*/
   refPlayer = ref => {
     this.player = ref;
@@ -258,6 +264,7 @@ class Categoria extends Component {
 function mapStateToProps(state) {
   return {
     categoria: state.categoria,
+    usuario: state.usuario,
   };
 }
 

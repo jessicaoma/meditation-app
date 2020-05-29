@@ -19,7 +19,7 @@ import Logo from '../components/Logo';
 import Cover from '../components/Cover';
 import TabBarIcon from '../components/TabBarIcon';
 import ScalableText from 'react-native-text';
-import API, {user} from '../utils/API';
+import API from '../utils/API';
 import ScreenBg from '../components/screenBg';
 import colors from '../constants/Colors';
 import {enumLoNuevo} from '../utils/types';
@@ -41,6 +41,7 @@ const headerH =
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Home'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Home'>} route
+ * @prop {import('../utils/types').Usuario} usuario
  * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
@@ -86,8 +87,8 @@ class Home extends Component {
   };
 
   componentDidMount = async () => {
-    const enprogreso = await API.getViajesEnProgreso(user);
-    const lonuevo = await API.getLoNuevo();
+    const enprogreso = await API.getEnProgreso(this.props.usuario.token);
+    const lonuevo = await API.getDestacados(this.props.usuario.token);
     const reflexion = await API.getReflexionDelDia();
     const tutorial = await API.getVideo('Tutorial');
     this.setState({enprogreso, lonuevo, reflexion, tutorial});
@@ -100,7 +101,7 @@ class Home extends Component {
     this.setState({
       enprogreso: [],
     });
-    const enprogreso = await API.getViajesEnProgreso(user);
+    const enprogreso = await API.getEnProgreso(this.props.usuario.token);
     this.setState({
       enprogreso,
     });
@@ -261,7 +262,6 @@ class Home extends Component {
   };
 
   _handleEmociones = () => {
-    //TODO verificar si ya esta en el redux, o consultar el server
     this.props.navigation.navigate('EmocionesStack');
   };
 
@@ -387,6 +387,13 @@ class Home extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  const {usuario} = state;
+  return {
+    usuario,
+  };
+}
+
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#fff'},
   scrollView: {
@@ -470,4 +477,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null)(Home);
+export default connect(mapStateToProps)(Home);

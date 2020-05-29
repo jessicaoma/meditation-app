@@ -12,6 +12,7 @@ import BookListItem from '../components/BookListItem';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import API from '../utils/API';
+import {connect} from 'react-redux';
 
 //Estoy restando los margenes laterales (16 + 16), y eso lo divido entre las columnas.
 const widthItem = Dimensions.window.width - Dimensions.regularSpace * 2 - 0;
@@ -22,10 +23,11 @@ const widthItem = Dimensions.window.width - Dimensions.regularSpace * 2 - 0;
  * @prop {import('../utils/types').Viaje} viaje
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Audiolibros'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Audiolibros'>} route
+ * @prop {import('../utils/types').Usuario} usuario
  * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
-export default class AudiolibrosScreen extends Component {
+class AudiolibrosScreen extends Component {
   static navigationOptions = {};
 
   constructor(props) {
@@ -46,7 +48,7 @@ export default class AudiolibrosScreen extends Component {
     this.setState({
       audioLibros: [],
     });
-    const data = await API.getAudiolibros();
+    const data = await API.getAudiolibros(this.props.usuario.token);
     this.setState({
       audioLibros: data,
     });
@@ -95,6 +97,12 @@ export default class AudiolibrosScreen extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    usuario: state.usuario,
+  };
+}
+
 const styles = StyleSheet.create({
   safe: {flex: 1, backgroundColor: 'white'},
   statusBar: {
@@ -116,3 +124,5 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Bold',
   },
 });
+
+export default connect(mapStateToProps)(AudiolibrosScreen);

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import {dateToStrYYYYMMDD} from './convert';
 import {envRemoto} from './types';
 
@@ -9,21 +8,163 @@ const BASE_API = envRemoto
 
 class Api {
   /** Consulta las meditaciones
-   * @return {Promise<import("./types").Meditación[]>} */
-  async getMeditaciones() {
-    const query = await fetch(`${BASE_API}meditaciones`);
-    const data = await query.json();
-    return data;
+   * @param {string} token Token de Autorización
+   * @return {Promise<import("./types").Meditación[] | {errors: any}>} */
+  async getMeditaciones(token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}meditaciones`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status < 300) {
+      return await query.json();
+    } else {
+      return {
+        errors: {
+          message: 'Datos inválidos',
+        },
+      };
+    }
   }
 
-  /** @returns {Promise<import("./types").Audiolibro[]>} */
-  async getAudiolibros() {
-    const myHeaders = new Headers({from: user});
-    const query = await fetch(`${BASE_API}audiolibros`, {
-      headers: myHeaders,
-    });
-    const data = await query.json();
-    return data;
+  /** Consulta las meditaciones
+   * @param {number} itemId Id de la meditacion
+   * @param {number} progreso duracion de la meditacion
+   * @param {string} token Token de Autorización
+   */
+  async postDiarioMeditacion(itemId, progreso, token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}diario/meditacion`, {
+        method: 'POST',
+        body: JSON.stringify({
+          itemId,
+          fecha: dateToStrYYYYMMDD(new Date()),
+          progreso,
+        }),
+        headers: {
+          Authorization: `Bearer  ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status < 300) {
+      return;
+    } else {
+      return {
+        errors: {
+          message: 'Datos inválidos',
+        },
+      };
+    }
+  }
+
+  /**
+   * @param {string} token Token de Autorización
+   * @return {Promise<import("./types").MeditacionesCompletadas | {errors: any}>} */
+  async getMeditacionesCompletadas(token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}meditaciones/completadas`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status < 300) {
+      return await query.json();
+    } else {
+      return {
+        errors: {
+          message: 'Datos inválidos',
+        },
+      };
+    }
+  }
+
+  /**
+   * @param {string} token Token de Autorización
+   * @returns {Promise<import("./types").Audiolibro[] | {errors: any}>}
+   */
+  async getAudiolibros(token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}audiolibros`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status < 300) {
+      return await query.json();
+    } else {
+      return {
+        errors: {
+          message: 'Datos inválidos',
+        },
+      };
+    }
+  }
+
+  /**
+   * @param {number} itemId Id del audiolibro
+   * @param {number} progreso Avance en el audiolibro
+   * @param {import('./types').enumStatus} estado Estatus a actualizar del audiolibro
+   * @param {string} token Token de Autorización
+   */
+  async putDiarioAudiolibro(itemId, progreso, estado, token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}diario/audiolibro`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          itemId,
+          fecha: dateToStrYYYYMMDD(new Date()),
+          estado,
+          progreso,
+        }),
+        headers: {
+          Authorization: `Bearer  ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status < 300) {
+      return;
+    } else {
+      return {
+        errors: {
+          message: 'Datos inválidos',
+        },
+      };
+    }
   }
 
   /** @return {Promise<import("./types").CartaDelAngel[]>} */
@@ -33,47 +174,220 @@ class Api {
     return data;
   }
 
-  /** @return {Promise<import("./types").Categoria[]>} */
-  async getCategorias() {
-    const query = await fetch(`${BASE_API}categorias`);
-    const data = await query.json();
-    return data;
-    //return catDB;
+  /**
+   * @param {string} token Token de Autorización
+   * @return {Promise<import("./types").Categoria[] | {errors: any}>}
+   */
+  async getCategorias(token) {
+    //const data = await query.json();
+    let query;
+    try {
+      query = await fetch(`${BASE_API}categorias`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status === 200) {
+      return await query.json();
+    } else {
+      return {
+        errors: {
+          message: 'Error Interno',
+        },
+      };
+    }
   }
 
   /**
-   * @param {number} categoriaId
-   * @param {string} user usuario activo
-   * @return {Promise<import("./types").Viaje[]>} */
-  async getViajesCategoria(categoriaId, user) {
-    const myHeaders = new Headers({from: user});
-    const query = await fetch(`${BASE_API}viajes/categoria/${categoriaId}`, {
-      headers: myHeaders,
-    });
-    const data = await query.json();
-    return data;
+   * @param {number} categoriaId categoria seleccionada
+   * @param {string} token Token de Autorización
+   * @return {Promise<import("./types").Viaje[] | {errors: any}>} */
+  async getViajesCategoria(categoriaId, token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}viajes/categoria/${categoriaId}`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status === 200) {
+      return await query.json();
+    } else {
+      return {
+        errors: {
+          message: 'Error Interno',
+        },
+      };
+    }
   }
 
   /**
-   * @param {string} user usuario activo
-   * @return {Promise<import("./types").Viaje[]>} */
-  async getViajesEnProgreso(user) {
-    const myHeaders = new Headers({from: user});
-    const query = await fetch(`${BASE_API}enprogreso`, {
-      headers: myHeaders,
-    });
-    const data = await query.json();
-    return data;
+   * @param {string} token Token de Autorización
+   * @return {Promise<import("./types").Viaje[] | {errors: any}>}
+   */
+  async getViajesCompletados(token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}viajes/completados`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status === 200) {
+      return await query.json();
+    } else {
+      return {
+        errors: {
+          message: 'Error Interno',
+        },
+      };
+    }
   }
 
-  /** @return {Promise<import("./types").Destacado[]>} */
-  async getLoNuevo() {
-    //const myHeaders = new Headers({from: user});
-    const query = await fetch(`${BASE_API}destacados`, {
-      //headers: myHeaders,
-    });
-    const data = await query.json();
-    return data;
+  /**
+   * @param {number} itemId Id del viaje
+   * @param {import('./types').enumStatus} estado Estado del paso
+   * @param {string} token Token de Autorización
+   */
+  async putDiarioViaje(itemId, estado, token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}diario/viaje`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          itemId,
+          fecha: dateToStrYYYYMMDD(new Date()),
+          estado,
+        }),
+        headers: {
+          Authorization: `Bearer  ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status < 300) {
+      return;
+    } else {
+      return {
+        errors: {
+          message: 'Datos inválidos',
+        },
+      };
+    }
+  }
+
+  /**
+   * @param {number} itemId Id del paso
+   * @param {import('./types').enumStatus} estado Estado del paso
+   * @param {string} token Token de Autorización
+   */
+  async putDiarioPaso(itemId, estado, token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}diario/paso`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          itemId,
+          fecha: dateToStrYYYYMMDD(new Date()),
+          estado,
+        }),
+        headers: {
+          Authorization: `Bearer  ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status < 300) {
+      return;
+    } else {
+      return {
+        errors: {
+          message: 'Datos inválidos',
+        },
+      };
+    }
+  }
+
+  /**
+   * @param {string} token Token de Autorización
+   * @return {Promise<import("./types").Viaje[] | {errors: any}>} */
+  async getEnProgreso(token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}enprogreso`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status < 300) {
+      return await query.json();
+    } else {
+      return {
+        errors: {
+          message: 'Datos inválidos',
+        },
+      };
+    }
+  }
+
+  /**
+   * @param {string} token Token de Autorización
+   * @return {Promise<import("./types").Destacado[] | {errors: any}>}
+   */
+  async getDestacados(token) {
+    let query;
+    try {
+      query = await fetch(`${BASE_API}destacados`, {
+        headers: {Authorization: `Bearer  ${token}`},
+      });
+    } catch (error) {
+      return {
+        errors: {
+          network: 'Error de Red',
+        },
+      };
+    }
+    if (query.status < 300) {
+      return await query.json();
+    } else {
+      return {
+        errors: {
+          message: 'Datos inválidos',
+        },
+      };
+    }
   }
 
   /** @return {Promise<import("./types").Reflexión>} */
@@ -81,18 +395,6 @@ class Api {
     //const myHeaders = new Headers({from: user});
     const query = await fetch(`${BASE_API}reflexion/deldia`, {
       //headers: myHeaders,
-    });
-    const data = await query.json();
-    return data;
-  }
-
-  /**
-   * @param {string} user usuario activo
-   * @return {Promise<import("./types").Viaje[]>} */
-  async getViajesCompletados(user) {
-    const myHeaders = new Headers({from: user});
-    const query = await fetch(`${BASE_API}viajes/completados`, {
-      headers: myHeaders,
     });
     const data = await query.json();
     return data;
@@ -106,68 +408,18 @@ class Api {
     return data;
   }
 
-  /** Consulta las meditaciones
-   * @param {string} itemId Id de la meditacion
-   * @param {number} progreso duracion de la meditacion
-   * @param {string} usuario usuario activo
-   */
-  async postDiarioMeditacion(itemId, progreso, usuario = user) {
-    await fetch(`${BASE_API}diario/meditacion`, {
-      method: 'POST',
-      body: JSON.stringify({
-        itemId,
-        fecha: dateToStrYYYYMMDD(new Date()),
-        progreso,
-        usuario,
-      }),
-      headers: {'Content-Type': 'application/json'},
-    });
-  }
-
-  /**
-   * @param {string} user usuario activo
-   * @return {Promise<import("./types").MeditacionesCompletadas>} */
-  async getMeditacionesCompletadas(user) {
-    const myHeaders = new Headers({from: user});
-    const query = await fetch(`${BASE_API}meditaciones/completadas`, {
-      headers: myHeaders,
-    });
-    const data = await query.json();
-    return data;
-  }
-
-  /**
-   * @param {string} viajeId
-   * @param {string} user usuario activo
-   * @return {Promise<import("./types").Viaje[]>} */
-  async getPasosDelViaje(viajeId, user) {
-    const myHeaders = new Headers({from: user});
-    const query = await fetch(`${BASE_API}pasos/viaje/${viajeId}`, {
-      headers: myHeaders,
-    });
-    const data = await query.json();
-    return data;
-  }
-
-  /** Consulta las meditaciones
-   * @param {string} itemId Id de la meditacion
-   * @param {number} progreso duracion de la meditacion
-   * @param {string} usuario usuario activo
-   * @param {import('./types').enumStatus} progreso duracion de la meditacion
-   */
-  async putDiarioAudiolibro(itemId, progreso, estado, usuario = user) {
-    await fetch(`${BASE_API}diario/audiolibro`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        itemId,
-        fecha: dateToStrYYYYMMDD(new Date()),
-        progreso,
-        usuario,
-        estado,
-      }),
-      headers: {'Content-Type': 'application/json'},
-    });
-  }
+  // /**
+  //  * @param {string} viajeId
+  //  * @param {string} user usuario activo
+  //  * @return {Promise<import("./types").Viaje[]>} */
+  // async getPasosDelViaje(viajeId, user) {
+  //   const myHeaders = new Headers({from: user});
+  //   const query = await fetch(`${BASE_API}pasos/viaje/${viajeId}`, {
+  //     headers: myHeaders,
+  //   });
+  //   const data = await query.json();
+  //   return data;
+  // }
 
   /** Busca uno de los siguientes videos (Bienvenida, Tutorial, MeditacionesIntro)
    * @param {string} titulo Titulo del video
@@ -177,42 +429,6 @@ class Api {
     const query = await fetch(`${BASE_API}videos/${titulo}`);
     const data = await query.json();
     return data;
-  }
-
-  /**
-   * @param {number} itemId Id del paso
-   * @param {import('./types').enumStatus} estado Estado del paso
-   * @param {string} usuario usuario activo
-   */
-  async putDiarioPaso(itemId, estado, usuario = user) {
-    await fetch(`${BASE_API}diario/paso`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        itemId,
-        fecha: dateToStrYYYYMMDD(new Date()),
-        estado,
-        usuario,
-      }),
-      headers: {'Content-Type': 'application/json'},
-    });
-  }
-
-  /**
-   * @param {number} itemId Id del viaje
-   * @param {import('./types').enumStatus} estado Estado del paso
-   * @param {string} usuario usuario activo
-   */
-  async putDiarioViaje(itemId, estado, usuario = user) {
-    await fetch(`${BASE_API}diario/viaje`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        itemId,
-        fecha: dateToStrYYYYMMDD(new Date()),
-        estado,
-        usuario,
-      }),
-      headers: {'Content-Type': 'application/json'},
-    });
   }
 
   /** Consulta las emociones
@@ -271,7 +487,6 @@ class Api {
       };
     }
     if (query.status >= 200 && query.status < 500) {
-      console.log(query.status);
       if (query.status < 400) {
         //TODO este metodo debe retornar los datos del metodo /emociones/registro/{fecha}
         //return await query.json();

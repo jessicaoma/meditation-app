@@ -21,6 +21,7 @@ import {SET_CATEGORIA} from '../reducers/types';
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'Categorias'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'Categorias'>} route
+ * @prop {import('../utils/types').Usuario} usuario
  * @prop {import('redux').Dispatch} [dispatch]
  * @extends {Component<Props>}
  */
@@ -31,10 +32,14 @@ class Categorias extends Component {
   };
 
   componentDidMount = async () => {
-    const data = await API.getCategorias();
-    this.setState({
-      categorias: data,
-    });
+    const data = await API.getCategorias(this.props.usuario.token);
+    if (data.errors === undefined) {
+      this.setState({
+        categorias: data,
+      });
+    } else {
+      //TODO Falta manejar
+    }
   };
 
   /** @param {import('../utils/types').Categoria} item */
@@ -89,6 +94,12 @@ class Categorias extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    usuario: state.usuario,
+  };
+}
+
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
@@ -129,4 +140,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null)(Categorias);
+export default connect(mapStateToProps)(Categorias);

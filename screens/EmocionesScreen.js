@@ -15,7 +15,6 @@ import ScalableText from 'react-native-text';
 import {connect} from 'react-redux';
 import {SET_EMOCION} from '../reducers/types';
 
-//TODO registrar seleccion
 const numColumns = 2;
 const width = (Dims.window.width - 40) / numColumns;
 const height = (Dims.window.width / numColumns) * 1.5;
@@ -77,8 +76,6 @@ class EmocionesScreen extends Component {
     API.postRegistroEmocion(item.key, this.props.usuario.token).then(result => {
       if (result.errors) {
         //TODO Preguntar que mostrar
-        //   console.error('error al consultar emociones');
-        console.log(result.errors);
       } else {
         this.props.dispatch({
           type: SET_EMOCION,

@@ -54,13 +54,12 @@ class LoginScreen extends Component {
       rememberme: true,
     };
     const result = await API.loginUser(datos);
-    //console.log(result);
 
     if (result.errors === undefined) {
       const now = new Date();
       const date = dateToStrYYYYMMDD(now);
       API.getEmocionOfDate(date, result.token).then(r => {
-        if (result.errors === undefined) {
+        if (r.errors === undefined) {
           this.props.dispatch({
             type: SET_EMOCION,
             payload: {

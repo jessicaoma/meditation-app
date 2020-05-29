@@ -10,7 +10,6 @@ import PasoEScreen from '../screens/PasoEScreen';
 const Stack = createStackNavigator();
 
 function ViajeCompletadoNavigator(props) {
-  //console.log(props);
   return (
     <Stack.Navigator
       screenOptions={{

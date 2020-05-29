@@ -37,8 +37,12 @@ function SplashScreen({navigation, usuario, angelTime, emocionTime, dispatch}) {
     });
   }
   setTimeout(() => {
+    console.log('Slash ' + (usuario === undefined));
     if (usuario === undefined) {
-      navigation.navigate('Login');
+      try {
+        navigation.navigate('Login');
+      } finally {
+      }
       // } else {
       //   // @ts-ignore
       //   navigation.replace('App');

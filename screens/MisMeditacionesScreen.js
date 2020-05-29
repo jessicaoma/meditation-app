@@ -5,16 +5,18 @@ import LogoPremio from '../constants/LogoPremio';
 import LogoReloj from '../constants/LogoReloj';
 import ScalableText from 'react-native-text';
 import colors from '../constants/Colors';
-import API, {user} from '../utils/API';
+import API from '../utils/API';
 import {millisToHours} from '../utils/convert';
+import {connect} from 'react-redux';
 
 /**
  * @typedef Props
  * @prop {import('@react-navigation/native').NavigationProp<(import('../navigation/AppNavigator').ParamList),'MisMeditaciones'>} navigation
  * @prop {import('@react-navigation/native').RouteProp<(import('../navigation/AppNavigator').ParamList),'MisMeditaciones'>} route
+ * @prop {import('../utils/types').Usuario} usuario
  * @extends {Component<Props>}
  */
-export default class MisMeditacionesScreen extends Component {
+class MisMeditacionesScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Mis Meditaciones',
   });
@@ -23,7 +25,7 @@ export default class MisMeditacionesScreen extends Component {
     completadas: 0,
   };
   componentDidMount = async () => {
-    const data = await API.getMeditacionesCompletadas(user);
+    const data = await API.getMeditacionesCompletadas(this.props.usuario.token);
     this.setState(data);
   };
 
@@ -47,28 +49,24 @@ export default class MisMeditacionesScreen extends Component {
                 Mi registro
               </ScalableText>
             </View>
-
             <View style={styles.inforowtitle}>
               <LogoReloj />
               <ScalableText style={styles.bigParagraph}>
                 Tiempo total meditado
               </ScalableText>
             </View>
-
             <View style={styles.inforow}>
               <ScalableText style={styles.bigTitle}>
                 {millisToHours(this.state.progreso)}
               </ScalableText>
               <ScalableText style={styles.purpleTitle}>HORAS</ScalableText>
             </View>
-
             <View style={styles.inforowtitle}>
               <LogoPremio />
               <ScalableText style={styles.bigParagraph}>
                 Sesiones completadas
               </ScalableText>
             </View>
-
             <View style={styles.inforow}>
               <ScalableText style={styles.bigTitle}>
                 {this.state.completadas}
@@ -80,6 +78,12 @@ export default class MisMeditacionesScreen extends Component {
       </ScrollView>
     </SafeAreaView>
   );
+}
+
+function mapStateToProps(state) {
+  return {
+    usuario: state.usuario,
+  };
 }
 
 const styles = StyleSheet.create({
@@ -135,3 +139,5 @@ const styles = StyleSheet.create({
     height: Dims.window.width - 30,
   },
 });
+
+export default connect(mapStateToProps)(MisMeditacionesScreen);
