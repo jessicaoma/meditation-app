@@ -145,8 +145,8 @@ class CrearCuentaScreen extends Component {
                       key={index.toString()}>
                       <Ionicons
                         name="md-alert"
-                        size={25}
-                        style={{color: '#efbfba', marginRight: 10}}
+                        size={15}
+                        style={{color: '#efbfba', marginRight: 4, marginTop:-4}}
                       />
                       <ScalableText style={styles.errorTexto}>
                         {error}

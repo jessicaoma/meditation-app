@@ -218,11 +218,11 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: Colors.darkPurple,
     borderRadius: 40,
-    paddingHorizontal: dimensions.window.width * 0.1,
-    height: dimensions.window.width * 0.14,
+    height: dimensions.window.width * 0.1,
     justifyContent: 'center',
     alignContent: 'center',
-    marginVertical: 30,
+    marginVertical: 20,
+    marginHorizontal: '15%',
   },
   buttonLabel: {
     color: 'white',
