@@ -155,7 +155,7 @@ function PasoEScreen(props) {
             <ScalableText style={styles.buttonLabel}>
               {viajeIndex + 1 === viajes.length
                 ? 'Ver otros cursos'
-                : 'Siguiente módulo'}
+                : 'Finalizar módulo'}
             </ScalableText>
           </View>
         </TouchableOpacity>

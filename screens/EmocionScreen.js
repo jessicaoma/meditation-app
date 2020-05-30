@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     marginVertical: 20,
-    marginHorizontal: '15%',
+    marginHorizontal: '20%',
   },
   buttonLabel: {
     color: 'white',

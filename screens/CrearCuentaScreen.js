@@ -33,6 +33,7 @@ class CrearCuentaScreen extends Component {
     pass: '',
     pass2: '',
     error: [],
+    loading: false,
   };
 
   checkEmail = () => {
@@ -47,6 +48,9 @@ class CrearCuentaScreen extends Component {
 
   handleLogin = async () => {
     let error = [];
+    loading = true;
+    this.setState({loading});
+
     if (this.state.name.trim().length === 0) {
       error.push('Debes ingresar un nombre');
     }
@@ -63,6 +67,8 @@ class CrearCuentaScreen extends Component {
     }
     if (error.length > 0) {
       this.setState({error});
+      let loading = false;
+      this.setState({loading});
       return;
     }
     const datos = {
@@ -81,6 +87,8 @@ class CrearCuentaScreen extends Component {
       this.setState({error: result.errors});
       //this.props.navigation.navigate('Login');
     }
+    let loading = false;
+    this.setState({loading});
   };
   nameRef = {};
   emailRef = {};
@@ -203,7 +211,20 @@ class CrearCuentaScreen extends Component {
                 <TouchableOpacity
                   onPress={this.handleLogin}
                   style={[styles.button]}>
-                  <Text style={styles.buttonLabel}>¡LISTO!</Text>
+                    <ScalableText style={styles.buttonLabel}>
+                    {this.state.loading ? (
+                      <Ionicons
+                        name="md-refresh"
+                        size={25}
+                        style={styles.loading}
+                      />
+
+                    ): (
+                    <>
+                      ¡LISTO!
+                    </>
+                    )}
+                    </ScalableText>
                 </TouchableOpacity>
               </View>
             </View>
