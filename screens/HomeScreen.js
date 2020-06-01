@@ -55,7 +55,7 @@ class Home extends Component {
     headerStyle: {height: headerH},
     headerLeft: () => (
       <View style={{marginLeft: 16}}>
-        <Logo />
+        <Logo style={{marginTop: 20,}} />
       </View>
     ),
     headerRight: () => (
