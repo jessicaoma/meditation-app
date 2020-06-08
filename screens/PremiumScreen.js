@@ -53,7 +53,7 @@ export default class PremiumScreen extends Component {
       {
         id: 4,
         title:
-          'Un módulo del curso (Ser Feliz) de desarrollo personal. Con recomendaciones y ejercicios.',
+          'Un módulo del curso "Ser feliz" de desarrollo personal, con recomendaciones y ejercicios.',
       },
       {
         id: 5,
@@ -62,7 +62,7 @@ export default class PremiumScreen extends Component {
       {
         id: 6,
         title:
-          'Un extracto de un audiolibro de Karim Temple. (Aprendiendo a Meditar)',
+          'Un extracto de un audiolibro de Karim Temple. (Libro: Aprendiendo a meditar)',
       },
       {
         id: 7,
@@ -134,7 +134,7 @@ export default class PremiumScreen extends Component {
       {
         id: 4,
         title:
-          'Cursos de desarrollo personal. Con recomendaciones y ejercicios.',
+          'Cursos de desarrollo personal, con recomendaciones y ejercicios.',
       },
       {
         id: 5,
@@ -142,7 +142,7 @@ export default class PremiumScreen extends Component {
       },
       {
         id: 6,
-        title: 'Un audiolibro de Karim Temple (Libro: APRENDIENDO A MEDITAR).',
+        title: 'Un audiolibro de Karim Temple (Libro: Aprendiendo a meditar).',
       },
       {
         id: 7,
@@ -227,13 +227,7 @@ export default class PremiumScreen extends Component {
             <View style={styles.container}>
               {this.features.premium.map(item => this.renderPremiumItem(item))}
             </View>
-            <Text style={[styles.bigParagraph]}>
-              {'\n'}
-              Pasado los 7 días de prueba el usuario tendrá acceso a:
-            </Text>
-            <View style={styles.container}>
-              {this.features.premium2.map(item => this.renderPremiumItem(item))}
-            </View>
+            
             <Text style={[styles.bigParagraph]}>
               {'\n'}
               Suscripción ANUAL. {'\n'}

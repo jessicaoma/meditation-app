@@ -114,8 +114,7 @@ class ViajeCompletadosScreen extends Component {
     } else {
       return (
         <ScalableText style={styles.bigParagraph}>
-          Aún no has finalizado ningún módulo de los cursos.{'\n\n'}
-          ¡Anímate a recorrer el curso de tu preferencia!
+          Al comenzar los cursos, verás aquí reflejados los módulos que has realizado para que puedas llevar un registro de lo aprendido.
         </ScalableText>
       );
     }
@@ -138,13 +137,8 @@ class ViajeCompletadosScreen extends Component {
               />
               {!this.state.isLoading && this.state.viajes.length > 0 && (
                 <>
-                  <ScalableText style={styles.bigTitle}>
-                    ¡Vas muy bien!
-                  </ScalableText>
                   <ScalableText style={styles.bigParagraph}>
-                    Has completado los siguientes módulos. Si deseas consultar
-                    nuevamente el contenido, presiona sobre el módulo de
-                    interés.
+                    Nunca te canses de buscar una mejor vida. Recuerda que la perseverancia siempre tiene su recompensa; sigue poco a poco avanzando en los cursos, hasta que alcances los objetivos propuestos. ¡Felicitaciones!
                   </ScalableText>
                 </>
               )}

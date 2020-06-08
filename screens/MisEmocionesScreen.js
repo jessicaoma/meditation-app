@@ -30,7 +30,7 @@ import {connect} from 'react-redux';
  */
 class MisEmocionesScreen extends Component {
   static navigationOptions = ({navigation}) => ({
-    title: 'Mis Emociones',
+    title: 'Mis emociones',
   });
 
   constructor(props) {
@@ -49,7 +49,7 @@ class MisEmocionesScreen extends Component {
   onPressSemanal = () => {
     this.setState({
       emocionesData: this.semana, //[3, 2, 0, 2],
-      title: 'Semanal',
+      title: 'semanal',
       yAxis: [
         {
           value: 0,
@@ -164,7 +164,7 @@ class MisEmocionesScreen extends Component {
                 fill
                 bold
                 onPress={this._handleClickCursos}>
-                Ir a cursos
+                Ir a Cursos
               </ItemBubble>
               <ItemBubble
                 color={Colors.primaryDark}
@@ -172,7 +172,7 @@ class MisEmocionesScreen extends Component {
                 bold
                 likeButton
                 onPress={this._handleClickMeditaciones}>
-                Ir a meditaciones
+                Ir a Meditaciones
               </ItemBubble>
             </View>
           </View>

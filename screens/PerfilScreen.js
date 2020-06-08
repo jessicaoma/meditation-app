@@ -66,7 +66,7 @@ class PerfilScreen extends Component {
                 <ScalableText
                   style={[styles.labelStyle]}
                   onPress={this.navigateToScreen('MisEmociones')}>
-                  Mis Emociones
+                  Mis emociones
                 </ScalableText>
                 <Flecha />
               </View>
@@ -75,7 +75,7 @@ class PerfilScreen extends Component {
                 <ScalableText
                   style={[styles.labelStyle]}
                   onPress={this.navigateToScreen('ViajesCompletadosStack')}>
-                  Módulos Finalizados
+                  Módulos finalizados
                 </ScalableText>
                 <Flecha />
               </View>
@@ -84,14 +84,14 @@ class PerfilScreen extends Component {
                 <ScalableText
                   style={[styles.labelStyle]}
                   onPress={this.navigateToScreen('MisMeditaciones')}>
-                  Mis Meditaciones
+                  Mis meditaciones
                 </ScalableText>
                 <Flecha />
               </View>
               <View style={[styles.itemStyle]}>
                 <TabBarIcon name={'Salir'} />
                 <ScalableText style={[styles.labelStyle]} onPress={this.logout}>
-                  Cerrar Sesión
+                  Cerrar sesión
                 </ScalableText>
               </View>
             </View>

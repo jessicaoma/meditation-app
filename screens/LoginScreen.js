@@ -175,7 +175,7 @@ class LoginScreen extends Component {
 
                     ): (
                     <>
-                      Iniciar Sesión
+                      Iniciar sesión
                     </>
                     )}
                     </ScalableText>
