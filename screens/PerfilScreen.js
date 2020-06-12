@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   itemsContainer: {
     width: '100%',
-    marginBottom: 15,
+    marginBottom: 60,
   },
   itemStyle: {
     flexDirection: 'row',
@@ -168,15 +168,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   labelStyle: {
-    fontSize: 18,
+    fontSize: 16,
     lineHeight: 18,
     marginLeft: 20,
     textAlign: 'left',
     fontFamily: 'MyriadPro-Regular',
     color: '#85787b',
     flex: 1,
-    paddingTop: 24,
-    paddingBottom: 20,
+    paddingTop: 20,
+    paddingBottom: 18,
   },
   footer: {
     //resizeMode: 'cover',
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     left: 0,
-    bottom: 20,
+    bottom: 30,
     flex: 1,
   },
 });

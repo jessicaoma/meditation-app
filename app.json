@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Karim Temple",
-    "slug": "karim-temple",
+    "name": "Serenamente",
+    "slug": "serenamente",
     "privacy": "public",
     "sdkVersion": "37.0.0",
     "platforms": [
@@ -21,7 +21,7 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.okotecnologia.karimtemple",
+      "bundleIdentifier": "com.okotecnologia.serenamente",
       "supportsTablet": true,
       "infoPlist": {
         "UIBackgroundModes": [
@@ -31,7 +31,7 @@
       "buildNumber": "1.0.1"
     },
     "android": {
-      "package": "com.okotecnologia.karimtemple",
+      "package": "com.okotecnologia.serenamente",
       "versionCode": 1
     }
   }
